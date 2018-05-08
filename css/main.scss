@@ -1,3 +1,33 @@
 :root {
   --color-background: #fff;
+  --color-banner-background-gradient-top: #45ACF0;
+  --color-banner-background-gradient-bottom: #1D97E7;
+  --font-banner-name-color: #fff;
+  --font-default-color: #464646;
+}
+
+body {
+  color: var(--font-default-color);
+}
+
+header[role="banner"] {
+  .name {
+    display: inline-block;
+    min-height: 90px;
+    padding: 15px 20px 0 20px;
+    margin: 0;
+    font: italic 4em Georgia, "Times New Roman", Times, serif;
+    color: var(--font-banner-name-color);
+    background: linear-gradient(to bottom, var(--color-banner-background-gradient-top), var(--color-banner-background-gradient-bottom));
+  }
+
+  &:before {
+    position: absolute;
+    width: 0;
+  	height: 0;
+    margin-top: 105px;
+  	border-top: 50px solid var(--color-banner-background-gradient-bottom);
+  	border-right: 50px solid transparent;
+    content: "";
+  }
 }

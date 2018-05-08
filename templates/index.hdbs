@@ -1,4 +1,4 @@
-{{> header_glob pageTitle="WOOO" }}
+{{> header_glob pageTitle="Jake Holman" }}
 
 
 {{> footer_glob }}
