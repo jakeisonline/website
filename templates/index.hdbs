@@ -1,4 +1,9 @@
 {{> header_glob pageTitle="Jake Holman" }}
-
-
+<h1>Helps products grow using thoughtful, design-based and collaborative product development</h1>
+<div class="set_left">
+  <p class="initial_letter">👋🏻 Hello, my name is Jake Holman</p>
+</div>
+<div class="set_right">
+  <p>Heyo</p>
+</div>
 {{> footer_glob }}
