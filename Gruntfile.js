@@ -4,8 +4,10 @@ module.exports = function(grunt) {
   // load timer first, explicitly
   require('time-grunt')(grunt);
 
-  // load all grunt tasks matching the ['grunt-*', '@*/grunt-*'] patterns
-  require('load-grunt-tasks')(grunt);
+  // check and load only tasks we need using jit-grunt
+  require('jit-grunt')(grunt, {
+    sasslint: 'grunt-sass-lint'
+  });
 
   grunt.initConfig({
     sass: {
@@ -42,9 +44,29 @@ module.exports = function(grunt) {
     concurrent: {
       prepare: ['clean:build', 'sasslint'],
       build: ['sass:build', 'compile-handlebars']
+    },
+    watch: {
+      templates: {
+        files: ['templates/**/*.hdbs'],
+        tasks: ['compile-handlebars']
+      },
+      css: {
+        files: ['css/**/*.scss'],
+        tasks: ['sasslint', 'sass']
+      }
     }
   });
 
   grunt.registerTask('build', ['concurrent:prepare', 'concurrent:build']);
 
+  /* When watch is fired, first check to see if it's templates, css, etc. then
+     only perform those related tasks */
+  grunt.event.on('watch', function(action, filepath) {
+    if (filepath.includes("templates/")) {
+      grunt.config('compile-handlebars.all.files.cwd', filepath);
+    } else if (filepath.includes("css/")) {
+      grunt.config('sasslint.target', filepath);
+      grunt.config('sass.build.files.src', filepath);
+    }
+  });
 };
