@@ -1,7 +1,9 @@
-{{> header_glob pageTitle="Jake Holman" }}
+{{> header_glob pageTitle="A product development leader based in San Francisco, California" }}
 <h1>Helps products grow using thoughtful, design-based and collaborative product development</h1>
 <div class="set_left">
-  <p class="initial_letter">👋🏻 Hello, my name is Jake Holman</p>
+  <p class="initial_letter">👋🏻 Hello, my name is <a href="/contact">Jake Holman</a> and I've
+  been making products for years. I started my journey by creating a CMS for my parents business, then
+  ended up leading two of <a href="/stories/zendesk">Zendesk's biggest products</a>. That's the short story, anyway.</p>
 </div>
 <div class="set_right">
   <p>Heyo</p>

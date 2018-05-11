@@ -1,3 +1,10 @@
 <header role="banner">
-  <h2 class="name">Jake Holman</h2>
+  <h2 id="name">JH</h2>
+  <ul role="navigation" id="nav">
+    <li><a href="/about">More me</a></li>
+    <li><a href="/contact">Talk to me</a></li>
+    <li><a href="https://www.twitter.com/jakeisonline" target="_blank">{{svg "twitter.svg"}}</a></li>
+    <li><a href="https://www.twitter.com/jakeisonline" target="_blank">{{svg "linkedin.svg"}}</a></li>
+    <li><a href="https://www.twitter.com/jakeisonline" target="_blank">{{svg "github.svg"}}</a></li>
+  </ul>
 </header>
