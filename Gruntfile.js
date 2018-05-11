@@ -35,7 +35,8 @@ module.exports = function(grunt) {
             ext: ".html"
           }
         ],
-        partials: 'templates/partials/*'
+        partials: 'templates/partials/*',
+        helpers: 'templates/helpers/*'
       }
     },
     clean: {
