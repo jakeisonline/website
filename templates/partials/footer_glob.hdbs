@@ -1,4 +1,35 @@
+    <section id="contact">
+      <h3>Talk to me</h3>
+      <p>For any enquiries about work, writing, speaking or consulting email
+      <a class="subtle" href="mailto:hello@jakeisonline.com">hello@jakeisonline.com</a></p>
+    </section>
+    <section id="availability">
+      <h3>Availability</h3>
+      <p><em>I'm looking for longer term work</em>, read more about
+      <a class="subtle" href="about/looking-for-work">what I'm looking for</a>.
+      <span class="subtle">Also open for speaking, teaching, advising or consulting.</span></p>
+    </section>
+    <section id="follow">
+      <h3>Follow me</h3>
+      <ul>
+        <li id="follow-twitter">
+          {{svg "twitter.svg"}}
+          <a href="https://www.twitter.com/jakeisonline" class="subtle" target="_blank">@jakeisonline</a>
+        </li>
+        <li id="follow-linkedin">
+          {{svg "linkedin.svg"}}
+          <a href="https://www.linkedin.com/in/jakeholman/" class="subtle" target="_blank">jakeholman</a>
+        </li>
+        <li id="follow-github">
+          {{svg "github.svg"}}
+          <a href="https://github.com/jakeisonline" class="subtle" target="_blank">jakeisonline</a>
+        </li>
+      </ul>
+    </section>
     <footer role="contentinfo">
+      <div id="little-name"></div>
+      <p>&copy; <strong>Jake Holman</strong> 1980ish - 2018</p>
+      <p class="subtle">Are you looking for a singing Jake Holman? That's not me.</p>
     </footer>
   </body>
 </html>

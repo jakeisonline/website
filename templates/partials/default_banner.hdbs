@@ -1,10 +1,8 @@
 <header role="banner">
   <h2 id="name">JH</h2>
   <ul role="navigation" id="nav">
-    <li><a href="/about">More me</a></li>
-    <li><a href="/contact">Talk to me</a></li>
-    <li><a href="https://www.twitter.com/jakeisonline" target="_blank">{{svg "twitter.svg"}}</a></li>
-    <li><a href="https://www.twitter.com/jakeisonline" target="_blank">{{svg "linkedin.svg"}}</a></li>
-    <li><a href="https://www.twitter.com/jakeisonline" target="_blank">{{svg "github.svg"}}</a></li>
+    <li><a href="./about">Learn about me</a></li>
+    <li><a href="./stories">Ready my stories</a></li>
+    <li><a href="./contact">Talk to me</a></li>
   </ul>
 </header>

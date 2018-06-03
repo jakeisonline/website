@@ -44,7 +44,15 @@ module.exports = function(grunt) {
     },
     concurrent: {
       prepare: ['clean:build', 'sasslint'],
-      build: ['sass:build', 'compile-handlebars']
+      build: ['copy:favicons', 'sass:build', 'compile-handlebars']
+    },
+    copy: {
+      favicons: {
+        expand: true,
+        cwd: 'images/favicons/',
+        src: ['*'],
+        dest: 'build/'
+      }
     },
     watch: {
       templates: {
@@ -54,6 +62,10 @@ module.exports = function(grunt) {
       css: {
         files: ['css/**/*.scss'],
         tasks: ['sasslint', 'sass']
+      },
+      favicons: {
+        files: ['images/favicons/*'],
+        tasks: ['copy:favicons']
       }
     }
   });
@@ -68,6 +80,8 @@ module.exports = function(grunt) {
     } else if (filepath.includes("css/")) {
       grunt.config('sasslint.target', filepath);
       grunt.config('sass.build.files.src', filepath);
+    } else if (filepath.includes("images/favicons/")) {
+
     }
   });
 };
