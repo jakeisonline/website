@@ -1,12 +1,13 @@
 {{> header_glob pageTitle="A product development leader based in San Francisco, California" }}
-<h1>Leads products to success using thoughtful, strategic & empathetic product development</h1>
+<h1>Leads products to success using strategic, high empathy & design-based methods</h1>
 <div class="full">
   <p class="initial_letter">👋🏻 Hello, my name is <a href="/about">Jake Holman</a> and I've
-  been making products for years. I started my journey by creating a CMS for my parents
+  been solving product problems for years. I started my journey by creating a CMS for my parents
   business, then ended up leading two of <a href="/stories/zendesk">Zendesk's biggest
-  products</a>. That's the short story, anyway.</p>
+  products</a>. There's a lot more, but that's the short version.</p>
   <p>I take an all-encomposing approach to product development and leadership, washing
   away <a href="/stories/product-donts">previous norms</a> associated with the traditional
   product role. I believe in an approach defined as <a href="/stories/product-culture">product culture</a>.</p>
+  <p>
 </div>
 {{> footer_glob }}

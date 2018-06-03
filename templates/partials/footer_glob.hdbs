@@ -28,8 +28,12 @@
     </section>
     <footer role="contentinfo">
       <div id="little-name"></div>
-      <p>&copy; <strong>Jake Holman</strong> 1980ish - 2018</p>
-      <p class="subtle">Are you looking for a singing Jake Holman? That's not me.</p>
+      <p>&copy; <strong>Jake Holman</strong> 1980ish - 2018.
+      <a class="subtle" href="https://github.com/jakeisonline/jakeisonline.com" target="_blank">
+      I made this website.</a></p>
+      <p class="subtle">Are you looking for the singing Jake Holman?
+      <a href="https://www.youtube.com/channel/UCNb-G4RTeEtdfiwfO-6dJSQ" target="_blank" rel="nofollow">
+      That's not me.</a></p>
     </footer>
   </body>
 </html>
