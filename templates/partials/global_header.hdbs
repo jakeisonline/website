@@ -16,4 +16,4 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    {{> default_banner }}
+    {{> global_navigation }}

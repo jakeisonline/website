@@ -1,4 +1,4 @@
-{{> header_glob pageTitle="A product development leader based in San Francisco, California" }}
+{{> global_header pageTitle="A product development leader based in San Francisco, California" }}
 <h1>Leads products to success using strategic, high empathy & design-based methods</h1>
 <div class="column-full">
   <p class="initial_letter">👋🏻 Hello, my name is <a href="/about">Jake Holman</a> and I've
@@ -10,4 +10,4 @@
   product role. I believe in an approach defined as <a href="/stories/product-culture">product culture</a>.</p>
   <p>
 </div>
-{{> footer_glob }}
+{{> global_footer }}

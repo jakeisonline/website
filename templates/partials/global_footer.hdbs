@@ -4,10 +4,7 @@
       <a class="subtle" href="mailto:hello@jakeisonline.com">hello@jakeisonline.com</a></p>
     </section>
     <section id="availability" class="looking">
-      <h3>Availability</h3>
-      <p><em>I'm looking for longer term work</em>, read more about
-      <a class="subtle" href="about/looking-for-work">what I'm looking for</a>.
-      <span class="subtle">Also open for speaking, teaching or advising.</span></p>
+      {{> snippet_availability }}
     </section>
     <section id="follow">
       <h3>Follow me</h3>
