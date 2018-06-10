@@ -133,40 +133,42 @@ a, a:visited {
   }
 }
 
+.sociallist {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    a {
+      margin-right: 35px;
+    }
+
+    svg {
+      width: 1em;
+      vertical-align: -3px;
+      margin-right: 4px;
+    }
+
+    &#follow-twitter svg {
+      fill: #1DA1F2;
+    }
+
+    &#follow-linkedin svg {
+      fill: #0077B5;
+    }
+
+    &#follow-github svg {
+      fill: #333;
+    }
+  }
+}
+
 #follow {
   grid-column: 7 / -1;
 
   ul {
-    display: block;
     grid-column: 3 / 5;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-
-      a {
-        margin-right: 35px;
-      }
-
-      svg {
-        width: 1em;
-        vertical-align: -3px;
-        margin-right: 4px;
-      }
-
-      &#follow-twitter svg {
-        fill: #1DA1F2;
-      }
-
-      &#follow-linkedin svg {
-        fill: #0077B5;
-      }
-
-      &#follow-github svg {
-        fill: #333;
-      }
-    }
   }
 }
 
