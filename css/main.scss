@@ -42,6 +42,10 @@ p {
   &:first-of-type {
     margin-top: 0;
   }
+
+  &.subtitle {
+    font-size: 1.15em;
+  }
 }
 
 a, a:visited {
