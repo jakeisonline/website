@@ -1,6 +1,7 @@
 :root {
   --page-color-background: #fff;
   --page-color-primary: #45ACF0;
+  --page-color-subtle: #ccc;
   --page-logo-color-gradient-top: #45ACF0;
   --page-logo-color-gradient-bottom: #1D97E7;
   --font-logo-color: #fff;
@@ -107,6 +108,21 @@ a, a:visited {
 
 #availability {
   grid-column: 4 / 7;
+
+  &.looking h3 {
+    &:after {
+      position: absolute;
+      width: 4.5em;
+      height: 1em;
+      color: #fff;
+      font-size: 0.6em;
+      background-color: var(--page-color-subtle);
+      content: "LOOKING";
+      padding: 3px 2px 5px 4px;
+      font-weight: var(--font-weight-normal);
+      margin: 3px 0 0 5px;
+    }
+  }
 }
 
 #follow {
@@ -147,7 +163,7 @@ a, a:visited {
 }
 
 footer {
-  border-top: 2px solid #ccc;
+  border-top: 2px solid var(--page-color-subtle);
   grid-column: 1 / -1;
   display: grid;
   margin-top: 60px;
@@ -238,10 +254,10 @@ header[role="banner"] {
   }
 }
 
-// Over about 1300px
-@media screen and (min-width: 81.250em) {
+// Over about 1339px
+@media screen and (min-width: 83.688em) {
   h1 {
-    font-size: 3.5em;
+    font-size: 3.6em;
   }
 
   .initial_letter::first-letter {
@@ -327,7 +343,7 @@ header[role="banner"] {
     }
 
     #nav li a {
-      font-size: 1em;
+      font-size: 1.08em;
     }
   }
 
@@ -342,6 +358,25 @@ header[role="banner"] {
 @media screen and (max-width: 39.063em) {
   h1 {
     font-size: 1.4em;
+    padding-top: 10px;
+  }
+
+  header[role="banner"] {
+    padding-top: 13px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--page-color-subtle);
+
+    #nav {
+      margin: 0;
+
+      li {
+        display: block;
+
+        a {
+          margin-right: 0;
+        }
+      }
+    }
   }
 
   .initial_letter::first-letter {
@@ -351,7 +386,7 @@ header[role="banner"] {
 }
 
 // Over about 768px
-@media screen and (min-width: 48em) {
+@media screen and (min-width: 46.875em) {
   body {
       grid-template-columns: 2fr 1fr 1fr 2fr 2fr 1fr 1fr 2fr;
       grid-column-gap: 30px;
