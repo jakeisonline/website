@@ -1,6 +1,6 @@
 {{> global_header pageTitle="A product development leader based in San Francisco, California" }}
 <h1>Leads products to success using strategic, high empathy & design-based methods</h1>
-<div class="column-full">
+<div class="content column-full">
   <p class="initial_letter">👋🏻 Hello, my name is <a href="/about">Jake Holman</a> and I've
   been solving product problems for years. I started my journey by creating a CMS for my parents
   business, then ended up leading two of <a href="/stories/zendesk">Zendesk's biggest

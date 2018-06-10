@@ -1,10 +1,10 @@
 {{> global_header pageTitle="A product development leader based in San Francisco, California" }}
 <h1>Come talk to me about things</h1>
-<div class="column-1">
+<div class="content column-1">
   <p class="subtitle">Glad you'd like to get in touch, there's plenty of ways to get contact me.
   How you contact me is totally up to you, but let me give you a few recommendations:<p>
 </div>
-<div class="column-2">
+<div class="content column-2">
   <h3>Just looking to stalk me instead?</h3>
   <p>That's fine, it's what the internet is for. You can find me in a bunch of places,
   here's where you'll find me the most:</p>

@@ -1,5 +1,5 @@
 <header role="banner">
-  <h2 id="name">JH</h2>
+  <h2 id="name"><a href="./">JH</a></h2>
   <ul role="navigation" id="nav">
     <li><a href="./about">Learn about me</a></li>
     <li><a href="./stories">Read my stories</a></li>

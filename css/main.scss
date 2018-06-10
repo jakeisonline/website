@@ -107,6 +107,12 @@ a, a:visited {
   grid-column: 5 / -1;
 }
 
+.content {
+  h3:first-of-type {
+    margin-top: 0;
+  }
+}
+
 .initial_letter::first-letter {
   float: left;
   margin-right: 16px;
@@ -241,6 +247,13 @@ header[role="banner"] {
       border-top: 37px solid var(--page-logo-color-gradient-bottom);
       border-right: 37px solid transparent;
       content: "";
+    }
+
+    a {
+      color: inherit;
+      font-weight: inherit;
+      background: 0;
+      text-shadow: none;
     }
   }
 
