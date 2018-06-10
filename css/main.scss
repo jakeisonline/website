@@ -91,8 +91,16 @@ a, a:visited {
   }
 }
 
-.full {
+.column-full {
   grid-column: 1 / -1;
+}
+
+.column-1 {
+  grid-column: 1 / 5;
+}
+
+.column-2 {
+  grid-column: 5 / -1;
 }
 
 .initial_letter::first-letter {
