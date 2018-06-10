@@ -1,0 +1,25 @@
+<section id="contact">
+  <h3>Talk to me</h3>
+  <p>For any enquiries about work, writing, speaking or consulting email
+  <a class="subtle" href="mailto:hello@jakeisonline.com">hello@jakeisonline.com</a></p>
+</section>
+<section id="availability" class="looking">
+  {{> snippet_availability }}
+</section>
+<section id="follow">
+  <h3>Follow me</h3>
+  <ul>
+    <li id="follow-twitter">
+      {{svg "twitter.svg"}}
+      <a href="https://www.twitter.com/jakeisonline" class="subtle" target="_blank">@jakeisonline</a>
+    </li>
+    <li id="follow-linkedin">
+      {{svg "linkedin.svg"}}
+      <a href="https://www.linkedin.com/in/jakeholman/" class="subtle" target="_blank">jakeholman</a>
+    </li>
+    <li id="follow-github">
+      {{svg "github.svg"}}
+      <a href="https://github.com/jakeisonline" class="subtle" target="_blank">jakeisonline</a>
+    </li>
+  </ul>
+</section>
