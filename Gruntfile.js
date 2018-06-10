@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         files: [
           { expand: true,
             cwd: 'templates/',
-            src: '*.hdbs',
+            src: ['**/*.hdbs', '!**/partials/**'],
             dest: 'build/',
             ext: ".html"
           }
