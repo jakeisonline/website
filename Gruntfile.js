@@ -1,6 +1,8 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
+  const sass = require('node-sass');
+
   // load timer first, explicitly
   require('time-grunt')(grunt);
 
@@ -12,6 +14,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
     sass: {
       build: {
+        options: {
+          implementation: sass
+        },
         files: [
           { expand: true,
             cwd: 'css/',
