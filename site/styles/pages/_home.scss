@@ -1,11 +1,10 @@
-.column-full {
+.introduction {
   grid-column: 1 / -1;
-}
 
-.column-1 {
-  grid-column: 1 / 5;
-}
-
-.column-2 {
-  grid-column: 5 / -1;
+  &__text--hand-wave::first-letter {
+    float: left;
+    margin-right: 16px;
+    margin-top: 6px;
+    font-size: 4em;
+  }
 }

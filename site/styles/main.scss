@@ -4,13 +4,16 @@
 @import "base/typography";
 
 @import "components/availability";
-@import "components/follow";
+@import "components/social-list";
 
 @import "layouts/header";
+@import "layouts/navigation";
 @import "layouts/footer";
 @import "layouts/talkmefollowme";
 
 @import "pages/home";
+@import "pages/about";
+@import "pages/contact";
 
 /* TODO these media queries should all be nested, and a mixin added to handle
    the query itself

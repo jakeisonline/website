@@ -1,15 +1,15 @@
-#contact {
+.talk {
   grid-column: 1 / 4;
 }
 
-#availability {
+.availability {
   grid-column: 4 / 7;
 }
 
-#follow {
+.follow {
   grid-column: 7 / -1;
 
-  ul {
+  .social-list {
     grid-column: 3 / 5;
   }
 }

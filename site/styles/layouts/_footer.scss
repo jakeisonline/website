@@ -1,4 +1,4 @@
-footer {
+.footer {
   border-top: 2px solid var(--page-color-subtle);
   grid-column: 1 / -1;
   display: grid;
@@ -14,7 +14,7 @@ footer {
     }
   }
 
-  #little-name {
+  &__little-name {
     display: inline-block;
     border-left: 5px solid #fff;
     border-right: 5px solid #fff;

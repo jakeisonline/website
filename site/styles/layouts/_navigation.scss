@@ -1,0 +1,29 @@
+.navigation {
+  display: block;
+  grid-column: 3 / 5;
+
+  text-align: right;
+
+  &__list {
+    list-style-type: none;
+  }
+
+  &__item {
+    display: inline-block;
+  }
+
+  &__link,
+  &__link:visited {
+    color: var(--page-color-primary);
+    font-size: 1.6em;
+    font-weight: var(--font-weight-bold);
+    margin-right: 35px;
+    background: none;
+    text-shadow: none;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--page-logo-color-gradient-bottom);
+    }
+  }
+}

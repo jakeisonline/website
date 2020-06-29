@@ -1,9 +1,9 @@
-header[role="banner"] {
+.header {
   grid-column: 1 / -1;
   display: grid;
   padding: 20px 0;
 
-  #name {
+  &__name {
     display: inline-block;
     height: 68px;
     width: 53px;
@@ -12,7 +12,10 @@ header[role="banner"] {
     margin: 0;
     font-weight: var(--font-weight-bold);
     color: var(--font-logo-color);
-    background: linear-gradient(to bottom, var(--page-logo-color-gradient-top), var(--page-logo-color-gradient-bottom));
+    background: linear-gradient(to bottom,
+                  var(--page-logo-color-gradient-top),
+                  var(--page-logo-color-gradient-bottom)
+                );
 
     &:before {
       position: absolute;
@@ -23,35 +26,18 @@ header[role="banner"] {
       border-right: 37px solid transparent;
       content: "";
     }
-
-    a {
-      color: inherit;
-      font-weight: inherit;
-      background: 0;
-      text-shadow: none;
-    }
   }
 
-  #nav {
-    display: block;
-    grid-column: 3 / 5;
-    list-style-type: none;
-    text-align: right;
+  &__link,
+  &__link:visited {
+    color: #fff;
+    font-weight: inherit;
+    background: 0;
+    text-shadow: none;
 
-    li {
-      display: inline-block;
-
-      a {
-        font-size: 1.6em;
-        font-weight: var(--font-weight-bold);
-        margin-right: 35px;
-        background: none;
-        text-shadow: none;
-
-        svg {
-          width: 1em;
-        }
-      }
+    &:hover {
+      color: inherit;
+      background-image: none;
     }
   }
 }
