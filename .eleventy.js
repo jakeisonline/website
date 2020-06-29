@@ -1,6 +1,9 @@
+const pluginSass = require("eleventy-plugin-sass");
+
 module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy("images");
+  eleventyConfig.addPlugin(pluginSass, { watch: ['site/css/*'] });
 
   eleventyConfig.addHandlebarsHelper("svg", function(value) {
     /* Based on the implementation by @aredridel at https://github.com/npm/handlebars-helper-icon */
@@ -31,9 +34,8 @@ module.exports = function(eleventyConfig) {
 
   return {
     dir: {
-      //input: "templates",
-      //includes: "templates/_includes",
-      output: "_site",
+      input: "site",
+      output: "_build",
       passthroughFileCopy: true
     }
   }
