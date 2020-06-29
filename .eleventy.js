@@ -19,8 +19,9 @@ module.exports = function(eleventyConfig) {
 
   // Compile Sass
   eleventyConfig.addPlugin(pluginSass, {
-    watch: [configOptions.dir.input + '/' + projectConfig.stylesDir + '/*'],
-    outputDir: configOptions.dir.output + '/' + projectConfig.stylesDir
+    watch: [configOptions.dir.input + '/' + projectConfig.stylesDir + '/**/*'],
+    outputDir: configOptions.dir.output + '/' + projectConfig.stylesDir,
+    sourcemaps: true
   });
 
   // Add SVG Handlebars Helper
