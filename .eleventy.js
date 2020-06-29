@@ -1,42 +1,32 @@
+// Declare configOptions so we can use these before returning
+const configOptions = { dir: { input: "site", output: "_build", passthroughFileCopy: true }};
+
+// Call 11ty plugins
 const pluginSass = require("eleventy-plugin-sass");
 
 module.exports = function(eleventyConfig) {
 
+  // Move images
   eleventyConfig.addPassthroughCopy("images");
-  eleventyConfig.addPlugin(pluginSass, { watch: ['site/css/*'], outputDir: '_build/css' });
 
-  eleventyConfig.addHandlebarsHelper("svg", function(value) {
-    /* Based on the implementation by @aredridel at https://github.com/npm/handlebars-helper-icon */
+  // Compile Sass
+  eleventyConfig.addPlugin(pluginSass, { watch: [configOptions.dir.input + '/css/*'],
+                                         outputDir: configOptions.dir.output + '/css' });
+
+  // Add SVG Handlebars Helper
+  eleventyConfig.addHandlebarsHelper("svg", function(name) {
+    /* Based on the implementation by @aredridel
+       at https://github.com/npm/handlebars-helper-icon
+    */
 
     const fs = require('fs');
     const handlebars = require('handlebars');
-    const resolve = require('resolve');
-    const nameToModule = {};
-    const cache = {};
 
-    module.exports = function(name, opts) {
+    const file = configOptions.dir.input + "/images/" + name;
+    const content = fs.readFileSync(file, 'utf-8');
 
-      // We don't want to play relative path games in templates, so all SVGs must
-      // be in the projects root image/ directory
-      name = "../../images/" + name;
-
-      const mod = nameToModule[name] || (nameToModule[name] = resolve.sync(name, {
-        extensions: ['.svg']
-      }));
-
-      const content = cache[name] || (cache[name] = fs.readFileSync(mod, 'utf-8'));
-
-      return new handlebars.SafeString(content.toString());
-    }
-
-    module.exports.cache = cache;
+    return new handlebars.SafeString(content.toString());
   });
 
-  return {
-    dir: {
-      input: "site",
-      output: "_build",
-      passthroughFileCopy: true
-    }
-  }
+  return configOptions;
 };
