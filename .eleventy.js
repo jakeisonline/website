@@ -1,5 +1,7 @@
 module.exports = function(eleventyConfig) {
 
+  eleventyConfig.addPassthroughCopy("images");
+
   eleventyConfig.addHandlebarsHelper("svg", function(value) {
     /* Based on the implementation by @aredridel at https://github.com/npm/handlebars-helper-icon */
 
@@ -29,8 +31,10 @@ module.exports = function(eleventyConfig) {
 
   return {
     dir: {
-      input: "templates",
-      output: "_site"
+      //input: "templates",
+      //includes: "templates/_includes",
+      output: "_site",
+      passthroughFileCopy: true
     }
   }
 };
