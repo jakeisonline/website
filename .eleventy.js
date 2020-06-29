@@ -6,8 +6,13 @@ const pluginSass = require("eleventy-plugin-sass");
 
 module.exports = function(eleventyConfig) {
 
-  // Move images
-  eleventyConfig.addPassthroughCopy("images");
+  // Move input directory images, but not the favicons directory
+  const imgDir = configOptions.dir.input + "/images/[!favicons]*";
+  eleventyConfig.addPassthroughCopy(imgDir);
+
+  // Move input directory favicons to the output root
+  const faviconsDir = configOptions.dir.input + "/images/favicons";
+  eleventyConfig.addPassthroughCopy({[faviconsDir]: "./"});
 
   // Compile Sass
   eleventyConfig.addPlugin(pluginSass, { watch: [configOptions.dir.input + '/css/*'],
