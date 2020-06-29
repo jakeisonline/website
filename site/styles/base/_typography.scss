@@ -14,19 +14,9 @@
   color: var(--font-color-subtle);
 }
 
-.content {
-  h3:first-of-type {
-    margin-top: 0;
-  }
-}
-
 p {
   &:first-of-type {
     margin-top: 0;
-  }
-
-  &.subtitle {
-    font-size: 1.15em;
   }
 }
 
@@ -44,14 +34,6 @@ p {
   &:hover {
     color: var(--page-logo-color-gradient-bottom);
     background-image: linear-gradient(to right, var(--page-logo-color-gradient-bottom) 100%, transparent 50%);
-
-    svg {
-      fill: var(--page-logo-color-gradient-bottom);
-    }
-  }
-
-  svg {
-    fill: var(--page-color-primary);
   }
 }
 
