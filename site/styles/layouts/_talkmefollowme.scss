@@ -1,0 +1,15 @@
+#contact {
+  grid-column: 1 / 4;
+}
+
+#availability {
+  grid-column: 4 / 7;
+}
+
+#follow {
+  grid-column: 7 / -1;
+
+  ul {
+    grid-column: 3 / 5;
+  }
+}

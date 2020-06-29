@@ -1,0 +1,16 @@
+#availability {
+  &.looking h3 {
+    &:after {
+      position: absolute;
+      width: 4.5em;
+      height: 1em;
+      color: #fff;
+      font-size: 0.6em;
+      background-color: var(--page-color-subtle);
+      content: "LOOKING";
+      padding: 3px 2px 5px 4px;
+      font-weight: var(--font-weight-normal);
+      margin: 3px 0 0 5px;
+    }
+  }
+}
