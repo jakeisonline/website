@@ -33,6 +33,6 @@
     "time-grunt": "^1.4.0"
   },
   "dependencies": {
-    "eleventy-plugin-sass": "^1.0.0"
+    "eleventy-plugin-sass": "github:NARKOZ/eleventy-plugin-sass#patch-1"
   }
 }
