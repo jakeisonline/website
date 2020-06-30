@@ -5,11 +5,12 @@
   margin: 0;
 
   &__item {
+    font-size: var(--font-default-size-rem);
 
     svg {
-      width: 1em;
-      vertical-align: -3px;
-      margin-right: 4px;
+      width: 2rem;
+      vertical-align: -.3rem;
+      margin-right: .4rem;
     }
 
     &--twitter svg {

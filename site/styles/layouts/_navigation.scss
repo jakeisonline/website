@@ -1,7 +1,7 @@
 .navigation {
   display: block;
   grid-column: 3 / 5;
-
+  margin-top: 2rem;
   text-align: right;
 
   &__list {
@@ -10,20 +10,29 @@
 
   &__item {
     display: inline-block;
+    font-size: 1.8rem;
+
+    &:not(:last-child) > * {
+      margin-right: 3.5rem;
+    }
   }
 
   &__link,
   &__link:visited {
     color: var(--page-color-primary);
-    font-size: 1.6em;
+    font-size: 3rem;
     font-weight: var(--font-weight-bold);
-    margin-right: 35px;
+
     background: none;
     text-shadow: none;
     text-decoration: none;
 
     &:hover {
       color: var(--page-logo-color-gradient-bottom);
+    }
+
+    &:not(:last-child) {
+
     }
   }
 }

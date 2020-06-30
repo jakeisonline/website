@@ -1,14 +1,21 @@
 :root {
+  // Page Colors
   --page-color-background: #fff;
   --page-color-primary: #45ACF0;
   --page-color-subtle: #ccc;
   --page-logo-color-gradient-top: #45ACF0;
   --page-logo-color-gradient-bottom: #1D97E7;
+
+  // Font Colors
   --font-logo-color: #fff;
   --font-color-default: #464646;
   --font-color-subtle: #ccc;
   --font-color-subtle-link: #606060;
-  --font-size: 18px;
+
+  // Font Styling
+  --font-family: 'Nunito', sans-serif;
+  --font-default-size-percentage: 62.5%;
+  --font-default-size-rem: 1.8rem;
   --font-weight-normal: 300;
   --font-weight-bold: 700;
 }

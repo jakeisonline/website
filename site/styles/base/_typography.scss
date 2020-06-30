@@ -1,39 +1,58 @@
 .heading-1 {
   grid-column: 1 / -1;
-  font-size: 2.8em;
+  font-size: 5rem;
   font-weight: var(--font-weight-bold);
-  line-height: 1.2em;
-  margin: 0.5em 0;
+  line-height: 6rem;
+  margin: 2.5rem 0;
 }
 
 .heading-3 {
-  margin: 0.4em 0;
+  font-size: 2.1rem;
+  margin: .6rem 0;
 }
 
 .text--subtle {
   color: var(--font-color-subtle);
 }
 
+.text--lede {
+  font-size: 2.1rem;
+}
+
 p {
-  &:first-of-type {
-    margin-top: 0;
+  font-size: var(--font-default-size-rem);
+
+  &:not(:last-child) {
+    margin-bottom: 2rem;
   }
 }
 
 .link,
 .link:visited {
   color: var(--page-color-primary);
-  background-image: linear-gradient(to right, var(--page-color-primary) 100%, transparent 50%);
-  background-position: 0 20px;
+  background-image: linear-gradient(
+                      to right,
+                      var(--page-color-primary) 100%,
+                      transparent 50%
+                    );
+  background-position: 0 2rem;
   background-repeat: repeat-x;
   background-size: 6px 1px;
   font-weight: var(--font-weight-bold);
   text-decoration: none;
-  text-shadow: 1px 1px 0 white, 2px 1px 0 white, -1px 1px 0 white, -2px 1px 0 white, 0 1px 0 white;
+  text-shadow: 1px 1px 0 white,
+               2px 1px 0 white,
+               -1px 1px 0 white,
+               -2px 1px 0 white,
+               0 1px 0 white;
 
   &:hover {
     color: var(--page-logo-color-gradient-bottom);
-    background-image: linear-gradient(to right, var(--page-logo-color-gradient-bottom) 100%, transparent 50%);
+    background-image: linear-gradient(
+                        to right,
+                        var(--page-logo-color-gradient-bottom) 100%,
+                        transparent 50%
+                      );
   }
 }
 
@@ -41,7 +60,11 @@ p {
 .link--subtle:visited {
   color: var(--font-color-subtle-link);
   font-weight: var(--font-weight-normal);
-  background-image: linear-gradient(to right, var(--page-color-primary) 50%, transparent 50%);
+  background-image: linear-gradient(
+                      to right,
+                      var(--page-color-primary) 50%,
+                      transparent 50%
+                    );
 
   &:hover {
     color: var(--font-color-default);

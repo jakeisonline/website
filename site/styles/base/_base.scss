@@ -1,11 +1,19 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
 html {
-  font-size: var(--font-size);
+  font-size: var(--font-default-size-percentage);
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
+  font-family: var(--font-family);
   font-weight: var(--font-weight-normal);
-  font-size: var(--font-size);
   color: var(--font-color-default);
   width: 95%;
   margin: 0 auto;
