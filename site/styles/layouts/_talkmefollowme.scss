@@ -3,13 +3,9 @@
 }
 
 .availability {
-  grid-column: 4 / 7;
+  grid-column: 4 / 6;
 }
 
 .follow {
-  grid-column: 7 / -1;
-
-  .social-list {
-    grid-column: 3 / 5;
-  }
+  grid-column: 6 / -1;
 }

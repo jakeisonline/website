@@ -11,10 +11,15 @@ html {
 }
 
 body {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 2fr) 1fr;
+  grid-column-gap: 3rem;
+  grid-row-gap: 1rem;
+  max-width: 1440px;
   box-sizing: border-box;
+  width: 95%;
   font-family: var(--font-family);
   font-weight: var(--font-weight-normal);
   color: var(--font-color-default);
-  width: 95%;
   margin: 0 auto;
 }
