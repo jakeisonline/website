@@ -25,7 +25,7 @@ module.exports = function(eleventyConfig) {
   });
 
   // Add SVG Handlebars Helper
-  eleventyConfig.addHandlebarsHelper("svg", function(name) {
+  eleventyConfig.addHandlebarsHelper("svg", function(fileName) {
     /* Based on the implementation by @aredridel
        at https://github.com/npm/handlebars-helper-icon
     */
@@ -33,7 +33,7 @@ module.exports = function(eleventyConfig) {
     const fs = require('fs');
     const handlebars = require('handlebars');
 
-    const file = configOptions.dir.input + "/" + projectConfig.imagesDir + "/" + name;
+    const file = configOptions.dir.input + "/" + projectConfig.imagesDir + "/" + fileName + ".svg";
     const content = fs.readFileSync(file, 'utf-8');
 
     return new handlebars.SafeString(content.toString());
