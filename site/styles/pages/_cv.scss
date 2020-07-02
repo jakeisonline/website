@@ -1,0 +1,148 @@
+.cv {
+  .header {
+    display: grid;
+    grid-template-columns: [headings-start] 2fr
+                           [headings-end contact-start] min-content [contact-end];
+    grid-template-rows: min-content min-content;
+    padding-bottom: 0;
+
+    &__name {
+      background: none;
+      font-family: "PT Serif";
+      font-weight: 400;
+      font-size: 6rem;
+      padding: 0;
+
+      &:before {
+        display: none;
+      }
+
+      &-container {
+        grid-column: 1 / 1;
+      }
+    }
+
+    &__link {
+      color: var(--page-color-primary);
+
+      &:hover {
+        color: var(--page-logo-color-gradient-bottom);
+      }
+    }
+
+    .contact {
+      grid-column: 2 / -1;
+      grid-row: 1 / -1;
+      align-self: center;
+
+      &__item {
+        color: var(--font-color-subtle-2);
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        padding-left: 2rem;
+        margin-left: 1rem;
+        border-left: 1px solid #ccc;
+
+        &:not(:last-child) {
+          padding-bottom: .3rem;
+        }
+
+        svg {
+          display: inline-block;
+          width: 1.3rem;
+          height: 1.3rem;
+          margin-right: .6rem;
+          fill: var(--page-color-primary);
+        }
+      }
+    }
+
+    .heading-1 {
+      grid-column: 1 / 1;
+      font-weight: 300;
+      font-size: 3.6rem;
+      line-height: 4.6rem;
+      color: var(--font-color-subtle-2);
+      margin: 0;
+    }
+  }
+
+  .heading-3 {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 1.5rem;
+    align-items: center;
+    font-size: 2.6rem;
+    font-family: "PT Serif";
+    margin-bottom: 4rem;
+
+    &::after {
+      content: "";
+      height: 1px;
+      display: block;
+      background-color: var(--font-color-subtle-1);
+    }
+  }
+}
+
+.work-experience,
+.education {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 2vw repeat(5, 2fr) 2vw;
+  grid-column-gap: 0;
+  margin-top: 3rem;
+
+  &__item {
+    grid-column: 2 / 7;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    &:not(:last-child) {
+      margin-bottom: 4rem;
+    }
+  }
+
+  &__place {
+    font-size: 2.3rem;
+    grid-column: 1 / 4;
+    align-self: center;
+  }
+
+  &__date {
+    color: var(--font-color-subtle-2);
+    font-size: 1.6rem;
+    grid-column: 4 / -1;
+    justify-self: end;
+    align-self: center;
+  }
+
+  &__title {
+    color: var(--font-color-subtle-2);
+    font-size: 2rem;
+    font-weight: normal;
+    grid-column: 1 / -1;
+  }
+
+  &__summary {
+    grid-column: 1 / -1;
+    font-size: 1.6rem;
+  }
+}
+
+.work-achievements {
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+  padding-left: 1.8rem;
+
+  &__item {
+    font-size: 1.6rem;
+    padding-left: .8rem;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+}
