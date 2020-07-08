@@ -1,9 +1,7 @@
-//@media print {
+@page {
   // Remove header/footer from printed version
-  @page {
-    margin: 2rem 1.6rem;
-  }
-//}
+  margin: 2rem 1.6rem;
+}
 
 * {
   // Force browsers to print background images, preserving the intended CV styling
@@ -119,7 +117,7 @@ html {
 .education {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 2vw repeat(5, 2fr) 2vw;
+  grid-template-columns: 1vw repeat(5, 2fr) 1vw;
   grid-column-gap: 0;
   margin-top: 3rem;
 
