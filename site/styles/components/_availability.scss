@@ -1,18 +1,20 @@
 .availability {
   &__heading {
-    &--looking {
-      position: relative;
+    position: relative;
 
-      &:after {
-        position: absolute;
-        color: #fff;
-        font-size: 1.2rem;
-        background-color: var(--page-color-subtle);
-        content: "LOOKING";
-        padding: .3rem .6rem;
-        font-weight: var(--font-weight-normal);
-        margin: .3rem 0 0 .5rem;
-      }
+    &:after {
+      position: absolute;
+      color: #fff;
+      font-size: 1.2rem;
+
+      padding: .3rem .6rem;
+      font-weight: var(--font-weight-normal);
+      margin: .3rem 0 0 .5rem;
+    }
+
+    &--available:after {
+      background-color: rgb(86, 167, 118);
+      content: "AVAILABLE";
     }
   }
 }
