@@ -1,7 +1,20 @@
+//@media print {
+  // Remove header/footer from printed version
+  @page {
+    margin: 2rem 1.6rem;
+  }
+//}
+
 * {
   // Force browsers to print background images, preserving the intended CV styling
   -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
   color-adjust: exact !important;                 /*Firefox*/
+}
+
+html {
+  @include media(print) {
+    font-size: var(--font-print-size-percentage);
+  }
 }
 
 .cv {

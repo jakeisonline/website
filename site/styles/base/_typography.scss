@@ -70,3 +70,8 @@ p {
     color: var(--font-color-default);
   }
 }
+
+.link--unbold,
+.link--unbold:visited {
+  font-weight: var(--font-weight-normal);
+}
