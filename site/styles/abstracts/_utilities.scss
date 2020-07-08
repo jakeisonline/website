@@ -2,4 +2,10 @@
   &--none {
     margin: 0 !important;
   }
+
+  &--top {
+    &-3 {
+      margin-top: 3rem !important;
+    }
+  }
 }
