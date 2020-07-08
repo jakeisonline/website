@@ -1,0 +1,7 @@
+@mixin media($type) {
+  @if $type == print {
+      @media print { @content; }
+  } @else {
+    @error "Unknown $type in media mixin: #{$type}";
+  }
+}

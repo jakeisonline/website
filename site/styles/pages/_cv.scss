@@ -1,3 +1,9 @@
+* {
+  // Force browsers to print background images, preserving the intended CV styling
+  -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+  color-adjust: exact !important;                 /*Firefox*/
+}
+
 .cv {
   .header {
     display: grid;
@@ -12,6 +18,10 @@
       font-weight: 400;
       font-size: 6rem;
       padding: 0;
+
+      @include media(print) {
+        font-size: 4rem;
+      }
 
       &:before {
         display: none;
@@ -65,6 +75,11 @@
       line-height: 4.6rem;
       color: var(--font-color-subtle-2);
       margin: 0;
+
+      @include media(print) {
+        font-size: 2.2rem;
+        line-height: 3.4rem;
+      }
     }
   }
 
