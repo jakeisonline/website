@@ -1,14 +1,14 @@
-.talk {
-  grid-row: 4 / 5;
-  grid-column: 4 / 6;
-}
-
 .availability {
   grid-row: 4 / 5;
   grid-column: 1 / 4;
 }
 
+.talk {
+  grid-row: 4 / 5;
+  grid-column: 4 / 7;
+}
+
 .follow {
   grid-row: 4 / 5;
-  grid-column: 6 / -1;
+  grid-column: 7 / -1;
 }
