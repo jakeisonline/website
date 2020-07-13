@@ -4,6 +4,10 @@
   }
 
   &--top {
+    &-none {
+      margin-top: 0 !important;
+    }
+
     &-3 {
       margin-top: 3rem !important;
     }
