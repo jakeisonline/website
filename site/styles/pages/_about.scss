@@ -1,7 +1,57 @@
 .about {
-  grid-column: 1 / 5;
+  &__me {
+    grid-column: 1 / 5;
+  }
+
+  &__side {
+    grid-column: 5 / -1;
+  }
+
+  &__experience {
+    font-size: var(--font-default-size-rem);
+  }
+
+  &__availability {
+
+  }
 }
 
 .experience {
-  grid-column: 5 / -1;
+  &__list {
+    list-style: none;
+    list-style-position: outside;
+    padding: 0;
+    margin: 0 0 3.6rem;
+  }
+
+  &__item {
+    position: relative;
+    padding-left: 3.1rem;
+
+    &:not(:last-child) {
+      margin-bottom: 1.1rem;
+    }
+
+    &::before {
+      position: absolute;
+      top: -.2rem;
+      left: 0;
+    }
+
+    &--time::before {
+      content: "⌛ ";
+    }
+
+    &--beliefs::before {
+      content: "🧠 ";
+    }
+
+    &--speaker::before {
+      content: "📢 ";
+    }
+
+    &--technical::before {
+      content: "💻 ";
+    }
+  }
 }
