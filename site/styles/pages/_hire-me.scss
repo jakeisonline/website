@@ -1,0 +1,9 @@
+.hire-me {
+  &__main {
+    grid-column: 1 / 6;
+  }
+
+  &__side {
+    grid-column: 6 / -1;
+  }
+}
