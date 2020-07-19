@@ -11,6 +11,11 @@
     &:first-of-type {
       padding-top: 1rem;
     }
+
+    .link {
+      // Adjust underline to be slightly closer, due to the smaller font-size
+      background-position: 0 1.9rem;
+    }
   }
 
   &__border {
