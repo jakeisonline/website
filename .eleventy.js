@@ -5,7 +5,7 @@ const configOptions = { dir: { input: "site", output: "_build", passthroughFileC
 const pluginSass = require("eleventy-plugin-sass");
 
 // General project constants
-const projectConfig = { stylesDir: "styles", imagesDir: "images" };
+const projectConfig = { stylesDir: "styles", imagesDir: "images", mediaDir: "media" };
 
 module.exports = function(eleventyConfig) {
 
@@ -16,6 +16,10 @@ module.exports = function(eleventyConfig) {
   // Move input directory favicons to the output root
   const faviconsDir = configOptions.dir.input + "/" + projectConfig.imagesDir + "/favicons";
   eleventyConfig.addPassthroughCopy({[faviconsDir]: "./"});
+
+  // Move input directory media
+  const mediaDir = configOptions.dir.input + "/" + projectConfig.mediaDir + "/*";
+  eleventyConfig.addPassthroughCopy(mediaDir);
 
   // Compile Sass
   eleventyConfig.addPlugin(pluginSass, {
