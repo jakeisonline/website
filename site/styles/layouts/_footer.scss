@@ -1,8 +1,7 @@
 .footer {
-  border-top: 2px solid var(--page-color-subtle);
   grid-column: 1 / -1;
   display: grid;
-  margin: 7rem 0 2rem;
+  margin: 5rem 0 2rem;
 
   p {
     font-size: 1.6rem;
@@ -10,33 +9,33 @@
     margin-top: 0;
 
     &:first-of-type {
-      padding-top: 2.5rem;
+      padding-top: 1rem;
+    }
+  }
+
+  &__border {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    align-items: center;
+
+    &::before,
+    &::after {
+      content: "";
+      height: 2px;
+      display: block;
+      background-color: var(--page-color-subtle);
     }
   }
 
   &__little-name {
-    display: inline-block;
-    border-left: 0.5rem solid #fff;
-    border-right: 0.5rem solid #fff;
-    height: 2.1rem;
-    width: 0;
-    padding: .8rem .9rem 0 1.2rem;
-    margin: -1.1rem auto;
-    font-weight: var(--font-weight-bold);
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: .6rem 0 0 .5rem;
     background: linear-gradient(
-                  to bottom,
-                  var(--page-logo-color-gradient-top),
-                  var(--page-logo-color-gradient-bottom)
-                );
-
-    &:before {
-      position: absolute;
-      width: 0;
-      height: 0;
-      margin: 1.2rem 0 0 -1.2rem;
-      border-top: .8rem solid var(--page-logo-color-gradient-bottom);
-      border-right: .8rem solid transparent;
-      content: "";
-    }
+      to bottom,
+      var(--page-logo-color-gradient-top),
+      var(--page-logo-color-gradient-bottom)
+    );
+    clip-path: var(--shape-name-box);
   }
 }

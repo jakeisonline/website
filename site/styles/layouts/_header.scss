@@ -1,32 +1,26 @@
 .header {
   display: flex;
   grid-column: 1 / -1;
-  padding: 2rem 0;
+  padding: 2rem 0 0;
 
   &__name-container {
     flex: 1;
   }
 
   &__name {
-    display: inline-block;
-    position: relative;
-    font-size: 5rem;
-    padding: .7rem 1.2rem 0 1.2rem;
-    margin: 0;
-    font-weight: var(--font-weight-bold);
+    background: linear-gradient(
+      to bottom,
+      var(--page-logo-color-gradient-top),
+      var(--page-logo-color-gradient-bottom)
+    );
+    clip-path: var(--shape-name-box);
     color: var(--font-logo-color);
-    background: linear-gradient(to bottom,
-                  var(--page-logo-color-gradient-top),
-                  var(--page-logo-color-gradient-bottom)
-                );
-
-    &:before {
-      position: absolute;
-      margin: 5.8rem 0 0 -1.2rem;
-      border-top: 3.7rem solid var(--page-logo-color-gradient-bottom);
-      border-right: 3.7rem solid transparent;
-      content: "";
-    }
+    display: inline-block;
+    font-size: 5rem;
+    font-weight: var(--font-weight-bold);
+    width: 10rem;
+    height: 10rem;
+    padding: .7rem 1.2rem 0 1.3rem;
   }
 
   &__link,
