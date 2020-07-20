@@ -39,7 +39,7 @@
     text-decoration: none;
 
     @include media(phone) {
-      font-size: var(--font-mobile-size-vw);
+      font-size: 5.3vw;
     }
 
     &:hover {
