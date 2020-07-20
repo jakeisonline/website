@@ -1,19 +1,25 @@
 .heading-1 {
   grid-column: 1 / -1;
-  font-size: 4.9rem;
+  font-size: 4.1rem;
   font-weight: var(--font-weight-bold);
-  line-height: 6rem;
+  line-height: 5.2rem;
   margin: 2.5rem 0;
 
   @include media(small-desktop) {
+    font-size: 3.4vw;
+    line-height: 4.5vw;
+    margin: 2vw 0;
+  }
+
+  @include media(tablet-portrait) {
     font-size: 4vw;
     line-height: 5.1vw;
     margin: 2vw 0;
   }
 
   @include media(phone) {
-    font-size: var(--font-mobile-size-vw);
-    line-height: 7vw;
+    font-size: 2rem;
+    line-height: 3rem;
   }
 }
 
@@ -22,8 +28,8 @@
   margin: .6rem 0;
 
   @include media(phone) {
-    font-size: var(--font-mobile-size-vw);
-    line-height: 7vw;
+    font-size: 2rem;
+    line-height: 3rem;
   }
 }
 
@@ -35,8 +41,8 @@
   font-size: 2.1rem;
 
   @include media(phone) {
-    font-size: 5vw;
-    line-height: 7vw;
+    font-size: var(--font-default-size-rem);
+    line-height: auto;
   }
 }
 

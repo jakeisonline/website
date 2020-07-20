@@ -1,11 +1,13 @@
 @mixin media($breakpoint) {
   @if $breakpoint == print { @media print { @content; }
-} @else if $breakpoint == small-desktop {
-    @media only screen and (max-width: 76em) { @content; } // 1024px
+  } @else if $breakpoint == big-desktop {
+    @media only screen and (min-width: 83.08em) { @content; } // 1080px
+  } @else if $breakpoint == small-desktop {
+    @media only screen and (max-width: 76.31em) { @content; } // 992px
   } @else if $breakpoint == tablet-portrait {
-    @media only screen and (max-width: 64em) { @content; } // 1024px
+    @media only screen and (max-width: 64em) { @content; } // 832px
   } @else if $breakpoint == phone {
-    @media only screen and (max-width: 42.5em) { @content; } // 680px
+    @media only screen and (max-width: 42.5em) { @content; } // 553px
   } @else {
     @error "Unknown $type in media mixin: #{$breakpoint}";
   }

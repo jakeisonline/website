@@ -18,10 +18,15 @@ body {
   max-width: 1440px;
   box-sizing: border-box;
   width: 95%;
+  max-width: 96rem;
   font-family: var(--font-family);
   font-weight: var(--font-weight-normal);
   color: var(--font-color-default);
   margin: 0 auto;
+
+  @include media(big-desktop) {
+    max-width: 114rem;
+  }
 
   @include media(phone) {
     width: 92%;
