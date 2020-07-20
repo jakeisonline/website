@@ -22,4 +22,8 @@ body {
   font-weight: var(--font-weight-normal);
   color: var(--font-color-default);
   margin: 0 auto;
+
+  @include media(phone) {
+    width: 92%;
+  }
 }

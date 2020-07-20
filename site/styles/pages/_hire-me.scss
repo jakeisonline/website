@@ -1,9 +1,18 @@
 .hire-me {
   &__main {
     grid-column: 1 / 6;
+
+    @include media(phone) {
+      grid-column: 1 / -1;
+    }
   }
 
   &__side {
     grid-column: 6 / -1;
+
+    @include media(phone) {
+      margin-top: 2rem;
+      grid-column: 1 / -1;
+    }
   }
 }

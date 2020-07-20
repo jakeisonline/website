@@ -1,14 +1,30 @@
 .availability {
   grid-row: 4 / 5;
   grid-column: 1 / 4;
+
+  @include media(phone) {
+    grid-column: 1 / -1;
+    margin-bottom: 2rem;
+  }
 }
 
 .talk {
   grid-row: 4 / 5;
   grid-column: 4 / 7;
+
+  @include media(phone) {
+    grid-column: 1 / -1;
+    grid-row: 5 / 6;
+    margin-bottom: 2rem;
+  }
 }
 
 .follow {
   grid-row: 4 / 5;
   grid-column: 7 / -1;
+
+  @include media(phone) {
+    grid-column: 1 / -1;
+    grid-row: 6 / 7;
+  }
 }

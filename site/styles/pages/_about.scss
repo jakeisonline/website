@@ -1,10 +1,18 @@
 .about {
   &__me {
     grid-column: 1 / 6;
+
+    @include media(phone) {
+      grid-column: 1 / -1;
+    }
   }
 
   &__lede-container {
     display: flex;
+
+    @include media(phone) {
+      display: block;
+    }
   }
 
   &__face {
@@ -12,18 +20,26 @@
     place-self: center;
     margin: -2.9rem 2rem 0 1rem;
     width: 86px;
+
+    @include media(phone) {
+      width: 20vw;
+      align-self: baseline;
+      float: left;
+      margin-top: -.5rem;
+    }
   }
 
   &__side {
     grid-column: 6 / -1;
+
+    @include media(phone) {
+      margin-top: 2rem;
+      grid-column: 1 / -1;
+    }
   }
 
   &__experience {
     font-size: var(--font-default-size-rem);
-  }
-
-  &__availability {
-
   }
 }
 

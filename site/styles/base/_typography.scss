@@ -1,14 +1,30 @@
 .heading-1 {
   grid-column: 1 / -1;
-  font-size: 5rem;
+  font-size: 4.9rem;
   font-weight: var(--font-weight-bold);
   line-height: 6rem;
   margin: 2.5rem 0;
+
+  @include media(small-desktop) {
+    font-size: 4vw;
+    line-height: 5.1vw;
+    margin: 2vw 0;
+  }
+
+  @include media(phone) {
+    font-size: var(--font-mobile-size-vw);
+    line-height: 7vw;
+  }
 }
 
 .heading-3 {
   font-size: 2.1rem;
   margin: .6rem 0;
+
+  @include media(phone) {
+    font-size: var(--font-mobile-size-vw);
+    line-height: 7vw;
+  }
 }
 
 .text--subtle {
@@ -17,6 +33,11 @@
 
 .text--lede {
   font-size: 2.1rem;
+
+  @include media(phone) {
+    font-size: 5vw;
+    line-height: 7vw;
+  }
 }
 
 p {

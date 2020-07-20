@@ -4,35 +4,46 @@
   margin-top: 2rem;
   text-align: right;
 
+  @include media(phone) {
+    margin-top: 0;
+  }
+
   &__list {
     list-style-type: none;
   }
 
   &__item {
     display: inline-block;
-    font-size: 1.8rem;
+
+    @include media(phone) {
+      display: block;
+      margin-top: .3rem;
+    }
 
     &:not(:last-child) > * {
       margin-right: 3.5rem;
+
+      @include media(phone) {
+        margin-right: 0;
+      }
     }
   }
 
   &__link,
   &__link:visited {
+    background: none;
     color: var(--page-color-primary);
     font-size: 3rem;
     font-weight: var(--font-weight-bold);
-
-    background: none;
     text-shadow: none;
     text-decoration: none;
 
-    &:hover {
-      color: var(--page-logo-color-gradient-bottom);
+    @include media(phone) {
+      font-size: var(--font-mobile-size-vw);
     }
 
-    &:not(:last-child) {
-
+    &:hover {
+      color: var(--page-logo-color-gradient-bottom);
     }
   }
 }
