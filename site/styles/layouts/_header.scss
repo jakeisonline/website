@@ -21,18 +21,31 @@
     width: 10rem;
     height: 10rem;
     padding: .7rem 1.2rem 0 1.3rem;
+    transition: transform 0.2s;
   }
 
   &__link,
   &__link:visited {
+    display: block;
+    width: 8rem;
     color: #fff;
     font-weight: inherit;
+    filter: drop-shadow(0 .2rem 1rem rgba(0, 0, 0, 0.2));
     background: 0;
     text-shadow: none;
+    transition: transform 0.2s;
 
     &:hover {
+      transform: translateY(-.3rem);
+      filter: drop-shadow(0 .5rem 1.6rem rgba(0, 0, 0, 0.2));
       color: inherit;
       background-image: none;
+    }
+
+    &:active,
+    &:focus {
+      transform: translateY(0);
+      filter: drop-shadow(0 .2rem 1rem rgba(0, 0, 0, 0.2));
     }
   }
 }
