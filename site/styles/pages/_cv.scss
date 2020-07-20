@@ -29,6 +29,8 @@ html {
       font-weight: 400;
       font-size: 6rem;
       padding: 0;
+      clip-path: none;
+      width: 100%;
 
       @include media(print) {
         font-size: 4rem;
