@@ -1,14 +1,4 @@
 .introduction {
   grid-column: 1 / -1;
   margin-bottom: 2rem;
-
-  &__hand-wave {
-    float: left;
-    margin: -.6rem 2rem 1rem 0;
-    font-size: 7.5rem;
-
-    @include media(phone) {
-      display: none;
-    }
-  }
 }

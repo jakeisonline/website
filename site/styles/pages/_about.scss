@@ -7,14 +7,6 @@
     }
   }
 
-  &__lede-container {
-    display: flex;
-
-    @include media(phone) {
-      display: block;
-    }
-  }
-
   &__side {
     grid-column: 6 / -1;
 
