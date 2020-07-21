@@ -1,6 +1,6 @@
+@import "abstracts/mixins";
 @import "abstracts/variables";
 @import "abstracts/utilities";
-@import "abstracts/mixins";
 
 @import "base/base";
 @import "base/typography";
@@ -9,6 +9,7 @@
 @import "components/lists";
 @import "components/availability";
 @import "components/social-list";
+@import "components/face";
 
 @import "layouts/header";
 @import "layouts/navigation";

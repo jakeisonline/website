@@ -15,20 +15,6 @@
     }
   }
 
-  &__face {
-    flex: 0;
-    place-self: center;
-    margin: -2.9rem 2rem 0 1rem;
-    width: 86px;
-
-    @include media(phone) {
-      width: 20vw;
-      align-self: baseline;
-      float: left;
-      margin-top: -.5rem;
-    }
-  }
-
   &__side {
     grid-column: 6 / -1;
 
