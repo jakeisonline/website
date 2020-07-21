@@ -1,0 +1,18 @@
+.face {
+  flex: 0;
+  place-self: center;
+
+  @include media(phone) {
+    align-self: baseline;
+    float: left;
+  }
+
+  &--smile {
+    margin: -2.9rem .8rem 0 0;
+    width: 107px;
+
+    @include media(phone) {
+      margin-top: -.3rem;
+    }
+  }
+}
