@@ -1,35 +1,44 @@
 .heading-1 {
   grid-column: 1 / -1;
-  font-size: 4.1rem;
+  font-size: var(--font-size-heading-1-rem);
   font-weight: var(--font-weight-bold);
-  line-height: 5.2rem;
+  line-height: var(--font-line-height-heading-1-rem);
   margin: 2.5rem 0;
 
+  @include media(big-desktop) {
+    font-size: calc(var(--font-size-heading-1-rem) + .3rem);
+    line-height: calc(var(--font-line-height-heading-1-rem) + .4rem);
+  }
+
   @include media(small-desktop) {
-    font-size: 3.4vw;
-    line-height: 4.5vw;
+    font-size: var(--font-size-heading-1-vw);
+    line-height: var(--font-line-height-heading-1-vw);
     margin: 2vw 0;
   }
 
   @include media(tablet-portrait) {
-    font-size: 4vw;
-    line-height: 5.1vw;
+    font-size: calc(var(--font-size-heading-1-vw) + .6vw);
+    line-height: calc(var(--font-line-height-heading-1-vw) + .6vw);
     margin: 2vw 0;
   }
 
   @include media(phone) {
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: calc(var(--font-size-heading-1-rem) - 2.1rem);
+    line-height: calc(var(--font-line-height-heading-1-rem) - 2.4rem);
   }
 }
 
 .heading-3 {
-  font-size: 2.1rem;
+  font-size: var(--font-size-heading-3-rem);
   margin: .6rem 0;
 
+  @include media(big-desktop) {
+    font-size: calc(var(--font-size-heading-3-rem) + .3rem);
+  }
+
   @include media(phone) {
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: calc(var(--font-size-heading-3-rem) - .1rem);
+    line-height: var(--font-line-height-heading-3-rem);
   }
 }
 
@@ -38,16 +47,20 @@
 }
 
 .text--lede {
-  font-size: 2.1rem;
+  font-size: var(--font-size-lede-rem);
+
+  @include media(big-desktop) {
+    font-size: calc(var(--font-size-lede-rem) + .3rem);
+  }
 
   @include media(phone) {
-    font-size: var(--font-default-size-rem);
+    font-size: var(--font-size-default-rem);
     line-height: auto;
   }
 }
 
 p {
-  font-size: var(--font-default-size-rem);
+  font-size: var(--font-size-default-rem);
 
   &:not(:last-child) {
     margin-bottom: 2rem;
@@ -80,6 +93,10 @@ p {
                         var(--page-logo-color-gradient-bottom) 100%,
                         transparent 50%
                       );
+  }
+
+  @include media(big-desktop) {
+    background-position: 0 2.2rem;
   }
 }
 

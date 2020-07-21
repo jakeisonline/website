@@ -1,3 +1,16 @@
+// // Font Sizing
+$font-size-default-rem: 1.9rem;
+
+$font-size-heading-1-rem: 4.1rem;
+$font-size-heading-1-vw: 3.4vw;
+$font-line-height-heading-1-rem: 5.2rem;
+$font-line-height-heading-1-vw: 4.5vw;
+
+$font-size-heading-3-rem: 2.1rem;
+$font-line-height-heading-3-rem: 3rem;
+
+$font-size-lede-rem: 2.2rem;
+
 :root {
   // Page Colors
   --page-color-background: #fff;
@@ -7,7 +20,7 @@
   --page-logo-color-gradient-bottom: #1D97E7;
 
   // Font Colors
-  --font-logo-color: #fff;
+  --font-color-logo: #fff;
   --font-color-default: #464646;
   --font-color-subtle-1: #ccc;
   --font-color-subtle-2: #8b8b8b;
@@ -15,12 +28,30 @@
 
   // Font Styling
   --font-family: 'Nunito', sans-serif;
-  --font-default-size-percentage: 62.5%;
-  --font-print-size-percentage: 50%;
-  --font-default-size-rem: 1.8rem;
   --font-weight-normal: 300;
   --font-weight-bold: 700;
 
+  // Font Sizing
+  --font-size-default-percentage: 62.5%;
+  --font-size-default-rem: #{$font-size-default-rem};
+  --font-size-print-percentage: 50%;
+
+  --font-size-heading-1-rem: #{$font-size-heading-1-rem};
+  --font-size-heading-1-vw: #{$font-size-heading-1-vw};
+  --font-line-height-heading-1-rem: #{$font-line-height-heading-1-rem};
+  --font-line-height-heading-1-vw: #{$font-line-height-heading-1-vw};
+
+  --font-size-heading-3-rem: #{$font-size-heading-3-rem};
+  --font-line-height-heading-3-rem: #{$font-line-height-heading-3-rem};
+
+  --font-size-lede-rem: #{$font-size-lede-rem};
+
   // Shapes
   --shape-name-box: polygon(0% 0%, 80% 0, 80% 75%, 25% 75%, 0 100%, 0 75%, 0% 75%);
+}
+
+@include media(big-desktop) {
+  :root {
+    --font-size-default-rem: calc(#{$font-size-default-rem} + .1rem);
+  }
 }
