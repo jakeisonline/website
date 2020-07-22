@@ -1,5 +1,5 @@
 .availability {
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
   grid-column: 1 / 4;
 
   @include media(phone) {
@@ -9,7 +9,7 @@
 }
 
 .talk {
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
   grid-column: 4 / 7;
 
   @include media(phone) {
@@ -20,7 +20,7 @@
 }
 
 .follow {
-  grid-row: 4 / 5;
+  grid-row: 3 / 4;
   grid-column: 7 / -1;
 
   @include media(phone) {

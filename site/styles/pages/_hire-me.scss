@@ -1,4 +1,8 @@
 .hire-me {
+  &__heading {
+    grid-column: 1 / -1;
+  }
+
   &__main {
     grid-column: 1 / 6;
 

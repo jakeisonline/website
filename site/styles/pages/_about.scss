@@ -7,6 +7,10 @@
     }
   }
 
+  &__heading {
+    grid-column: 1 / -1;
+  }
+
   &__side {
     grid-column: 6 / -1;
 
