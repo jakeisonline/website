@@ -19,9 +19,11 @@
     &--laptop {
       margin: -2.7rem 1.2rem 0 0;
       width: 9rem;
+      height: 9rem;
 
       @include media(phone) {
         width: 7rem;
+        height: 7rem;
         margin-top: -.1rem;
       }
     }
@@ -29,9 +31,11 @@
     &--smile {
       margin: -2.9rem .8rem 0 0;
       width: 10.7rem;
+      height: 10.7rem;
 
       @include media(phone) {
         width: 7rem;
+        height: 7rem;
         margin-top: -.1rem;
       }
     }
