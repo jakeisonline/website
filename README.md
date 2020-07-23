@@ -24,4 +24,5 @@ npm run
 * Location, telephone and contact icons used on my CV/Resume supplied by [lineicons.com](https://lineicons.com/)
 * Twitter, LinkedIn & Github icons used on most pages supplied by [simpleicons.org](https://simpleicons.org/)
 
+
 ![Jake's big dumb smiling face](https://raw.githubusercontent.com/jakeisonline/jakeisonline.com/main/site/images/jake-smile-1x.png)
