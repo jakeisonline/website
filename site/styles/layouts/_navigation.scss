@@ -42,6 +42,10 @@
       font-size: 5.3vw;
     }
 
+    @include media(big-desktop) {
+      font-size: 3.3rem;
+    }
+
     &:hover {
       color: var(--page-logo-color-gradient-bottom);
     }

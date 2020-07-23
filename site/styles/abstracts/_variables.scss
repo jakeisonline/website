@@ -47,7 +47,8 @@ $font-size-lede-rem: 2.2rem;
   --font-size-lede-rem: #{$font-size-lede-rem};
 
   // Shapes
-  --shape-name-box: polygon(0% 0%, 80% 0, 80% 75%, 25% 75%, 0 100%, 0 75%, 0% 75%);
+  --shape-name-box-full: polygon(0% 0%, 80% 0, 80% 75%, 6.3% 75%, 0 100%, 0 75%, 0% 75%);
+  --shape-name-box-small: polygon(0% 0%, 80% 0, 80% 75%, 25% 75%, 0 100%, 0 75%, 0% 75%);
 }
 
 @include media(big-desktop) {

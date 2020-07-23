@@ -13,21 +13,26 @@
       var(--page-logo-color-gradient-top),
       var(--page-logo-color-gradient-bottom)
     );
-    clip-path: var(--shape-name-box);
+    clip-path: var(--shape-name-box-full);
     color: var(--font-color-logo);
     display: inline-block;
     font-size: 5rem;
     font-weight: var(--font-weight-bold);
-    width: 10rem;
+    width: 39.4rem;
     height: 10rem;
     padding: .7rem 1.2rem 0 1.3rem;
     transition: transform 0.2s;
 
     @include media(phone) {
+      clip-path: var(--shape-name-box-small);
       padding: 2vw 3.6vw 0;
       font-size: 9.7vw;
       width: 22vw;
       height: 22vw;
+
+      &--full {
+        display: none;
+      }
     }
   }
 
