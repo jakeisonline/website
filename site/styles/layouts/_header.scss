@@ -1,7 +1,11 @@
 .header {
   display: flex;
   grid-column: 1 / -1;
-  padding: 2rem 0 0;
+  padding: 2.6rem 0 0;
+
+  @include media(phone) {
+    padding-top: 2rem;
+  }
 
   &__name-container {
     flex: 1;
