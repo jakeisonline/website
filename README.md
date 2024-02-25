@@ -1,4 +1,4 @@
-# jakeisonline.com ![W3C Validation Status](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fwww.jakeisonline.com) ![Netlify Status](https://img.shields.io/netlify/0e6cb414-ac4b-4f2e-893c-ed5085730e5d) ![Built on 11ty](https://img.shields.io/github/package-json/dependency-version/jakeisonline/jakeisonline.com/dev/@11ty/eleventy)
+# jakeisonline.com ![W3C Validation Status]![W3C Validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fwww.jakeisonline.com) ![Netlify Status](https://img.shields.io/netlify/0e6cb414-ac4b-4f2e-893c-ed5085730e5d) ![Built on 11ty](https://img.shields.io/github/package-json/dependency-version/jakeisonline/jakeisonline.com/dev/@11ty/eleventy)
 
 
 A static file website to talk about **me**. You're welcome. It's built on [11ty](https://github.com/11ty/eleventy) and hosted by [netlify](https://www.netlify.com/).
