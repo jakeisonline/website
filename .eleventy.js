@@ -2,7 +2,7 @@
 const configOptions = { dir: { input: "site", output: "_build", passthroughFileCopy: true }};
 
 // Call 11ty plugins
-const pluginSass = require("eleventy-plugin-sass");
+const pluginSass = require("eleventy-sass");
 
 // General project constants
 const projectConfig = { stylesDir: "styles", imagesDir: "images", mediaDir: "media" };
