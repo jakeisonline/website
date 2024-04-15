@@ -50,7 +50,7 @@ const TaggerInputField = ({
       onKeyDown={handleKeydown}
       onChange={handleInput}
       placeholder={placeholder}
-      className="bg-inherit placeholder:font-bold focus:border-0 focus:outline-none m-w-1 hover:cursor-pointer focus:hover:cursor-text"
+      className="py-1 bg-inherit placeholder:font-bold focus:border-0 focus:outline-none m-w-1 hover:cursor-pointer focus:hover:cursor-text placeholder:pl-0.5"
     />
   )
 }
