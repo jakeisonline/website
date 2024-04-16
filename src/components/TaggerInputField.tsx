@@ -29,7 +29,7 @@ const TaggerInputField = ({
 
     switch (e.key) {
       case "Enter":
-        if (tagQueryValue !== "") {
+        if (tagQueryValue !== "" && tagQueryValue.trim().length !== 0) {
           addTag(tagQueryValue)
           tagQuery("")
         }
