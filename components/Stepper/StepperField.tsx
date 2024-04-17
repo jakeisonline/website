@@ -8,10 +8,12 @@ import useStepperField from "@/utils/useStepperField"
 
 interface StepperFieldProps {
   startNum: number
+  minNum?: number
+  maxNum?: number
 }
 
-const StepperField = ({ startNum }: StepperFieldProps) => {
-  const { stepValue, handleStep } = useStepperField(1, 1, 10)
+const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
+  const { stepValue, handleStep } = useStepperField(startNum, minNum, maxNum)
 
   return (
     <div className="flex flex-row items-center gap-2 px-1 py-1 border border-gray-300 rounded-md">

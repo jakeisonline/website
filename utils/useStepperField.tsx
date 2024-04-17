@@ -2,8 +2,8 @@ import { useState } from "react"
 
 const useStepperInputField = (
   startNum: number,
-  minNum: number | null,
-  maxNum: number | null,
+  minNum?: number | null,
+  maxNum?: number | null,
 ) => {
   const [stepValue, setStepValue] = useState<number>(startNum)
 
@@ -14,7 +14,7 @@ const useStepperInputField = (
       newValue = stepValue + 1
       setStepValue(newValue)
     } else if (direction === "down") {
-      if (minNum && stepValue <= minNum) return
+      if ((minNum || minNum === 0) && stepValue <= minNum) return
       newValue = stepValue - 1
       setStepValue(newValue)
     }
