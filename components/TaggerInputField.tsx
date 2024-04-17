@@ -1,4 +1,4 @@
-import React, { useState, RefObject } from "react"
+import { useState, RefObject } from "react"
 
 interface TaggerInputProps {
   placeholder: string // String displayed as the input's placeholder

@@ -1,4 +1,5 @@
-import CrossIcon from "../../public/cross.svg?react"
+import Image from "next/image"
+import CrossIcon from "@/svgs/CrossIcon"
 
 interface TaggerTagProps {
   label: string // String displayed as the tag's label
