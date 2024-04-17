@@ -1,8 +1,8 @@
 "use client"
 
 import { useRef } from "react"
-import TaggerInputField from "@/components/TaggerInputField"
-import TaggerTag from "@/components/TaggerTag"
+import TaggerInputField from "@/components/Tagger/TaggerInputField"
+import TaggerTag from "@/components/Tagger/TaggerTag"
 import useTaggerInputField from "@/utils/useTaggerInputField"
 
 const TaggerField = () => {
@@ -20,7 +20,7 @@ const TaggerField = () => {
   return (
     <div
       onClick={handleClick}
-      className="peer hover:shadow hover:shadow-indigo-300/40 hover:cursor-pointer hover:border-indigo-50 min-w-56 rounded-lg bg-white text-black shadow-sm max-w-2xl px-2 py-2 flex flex-wrap gap-2 border-2 border-white hover:focus-within:shadow-none focus-within:border-indigo-300 hover:focus-within:border-indigo-300"
+      className="flex flex-wrap max-w-2xl gap-2 px-2 py-2 text-black bg-white border-2 border-white rounded-lg shadow-sm peer hover:shadow hover:shadow-indigo-300/40 hover:cursor-pointer hover:border-indigo-50 min-w-56 hover:focus-within:shadow-none focus-within:border-indigo-300 hover:focus-within:border-indigo-300"
     >
       {tags.map((label: string, index: number) => (
         <TaggerTag label={label} key={index} removeTag={handleRemoveTag} />
