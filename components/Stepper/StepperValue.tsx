@@ -1,9 +1,9 @@
 interface StepperValueProps {
-  stepperValue: number
+  stepValue: number
 }
 
-const StepperValue = ({ stepperValue }: StepperValueProps) => {
-  return <div className="text-xs text-gray-800 select-none">{stepperValue}</div>
+const StepperValue = ({ stepValue }: StepperValueProps) => {
+  return <div className="text-xs text-gray-800 select-none">{stepValue}</div>
 }
 
 export default StepperValue

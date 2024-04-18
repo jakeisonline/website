@@ -20,7 +20,7 @@ const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
       <StepperController direction="down" handleStep={handleStep}>
         <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
-      <StepperValue stepperValue={stepValue} />
+      <StepperValue stepValue={stepValue} />
       <StepperController direction="up" handleStep={handleStep}>
         <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
