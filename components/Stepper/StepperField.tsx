@@ -17,11 +17,21 @@ const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
 
   return (
     <div className="flex flex-row items-center gap-2 px-1 py-1 border border-gray-300 rounded-md">
-      <StepperController direction="down" handleStep={handleStep}>
+      <StepperController
+        direction="down"
+        handleStep={handleStep}
+        stepValue={stepValue}
+        minValue={minNum}
+      >
         <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
       <StepperValue stepValue={stepValue} />
-      <StepperController direction="up" handleStep={handleStep}>
+      <StepperController
+        direction="up"
+        handleStep={handleStep}
+        stepValue={stepValue}
+        maxValue={maxNum}
+      >
         <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
     </div>
