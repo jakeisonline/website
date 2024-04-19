@@ -8,9 +8,9 @@ export default function Home() {
       </p>
       <StepperField startNum={0} minNum={0} maxNum={10} />
       <p className="mt-6 mb-1 text-sm text-slate-800">
-        &lt;StepperField startNum={5} minNum={-10} maxNum={15} /&gt;
+        &lt;StepperField startNum={1000} minNum={99} maxNum={1000} /&gt;
       </p>
-      <StepperField startNum={5} minNum={-10} maxNum={15} />
+      <StepperField startNum={1000} minNum={-99} maxNum={1000} />
     </main>
   )
 }
