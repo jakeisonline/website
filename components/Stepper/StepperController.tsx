@@ -4,7 +4,6 @@ interface StepperControllerProps {
   stepValue: number
   minValue?: number | null
   maxValue?: number | null
-  setFocus: (arg0: boolean) => void
   children: any
 }
 
@@ -14,12 +13,11 @@ const StepperValue = ({
   stepValue,
   minValue,
   maxValue,
-  setFocus,
   children,
 }: StepperControllerProps) => {
-  const handleClick = () => {
-    setFocus(true)
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     handleStep(direction)
+    e.preventDefault()
   }
 
   const shouldDisable = () => {
@@ -33,7 +31,7 @@ const StepperValue = ({
   }
 
   return (
-    <div
+    <button
       onMouseDown={handleClick}
       className={
         shouldDisable()
@@ -42,7 +40,7 @@ const StepperValue = ({
       }
     >
       {children}
-    </div>
+    </button>
   )
 }
 

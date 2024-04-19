@@ -14,16 +14,11 @@ interface StepperFieldProps {
 }
 
 const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
-  const { stepValue, handleStep, hasFocus, setFocus } = useStepperField(
-    startNum,
-    minNum,
-    maxNum,
-  )
+  const { stepValue, handleStep } = useStepperField(startNum, minNum, maxNum)
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    setFocus(true)
     inputRef.current && inputRef.current.focus()
   }
 
@@ -33,32 +28,22 @@ const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
     <div
       onClick={handleClick}
       onMouseDown={handleClick}
-      className={`${
-        hasFocus
-          ? "inner-border-blue-500 inner-border-2"
-          : "hover:inner-border-gray-600 inner-border-gray-400"
-      }  hover:cursor-pointer flex flex-row items-center gap-2 px-1 py-1 inner-border rounded-md select-none`}
+      className={`has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer flex flex-row items-center gap-2 px-1 py-1 inner-border rounded-md select-none`}
     >
       <StepperController
         direction="down"
         handleStep={handleStep}
         stepValue={stepValue}
         minValue={minNum}
-        setFocus={setFocus}
       >
         <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
-      <StepperValue
-        stepValue={stepValue}
-        inputRef={inputRef}
-        setFocus={setFocus}
-      />
+      <StepperValue stepValue={stepValue} inputRef={inputRef} />
       <StepperController
         direction="up"
         handleStep={handleStep}
         stepValue={stepValue}
         maxValue={maxNum}
-        setFocus={setFocus}
       >
         <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
