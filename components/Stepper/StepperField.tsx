@@ -27,7 +27,6 @@ const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
   return (
     <div
       onClick={handleClick}
-      onMouseDown={handleClick}
       className={`has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer flex flex-row items-center gap-2 px-1 py-1 inner-border rounded-md select-none`}
     >
       <StepperController
