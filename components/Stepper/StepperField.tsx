@@ -19,10 +19,9 @@ const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    inputRef.current && inputRef.current.focus()
+    if (e.screenX !== 0 && e.screenY !== 0)
+      inputRef.current && inputRef.current.focus()
   }
-
-  // has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2
 
   return (
     <div
@@ -37,7 +36,11 @@ const StepperField = ({ startNum, minNum, maxNum }: StepperFieldProps) => {
       >
         <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
       </StepperController>
-      <StepperValue stepValue={stepValue} inputRef={inputRef} />
+      <StepperValue
+        stepValue={stepValue}
+        handleStep={handleStep}
+        inputRef={inputRef}
+      />
       <StepperController
         direction="up"
         handleStep={handleStep}
