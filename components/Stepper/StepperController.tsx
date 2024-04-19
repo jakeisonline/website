@@ -4,6 +4,7 @@ interface StepperControllerProps {
   stepValue: number
   minValue?: number | null
   maxValue?: number | null
+  setFocus: (arg0: boolean) => void
   children: any
 }
 
@@ -13,9 +14,11 @@ const StepperValue = ({
   stepValue,
   minValue,
   maxValue,
+  setFocus,
   children,
 }: StepperControllerProps) => {
   const handleClick = () => {
+    setFocus(true)
     handleStep(direction)
   }
 
@@ -31,7 +34,7 @@ const StepperValue = ({
 
   return (
     <div
-      onClick={handleClick}
+      onMouseDown={handleClick}
       className={
         shouldDisable()
           ? "px-1 py-1 rounded-md opacity-20"

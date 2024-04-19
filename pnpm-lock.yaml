@@ -37,6 +37,9 @@ devDependencies:
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.3
+  tailwindcss-inner-border:
+    specifier: ^0.2.0
+    version: 0.2.0(tailwindcss@3.4.3)
   typescript:
     specifier: ^5
     version: 5.4.5
@@ -2572,6 +2575,14 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: true
+
+  /tailwindcss-inner-border@0.2.0(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-IrKWoSHMisGY1FGfwD3+5nzPu1N9gWqUopqma72rS/5wp+DGxUltXhMm84TLpUeaUJyW6NDSHUO/qWh/+puZvg==}
+    peerDependencies:
+      tailwindcss: '>=3'
+    dependencies:
+      tailwindcss: 3.4.3
     dev: true
 
   /tailwindcss@3.4.3:

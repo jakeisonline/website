@@ -6,6 +6,7 @@ const useStepperInputField = (
   maxNum?: number | null,
 ) => {
   const [stepValue, setStepValue] = useState<number>(startNum)
+  const [hasFocus, setFocus] = useState<boolean>(false)
 
   const handleStep = (direction: string) => {
     let newValue: number
@@ -20,7 +21,7 @@ const useStepperInputField = (
     }
   }
 
-  return { stepValue, handleStep }
+  return { stepValue, handleStep, hasFocus, setFocus }
 }
 
 export default useStepperInputField

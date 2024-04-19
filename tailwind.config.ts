@@ -17,6 +17,7 @@ const config: Config = {
     },
   },
   plugins: [
+    require("tailwindcss-inner-border"),
     plugin(function({ addBase }) {
       addBase({
         "html": { fontSize: "22px" },
