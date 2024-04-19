@@ -16,18 +16,16 @@ const StepperValue = ({ stepValue, inputRef, setFocus }: StepperValueProps) => {
   }
 
   return (
-    <div className="min-w-4">
-      <input
-        type="text"
-        ref={inputRef}
-        value={stepValue}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        style={{ width: String(stepValue).length + "ch" }}
-        className="text-xs text-center text-gray-800 bg-white select-none focus:border-0 focus:outline-none caret-transparent cursor-pointer"
-        readOnly
-      />
-    </div>
+    <input
+      type="text"
+      ref={inputRef}
+      value={stepValue}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      style={{ width: String(stepValue).length + "ch" }}
+      className="min-w-4 text-xs text-center text-gray-800 bg-white select-none focus:border-0 focus:outline-none caret-transparent cursor-pointer"
+      readOnly
+    />
   )
 }
 
