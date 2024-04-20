@@ -7,12 +7,18 @@ import StepperController from "./StepperController"
 import useStepperField from "@/utils/useStepperField"
 import { useRef } from "react"
 import StepperLabel from "./StepperLabel"
+import StepperCollapsableContainer from "./StepperCollapsableContainer"
+import StepperBalloon from "./StepperBadge"
 
 interface StepperFieldProps {
   startNum: number
   minNum?: number
   maxNum?: number
   fieldName?: string
+  fieldLabel?: string
+  collapses?: boolean
+  hideBadge?: boolean
+  hideBadgeNum?: number
 }
 
 const StepperField = ({
@@ -20,6 +26,10 @@ const StepperField = ({
   minNum,
   maxNum,
   fieldName,
+  fieldLabel,
+  collapses,
+  hideBadge,
+  hideBadgeNum,
 }: StepperFieldProps) => {
   const { stepValue, handleStep } = useStepperField(startNum, minNum, maxNum)
 
@@ -33,31 +43,43 @@ const StepperField = ({
   return (
     <div
       onClick={handleClick}
-      className={`has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer flex flex-row items-center gap-1 px-1 py-1 inner-border rounded-md select-none text-xs`}
+      className={`has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-gray-500 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative`}
     >
-      <StepperLabel fieldName={fieldName} labelValue="M" />
-      <StepperController
-        direction="down"
-        handleStep={handleStep}
-        stepValue={stepValue}
-        minValue={minNum}
-      >
-        <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
-      </StepperController>
-      <StepperValue
-        stepValue={stepValue}
-        handleStep={handleStep}
-        inputRef={inputRef}
+      <StepperLabel
         fieldName={fieldName}
+        labelValue={fieldLabel}
+        collapses={collapses}
       />
-      <StepperController
-        direction="up"
-        handleStep={handleStep}
+      <StepperCollapsableContainer collapses={collapses}>
+        <StepperController
+          direction="down"
+          handleStep={handleStep}
+          stepValue={stepValue}
+          minValue={minNum}
+        >
+          <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
+        </StepperController>
+        <StepperValue
+          stepValue={stepValue}
+          handleStep={handleStep}
+          inputRef={inputRef}
+          fieldName={fieldName}
+        />
+        <StepperController
+          direction="up"
+          handleStep={handleStep}
+          stepValue={stepValue}
+          maxValue={maxNum}
+        >
+          <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
+        </StepperController>
+      </StepperCollapsableContainer>
+      <StepperBalloon
+        hideBadge={hideBadge}
+        hideBadgeNum={hideBadgeNum}
         stepValue={stepValue}
-        maxValue={maxNum}
-      >
-        <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
-      </StepperController>
+        collapses={collapses}
+      />
     </div>
   )
 }
