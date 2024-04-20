@@ -15,14 +15,9 @@ const StepperValue = ({
   maxValue,
   children,
 }: StepperControllerProps) => {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     handleStep(direction)
     e.preventDefault()
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>): void => {
-    const acceptedKeys = ["Enter", "Space"]
-    if (acceptedKeys.includes(e.code)) handleStep(direction)
   }
 
   const shouldDisable = () => {
@@ -36,9 +31,8 @@ const StepperValue = ({
   }
 
   return (
-    <button
+    <div
       onMouseDown={handleClick}
-      onKeyDown={handleKeyDown}
       className={
         shouldDisable()
           ? "px-1 py-1 rounded-md opacity-20 focus:outline focus:outline-2 focus:outline-gray-600"
@@ -46,7 +40,7 @@ const StepperValue = ({
       }
     >
       {children}
-    </button>
+    </div>
   )
 }
 
