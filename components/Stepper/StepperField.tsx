@@ -8,7 +8,7 @@ import useStepperField from "@/utils/useStepperField"
 import { useRef } from "react"
 import StepperLabel from "./StepperLabel"
 import StepperCollapsableContainer from "./StepperCollapsableContainer"
-import StepperBalloon from "./StepperBadge"
+import StepperBadge from "./StepperBadge"
 
 interface StepperFieldProps {
   startNum: number
@@ -77,7 +77,7 @@ const StepperField = ({
           <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
         </StepperController>
       </StepperCollapsableContainer>
-      <StepperBalloon
+      <StepperBadge
         hideBadge={hideBadge}
         hideBadgeNum={hideBadgeNum}
         stepValue={stepValue}
