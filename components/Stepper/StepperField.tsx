@@ -38,11 +38,12 @@ const StepperField = ({
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
     if (e.screenX !== 0 && e.screenY !== 0)
       inputRef.current && inputRef.current.focus()
+    e.preventDefault()
   }
 
   return (
     <div
-      onClick={handleClick}
+      onMouseDown={handleClick}
       className={`has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-gray-500 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative`}
     >
       <StepperLabel
