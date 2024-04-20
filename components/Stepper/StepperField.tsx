@@ -61,6 +61,8 @@ const StepperField = ({
         </StepperController>
         <StepperValue
           stepValue={stepValue}
+          minNum={minNum}
+          maxNum={maxNum}
           handleStep={handleStep}
           inputRef={inputRef}
           fieldName={fieldName}

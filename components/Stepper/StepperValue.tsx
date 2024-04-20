@@ -2,16 +2,20 @@ import { RefObject } from "react"
 
 interface StepperValueProps {
   stepValue: number
+  minNum?: number
+  maxNum?: number
   inputRef: RefObject<HTMLInputElement> // input ref for parent component handling
   handleStep: (direction: string) => void
   fieldName?: string
 }
 
 const StepperValue = ({
-  fieldName,
   stepValue,
-  handleStep,
+  minNum,
+  maxNum,
   inputRef,
+  handleStep,
+  fieldName,
 }: StepperValueProps) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     switch (e.code) {
@@ -26,13 +30,15 @@ const StepperValue = ({
 
   return (
     <input
-      type="text"
+      type="number"
+      min={minNum}
+      max={maxNum}
       name={fieldName}
       ref={inputRef}
       value={stepValue}
       onKeyDown={handleKeyDown}
       style={{ width: String(stepValue).length + "ch" }}
-      className="min-w-4 text-center text-gray-800 bg-white select-none focus:border-0 focus:outline-none caret-transparent cursor-pointer"
+      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center text-gray-800 bg-white select-none focus:border-0 focus:outline-none caret-transparent cursor-pointer"
       readOnly
     />
   )
