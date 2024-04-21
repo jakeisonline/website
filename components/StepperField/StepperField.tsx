@@ -7,7 +7,7 @@ import StepperController from "./StepperController"
 import useStepperField from "@/hooks/useStepperField"
 import { useRef } from "react"
 import StepperLabel from "./StepperLabel"
-import StepperCollapsableContainer from "./StepperCollapsableContainer"
+import StepperCollapsable from "./StepperCollapsable"
 import StepperBadge from "./StepperBadge"
 
 interface StepperFieldProps {
@@ -58,7 +58,7 @@ const StepperField = ({
         fieldLabelReader={fieldLabelReader}
         collapses={collapses}
       />
-      <StepperCollapsableContainer collapses={collapses}>
+      <StepperCollapsable collapses={collapses}>
         <StepperController
           direction="down"
           handleStep={handleStep}
@@ -85,7 +85,7 @@ const StepperField = ({
         >
           <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
         </StepperController>
-      </StepperCollapsableContainer>
+      </StepperCollapsable>
       <StepperBadge
         hideBadge={hideBadge}
         hideBadgeNum={hideBadgeNum}
