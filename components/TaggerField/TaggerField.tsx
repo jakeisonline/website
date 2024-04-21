@@ -1,8 +1,8 @@
 "use client"
 
 import { useRef } from "react"
-import TaggerInputField from "@/components/Tagger/TaggerInputField"
-import TaggerTag from "@/components/Tagger/TaggerTag"
+import TaggerInputField from "./TaggerInputField"
+import TaggerTag from "./TaggerTag"
 import useTaggerInputField from "@/hooks/useTaggerInputField"
 
 const TaggerField = () => {
