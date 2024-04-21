@@ -1,4 +1,3 @@
-import classNames from "classnames"
 import clsx from "clsx"
 
 interface StepperControllerProps {
