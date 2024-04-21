@@ -19,7 +19,7 @@ const StepperLabel = ({
     "cursor-pointer text-gray-800 pl-1.5": true,
     "pr-1.5": collapses,
     "pr-2 border-r": !collapses,
-    "sr-only": fieldLabel,
+    "sr-only": !fieldLabel,
   })
 
   return (
