@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import TaggerInputField from "@/components/Tagger/TaggerInputField"
 import TaggerTag from "@/components/Tagger/TaggerTag"
-import useTaggerInputField from "@/utils/useTaggerInputField"
+import useTaggerInputField from "@/hooks/useTaggerInputField"
 
 const TaggerField = () => {
   const { tags, handleAddTag, handleRemoveTag, handleRemoveLastTag } =
