@@ -18,16 +18,10 @@ const StepperValue = ({
   fieldName,
 }: StepperValueProps) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (e.code) {
-      case "ArrowDown":
-        e.preventDefault()
-        handleStep("down")
-        return
-      case "ArrowUp":
-        e.preventDefault()
-        handleStep("up")
-        return
-    }
+    if (e.code !== "ArrowDown" && e.code !== "ArrowUp") return
+    const stepDirection = e.code === "ArrowUp" ? "up" : "down"
+    handleStep(stepDirection)
+    e.preventDefault()
   }
 
   return (
