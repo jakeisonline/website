@@ -21,7 +21,7 @@ export default function Home() {
           <code className="text-slate-800 text-xs">
             &lt;StepperField &nbsp;&nbsp;
             <br />
-            startNum=&#123;0&#125;
+            &nbsp;&nbsp;startNum=&#123;0&#125;
             <br />
             &nbsp;&nbsp;minNum=&#123;0&#125;
             <br />
