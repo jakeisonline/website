@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="flex mt-12 flex-col items-center justify-center w-full mx-auto">
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
-        <StepperField startNum={0} />
+        <StepperField startNum={0} fieldLabelReader="Quantity" />
         <pre className="mt-1">
           <code className="text-slate-800 text-xs">
             &lt;StepperField
@@ -49,8 +49,10 @@ export default function Home() {
       </div>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField
-          fieldName="M"
+          fieldId="sizes_medium"
+          fieldName="sizes_medium"
           fieldLabel="M"
+          fieldLabelReader="Medium"
           startNum={100}
           minNum={-99}
           maxNum={100}
@@ -59,15 +61,19 @@ export default function Home() {
           <code className="mt-2 text-slate-800 text-xs">
             &lt;StepperField
             <br />
-            &nbsp;&nbsp;fieldName=&#123;&#34;M&#34;&#125;
+            &nbsp;&nbsp;fieldId=&#123;&#34;sizes_medium&#34;&#125;
+            <br />
+            &nbsp;&nbsp;fieldName=&#123;&#34;sizes_medium&#34;&#125;
             <br />
             &nbsp;&nbsp;fieldLabel=&#123;&#34;M&#34;&#125;
             <br />
-            &nbsp;&nbsp;startNum=&#123;1000&#125;
+            &nbsp;&nbsp;fieldLabelReader=&#123;&#34;Medium&#34;&#125;
             <br />
-            &nbsp;&nbsp;minNum=&#123;99&#125;
+            &nbsp;&nbsp;startNum=&#123;100&#125;
             <br />
-            &nbsp;&nbsp;maxNum=&#123;1000&#125;
+            &nbsp;&nbsp;minNum=&#123;-99&#125;
+            <br />
+            &nbsp;&nbsp;maxNum=&#123;100&#125;
             <br />
             /&gt;
           </code>
@@ -78,8 +84,10 @@ export default function Home() {
           <StepperField
             collapses={true}
             hideBadgeNum={0}
-            fieldName="S"
+            fieldId="sizes_small"
+            fieldName="sizes_small"
             fieldLabel="S"
+            fieldLabelReader="Small"
             startNum={0}
             minNum={0}
             maxNum={100}
@@ -87,8 +95,10 @@ export default function Home() {
           <StepperField
             collapses={true}
             hideBadgeNum={0}
-            fieldName="M"
+            fieldId="sizes_med"
+            fieldName="sizes_medium"
             fieldLabel="M"
+            fieldLabelReader="Medium"
             startNum={3}
             minNum={0}
             maxNum={100}
@@ -96,8 +106,10 @@ export default function Home() {
           <StepperField
             collapses={true}
             hideBadgeNum={0}
-            fieldName="L"
+            fieldId="sizes_large"
+            fieldName="sizes_large"
             fieldLabel="L"
+            fieldLabelReader="Large"
             startNum={0}
             minNum={0}
             maxNum={100}
@@ -113,9 +125,13 @@ export default function Home() {
             <br />
             &nbsp;&nbsp;hideBadgeNum=&#123;&#34;0&#34;&#125;
             <br />
-            &nbsp;&nbsp;fieldName=&#123;&#34;M&#34;&#125;
+            &nbsp;&nbsp;fieldId=&#123;&#34;sizes_medium&#34;&#125;
+            <br />
+            &nbsp;&nbsp;fieldName=&#123;&#34;sizes_medium&#34;&#125;
             <br />
             &nbsp;&nbsp;fieldLabel=&#123;&#34;M&#34;&#125;
+            <br />
+            &nbsp;&nbsp;fieldLabelReader=&#123;&#34;Medium&#34;&#125;
             <br />
             &nbsp;&nbsp;startNum=&#123;1000&#125;
             <br />
