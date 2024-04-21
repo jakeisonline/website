@@ -22,7 +22,7 @@ const StepperValue = ({
     e.preventDefault()
   }
 
-  const shouldDisable = () => {
+  const isDisabled = () => {
     if ((minValue || minValue === 0) && stepValue <= minValue) {
       return true
     } else if (maxValue && stepValue >= maxValue) {
@@ -35,9 +35,9 @@ const StepperValue = ({
   const divClass = classNames({
     "px-1 py-1 rounded-md": true,
     "opacity-20 focus:outline focus:outline-2 focus:outline-gray-600":
-      shouldDisable,
+      isDisabled,
     "group hover:bg-blue-100 hover:cursor-pointer focus:outline focus:outline-2 focus:outline-blue-200":
-      !shouldDisable,
+      !isDisabled,
   })
 
   return (
