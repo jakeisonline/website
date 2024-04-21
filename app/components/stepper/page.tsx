@@ -133,11 +133,11 @@ export default function Home() {
             <br />
             &nbsp;&nbsp;fieldLabelReader=&#123;&#34;Medium&#34;&#125;
             <br />
-            &nbsp;&nbsp;startNum=&#123;1000&#125;
+            &nbsp;&nbsp;startNum=&#123;0&#125;
             <br />
-            &nbsp;&nbsp;minNum=&#123;99&#125;
+            &nbsp;&nbsp;minNum=&#123;0&#125;
             <br />
-            &nbsp;&nbsp;maxNum=&#123;1000&#125;
+            &nbsp;&nbsp;maxNum=&#123;100&#125;
             <br />
             /&gt;
           </code>
