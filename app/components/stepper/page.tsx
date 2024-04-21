@@ -37,11 +37,11 @@ export default function Home() {
           <code className="mt-2 text-slate-800 text-xs">
             &lt;StepperField
             <br />
-            &nbsp;&nbsp;startNum=&#123;1000&#125;
+            &nbsp;&nbsp;startNum=&#123;100&#125;
             <br />
-            &nbsp;&nbsp;minNum=&#123;99&#125;
+            &nbsp;&nbsp;minNum=&#123;-99&#125;
             <br />
-            &nbsp;&nbsp;maxNum=&#123;1000&#125;
+            &nbsp;&nbsp;maxNum=&#123;100&#125;
             <br />
             /&gt;
           </code>
@@ -121,7 +121,7 @@ export default function Home() {
             <br />
             &lt;StepperField
             <br />
-            &nbsp;&nbsp;collapsible=&#123;&#34;true&#34;&#125;
+            &nbsp;&nbsp;collapsible=&#123;true&#125;
             <br />
             &nbsp;&nbsp;hideBadgeNum=&#123;&#34;0&#34;&#125;
             <br />
