@@ -82,7 +82,7 @@ export default function Home() {
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <div className="flex gap-3">
           <StepperField
-            collapses={true}
+            collapsible={true}
             hideBadgeNum={0}
             fieldId="sizes_small"
             fieldName="sizes_small"
@@ -93,7 +93,7 @@ export default function Home() {
             maxNum={100}
           />
           <StepperField
-            collapses={true}
+            collapsible={true}
             hideBadgeNum={0}
             fieldId="sizes_med"
             fieldName="sizes_medium"
@@ -104,7 +104,7 @@ export default function Home() {
             maxNum={100}
           />
           <StepperField
-            collapses={true}
+            collapsible={true}
             hideBadgeNum={0}
             fieldId="sizes_large"
             fieldName="sizes_large"
@@ -121,7 +121,7 @@ export default function Home() {
             <br />
             &lt;StepperField
             <br />
-            &nbsp;&nbsp;collapses=&#123;&#34;true&#34;&#125;
+            &nbsp;&nbsp;collapsible=&#123;&#34;true&#34;&#125;
             <br />
             &nbsp;&nbsp;hideBadgeNum=&#123;&#34;0&#34;&#125;
             <br />
