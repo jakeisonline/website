@@ -1,25 +1,27 @@
 interface StepperLabelProps {
-  fieldName?: string
-  labelValue?: string
+  fieldId?: string
+  fieldLabel?: string
+  fieldLabelReader?: string
   collapses?: boolean | false
 }
 
 const StepperLabel = ({
-  fieldName,
-  labelValue,
+  fieldId,
+  fieldLabel,
+  fieldLabelReader,
   collapses,
 }: StepperLabelProps) => {
-  if (!fieldName) return null
+  if (!fieldId) return null
 
   return (
     <label
-      htmlFor={fieldName}
+      htmlFor={fieldId}
       className={
         "cursor-pointer text-gray-800 pl-1.5 " +
         (collapses ? "pr-1.5" : "pr-2 border-r")
       }
     >
-      {labelValue}
+      {fieldLabel}
     </label>
   )
 }
