@@ -4,21 +4,21 @@ interface StepperLabelProps {
   fieldId?: string
   fieldLabel?: string
   fieldLabelReader?: string
-  collapses?: boolean | false
+  collapsible?: boolean | false
 }
 
 const StepperLabel = ({
   fieldId,
   fieldLabel,
   fieldLabelReader,
-  collapses,
+  collapsible,
 }: StepperLabelProps) => {
   const ariaLabel = fieldLabelReader ? fieldLabelReader : fieldLabel
 
   const labelClass = clsx(
     "cursor-pointer text-gray-800 pl-1.5",
-    collapses && "pr-1.5",
-    !collapses && "pr-2 border-r",
+    collapsible && "pr-1.5",
+    !collapsible && "pr-2 border-r",
     !fieldLabel && "sr-only",
   )
 
