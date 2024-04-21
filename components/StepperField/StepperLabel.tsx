@@ -1,4 +1,4 @@
-import classNames from "classnames"
+import clsx from "clsx"
 
 interface StepperLabelProps {
   fieldId?: string
@@ -15,12 +15,12 @@ const StepperLabel = ({
 }: StepperLabelProps) => {
   const ariaLabel = fieldLabelReader ? fieldLabelReader : fieldLabel
 
-  const labelClass = classNames({
-    "cursor-pointer text-gray-800 pl-1.5": true,
-    "pr-1.5": collapses,
-    "pr-2 border-r": !collapses,
-    "sr-only": !fieldLabel,
-  })
+  const labelClass = clsx(
+    "cursor-pointer text-gray-800 pl-1.5",
+    collapses && "pr-1.5",
+    !collapses && "pr-2 border-r",
+    !fieldLabel && "sr-only",
+  )
 
   return (
     <label htmlFor={fieldId} aria-label={ariaLabel} className={labelClass}>

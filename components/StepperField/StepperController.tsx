@@ -1,4 +1,5 @@
 import classNames from "classnames"
+import clsx from "clsx"
 
 interface StepperControllerProps {
   direction: string
@@ -32,13 +33,13 @@ const StepperValue = ({
     }
   }
 
-  const divClass = classNames({
-    "px-1 py-1 rounded-md": true,
-    "opacity-20 focus:outline focus:outline-2 focus:outline-gray-600":
-      isDisabled,
-    "group hover:bg-blue-100 hover:cursor-pointer focus:outline focus:outline-2 focus:outline-blue-200":
-      !isDisabled,
-  })
+  const divClass = clsx(
+    "px-1 py-1 rounded-md",
+    isDisabled() &&
+      "opacity-20 focus:outline focus:outline-2 focus:outline-gray-600",
+    !isDisabled() &&
+      "group hover:bg-blue-100 hover:cursor-pointer focus:outline focus:outline-2 focus:outline-blue-200",
+  )
 
   return (
     <div onMouseDown={handleClick} className={divClass}>
