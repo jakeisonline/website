@@ -1,3 +1,5 @@
+import classNames from "classnames"
+
 interface StepperControllerProps {
   direction: string
   handleStep: (direction: string) => void
@@ -30,15 +32,16 @@ const StepperValue = ({
     }
   }
 
+  const divClass = classNames({
+    "px-1 py-1 rounded-md": true,
+    "opacity-20 focus:outline focus:outline-2 focus:outline-gray-600":
+      shouldDisable,
+    "group hover:bg-blue-100 hover:cursor-pointer focus:outline focus:outline-2 focus:outline-blue-200":
+      !shouldDisable,
+  })
+
   return (
-    <div
-      onMouseDown={handleClick}
-      className={
-        shouldDisable()
-          ? "px-1 py-1 rounded-md opacity-20 focus:outline focus:outline-2 focus:outline-gray-600"
-          : "px-1 py-1 rounded-md group hover:bg-blue-100 hover:cursor-pointer focus:outline focus:outline-2 focus:outline-blue-200"
-      }
-    >
+    <div onMouseDown={handleClick} className={divClass}>
       {children}
     </div>
   )
