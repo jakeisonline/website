@@ -2,21 +2,18 @@ interface RangeGrabberProps {
   initialValue: number
   grabberPosition: number
   handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
-  handleMouseUp: () => void
 }
 
 const RangeGrabber = ({
   initialValue,
   grabberPosition,
   handleMouseDown,
-  handleMouseUp,
 }: RangeGrabberProps) => {
   return (
     <div
       style={{ marginLeft: grabberPosition }}
       className="group relative cursor-pointer select-none"
       onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
     >
       <div className="flex flex-col items-center">
         <div className="group-active:shadow-lg group-hover:bg-slate-900 absolute bg-black inline-block rounded-md -translate-y-7">

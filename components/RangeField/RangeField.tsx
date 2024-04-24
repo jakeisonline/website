@@ -2,13 +2,21 @@
 
 import useRangeField from "@/hooks/useRangeField"
 import RangeGrabber from "./RangeGrabber"
+import RangeBar from "./RangeBar"
 
 interface RangeFieldProps {
+  minRange: number
+  maxRange: number
   initialLowValue: number
   initialHighValue: number
 }
 
-const RangeField = ({ initialLowValue, initialHighValue }: RangeFieldProps) => {
+const RangeField = ({
+  minRange,
+  maxRange,
+  initialLowValue,
+  initialHighValue,
+}: RangeFieldProps) => {
   const {
     lowValue,
     setLowValue,
@@ -27,6 +35,7 @@ const RangeField = ({ initialLowValue, initialHighValue }: RangeFieldProps) => {
     <div
       className="bg-white py-9 px-10 rounded-lg"
       onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
       <div className="mb-16">
         <p className="text-2xl">Price Range</p>
@@ -34,21 +43,23 @@ const RangeField = ({ initialLowValue, initialHighValue }: RangeFieldProps) => {
           The average nightly price is $499
         </p>
       </div>
-      <div className="flex flex-row flex-none items-center bg-blue-100 h-1 rounded-full">
+      <RangeBar minRange={minRange} maxRange={maxRange}>
         <RangeGrabber
-          initialValue={initialLowValue}
+          initialValue={lowValue}
           grabberPosition={grabberPosition}
           handleMouseDown={handleMouseDown}
-          handleMouseUp={handleMouseUp}
         />
         <div className="h-1 bg-blue-600 grow"></div>
-        <div className="group relative mr-10 cursor-pointer select-none">
+        <div
+          style={{ marginRight: 10 }}
+          className="group relative cursor-pointer select-none"
+        >
           <div className="group-active:shadow-lg absolute bg-black inline-block rounded-md -translate-y-7 -translate-x-4">
-            <span className="text-sm py-1 px-1.5 text-white">$21,300</span>
+            <span className="text-sm py-1 px-1.5 text-white">90</span>
           </div>
           <div className="group-active:shadow-md group-active:shadow-blue-600/20 w-3.5 h-3.5 rounded-full border-4 bg-white border-blue-600"></div>
         </div>
-      </div>
+      </RangeBar>
       <div className="flex flex-row mt-3">
         <div className="">
           <label className="text-sm">Min Price</label>
@@ -56,6 +67,8 @@ const RangeField = ({ initialLowValue, initialHighValue }: RangeFieldProps) => {
             <input
               type="number"
               className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 bg-white focus:outline-none text-sm"
+              value={lowValue}
+              readOnly
             />
             <span className="text-slate-600 pl-2 border-l border-slate-400">
               $

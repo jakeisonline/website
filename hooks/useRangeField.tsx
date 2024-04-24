@@ -23,8 +23,11 @@ const useRangeField = ({
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return
     const newPosition = e.clientX - mouseOffset
-    if (newPosition < 0) return
+    const newValue = Math.round(newPosition / 5.62)
+    console.log(highValue)
+    if (newPosition < 0 || newValue >= highValue - 5) return
     setGrabberPosition(newPosition)
+    setLowValue(newValue)
   }
 
   const handleMouseUp = () => {
