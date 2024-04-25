@@ -3,6 +3,7 @@
 import useRangeField from "@/hooks/useRangeField"
 import RangeGrabber from "./RangeGrabber"
 import RangeBar from "./RangeBar"
+import RangeFill from "./RangeFill"
 
 interface RangeFieldProps {
   minRange: number
@@ -48,7 +49,7 @@ const RangeField = ({
           handleMouseDown={handleMouseDown}
           getGrabberPosition={getGrabberPosition}
         />
-        <div className="h-1 bg-blue-600 grow"></div>
+        <RangeFill className="h-1 bg-blue-600 grow" />
         <div
           style={{ marginRight: 10 }}
           className="group relative cursor-pointer select-none"
