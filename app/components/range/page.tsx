@@ -6,7 +6,7 @@ export default function Home() {
       <RangeField
         minRange={0}
         maxRange={1000}
-        initialLowValue={0}
+        initialLowValue={20}
         initialHighValue={90}
       />
     </main>

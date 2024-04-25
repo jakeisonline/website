@@ -1,34 +1,45 @@
-import { useRef, useState, useLayoutEffect } from "react"
+import {
+  useRef,
+  useState,
+  useEffect,
+  createContext,
+  ReactNode,
+  useContext,
+} from "react"
 
 interface RangeBarProps {
-  minRange: number
-  maxRange: number
-  children: any
+  setBarWidth: any
+  children: ReactNode
 }
 
-const RangeBar = ({ minRange, maxRange, children }: RangeBarProps) => {
+export const RangeBarWidthContext = createContext(0)
+
+const RangeBar = ({ setBarWidth, children }: RangeBarProps) => {
   const ref = useRef<HTMLInputElement | null>(null)
   const [width, setWidth] = useState(0)
 
-  useLayoutEffect(() => {
-    if (ref.current) {
+  useEffect(() => {
+    if (ref.current && ref.current.offsetWidth > 0) {
+      setBarWidth(ref.current.offsetWidth)
       setWidth(ref.current.offsetWidth)
     }
   }, [])
 
-  // console.log(
-  //   "Width:",
-  //   Math.floor(width) / Math.floor(Math.floor(maxRange - minRange)),
-  // )
-
   return (
-    <div
-      ref={ref}
-      className="flex flex-row flex-none items-center bg-blue-100 h-1 rounded-full"
-    >
-      {children}
-    </div>
+    <RangeBarWidthContext.Provider value={width}>
+      <div
+        ref={ref}
+        className="flex flex-row flex-none items-center bg-blue-100 h-1 rounded-full"
+      >
+        {children}
+      </div>
+    </RangeBarWidthContext.Provider>
   )
 }
 
 export default RangeBar
+
+export const useRangeBarContext = () => {
+  const context = useContext(RangeBarWidthContext)
+  return context
+}

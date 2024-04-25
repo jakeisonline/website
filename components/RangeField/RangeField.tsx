@@ -26,6 +26,8 @@ const RangeField = ({
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
+    setBarWidth,
+    getGrabberPosition,
   } = useRangeField({
     lowStartValue: initialLowValue,
     highStartValue: initialHighValue,
@@ -39,13 +41,12 @@ const RangeField = ({
     >
       <div className="mb-16">
         <p className="text-2xl">Price Range</p>
-        <p className="text-sm text-slate-500"></p>
       </div>
-      <RangeBar minRange={minRange} maxRange={maxRange}>
+      <RangeBar setBarWidth={setBarWidth}>
         <RangeGrabber
           initialValue={lowValue}
-          grabberPosition={grabberPosition}
           handleMouseDown={handleMouseDown}
+          getGrabberPosition={getGrabberPosition}
         />
         <div className="h-1 bg-blue-600 grow"></div>
         <div

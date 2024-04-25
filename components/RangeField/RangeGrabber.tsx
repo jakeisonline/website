@@ -1,17 +1,25 @@
+import { forwardRef, useContext } from "react"
+import { useRangeBarContext } from "./RangeBar"
+
 interface RangeGrabberProps {
   initialValue: number
-  grabberPosition: number
   handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
+  getGrabberPosition: any
 }
 
 const RangeGrabber = ({
   initialValue,
-  grabberPosition,
   handleMouseDown,
+  getGrabberPosition,
 }: RangeGrabberProps) => {
+  const barWidth = useRangeBarContext()
+  if (!barWidth) return
+
+  const position = getGrabberPosition(initialValue)
+
   return (
     <div
-      style={{ marginLeft: grabberPosition }}
+      style={{ marginLeft: position }}
       className="group relative cursor-pointer select-none"
       onMouseDown={handleMouseDown}
     >
