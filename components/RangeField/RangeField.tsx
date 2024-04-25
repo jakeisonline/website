@@ -39,9 +39,7 @@ const RangeField = ({
     >
       <div className="mb-16">
         <p className="text-2xl">Price Range</p>
-        <p className="text-sm text-slate-500">
-          The average nightly price is $499
-        </p>
+        <p className="text-sm text-slate-500"></p>
       </div>
       <RangeBar minRange={minRange} maxRange={maxRange}>
         <RangeGrabber
