@@ -41,7 +41,7 @@ const RangeField = ({
       onTouchEnd={handleMouseUp}
       onTouchCancel={handleMouseUp}
     >
-      <div className="mb-16">
+      <div className="mb-12">
         <p className="text-2xl">Price Range</p>
       </div>
       <RangeBar setBarWidth={setBarWidth}>
@@ -59,7 +59,7 @@ const RangeField = ({
           getGrabberPosition={getGrabberPosition}
         />
       </RangeBar>
-      <div className="flex flex-row mt-3">
+      <div className="sm:flex mt-3">
         <div className="">
           <label className="text-sm">Min Price</label>
           <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 flex inner-border inner-border-slate-500 rounded-md py-2 px-2.5">

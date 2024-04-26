@@ -126,8 +126,6 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
     setBarWidth,
     getGrabberPosition,
     currentValues,
-    grabberPositions,
-    setGrabberPositions,
   }
 }
 

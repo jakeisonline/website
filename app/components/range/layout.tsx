@@ -12,7 +12,7 @@ export default function RootLayout({
         <title>Components | Range</title>
       </head>
 
-      <body>{children}</body>
+      <body className="min-h-96 sm:min-h-screen">{children}</body>
     </html>
   )
 }
