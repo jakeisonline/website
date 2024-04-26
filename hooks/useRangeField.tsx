@@ -60,7 +60,6 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
   }
 
   const getXOffset = (e: any) => {
-    console.log(e)
     return e.type == "touchmove" || e.type == "touchstart"
       ? e.touches[0].clientX
       : e.clientX
