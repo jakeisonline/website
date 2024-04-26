@@ -74,7 +74,7 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
       mouseOffset[type as keyof typeof mouseOffset] !== 0
         ? e.clientX - mouseOffset[type as keyof typeof mouseOffset]
         : getGrabberPosition(currentValues.high)
-    const newValue = Math.round(newPosition / (barWidth / 100))
+    const newValue = Math.round(newPosition / (barWidth / currentValues.max))
 
     if (!canMoveGrabber(type, newValue)) return
 
@@ -101,7 +101,7 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
   }
 
   const getGrabberPosition = (value: number) => {
-    return (barWidth / 100) * value
+    return (barWidth / currentValues.max) * value
   }
 
   const handleMouseUp = () => {
