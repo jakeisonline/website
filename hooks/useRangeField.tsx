@@ -37,7 +37,7 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
       draggingType: grabberType,
     })
 
-    updateMouseOffset(grabberType, e.clientX)
+    updateMouseOffset(grabberType, getXOffset(e))
   }
 
   const updateMouseOffset = (grabberType: string, clientX: number) => {
@@ -59,7 +59,16 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
     }))
   }
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const getXOffset = (e: any) => {
+    console.log(e)
+    return e.type == "touchmove" || e.type == "touchstart"
+      ? e.touches[0].clientX
+      : e.clientX
+  }
+
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
+  ) => {
     if (!draggingEvent.isDragging) return
     const grabberType = draggingEvent.draggingType
 
@@ -68,11 +77,11 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
 
   const handleGrabberMove = (
     type: string,
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ) => {
     const newPosition =
       mouseOffset[type as keyof typeof mouseOffset] !== 0
-        ? e.clientX - mouseOffset[type as keyof typeof mouseOffset]
+        ? getXOffset(e) - mouseOffset[type as keyof typeof mouseOffset]
         : getGrabberPosition(currentValues.high)
     const newValue = Math.round(newPosition / (barWidth / currentValues.max))
 

@@ -36,7 +36,10 @@ const RangeField = ({
     <div
       className="bg-white py-9 px-10 rounded-lg"
       onMouseMove={handleMouseMove}
+      onTouchMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      onTouchEnd={handleMouseUp}
+      onTouchCancel={handleMouseUp}
     >
       <div className="mb-16">
         <p className="text-2xl">Price Range</p>

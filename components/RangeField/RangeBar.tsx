@@ -29,7 +29,7 @@ const RangeBar = ({ setBarWidth, children }: RangeBarProps) => {
     <RangeBarWidthContext.Provider value={width}>
       <div
         ref={ref}
-        className="flex flex-row flex-none items-center bg-blue-100 h-1 rounded-full"
+        className="touch-none flex flex-row flex-none items-center bg-blue-100 h-1 rounded-full"
       >
         {children}
       </div>

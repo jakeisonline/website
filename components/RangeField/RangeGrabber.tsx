@@ -33,6 +33,7 @@ const RangeGrabber = ({
       style={style}
       className="group relative cursor-pointer select-none"
       onMouseDown={doMouseDown}
+      onTouchStart={doMouseDown}
     >
       <div className="flex flex-col items-center">
         <div className="group-active:shadow-lg group-hover:bg-slate-900 absolute bg-black inline-block rounded-md -translate-y-7">
