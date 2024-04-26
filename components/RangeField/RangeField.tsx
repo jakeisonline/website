@@ -8,8 +8,8 @@ import RangeFill from "./RangeFill"
 interface RangeFieldProps {
   minRange: number
   maxRange: number
-  initialLowValue: number
-  initialHighValue: number
+  initialLowValue?: number
+  initialHighValue?: number
 }
 
 const RangeField = ({
