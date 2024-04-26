@@ -5,9 +5,9 @@ export default function Home() {
     <main className="m-auto">
       <RangeField
         minRange={0}
-        maxRange={1000}
+        maxRange={100}
         initialLowValue={20}
-        initialHighValue={90}
+        initialHighValue={80}
       />
     </main>
   )

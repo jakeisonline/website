@@ -2,12 +2,14 @@ import { forwardRef, useContext } from "react"
 import { useRangeBarContext } from "./RangeBar"
 
 interface RangeGrabberProps {
+  type: string
   initialValue: number
-  handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
+  handleMouseDown: (e: React.MouseEvent<HTMLDivElement>, type: string) => void
   getGrabberPosition: any
 }
 
 const RangeGrabber = ({
+  type,
   initialValue,
   handleMouseDown,
   getGrabberPosition,
@@ -15,13 +17,22 @@ const RangeGrabber = ({
   const barWidth = useRangeBarContext()
   if (!barWidth) return
 
-  const position = getGrabberPosition(initialValue)
+  const grabberPosition = getGrabberPosition(initialValue)
+
+  const doMouseDown = (e: any) => {
+    handleMouseDown(e, type)
+  }
+
+  const style =
+    type === "low"
+      ? { marginLeft: grabberPosition }
+      : { marginRight: barWidth - grabberPosition }
 
   return (
     <div
-      style={{ marginLeft: position }}
+      style={style}
       className="group relative cursor-pointer select-none"
-      onMouseDown={handleMouseDown}
+      onMouseDown={doMouseDown}
     >
       <div className="flex flex-col items-center">
         <div className="group-active:shadow-lg group-hover:bg-slate-900 absolute bg-black inline-block rounded-md -translate-y-7">

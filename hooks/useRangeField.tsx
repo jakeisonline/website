@@ -1,39 +1,103 @@
 import { useState } from "react"
 
 interface useRangeFieldProps {
-  lowStartValue: number
-  highStartValue: number
+  min: number
+  max: number
+  low?: number
+  high?: number
 }
 
-const useRangeField = ({
-  lowStartValue,
-  highStartValue,
-}: useRangeFieldProps) => {
-  const [lowValue, setLowValue] = useState(lowStartValue | 0)
-  const [highValue, setHighValue] = useState(highStartValue | 1)
-  const [isDragging, setIsDragging] = useState(false)
-  const [grabberPosition, setGrabberPosition] = useState(0)
-  const [mouseOffset, setMouseOffset] = useState(0)
+const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
+  const [currentValues, setCurrentValues] = useState({
+    min: min,
+    max: max,
+    low: low ? low : min,
+    high: high ? high : max,
+  })
+  const [grabberPositions, setGrabberPositions] = useState({
+    low: 0,
+    high: 0,
+  })
+  const [mouseOffset, setMouseOffset] = useState({
+    low: 0,
+    high: 0,
+  })
   const [barWidth, setBarWidth] = useState(0)
+  const [draggingEvent, setDraggingEvent] = useState({
+    isDragging: false,
+    draggingType: "",
+  })
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true)
+  const handleMouseDown = (
+    e: React.MouseEvent<HTMLDivElement>,
+    grabberType: string,
+  ) => {
+    setDraggingEvent({
+      isDragging: true,
+      draggingType: grabberType,
+    })
 
-    if (grabberPosition === 0 && mouseOffset === 0) {
-      setMouseOffset(e.clientX - getGrabberPosition(lowValue))
-    } else {
-      setMouseOffset(e.clientX - grabberPosition)
+    updateMouseOffset(grabberType, e.clientX)
+  }
+
+  const updateMouseOffset = (grabberType: string, clientX: number) => {
+    const value = grabberType === "low" ? currentValues.low : currentValues.high
+
+    const newValue =
+      grabberPositions[grabberType as keyof typeof grabberPositions] === 0 &&
+      mouseOffset[grabberType as keyof typeof grabberPositions] === 0
+        ? clientX - getGrabberPosition(value)
+        : clientX -
+          grabberPositions[grabberType as keyof typeof grabberPositions]
+
+    const newMouseOffset = {
+      [grabberType]: newValue,
     }
+    setMouseOffset((mouseOffset) => ({
+      ...mouseOffset,
+      ...newMouseOffset,
+    }))
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return
+    if (!draggingEvent.isDragging) return
+    const grabberType = draggingEvent.draggingType
+
+    handleGrabberMove(grabberType, e)
+  }
+
+  const handleGrabberMove = (
+    type: string,
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
     const newPosition =
-      mouseOffset !== 0 ? e.clientX - mouseOffset : getGrabberPosition(lowValue)
+      mouseOffset[type as keyof typeof mouseOffset] !== 0
+        ? e.clientX - mouseOffset[type as keyof typeof mouseOffset]
+        : getGrabberPosition(currentValues.high)
     const newValue = Math.round(newPosition / (barWidth / 100))
-    if (newPosition < 0 || newValue >= highValue - 5) return
-    setGrabberPosition(newPosition)
-    setLowValue(newValue)
+
+    if (!canMoveGrabber(type, newValue)) return
+
+    const updatedPosition = { [type]: newPosition }
+    setGrabberPositions((grabberPositions) => ({
+      ...grabberPositions,
+      ...updatedPosition,
+    }))
+    const updatedValue = { [type]: newValue }
+    setCurrentValues((currentValues) => ({
+      ...currentValues,
+      ...updatedValue,
+    }))
+  }
+
+  const canMoveGrabber = (type: string, newValue: number) => {
+    if (type === "low") {
+      return (
+        newValue >= currentValues.min && newValue <= currentValues.high - 15
+      )
+    } else {
+      return newValue <= currentValues.max && newValue >= currentValues.low + 15
+    }
   }
 
   const getGrabberPosition = (value: number) => {
@@ -41,20 +105,21 @@ const useRangeField = ({
   }
 
   const handleMouseUp = () => {
-    setIsDragging(false)
+    setDraggingEvent({
+      isDragging: false,
+      draggingType: "",
+    })
   }
 
   return {
-    lowValue,
-    setLowValue,
-    highValue,
-    setHighValue,
-    grabberPosition,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
     setBarWidth,
     getGrabberPosition,
+    currentValues,
+    grabberPositions,
+    setGrabberPositions,
   }
 }
 

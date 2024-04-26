@@ -19,19 +19,17 @@ const RangeField = ({
   initialHighValue,
 }: RangeFieldProps) => {
   const {
-    lowValue,
-    setLowValue,
-    highValue,
-    setHighValue,
-    grabberPosition,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
     setBarWidth,
     getGrabberPosition,
+    currentValues,
   } = useRangeField({
-    lowStartValue: initialLowValue,
-    highStartValue: initialHighValue,
+    min: minRange,
+    max: maxRange,
+    low: initialLowValue,
+    high: initialHighValue,
   })
 
   return (
@@ -45,20 +43,18 @@ const RangeField = ({
       </div>
       <RangeBar setBarWidth={setBarWidth}>
         <RangeGrabber
-          initialValue={lowValue}
+          type={"low"}
+          initialValue={currentValues.low}
           handleMouseDown={handleMouseDown}
           getGrabberPosition={getGrabberPosition}
         />
         <RangeFill className="h-1 bg-blue-600 grow" />
-        <div
-          style={{ marginRight: 10 }}
-          className="group relative cursor-pointer select-none"
-        >
-          <div className="group-active:shadow-lg absolute bg-black inline-block rounded-md -translate-y-7 -translate-x-4">
-            <span className="text-sm py-1 px-1.5 text-white">90</span>
-          </div>
-          <div className="group-active:shadow-md group-active:shadow-blue-600/20 w-3.5 h-3.5 rounded-full border-4 bg-white border-blue-600"></div>
-        </div>
+        <RangeGrabber
+          type={"high"}
+          initialValue={currentValues.high}
+          handleMouseDown={handleMouseDown}
+          getGrabberPosition={getGrabberPosition}
+        />
       </RangeBar>
       <div className="flex flex-row mt-3">
         <div className="">
@@ -67,7 +63,7 @@ const RangeField = ({
             <input
               type="number"
               className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 bg-white focus:outline-none text-sm"
-              value={lowValue}
+              value={currentValues.low}
               readOnly
             />
             <span className="text-slate-600 pl-2 border-l border-slate-400">
@@ -82,6 +78,8 @@ const RangeField = ({
             <input
               type="number"
               className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 bg-white focus:outline-none text-sm"
+              value={currentValues.high}
+              readOnly
             />
             <span className="text-slate-600 pl-2 border-l border-slate-400">
               $
