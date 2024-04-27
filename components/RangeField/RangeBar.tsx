@@ -23,7 +23,7 @@ const RangeBar = ({ setBarWidth, children }: RangeBarProps) => {
       setBarWidth(ref.current.offsetWidth)
       setWidth(ref.current.offsetWidth)
     }
-  }, [])
+  }, [setBarWidth])
 
   return (
     <RangeBarWidthContext.Provider value={width}>
