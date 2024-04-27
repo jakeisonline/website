@@ -41,7 +41,7 @@ const RangeField = ({
       onTouchEnd={handleMouseUp}
       onTouchCancel={handleMouseUp}
     >
-      <div className="mb-12 touch-none">
+      <div className="mb-12">
         <p className="text-2xl">Price Range</p>
       </div>
       <RangeBar setBarWidth={setBarWidth}>
