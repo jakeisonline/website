@@ -28,7 +28,7 @@ export default function InfoPanel({
             <h1 className="font-extrabold text-2xl pb-6">{country?.country}</h1>
             <p>{country?.infoText}</p>
             <section>
-              <ul className="list-disc list-inside pl-1 my-4">
+              <ul className="list-disc list-inside pl-1 mt-5 mb-8">
                 {country?.infoBullets.map((bullet, index) => (
                   <li key={`bullet-${index}`}>{bullet}</li>
                 ))}
