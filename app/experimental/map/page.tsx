@@ -7,9 +7,13 @@ import { COUNTRIES } from "./countries"
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
+const initialCountry = COUNTRIES.find(
+  (country) => country.country === "United Kingdom",
+)
+
 const initialViewState = {
-  longitude: COUNTRIES[0].longitude,
-  latitude: COUNTRIES[0].latitude,
+  longitude: initialCountry?.longitude,
+  latitude: initialCountry?.latitude,
   zoom: 5,
   bearing: 0,
   pitch: 0,
@@ -33,7 +37,7 @@ type onSelectCountryProps = {
 
 export default function Page() {
   const mapRef = useRef<MapRef>(null)
-  const [currentCountry, setCurrentCountry] = useState(COUNTRIES[0].country)
+  const [currentCountry, setCurrentCountry] = useState(initialCountry?.country)
 
   const onSelectCountry = useCallback(
     ({ longitude, latitude, zoom = 5, country }: onSelectCountryProps) => {
