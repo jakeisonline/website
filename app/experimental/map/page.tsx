@@ -2,11 +2,8 @@
 
 import { useRef, useCallback, useContext, useState } from "react"
 import Map, { MapRef } from "react-map-gl"
-
 import InfoPanel from "./infoPanel"
-import CountryPills from "./countryPills"
 import { COUNTRIES } from "./countries"
-import { env } from "process"
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
@@ -55,7 +52,7 @@ export default function Page() {
       <Map
         ref={mapRef}
         initialViewState={initialViewState}
-        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
       />
       <InfoPanel
