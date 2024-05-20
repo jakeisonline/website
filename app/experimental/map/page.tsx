@@ -2,35 +2,12 @@
 
 import { useRef, useCallback, useState } from "react"
 import Map, { MapRef, Marker } from "react-map-gl"
-import InfoPanel from "./infoPanel"
-import WelcomePanel from "./welcomePanel"
-import Pin from "./pin"
-import WebpageWrapper from "./webpageWrapper"
-
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
-
-const initialLocation = {
-  latitude: 53.3418237,
-  longitude: -6.2870543,
-  zoom: 15,
-}
-
-const initialViewState = {
-  longitude: initialLocation?.longitude,
-  latitude: initialLocation?.latitude,
-  zoom: initialLocation?.zoom,
-  bearing: 0,
-  pitch: 0,
-  // Disable all interactions
-  scrollZoom: false,
-  boxZoom: false,
-  dragRotate: false,
-  dragPan: false,
-  keyboard: false,
-  doubleClickZoom: false,
-  touchZoomRotate: false,
-  touchPitch: false,
-}
+import InfoPanel from "./components/infoPanel"
+import WelcomePanel from "./components/welcomePanel"
+import Pin from "./components/pin"
+import WebpageWrapper from "./components/webpageWrapper"
+import useMapContext from "./hooks/useMapContext"
+import { MAPBOX_TOKEN, INITIAL_LOCATION, INITIAL_VIEWSTATE } from "./lib/const"
 
 type onSelectCountryProps = {
   longitude: number
@@ -40,9 +17,9 @@ type onSelectCountryProps = {
 }
 
 export default function Page() {
+  const { currentCountry, handleSetCountry, displayCountryPage } =
+    useMapContext()
   const mapRef = useRef<MapRef>(null)
-  const [currentCountry, setCurrentCountry] = useState<String>("")
-  const [displayCountryPage, setDisplayCountryPage] = useState<Boolean>(false)
 
   const onSelectCountry = useCallback(
     ({ longitude, latitude, zoom = 5, country }: onSelectCountryProps) => {
@@ -51,33 +28,24 @@ export default function Page() {
         duration: 2000,
         zoom: zoom,
       })
-      setCurrentCountry(country)
+      handleSetCountry(country)
     },
-    [],
+    [handleSetCountry],
   )
-
-  const onResetCountry = useCallback(() => {
-    setCurrentCountry("")
-  }, [])
 
   return (
     <div className="relative size-full h-screen overflow-hidden">
-      {displayCountryPage && (
-        <WebpageWrapper
-          currentCountry={currentCountry}
-          setDisplayCountryPage={setDisplayCountryPage}
-        />
-      )}
+      {displayCountryPage && <WebpageWrapper />}
       <Map
         ref={mapRef}
-        initialViewState={initialViewState}
+        initialViewState={INITIAL_VIEWSTATE}
         mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
         {!currentCountry && (
           <Marker
-            longitude={initialLocation?.longitude}
-            latitude={initialLocation?.latitude}
+            longitude={INITIAL_LOCATION.longitude}
+            latitude={INITIAL_LOCATION.latitude}
             anchor="bottom"
           >
             <Pin />
@@ -85,13 +53,7 @@ export default function Page() {
         )}
       </Map>
       {!currentCountry && <WelcomePanel onSelectCountry={onSelectCountry} />}
-      {!displayCountryPage && currentCountry && (
-        <InfoPanel
-          currentCountry={currentCountry}
-          onResetCountry={onResetCountry}
-          setDisplayCountryPage={setDisplayCountryPage}
-        />
-      )}
+      {!displayCountryPage && currentCountry && <InfoPanel />}
     </div>
   )
 }

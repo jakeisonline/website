@@ -1,28 +1,21 @@
-import { COUNTRIES } from "./countries"
-import CountryPills from "./countryPills"
+import { COUNTRIES } from "../lib/countries"
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
+import useMapContext from "../hooks/useMapContext"
 
-type InfoPanelProps = {
-  currentCountry: any // todo: define type for country
-  onResetCountry: (country: any) => void
-  setDisplayCountryPage: (displayCountryPage: boolean) => void
-}
-
-export default function InfoPanel({
-  currentCountry,
-  onResetCountry,
-  setDisplayCountryPage,
-}: InfoPanelProps) {
+export default function InfoPanel() {
+  const { currentCountry, handleShowCountryPage, handleResetCountry } =
+    useMapContext()
   const country = COUNTRIES.find(
     (country) => country.country === currentCountry,
   )
+
   return (
     <div className="absolute top-0 right-0">
       <div className="shadow-xl  mt-4 mr-4 rounded-lg z-10 w-96 bg-white text-zinc-900">
         <div className="py-4 px-4">
           <button
             className="flex items-center text-sm font-semibold gap-1 py-2 px-4 border border-zinc-400 rounded-full mb-4"
-            onClick={onResetCountry}
+            onClick={handleResetCountry}
           >
             <ArrowLeftIcon />
             Back
@@ -47,7 +40,7 @@ export default function InfoPanel({
                   className="flex items-center text-sm bg-[#e60000] font-semibold gap-1 py-2 px-4 border border-[#e60000] rounded-full text-white relative right-0"
                   onClick={(e) => {
                     e.preventDefault()
-                    setDisplayCountryPage(true)
+                    handleShowCountryPage(true)
                   }}
                 >
                   Visit site

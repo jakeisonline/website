@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { COUNTRIES } from "./countries"
+import { COUNTRIES } from "../lib/countries"
 
 type CountryPillsProps = {
   onSelectCountry: (country: any) => void

@@ -3,17 +3,12 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { useState } from "react"
-import { COUNTRIES } from "./countries"
+import { COUNTRIES } from "../lib/countries"
+import useMapContext from "../hooks/useMapContext"
 
-type WebpageWrapperProps = {
-  currentCountry: any
-  setDisplayCountryPage: (displayCountryPage: boolean) => void
-}
-
-export default function WebpageWrapper({
-  currentCountry,
-  setDisplayCountryPage,
-}: WebpageWrapperProps) {
+export default function WebpageWrapper() {
+  const { currentCountry, handleShowCountryPage, handleResetCountry } =
+    useMapContext()
   const country = COUNTRIES.find(
     (country) => country.country === currentCountry,
   )
@@ -28,7 +23,7 @@ export default function WebpageWrapper({
         <button
           className="flex items-center text-sm font-semibold gap-1 py-2 px-4 border border-zinc-400 rounded-full text-zinc-900"
           onClick={() => {
-            setDisplayCountryPage(false)
+            handleShowCountryPage(false)
           }}
         >
           <ArrowLeftIcon />
@@ -53,13 +48,13 @@ export default function WebpageWrapper({
           </svg>
         )}
 
-        <Link
-          href="/experimental/map"
+        <button
           className="flex items-center text-sm font-semibold gap-1 py-2 px-4  text-zinc-900"
+          onClick={handleResetCountry}
         >
           See more countries
           <ArrowRightIcon />
-        </Link>
+        </button>
       </div>
       <iframe
         src={country?.site}
