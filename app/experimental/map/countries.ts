@@ -16,6 +16,7 @@ export const COUNTRIES = [
   },
   {
     country: "Czech Republic",
+    site: "https://odysea.nadacevodafone.cz/",
     flagImage: "flag_czech.webp",
     latitude: 49.7736566,
     longitude: 12.830106,
@@ -31,6 +32,7 @@ export const COUNTRIES = [
   },
   {
     country: "Germany",
+    site: "https://coding-for-tomorrow.de/",
     latitude: 51.0834196,
     longitude: 10.4234469,
     flagImage: "flag_germany.webp",
