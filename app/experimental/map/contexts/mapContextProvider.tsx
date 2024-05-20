@@ -43,7 +43,7 @@ export default function MapContextProvider({
   const handleResetCountry = useCallback(() => {
     handleShowCountryPage(false)
     setCurrentCountry("")
-  }, [])
+  }, [handleShowCountryPage])
   return (
     <MapContext.Provider
       value={{
