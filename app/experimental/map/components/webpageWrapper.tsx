@@ -1,7 +1,6 @@
 "use client"
 
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
-import Link from "next/link"
 import { useState } from "react"
 import { COUNTRIES } from "../lib/countries"
 import useMapContext from "../hooks/useMapContext"
@@ -50,7 +49,9 @@ export default function WebpageWrapper() {
 
         <button
           className="flex items-center text-sm font-semibold gap-1 py-2 px-4  text-zinc-900"
-          onClick={handleResetCountry}
+          onClick={() => {
+            handleResetCountry()
+          }}
         >
           See more countries
           <ArrowRightIcon />

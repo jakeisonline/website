@@ -9,29 +9,14 @@ import WebpageWrapper from "./components/webpageWrapper"
 import useMapContext from "./hooks/useMapContext"
 import { MAPBOX_TOKEN, INITIAL_LOCATION, INITIAL_VIEWSTATE } from "./lib/const"
 
-type onSelectCountryProps = {
-  longitude: number
-  latitude: number
-  zoom?: number
-  country: string
-}
-
 export default function Page() {
-  const { currentCountry, handleSetCountry, displayCountryPage } =
-    useMapContext()
+  const {
+    currentCountry,
+    handleSetCountry,
+    displayCountryPage,
+    handleMapMove,
+  } = useMapContext()
   const mapRef = useRef<MapRef>(null)
-
-  const onSelectCountry = useCallback(
-    ({ longitude, latitude, zoom = 5, country }: onSelectCountryProps) => {
-      mapRef.current?.flyTo({
-        center: [longitude, latitude],
-        duration: 2000,
-        zoom: zoom,
-      })
-      handleSetCountry(country)
-    },
-    [handleSetCountry],
-  )
 
   return (
     <div className="relative size-full h-screen overflow-hidden">
@@ -52,7 +37,7 @@ export default function Page() {
           </Marker>
         )}
       </Map>
-      {!currentCountry && <WelcomePanel onSelectCountry={onSelectCountry} />}
+      {!currentCountry && <WelcomePanel mapRef={mapRef} />}
       {!displayCountryPage && currentCountry && <InfoPanel />}
     </div>
   )
