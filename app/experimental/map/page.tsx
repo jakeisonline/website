@@ -10,12 +10,7 @@ import useMapContext from "./hooks/useMapContext"
 import { MAPBOX_TOKEN, INITIAL_LOCATION, INITIAL_VIEWSTATE } from "./lib/const"
 
 export default function Page() {
-  const {
-    currentCountry,
-    handleSetCountry,
-    displayCountryPage,
-    handleMapMove,
-  } = useMapContext()
+  const { isInitialState, currentCountry, displayCountryPage } = useMapContext()
   const mapRef = useRef<MapRef>(null)
 
   return (
@@ -27,7 +22,7 @@ export default function Page() {
         mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
-        {!currentCountry && (
+        {isInitialState && (
           <Marker
             longitude={INITIAL_LOCATION.longitude}
             latitude={INITIAL_LOCATION.latitude}
