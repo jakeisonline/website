@@ -5,7 +5,7 @@ interface StepperCollapsibleContainerProps {
   children: any
 }
 
-const StepperCollapsableContainer = ({
+const StepperCollapsibleContainer = ({
   collapsible,
   children,
 }: StepperCollapsibleContainerProps) => {
@@ -18,4 +18,4 @@ const StepperCollapsableContainer = ({
   return <div className={divClass}>{children}</div>
 }
 
-export default StepperCollapsableContainer
+export default StepperCollapsibleContainer

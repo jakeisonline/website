@@ -1,4 +1,4 @@
-import { useRangeBarContext } from "./RangeBar"
+import { useRangeBarContext } from "./range-bar"
 
 const RangeFill = ({ ...props }) => {
   const barWidth = useRangeBarContext()

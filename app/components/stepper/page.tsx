@@ -1,4 +1,4 @@
-import StepperField from "@/components/StepperField"
+import StepperField from "@/components/stepper-field"
 
 export default function Home() {
   return (

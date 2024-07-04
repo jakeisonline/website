@@ -1,9 +1,9 @@
 "use client"
 
 import useRangeField from "@/hooks/useRangeField"
-import RangeGrabber from "./RangeGrabber"
-import RangeBar from "./RangeBar"
-import RangeFill from "./RangeFill"
+import RangeGrabber from "./range-grabber"
+import RangeBar from "./range-bar"
+import RangeFill from "./range-fill"
 
 interface RangeFieldProps {
   minRange: number

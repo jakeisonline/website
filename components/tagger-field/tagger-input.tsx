@@ -7,7 +7,7 @@ interface TaggerInputProps {
   taggerInputRef: RefObject<HTMLInputElement> // input ref for parent component handling
 }
 
-const TaggerInputField = ({
+const TaggerInput = ({
   placeholder,
   addTag,
   removeLastTag,
@@ -55,4 +55,4 @@ const TaggerInputField = ({
   )
 }
 
-export default TaggerInputField
+export default TaggerInput

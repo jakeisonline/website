@@ -1,5 +1,5 @@
 import { forwardRef, useContext } from "react"
-import { useRangeBarContext } from "./RangeBar"
+import { useRangeBarContext } from "./range-bar"
 
 interface RangeGrabberProps {
   type: string

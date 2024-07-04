@@ -1,4 +1,4 @@
-import RangeField from "@/components/RangeField"
+import RangeField from "@/components/range-field"
 
 export default function Home() {
   return (

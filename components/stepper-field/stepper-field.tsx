@@ -2,13 +2,13 @@
 
 import StepperPlusIcon from "@/svgs/StepperPlusIcon"
 import StepperMinusIcon from "@/svgs/StepperMinusIcon"
-import StepperValue from "./StepperValue"
-import StepperController from "./StepperController"
+import StepperValue from "./stepper-value"
+import StepperController from "./stepper-controller"
 import useStepperField from "@/hooks/useStepperField"
 import { useRef } from "react"
-import StepperLabel from "./StepperLabel"
-import StepperCollapsible from "./StepperCollapsible"
-import StepperBadge from "./StepperBadge"
+import StepperLabel from "./stepper-label"
+import StepperCollapsible from "./stepper-collapsible"
+import StepperBadge from "./stepper-badge"
 
 interface StepperFieldProps {
   startNum: number

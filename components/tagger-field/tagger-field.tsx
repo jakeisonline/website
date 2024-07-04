@@ -1,8 +1,8 @@
 "use client"
 
 import { useRef } from "react"
-import TaggerInputField from "./TaggerInputField"
-import TaggerTag from "./TaggerTag"
+import TaggerInput from "./tagger-input"
+import TaggerTag from "./tagger-tag"
 import useTaggerInputField from "@/hooks/useTaggerInputField"
 
 const TaggerField = () => {
@@ -25,7 +25,7 @@ const TaggerField = () => {
       {tags.map((label: string, index: number) => (
         <TaggerTag label={label} key={index} removeTag={handleRemoveTag} />
       ))}
-      <TaggerInputField
+      <TaggerInput
         placeholder="+ Add Tag"
         addTag={handleAddTag}
         removeLastTag={handleRemoveLastTag}

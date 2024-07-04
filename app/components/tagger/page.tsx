@@ -1,4 +1,4 @@
-import TaggerField from "@/components/TaggerField"
+import TaggerField from "@/components/tagger-field"
 
 export default function Home() {
   return (
