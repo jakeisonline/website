@@ -1,16 +1,17 @@
+import useStepperFieldContext from "@/hooks/use-stepper-field-context"
+
 interface StepperBadgeProps {
   hideBadge?: boolean
   hideBadgeNum?: number
-  stepValue: number
   collapsible?: boolean
 }
 
 const StepperBadge = ({
   hideBadge,
   hideBadgeNum,
-  stepValue,
   collapsible,
 }: StepperBadgeProps) => {
+  const { stepValue } = useStepperFieldContext()
   if (!collapsible || hideBadge || stepValue == hideBadgeNum) return
 
   return (

@@ -1,31 +1,22 @@
+import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import clsx from "clsx"
 
 interface StepperControllerProps {
   direction: string
-  handleStep: (direction: string) => void
-  stepValue: number
-  minValue?: number | null
-  maxValue?: number | null
   children: any
 }
 
-const StepperValue = ({
-  direction,
-  handleStep,
-  stepValue,
-  minValue,
-  maxValue,
-  children,
-}: StepperControllerProps) => {
+const StepperValue = ({ direction, children }: StepperControllerProps) => {
+  const { minNum, maxNum, stepValue, handleStep } = useStepperFieldContext()
   const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     handleStep(direction)
     e.preventDefault()
   }
 
   const isDisabled = () => {
-    if ((minValue || minValue === 0) && stepValue <= minValue) {
+    if ((minNum || minNum === 0) && stepValue <= minNum) {
       return true
-    } else if (maxValue && stepValue >= maxValue) {
+    } else if (maxNum && stepValue >= maxNum) {
       return true
     } else {
       return false

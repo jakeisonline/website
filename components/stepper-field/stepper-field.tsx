@@ -4,11 +4,12 @@ import StepperPlusIcon from "@/svgs/StepperPlusIcon"
 import StepperMinusIcon from "@/svgs/StepperMinusIcon"
 import StepperValue from "./stepper-value"
 import StepperController from "./stepper-controller"
-import useStepperField from "@/hooks/useStepperField"
+import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { useRef } from "react"
 import StepperLabel from "./stepper-label"
 import StepperCollapsible from "./stepper-collapsible"
 import StepperBadge from "./stepper-badge"
+import { StepperFieldContextProvider } from "@/contexts/stepper-field-context-provider"
 
 interface StepperFieldProps {
   startNum: number
@@ -35,7 +36,7 @@ const StepperField = ({
   hideBadge,
   hideBadgeNum,
 }: StepperFieldProps) => {
-  const { stepValue, handleStep } = useStepperField(startNum, minNum, maxNum)
+  const { stepValue, handleStep } = useStepperFieldContext()
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -46,53 +47,44 @@ const StepperField = ({
   }
 
   return (
-    <div
-      onMouseDown={handleClick}
-      className={
-        "has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-gray-500 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
-      }
+    <StepperFieldContextProvider
+      minNum={minNum}
+      maxNum={maxNum}
+      startNum={startNum}
+      inputRef={inputRef}
     >
-      <StepperLabel
-        fieldId={fieldId}
-        fieldLabel={fieldLabel}
-        fieldLabelReader={fieldLabelReader}
-        collapsible={collapsible}
-      />
-      <StepperCollapsible collapsible={collapsible}>
-        <StepperController
-          direction="down"
-          handleStep={handleStep}
-          stepValue={stepValue}
-          minValue={minNum}
-        >
-          <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
-        </StepperController>
-        <StepperValue
-          stepValue={stepValue}
-          minNum={minNum}
-          maxNum={maxNum}
-          handleStep={handleStep}
-          inputRef={inputRef}
+      <div
+        onMouseDown={handleClick}
+        className={
+          "has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-gray-500 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
+        }
+      >
+        <StepperLabel
           fieldId={fieldId}
-          fieldName={fieldName}
+          fieldLabel={fieldLabel}
           fieldLabelReader={fieldLabelReader}
+          collapsible={collapsible}
         />
-        <StepperController
-          direction="up"
-          handleStep={handleStep}
-          stepValue={stepValue}
-          maxValue={maxNum}
-        >
-          <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
-        </StepperController>
-      </StepperCollapsible>
-      <StepperBadge
-        hideBadge={hideBadge}
-        hideBadgeNum={hideBadgeNum}
-        stepValue={stepValue}
-        collapsible={collapsible}
-      />
-    </div>
+        <StepperCollapsible collapsible={collapsible}>
+          <StepperController direction="down">
+            <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
+          </StepperController>
+          <StepperValue
+            fieldId={fieldId}
+            fieldName={fieldName}
+            fieldLabelReader={fieldLabelReader}
+          />
+          <StepperController direction="up">
+            <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
+          </StepperController>
+        </StepperCollapsible>
+        <StepperBadge
+          hideBadge={hideBadge}
+          hideBadgeNum={hideBadgeNum}
+          collapsible={collapsible}
+        />
+      </div>
+    </StepperFieldContextProvider>
   )
 }
 

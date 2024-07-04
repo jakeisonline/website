@@ -1,26 +1,19 @@
+import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { RefObject } from "react"
 
 interface StepperValueProps {
-  stepValue: number
-  minNum?: number
-  maxNum?: number
-  inputRef: RefObject<HTMLInputElement> // input ref for parent component handling
-  handleStep: (direction: string) => void
   fieldId?: string
   fieldName?: string
   fieldLabelReader?: string
 }
 
 const StepperValue = ({
-  stepValue,
-  minNum,
-  maxNum,
-  inputRef,
-  handleStep,
   fieldId,
   fieldName,
   fieldLabelReader,
 }: StepperValueProps) => {
+  const { minNum, maxNum, stepValue, handleStep, inputRef } =
+    useStepperFieldContext()
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code !== "ArrowDown" && e.code !== "ArrowUp") return
     const stepDirection = e.code === "ArrowUp" ? "up" : "down"
