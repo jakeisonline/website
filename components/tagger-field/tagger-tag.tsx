@@ -1,14 +1,16 @@
 import Image from "next/image"
 import CrossIcon from "@/svgs/CrossIcon"
+import useTaggerFieldContext from "@/hooks/use-tagger-field-context"
 
 interface TaggerTagProps {
   label: string // String displayed as the tag's label
-  removeTag: (tag: string) => void
 }
 
-const TaggerTag = ({ label, removeTag }: TaggerTagProps) => {
-  const handleRemove = () => {
-    removeTag(label)
+const TaggerTag = ({ label }: TaggerTagProps) => {
+  const { handleRemoveTag } = useTaggerFieldContext()
+
+  const handleClick = () => {
+    handleRemoveTag(label)
   }
 
   return (
@@ -16,7 +18,7 @@ const TaggerTag = ({ label, removeTag }: TaggerTagProps) => {
       <span className="mr-0.5">{label}</span>
       <div
         className="flex rounded-full ml-0.5 px-1 py-0.5 opacity-55 hover:opacity-100 hover:bg-indigo-200"
-        onClick={handleRemove}
+        onClick={handleClick}
       >
         <CrossIcon className="relative w-4 h-4 top-0.5" />
       </div>

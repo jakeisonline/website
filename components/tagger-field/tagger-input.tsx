@@ -1,19 +1,14 @@
+import useTaggerFieldContext from "@/hooks/use-tagger-field-context"
 import { useState, RefObject } from "react"
 
 interface TaggerInputProps {
   placeholder: string // String displayed as the input's placeholder
-  addTag: (tag: string) => void // addTag handled, passed through props
-  removeLastTag: () => void
-  taggerInputRef: RefObject<HTMLInputElement> // input ref for parent component handling
 }
 
-const TaggerInput = ({
-  placeholder,
-  addTag,
-  removeLastTag,
-  taggerInputRef,
-}: TaggerInputProps) => {
+const TaggerInput = ({ placeholder }: TaggerInputProps) => {
   const [tag, tagQuery] = useState("")
+  const { inputRef, handleAddTag, handleRemoveLastTag } =
+    useTaggerFieldContext()
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Allow users to keep seeing what they're typing, as expected
@@ -30,13 +25,13 @@ const TaggerInput = ({
     switch (e.key) {
       case "Enter":
         if (tagQueryValue !== "" && tagQueryValue.trim().length !== 0) {
-          addTag(tagQueryValue)
+          handleAddTag(tagQueryValue)
           tagQuery("")
         }
         return
       case "Backspace":
         if (tagQueryValue === "") {
-          removeLastTag()
+          handleRemoveLastTag()
         }
         return
     }
@@ -44,7 +39,7 @@ const TaggerInput = ({
 
   return (
     <input
-      ref={taggerInputRef}
+      ref={inputRef}
       type="text"
       value={tag}
       onKeyDown={handleKeydown}
