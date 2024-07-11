@@ -1,5 +1,5 @@
 import RangeField from "@/components/range-field"
-import StepperField from "@/components/StepperField"
+import StepperField from "@/components/stepper-field"
 import TaggerField from "@/components/tagger-field"
 
 export default function ComponentsPage() {
