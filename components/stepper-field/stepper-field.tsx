@@ -9,7 +9,7 @@ import { useRef } from "react"
 import StepperLabel from "./stepper-label"
 import StepperCollapsible from "./stepper-collapsible"
 import StepperBadge from "./stepper-badge"
-import { StepperFieldContextProvider } from "@/contexts/stepper-field-context-provider"
+import StepperFieldContextProvider from "@/contexts/stepper-field-context-provider"
 
 interface StepperFieldProps {
   startNum: number

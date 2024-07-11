@@ -16,19 +16,21 @@ export const StepperFieldContext = createContext<StepperFieldContextType>({
   handleStep: () => {},
 })
 
-export const StepperFieldContextProvider = ({
+type StepperFieldContextProviderProps = {
+  minNum?: number
+  maxNum?: number
+  startNum?: number
+  inputRef: RefObject<HTMLInputElement>
+  children: React.ReactElement
+}
+
+export default function StepperFieldContextProvider({
   minNum = 0,
   maxNum = 100,
   startNum = 0,
   inputRef,
   children,
-}: {
-  minNum?: number
-  maxNum?: number
-  startNum?: number
-  inputRef: RefObject<HTMLInputElement>
-  children: React.ReactNode
-}) => {
+}: StepperFieldContextProviderProps) {
   const [stepValue, setStepValue] = useState<number>(startNum)
 
   const handleStep = (direction: string) => {
