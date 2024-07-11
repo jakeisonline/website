@@ -1,3 +1,4 @@
+import useRangeFieldContext from "@/hooks/use-range-field-context"
 import {
   useRef,
   useState,
@@ -8,13 +9,13 @@ import {
 } from "react"
 
 interface RangeBarProps {
-  setBarWidth: any
   children: ReactNode
 }
 
 export const RangeBarWidthContext = createContext(0)
 
-const RangeBar = ({ setBarWidth, children }: RangeBarProps) => {
+const RangeBar = ({ children }: RangeBarProps) => {
+  const { setBarWidth } = useRangeFieldContext()
   const ref = useRef<HTMLInputElement | null>(null)
   const [width, setWidth] = useState(0)
 

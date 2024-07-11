@@ -1,22 +1,17 @@
-import { forwardRef, useContext } from "react"
 import { useRangeBarContext } from "./range-bar"
+import useRangeFieldContext from "@/hooks/use-range-field-context"
 
 interface RangeGrabberProps {
   type: string
-  initialValue: number
-  handleMouseDown: (e: React.MouseEvent<HTMLDivElement>, type: string) => void
-  getGrabberPosition: any
 }
 
-const RangeGrabber = ({
-  type,
-  initialValue,
-  handleMouseDown,
-  getGrabberPosition,
-}: RangeGrabberProps) => {
+const RangeGrabber = ({ type }: RangeGrabberProps) => {
+  const { currentValues, handleMouseDown, getGrabberPosition } =
+    useRangeFieldContext()
   const barWidth = useRangeBarContext()
   if (!barWidth) return
 
+  const initialValue = type === "low" ? currentValues.low : currentValues.high
   const grabberPosition = getGrabberPosition(initialValue)
 
   const doMouseDown = (e: any) => {

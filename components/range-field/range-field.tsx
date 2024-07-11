@@ -1,11 +1,13 @@
 "use client"
 
-import useRangeField from "@/hooks/useRangeField"
 import RangeGrabber from "./range-grabber"
 import RangeBar from "./range-bar"
 import RangeFill from "./range-fill"
+import RangeFieldContextProvider from "@/contexts/range-field-context-provider"
+import RangeContainer from "./range-container"
+import RangeNumber from "./range-number"
 
-interface RangeFieldProps {
+type RangeFieldProps = {
   minRange: number
   maxRange: number
   initialLowValue?: number
@@ -18,79 +20,29 @@ const RangeField = ({
   initialLowValue,
   initialHighValue,
 }: RangeFieldProps) => {
-  const {
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-    setBarWidth,
-    getGrabberPosition,
-    currentValues,
-  } = useRangeField({
-    min: minRange,
-    max: maxRange,
-    low: initialLowValue,
-    high: initialHighValue,
-  })
-
   return (
-    <div
-      className="bg-white py-9 px-10 rounded-lg"
-      onMouseMove={handleMouseMove}
-      onTouchMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onTouchEnd={handleMouseUp}
-      onTouchCancel={handleMouseUp}
+    <RangeFieldContextProvider
+      min={minRange}
+      max={maxRange}
+      low={initialLowValue}
+      high={initialHighValue}
     >
-      <div className="mb-12">
-        <p className="text-2xl">Price Range</p>
-      </div>
-      <RangeBar setBarWidth={setBarWidth}>
-        <RangeGrabber
-          type={"low"}
-          initialValue={currentValues.low}
-          handleMouseDown={handleMouseDown}
-          getGrabberPosition={getGrabberPosition}
-        />
-        <RangeFill className="h-1 bg-blue-600 grow" />
-        <RangeGrabber
-          type={"high"}
-          initialValue={currentValues.high}
-          handleMouseDown={handleMouseDown}
-          getGrabberPosition={getGrabberPosition}
-        />
-      </RangeBar>
-      <div className="sm:flex mt-3">
-        <div className="">
-          <label className="text-sm">Min Price</label>
-          <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 flex inner-border inner-border-slate-500 rounded-md py-2 px-2.5">
-            <input
-              type="number"
-              className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 bg-white focus:outline-none text-sm"
-              value={currentValues.low}
-              readOnly
-            />
-            <span className="text-slate-600 pl-2 border-l border-slate-400">
-              $
-            </span>
-          </div>
+      <RangeContainer>
+        <div className="mb-12">
+          <p className="text-2xl">Price Range</p>
         </div>
-        <div className="w-3 mx-2"></div>
-        <div className="">
-          <label className="text-sm">Max Price</label>
-          <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 flex inner-border inner-border-slate-500 rounded-md py-2 px-2.5">
-            <input
-              type="number"
-              className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 bg-white focus:outline-none text-sm"
-              value={currentValues.high}
-              readOnly
-            />
-            <span className="text-slate-600 pl-2 border-l border-slate-400">
-              $
-            </span>
-          </div>
+        <RangeBar>
+          <RangeGrabber type={"low"} />
+          <RangeFill className="h-1 bg-blue-600 grow" />
+          <RangeGrabber type={"high"} />
+        </RangeBar>
+        <div className="sm:flex mt-3">
+          <RangeNumber label="Min Price" type="low" />
+          <div className="w-3 mx-2"></div>
+          <RangeNumber label="Max Price" type="high" />
         </div>
-      </div>
-    </div>
+      </RangeContainer>
+    </RangeFieldContextProvider>
   )
 }
 

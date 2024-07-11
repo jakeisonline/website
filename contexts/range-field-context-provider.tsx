@@ -1,13 +1,45 @@
-import { useState } from "react"
+"use client"
 
-interface useRangeFieldProps {
+import { createContext, useState } from "react"
+
+type RangeFieldContextType = {
+  handleMouseDown: (
+    e: React.MouseEvent<HTMLDivElement>,
+    grabberType: string,
+  ) => void
+  handleMouseMove: (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
+  ) => void
+  handleMouseUp: () => void
+  setBarWidth: (width: number) => void
+  getGrabberPosition: (value: number) => number
+  currentValues: { min: number; max: number; low: number; high: number }
+}
+
+export const RangeFieldContext = createContext<RangeFieldContextType>({
+  handleMouseDown: () => {},
+  handleMouseMove: () => {},
+  handleMouseUp: () => {},
+  setBarWidth: () => {},
+  getGrabberPosition: () => 0,
+  currentValues: { min: 0, max: 100, low: 0, high: 100 },
+})
+
+type RangeFieldContextProviderProps = {
   min: number
   max: number
   low?: number
   high?: number
+  children: React.ReactNode
 }
 
-const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
+export default function RangeFieldContextProvider({
+  min,
+  max,
+  low,
+  high,
+  children,
+}: RangeFieldContextProviderProps) {
   const [currentValues, setCurrentValues] = useState({
     min: min,
     max: max,
@@ -119,14 +151,18 @@ const useRangeField = ({ low, high, min, max }: useRangeFieldProps) => {
     })
   }
 
-  return {
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-    setBarWidth,
-    getGrabberPosition,
-    currentValues,
-  }
+  return (
+    <RangeFieldContext.Provider
+      value={{
+        handleMouseDown,
+        handleMouseMove,
+        handleMouseUp,
+        setBarWidth,
+        getGrabberPosition,
+        currentValues,
+      }}
+    >
+      {children}
+    </RangeFieldContext.Provider>
+  )
 }
-
-export default useRangeField
