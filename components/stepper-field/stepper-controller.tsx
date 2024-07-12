@@ -17,10 +17,10 @@ const StepperValue = ({ direction, children }: StepperControllerProps) => {
     if (
       direction === "down" &&
       (minNum || minNum === 0) &&
-      stepValue <= minNum
+      +stepValue <= minNum
     ) {
       return true
-    } else if (direction === "up" && maxNum && stepValue >= maxNum) {
+    } else if (direction === "up" && maxNum && +stepValue >= maxNum) {
       return true
     } else {
       return false
