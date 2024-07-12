@@ -15,6 +15,7 @@ interface StepperFieldProps {
   startNum: number
   minNum?: number
   maxNum?: number
+  stepSize?: number
   fieldId?: string
   fieldName?: string
   fieldLabel?: string
@@ -28,6 +29,7 @@ const StepperField = ({
   startNum,
   minNum,
   maxNum,
+  stepSize,
   fieldId,
   fieldName,
   fieldLabel,
@@ -51,6 +53,7 @@ const StepperField = ({
       minNum={minNum}
       maxNum={maxNum}
       startNum={startNum}
+      stepSize={stepSize}
       inputRef={inputRef}
     >
       <div

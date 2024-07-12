@@ -23,6 +23,7 @@ type StepperFieldContextProviderProps = {
   minNum?: number
   maxNum?: number
   startNum?: number
+  stepSize?: number
   inputRef: RefObject<HTMLInputElement>
   children: React.ReactElement
 }
@@ -31,6 +32,7 @@ export default function StepperFieldContextProvider({
   minNum = 0,
   maxNum = 100,
   startNum = 0,
+  stepSize = 1,
   inputRef,
   children,
 }: StepperFieldContextProviderProps) {
@@ -39,10 +41,10 @@ export default function StepperFieldContextProvider({
   const handleStep = (direction: string) => {
     let newValue: number
     if (direction === "up") {
-      newValue = +stepValue + 1
+      newValue = +stepValue + stepSize
       !isAboveMax(newValue) && setStepValue(newValue)
     } else if (direction === "down") {
-      newValue = +stepValue - 1
+      newValue = +stepValue - stepSize
       !isBelowMin(newValue) && setStepValue(newValue)
     }
   }
