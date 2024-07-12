@@ -4,7 +4,6 @@ import StepperPlusIcon from "@/svgs/StepperPlusIcon"
 import StepperMinusIcon from "@/svgs/StepperMinusIcon"
 import StepperValue from "./stepper-value"
 import StepperController from "./stepper-controller"
-import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { useRef } from "react"
 import StepperLabel from "./stepper-label"
 import StepperCollapsible from "./stepper-collapsible"
@@ -38,8 +37,6 @@ const StepperField = ({
   hideBadge,
   hideBadgeNum,
 }: StepperFieldProps) => {
-  const { stepValue, handleStep } = useStepperFieldContext()
-
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
