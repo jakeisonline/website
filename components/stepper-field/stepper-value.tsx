@@ -12,29 +12,31 @@ const StepperValue = ({
   fieldName,
   fieldLabelReader,
 }: StepperValueProps) => {
-  const { minNum, maxNum, stepValue, handleStep, inputRef } =
-    useStepperFieldContext()
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code !== "ArrowDown" && e.code !== "ArrowUp") return
-    const stepDirection = e.code === "ArrowUp" ? "up" : "down"
-    handleStep(stepDirection)
-    e.preventDefault()
-  }
+  const {
+    minNum,
+    maxNum,
+    stepValue,
+    handleChange,
+    handleKeyDown,
+    handleBlur,
+    inputRef,
+  } = useStepperFieldContext()
 
   return (
     <input
       type="number"
-      min={minNum}
-      max={maxNum}
       id={fieldId}
       name={fieldName}
-      ref={inputRef}
       value={stepValue}
+      ref={inputRef}
+      min={minNum}
+      max={maxNum}
       onKeyDown={handleKeyDown}
+      onChange={handleChange}
+      onBlur={handleBlur}
       aria-label={fieldLabelReader}
       style={{ width: String(stepValue).length + "ch" }}
-      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 min-w-4 text-center text-gray-800 bg-white select-none focus:border-0 focus:outline-none caret-transparent cursor-pointer"
-      readOnly
+      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 min-w-4 text-center text-gray-800 bg-white focus:border-0 focus:outline-none cursor-pointer"
     />
   )
 }

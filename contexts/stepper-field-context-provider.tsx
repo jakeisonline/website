@@ -3,12 +3,15 @@
 import { RefObject, createContext, useContext, useState } from "react"
 
 type StepperFieldContextType = {
-  stepValue: number
+  stepValue: number | ""
   handleStep: (direction: string) => void
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  handleBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   minNum?: number
   maxNum?: number
-  inputRef?: RefObject<HTMLInputElement>
   startNum?: number
+  inputRef?: RefObject<HTMLInputElement>
 }
 
 export const StepperFieldContext = createContext<StepperFieldContextType>({
@@ -31,19 +34,65 @@ export default function StepperFieldContextProvider({
   inputRef,
   children,
 }: StepperFieldContextProviderProps) {
-  const [stepValue, setStepValue] = useState<number>(startNum)
+  const [stepValue, setStepValue] = useState<number | "">(startNum)
 
   const handleStep = (direction: string) => {
     let newValue: number
     if (direction === "up") {
-      if (maxNum && stepValue >= maxNum) return
-      newValue = stepValue + 1
-      setStepValue(newValue)
+      newValue = +stepValue + 1
+      !isAboveMax(newValue) && setStepValue(newValue)
     } else if (direction === "down") {
-      if ((minNum || minNum === 0) && stepValue <= minNum) return
-      newValue = stepValue - 1
-      setStepValue(newValue)
+      newValue = +stepValue - 1
+      !isBelowMin(newValue) && setStepValue(newValue)
     }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "") return setStepValue("")
+    const newValue = +e.target.value
+    !isNaN(newValue) && setStepValue(newValue)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code == "ArrowDown" || e.code == "ArrowUp") {
+      const stepDirection = e.code === "ArrowUp" ? "up" : "down"
+      handleStep(stepDirection)
+      e.preventDefault()
+    } else if (e.code == "Enter") {
+      e.preventDefault()
+      setValueWithinRange(stepValue.toString())
+    }
+    return
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setValueWithinRange(e.target.value)
+  }
+
+  const setValueToStart = () => {
+    setStepValue(startNum)
+  }
+
+  const setValueToMax = () => {
+    setStepValue(maxNum)
+  }
+
+  const setValueToMin = () => {
+    setStepValue(minNum)
+  }
+
+  const setValueWithinRange = (value: string) => {
+    if (!value) return setValueToStart()
+    if (isBelowMin(+value)) return setValueToMin()
+    if (isAboveMax(+value)) return setValueToMax()
+  }
+
+  const isBelowMin = (value: number) => {
+    return (minNum || minNum === 0) && value < minNum
+  }
+
+  const isAboveMax = (value: number) => {
+    return maxNum && value > maxNum
   }
 
   return (
@@ -51,6 +100,9 @@ export default function StepperFieldContextProvider({
       value={{
         stepValue,
         handleStep,
+        handleChange,
+        handleKeyDown,
+        handleBlur,
         minNum,
         maxNum,
         startNum,
