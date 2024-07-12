@@ -29,8 +29,8 @@ type StepperFieldContextProviderProps = {
 }
 
 export default function StepperFieldContextProvider({
-  minNum = 0,
-  maxNum = 100,
+  minNum,
+  maxNum,
   startNum = 0,
   stepSize = 1,
   inputRef,
@@ -76,11 +76,11 @@ export default function StepperFieldContextProvider({
   }
 
   const setValueToMax = () => {
-    setStepValue(maxNum)
+    if (maxNum) setStepValue(maxNum)
   }
 
   const setValueToMin = () => {
-    setStepValue(minNum)
+    if (minNum) setStepValue(minNum)
   }
 
   const setValueWithinRange = (value: string) => {
