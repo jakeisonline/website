@@ -1,6 +1,6 @@
 import clsx from "clsx"
 
-interface StepperCollapsibleContainerProps {
+type StepperCollapsibleContainerProps = {
   collapsible?: boolean
   children: any
 }

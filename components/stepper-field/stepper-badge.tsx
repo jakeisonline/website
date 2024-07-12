@@ -1,6 +1,6 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 
-interface StepperBadgeProps {
+type StepperBadgeProps = {
   hideBadge?: boolean
   hideBadgeNum?: number
   collapsible?: boolean

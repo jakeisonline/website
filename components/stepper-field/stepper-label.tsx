@@ -1,6 +1,6 @@
 import clsx from "clsx"
 
-interface StepperLabelProps {
+type StepperLabelProps = {
   fieldId?: string
   fieldLabel?: string
   fieldLabelReader?: string

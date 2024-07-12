@@ -10,7 +10,7 @@ import StepperCollapsible from "./stepper-collapsible"
 import StepperBadge from "./stepper-badge"
 import StepperFieldContextProvider from "@/contexts/stepper-field-context-provider"
 
-interface StepperFieldProps {
+type StepperFieldProps = {
   startNum: number
   minNum?: number
   maxNum?: number

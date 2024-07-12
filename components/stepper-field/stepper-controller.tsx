@@ -1,7 +1,7 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import clsx from "clsx"
 
-interface StepperControllerProps {
+type StepperControllerProps = {
   direction: string
   children: any
 }
