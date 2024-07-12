@@ -1,5 +1,4 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
-import { RefObject } from "react"
 
 type StepperValueProps = {
   fieldId?: string
