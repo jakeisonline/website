@@ -47,26 +47,25 @@ export default function StepperFieldContextProvider({
         shiftStep && stepShiftSize
           ? +stepValue + stepShiftSize
           : +stepValue + stepSize
-      !isAboveMax(newValue) && setStepValue(newValue)
+      setValueWithinRange(newValue)
     } else if (direction === "down") {
       newValue =
         shiftStep && stepShiftSize
           ? +stepValue - stepShiftSize
           : +stepValue - stepSize
-      !isBelowMin(newValue) && setStepValue(newValue)
+      setValueWithinRange(newValue)
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") return setStepValue("")
     const newValue = +e.target.value
-    !isNaN(newValue) && setStepValue(newValue)
+    !isNaN(newValue) && setValueWithinRange(newValue)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const shiftKeyHeld = e.shiftKey
     // User is using arrow keys to step, and may or may not be holding shift key
-    // TODO: While this works, if shift stepping will result in min/max being reached, the field will not update. Instead it should be brought to the min/max value
     if (e.code == "ArrowDown" || e.code == "ArrowUp") {
       const stepDirection = e.code === "ArrowUp" ? "up" : "down"
       handleStep(stepDirection, shiftKeyHeld)
@@ -74,14 +73,14 @@ export default function StepperFieldContextProvider({
     }
     // User is pressing enter within the stepper field
     else if (e.code == "Enter") {
+      setValueWithinRange(stepValue)
       e.preventDefault()
-      setValueWithinRange(stepValue.toString())
     }
     return
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setValueWithinRange(e.target.value)
+    setValueWithinRange(+e.target.value)
   }
 
   const setValueToStart = () => {
@@ -96,10 +95,12 @@ export default function StepperFieldContextProvider({
     if (minNum) setStepValue(minNum)
   }
 
-  const setValueWithinRange = (value: string) => {
+  const setValueWithinRange = (value: number | "") => {
     if (!value) return setValueToStart()
-    if (isBelowMin(+value)) return setValueToMin()
-    if (isAboveMax(+value)) return setValueToMax()
+    if (isBelowMin(value)) return setValueToMin()
+    if (isAboveMax(value)) return setValueToMax()
+
+    return setStepValue(value)
   }
 
   const isBelowMin = (value: number) => {
