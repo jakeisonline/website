@@ -39,10 +39,12 @@ const StepperField = ({
 }: StepperFieldProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (e.screenX !== 0 && e.screenY !== 0)
+  // Handles focus when users click the field's chrome but not neccessarily the input
+  const handleFocus = (e: React.MouseEvent<HTMLInputElement>) => {
+    if (e.screenX !== 0 && e.screenY !== 0) {
       inputRef.current && inputRef.current.focus()
-    e.preventDefault()
+      e.preventDefault()
+    }
   }
 
   return (
@@ -54,7 +56,7 @@ const StepperField = ({
       inputRef={inputRef}
     >
       <div
-        onMouseDown={handleClick}
+        onMouseUp={handleFocus}
         className={
           "has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-gray-500 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
         }
