@@ -15,6 +15,7 @@ type StepperFieldProps = {
   minNum?: number
   maxNum?: number
   stepSize?: number
+  stepShiftSize?: number
   fieldId?: string
   fieldName?: string
   fieldLabel?: string
@@ -29,6 +30,7 @@ const StepperField = ({
   minNum,
   maxNum,
   stepSize,
+  stepShiftSize,
   fieldId,
   fieldName,
   fieldLabel,
@@ -53,6 +55,7 @@ const StepperField = ({
       maxNum={maxNum}
       startNum={startNum}
       stepSize={stepSize}
+      stepShiftSize={stepShiftSize}
       inputRef={inputRef}
     >
       <div

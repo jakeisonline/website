@@ -16,7 +16,7 @@ export default function Home() {
         </pre>
       </div>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
-        <StepperField startNum={0} minNum={0} maxNum={10} />
+        <StepperField startNum={0} minNum={0} maxNum={10} stepShiftSize={10} />
         <pre className="mt-1">
           <code className="text-slate-800 text-xs">
             &lt;StepperField &nbsp;&nbsp;

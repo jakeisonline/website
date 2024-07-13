@@ -9,7 +9,8 @@ type StepperControllerProps = {
 const StepperValue = ({ direction, children }: StepperControllerProps) => {
   const { minNum, maxNum, stepValue, handleStep } = useStepperFieldContext()
   const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-    handleStep(direction)
+    const shiftKeyHeld = e.shiftKey
+    handleStep(direction, shiftKeyHeld)
     e.preventDefault()
   }
 

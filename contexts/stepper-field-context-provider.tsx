@@ -4,7 +4,7 @@ import { RefObject, createContext, useContext, useState } from "react"
 
 type StepperFieldContextType = {
   stepValue: number | ""
-  handleStep: (direction: string) => void
+  handleStep: (direction: string, shiftStep?: boolean) => void
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   handleBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
@@ -24,6 +24,7 @@ type StepperFieldContextProviderProps = {
   maxNum?: number
   startNum?: number
   stepSize?: number
+  stepShiftSize?: number
   inputRef: RefObject<HTMLInputElement>
   children: React.ReactElement
 }
@@ -33,18 +34,25 @@ export default function StepperFieldContextProvider({
   maxNum,
   startNum = 0,
   stepSize = 1,
+  stepShiftSize,
   inputRef,
   children,
 }: StepperFieldContextProviderProps) {
   const [stepValue, setStepValue] = useState<number | "">(startNum)
 
-  const handleStep = (direction: string) => {
+  const handleStep = (direction: string, shiftStep?: boolean) => {
     let newValue: number
     if (direction === "up") {
-      newValue = +stepValue + stepSize
+      newValue =
+        shiftStep && stepShiftSize
+          ? +stepValue + stepShiftSize
+          : +stepValue + stepSize
       !isAboveMax(newValue) && setStepValue(newValue)
     } else if (direction === "down") {
-      newValue = +stepValue - stepSize
+      newValue =
+        shiftStep && stepShiftSize
+          ? +stepValue - stepShiftSize
+          : +stepValue - stepSize
       !isBelowMin(newValue) && setStepValue(newValue)
     }
   }
@@ -56,11 +64,25 @@ export default function StepperFieldContextProvider({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code == "ArrowDown" || e.code == "ArrowUp") {
+    // User is holding shift key and using arrow keys to shift the stepper field
+    if (
+      stepShiftSize &&
+      (e.code == "ArrowDown" || e.code == "ArrowUp") &&
+      e.shiftKey
+    ) {
+      // TODO: While this works, if shifting will result in min/max being reached, the field will not update. Instead it should be brought to the min/max
+      const stepDirection = e.code === "ArrowUp" ? "up" : "down"
+      handleStep(stepDirection, true)
+      e.preventDefault()
+    }
+    // User is not holding shift key and using arrow keys to shift the stepper field
+    else if (e.code == "ArrowDown" || e.code == "ArrowUp") {
       const stepDirection = e.code === "ArrowUp" ? "up" : "down"
       handleStep(stepDirection)
       e.preventDefault()
-    } else if (e.code == "Enter") {
+    }
+    // User is pressing enter within the stepper field
+    else if (e.code == "Enter") {
       e.preventDefault()
       setValueWithinRange(stepValue.toString())
     }
