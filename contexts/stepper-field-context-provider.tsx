@@ -64,21 +64,12 @@ export default function StepperFieldContextProvider({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // User is holding shift key and using arrow keys to shift the stepper field
-    if (
-      stepShiftSize &&
-      (e.code == "ArrowDown" || e.code == "ArrowUp") &&
-      e.shiftKey
-    ) {
-      // TODO: While this works, if shifting will result in min/max being reached, the field will not update. Instead it should be brought to the min/max
+    const shiftKeyHeld = e.shiftKey
+    // User is using arrow keys to step, and may or may not be holding shift key
+    // TODO: While this works, if shift stepping will result in min/max being reached, the field will not update. Instead it should be brought to the min/max value
+    if (e.code == "ArrowDown" || e.code == "ArrowUp") {
       const stepDirection = e.code === "ArrowUp" ? "up" : "down"
-      handleStep(stepDirection, true)
-      e.preventDefault()
-    }
-    // User is not holding shift key and using arrow keys to shift the stepper field
-    else if (e.code == "ArrowDown" || e.code == "ArrowUp") {
-      const stepDirection = e.code === "ArrowUp" ? "up" : "down"
-      handleStep(stepDirection)
+      handleStep(stepDirection, shiftKeyHeld)
       e.preventDefault()
     }
     // User is pressing enter within the stepper field
