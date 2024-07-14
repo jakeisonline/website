@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Card, CardContent } from "@/components/ui/card"
 import CodeBlock from "@/components/ui/code-block"
-import { H1 } from "@/components/ui/headings"
+import { H1, H2 } from "@/components/ui/headings"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -56,6 +56,7 @@ export default function StepperPage() {
           <CodeBlock>{`<StepperField startNum={0} />`}</CodeBlock>
         </TabsContent>
       </Tabs>
+      <H2 className="mt-8">Examples</H2>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10"></div>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField startNum={0} minNum={0} maxNum={10} stepShiftSize={10} />
