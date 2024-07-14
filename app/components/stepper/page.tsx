@@ -1,4 +1,12 @@
 import { FeatureItem, FeatureList } from "@/components/feature-list"
+import {
+  PropsTable,
+  PropsTableBody,
+  PropsTableCell,
+  PropsTableHead,
+  PropsTableHeadCell,
+  PropsTableRow,
+} from "@/components/props-table"
 import StepperField from "@/components/stepper-field"
 import {
   Breadcrumb,
@@ -75,6 +83,25 @@ export default function StepperPage() {
       <H2>Usage</H2>
       <CodeBlock className="mb-4 w-3/5">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
       <CodeBlock className="w-3/5">{`<StepperField startNum={0} />`}</CodeBlock>
+      <H2>Props</H2>
+      <PropsTable>
+        <PropsTableHead>
+          <PropsTableRow>
+            <PropsTableHeadCell>Prop</PropsTableHeadCell>
+            <PropsTableHeadCell>Type</PropsTableHeadCell>
+            <PropsTableHeadCell>Default</PropsTableHeadCell>
+            <PropsTableHeadCell>Description</PropsTableHeadCell>
+          </PropsTableRow>
+        </PropsTableHead>
+        <PropsTableBody>
+          <PropsTableRow>
+            <PropsTableCell>collapsible</PropsTableCell>
+            <PropsTableCell>boolean</PropsTableCell>
+            <PropsTableCell>false</PropsTableCell>
+            <PropsTableCell>Collapsed or not?</PropsTableCell>
+          </PropsTableRow>
+        </PropsTableBody>
+      </PropsTable>
       <H2>Examples</H2>
       <H3>Collapsing stepper fields</H3>
       <P>
