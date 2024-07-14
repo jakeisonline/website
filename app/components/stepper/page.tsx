@@ -7,6 +7,8 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
+import H1 from "@/components/ui/h1"
+import P from "@/components/ui/p"
 import { SlashIcon } from "lucide-react"
 
 export default function StepperPage() {
@@ -23,6 +25,12 @@ export default function StepperPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+      <H1 className="mt-2">Stepper</H1>
+      <P className="mt-2">
+        The Stepper component is a user interface element that allows users to
+        increment or decrement a value. It is commonly used for inputting
+        numerical values, such as quantities or prices.
+      </P>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField startNum={0} fieldLabelReader="Quantity" />
         <pre className="mt-1">
