@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Card, CardContent } from "@/components/ui/card"
 import CodeBlock from "@/components/ui/code-block"
-import { H1, H2 } from "@/components/ui/headings"
+import { H1, H2, H3 } from "@/components/ui/headings"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -74,7 +74,96 @@ export default function StepperPage() {
       <CodeBlock className="mb-4 w-3/5">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
       <CodeBlock className="w-3/5">{`<StepperField startNum={0} />`}</CodeBlock>
       <H2>Examples</H2>
-
+      <H3>Collapsing stepper fields</H3>
+      <P>
+        You might want to display multiple quantities in a single row. For
+        example, when ordering multiple product variants in bulk, or providing
+        measurements for a product.
+      </P>
+      <Tabs defaultValue="example" className="w-3/5 mt-8">
+        <TabsList>
+          <TabsTrigger value="example">Example</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+        <TabsContent value="example">
+          <Card>
+            <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
+              <div className="flex gap-3">
+                <StepperField
+                  collapsible={true}
+                  hideBadgeNum={0}
+                  fieldId="sizes_small"
+                  fieldName="sizes_small"
+                  fieldLabel="S"
+                  fieldLabelReader="Small"
+                  startNum={0}
+                  minNum={0}
+                  maxNum={100}
+                />
+                <StepperField
+                  collapsible={true}
+                  hideBadgeNum={0}
+                  fieldId="sizes_med"
+                  fieldName="sizes_medium"
+                  fieldLabel="M"
+                  fieldLabelReader="Medium"
+                  startNum={3}
+                  minNum={0}
+                  maxNum={100}
+                />
+                <StepperField
+                  collapsible={true}
+                  hideBadgeNum={0}
+                  fieldId="sizes_large"
+                  fieldName="sizes_large"
+                  fieldLabel="L"
+                  fieldLabelReader="Large"
+                  startNum={0}
+                  minNum={0}
+                  maxNum={100}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="code">
+          <CodeBlock>{`<div className="flex gap-3">
+  <StepperField
+    collapsible={true}
+    hideBadgeNum={0}
+    fieldId="sizes_small"
+    fieldName="sizes_small"
+    fieldLabel="S"
+    fieldLabelReader="Small"
+    startNum={0}
+    minNum={0}
+    maxNum={100}
+  />
+  <StepperField
+    collapsible={true}
+    hideBadgeNum={0}
+    fieldId="sizes_med"
+    fieldName="sizes_medium"
+    fieldLabel="M"
+    fieldLabelReader="Medium"
+    startNum={3}
+    minNum={0}
+    maxNum={100}
+  />
+  <StepperField
+    collapsible={true}
+    hideBadgeNum={0}
+    fieldId="sizes_large"
+    fieldName="sizes_large"
+    fieldLabel="L"
+    fieldLabelReader="Large"
+    startNum={0}
+    minNum={0}
+    maxNum={100}
+  />
+</div>`}</CodeBlock>
+        </TabsContent>
+      </Tabs>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField startNum={0} minNum={0} maxNum={10} stepShiftSize={10} />
         <pre className="mt-1">

@@ -30,3 +30,16 @@ export function H2({ className, children }: HeadingProps) {
     </h2>
   )
 }
+
+export function H3({ className, children }: HeadingProps) {
+  return (
+    <h3
+      className={cn(
+        "font-heading mt-8 pb-2 scroll-m-20 text-xl font-semibold tracking-tight",
+        className,
+      )}
+    >
+      {children}
+    </h3>
+  )
+}
