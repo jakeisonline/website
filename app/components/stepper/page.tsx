@@ -1,3 +1,4 @@
+import { FeatureItem, FeatureList } from "@/components/feature-list"
 import StepperField from "@/components/stepper-field"
 import {
   Breadcrumb,
@@ -33,6 +34,12 @@ export default function StepperPage() {
         increment or decrement a value. It is commonly used for inputting
         numerical values, such as quantities or prices.
       </P>
+      <FeatureList>
+        <FeatureItem>Native form element (number input)</FeatureItem>
+        <FeatureItem>Keyboard editable, controllable & accessible</FeatureItem>
+        <FeatureItem>Custom step size and range (optional)</FeatureItem>
+        <FeatureItem>Shift stepping for power users (optional)</FeatureItem>
+      </FeatureList>
       <Tabs defaultValue="example" className="w-3/5 mt-8">
         <TabsList>
           <TabsTrigger value="example">Example</TabsTrigger>
