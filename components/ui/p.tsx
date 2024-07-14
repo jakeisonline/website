@@ -6,5 +6,5 @@ type PProps = {
 }
 
 export default function P({ className, children }: PProps) {
-  return <p className={cn("text-slate-800 text-base", className)}>{children}</p>
+  return <p className={cn("text-base", className)}>{children}</p>
 }
