@@ -28,7 +28,7 @@ export default function StepperPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <H1 className="mt-2">Stepper</H1>
+      <H1>Stepper</H1>
       <P className="mt-2">
         The Stepper component is a user interface element that allows users to
         increment or decrement a value. It is commonly used for inputting
@@ -48,16 +48,33 @@ export default function StepperPage() {
         <TabsContent value="example">
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
-              <StepperField startNum={0} fieldLabelReader="Quantity" />
+              <StepperField
+                startNum={0}
+                minNum={0}
+                fieldId={"quantity"}
+                fieldName={"quantity"}
+                fieldLabel={"Quantity"}
+                fieldLabelReader={"Quantity"}
+              />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="code">
-          <CodeBlock>{`<StepperField startNum={0} />`}</CodeBlock>
+          <CodeBlock>{`<StepperField
+  startNum={0}
+  minNum={0}
+  fieldId={"quantity"}
+  fieldName={"quantity"}
+  fieldLabel={"Quantity"}
+  fieldLabelReader={"Quantity"}
+/>`}</CodeBlock>
         </TabsContent>
       </Tabs>
-      <H2 className="mt-8">Examples</H2>
-      <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10"></div>
+      <H2>Usage</H2>
+      <CodeBlock className="mb-4 w-3/5">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
+      <CodeBlock className="w-3/5">{`<StepperField startNum={0} />`}</CodeBlock>
+      <H2>Examples</H2>
+
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField startNum={0} minNum={0} maxNum={10} stepShiftSize={10} />
         <pre className="mt-1">
