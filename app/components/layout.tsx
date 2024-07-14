@@ -37,7 +37,7 @@ export default function RootLayout({
                   <NavigationItem href="/components">Components</NavigationItem>
                 </Navigation>
               </div>
-              <div className="justify-end flex flex-1">
+              <div className="justify-end flex flex-1 gap-1">
                 <Button
                   variant="ghost"
                   size="icon"
