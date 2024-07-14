@@ -31,9 +31,9 @@ const StepperValue = ({ direction, children }: StepperControllerProps) => {
   const divClass = clsx(
     "px-1 py-1 rounded-md",
     isDisabled() &&
-      "opacity-20 focus:outline focus:outline-2 focus:outline-gray-600",
+      "opacity-40 focus:outline focus:outline-2 focus:outline-muted",
     !isDisabled() &&
-      "group hover:bg-blue-100 hover:cursor-pointer focus:outline focus:outline-2 focus:outline-blue-200",
+      "group hover:bg-accent hover:cursor-pointer focus:outline focus:outline-2 focus:outline-primary",
   )
 
   return (

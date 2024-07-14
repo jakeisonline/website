@@ -61,7 +61,7 @@ const StepperField = ({
       <div
         onMouseUp={handleFocus}
         className={
-          "has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-gray-500 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
+          "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-border px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
         }
       >
         <StepperLabel
@@ -72,7 +72,7 @@ const StepperField = ({
         />
         <StepperCollapsible collapsible={collapsible}>
           <StepperController direction="down">
-            <StepperMinusIcon className="fill-gray-800 group-hover:fill-blue-900" />
+            <StepperMinusIcon className="fill-foreground" />
           </StepperController>
           <StepperValue
             fieldId={fieldId}
@@ -80,7 +80,7 @@ const StepperField = ({
             fieldLabelReader={fieldLabelReader}
           />
           <StepperController direction="up">
-            <StepperPlusIcon className="fill-gray-800 group-hover:fill-blue-900" />
+            <StepperPlusIcon className="fill-foreground" />
           </StepperController>
         </StepperCollapsible>
         <StepperBadge

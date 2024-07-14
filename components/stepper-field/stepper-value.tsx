@@ -35,7 +35,7 @@ const StepperValue = ({
       onBlur={handleBlur}
       aria-label={fieldLabelReader}
       style={{ width: String(stepValue).length + "ch" }}
-      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 min-w-4 text-center text-gray-800 bg-white focus:border-0 focus:outline-none cursor-pointer"
+      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer"
     />
   )
 }
