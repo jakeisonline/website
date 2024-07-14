@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
+import { Card, CardContent } from "@/components/ui/card"
 import H1 from "@/components/ui/h1"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -37,7 +38,11 @@ export default function StepperPage() {
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
         <TabsContent value="example">
-          <StepperField startNum={0} fieldLabelReader="Quantity" />
+          <Card>
+            <CardContent className="pt-6">
+              <StepperField startNum={0} fieldLabelReader="Quantity" />
+            </CardContent>
+          </Card>
         </TabsContent>
         <TabsContent value="code">
           <pre className="mt-1">
