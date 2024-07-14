@@ -1,8 +1,8 @@
 import StepperField from "@/components/stepper-field"
 
-export default function Home() {
+export default function StepperPage() {
   return (
-    <main className="flex mt-12 flex-col items-center justify-center w-full mx-auto">
+    <main className="container flex-1">
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField startNum={0} fieldLabelReader="Quantity" />
         <pre className="mt-1">
