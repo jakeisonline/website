@@ -1,5 +1,3 @@
-import "./stepper.css"
-
 export default function RootLayout({
   children,
 }: Readonly<{
