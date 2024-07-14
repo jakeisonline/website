@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Card, CardContent } from "@/components/ui/card"
 import CodeBlock from "@/components/ui/code-block"
-import H1 from "@/components/ui/h1"
+import { H1 } from "@/components/ui/headings"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
