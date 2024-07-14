@@ -24,7 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function StepperPage() {
   return (
-    <main className="container flex-1 pb-20">
+    <main className="container flex-1 pb-20 pt-6">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
