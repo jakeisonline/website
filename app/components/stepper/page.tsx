@@ -1,8 +1,28 @@
 import StepperField from "@/components/stepper-field"
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb"
+import { SlashIcon } from "lucide-react"
 
 export default function StepperPage() {
   return (
     <main className="container flex-1">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Stepper</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10">
         <StepperField startNum={0} fieldLabelReader="Quantity" />
         <pre className="mt-1">
