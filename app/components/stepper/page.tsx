@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
 import { Card, CardContent } from "@/components/ui/card"
+import CodeBlock from "@/components/ui/code-block"
 import H1 from "@/components/ui/h1"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -32,28 +33,20 @@ export default function StepperPage() {
         increment or decrement a value. It is commonly used for inputting
         numerical values, such as quantities or prices.
       </P>
-      <Tabs defaultValue="example" className="w-full mt-8">
+      <Tabs defaultValue="example" className="w-3/5 mt-8">
         <TabsList>
           <TabsTrigger value="example">Example</TabsTrigger>
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
         <TabsContent value="example">
           <Card>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <StepperField startNum={0} fieldLabelReader="Quantity" />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="code">
-          <pre className="mt-1">
-            <code className="text-slate-800 text-xs">
-              &lt;StepperField
-              <br />
-              &nbsp;&nbsp;startNum=&#123;0&#125;
-              <br />
-              /&gt;
-            </code>
-          </pre>
+          <CodeBlock>{`<StepperField startNum={0} />`}</CodeBlock>
         </TabsContent>
       </Tabs>
       <div className="flex w-60 justify-center items-center flex-col gap-1 pb-10"></div>
