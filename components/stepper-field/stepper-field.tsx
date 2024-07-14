@@ -61,7 +61,7 @@ const StepperField = ({
       <div
         onMouseUp={handleFocus}
         className={
-          "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2  hover:cursor-pointer hover:inner-border-border px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
+          "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
         }
       >
         <StepperLabel
