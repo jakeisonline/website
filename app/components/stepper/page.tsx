@@ -21,6 +21,7 @@ import CodeBlock from "@/components/ui/code-block"
 import { H1, H2, H3 } from "@/components/ui/headings"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Link from "next/link"
 
 export default function StepperPage() {
   return (
@@ -102,6 +103,19 @@ export default function StepperPage() {
           </TableRow>
         </TableBody>
       </Table>
+      <H2>Accessibility</H2>
+      <P>
+        At its core, this component is simply a{" "}
+        <Link
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number"
+          rel="noreferrer"
+          target="_blank"
+        >
+          native number field
+        </Link>
+        . The component is designed to be used with a screen reader, and the
+        screen reader will announce the component as a number input.
+      </P>
       <H2>Examples</H2>
       <H3>Collapsing stepper fields</H3>
       <P>
