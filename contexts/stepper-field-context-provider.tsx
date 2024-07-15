@@ -97,11 +97,11 @@ export default function StepperFieldContextProvider({
   }
 
   const setValueToMax = () => {
-    if (maxNum) setStepValue(maxNum)
+    if (typeof maxNum === "number") setStepValue(maxNum)
   }
 
   const setValueToMin = () => {
-    if (minNum) setStepValue(minNum)
+    if (typeof minNum === "number") setStepValue(minNum)
   }
 
   const setValueWithinRange = (value: number | "") => {
