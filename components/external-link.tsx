@@ -7,7 +7,10 @@ type ExternalLinkProps = {
   props: React.ComponentPropsWithoutRef<typeof ExternalLink>
 }
 
-export default function ExternalLink({ children, ...props }: any) {
+export default function ExternalLink({
+  children,
+  ...props
+}: ExternalLinkProps) {
   return (
     <Link
       href={props.href}
