@@ -140,6 +140,18 @@ export default function StepperPage() {
             </TableCell>
             <TableCell>Shift step value</TableCell>
           </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>Home</Keeb>
+            </TableCell>
+            <TableCell>Set value to minNum</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>End</Keeb>
+            </TableCell>
+            <TableCell>Set value to maxNum</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
       <H2>Examples</H2>

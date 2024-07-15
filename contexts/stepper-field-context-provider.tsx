@@ -40,6 +40,8 @@ export default function StepperFieldContextProvider({
 }: StepperFieldContextProviderProps) {
   const [stepValue, setStepValue] = useState<number | "">(startNum)
 
+  console.log("minNum", minNum)
+
   const handleStep = (direction: string, shiftStep?: boolean) => {
     let newValue: number
     if (direction === "up") {
@@ -69,6 +71,13 @@ export default function StepperFieldContextProvider({
     if (e.code == "ArrowDown" || e.code == "ArrowUp") {
       const stepDirection = e.code === "ArrowUp" ? "up" : "down"
       handleStep(stepDirection, shiftKeyHeld)
+      e.preventDefault()
+      // User is pressing home or end within the stepper field
+    } else if (e.code == "Home") {
+      setValueToMin()
+      e.preventDefault()
+    } else if (e.code == "End") {
+      setValueToMax()
       e.preventDefault()
     }
     // User is pressing enter within the stepper field
