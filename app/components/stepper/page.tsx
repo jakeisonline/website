@@ -22,6 +22,7 @@ import { H1, H2, H3 } from "@/components/ui/headings"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
+import ExternalLink from "@/components/external-link"
 
 export default function StepperPage() {
   return (
@@ -106,13 +107,9 @@ export default function StepperPage() {
       <H2>Accessibility</H2>
       <P>
         At its core, this component is simply a{" "}
-        <Link
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number"
-          rel="noreferrer"
-          target="_blank"
-        >
+        <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">
           native number field
-        </Link>
+        </ExternalLink>
         . The component is designed to be used with a screen reader, and the
         screen reader will announce the component as a number input.
       </P>
