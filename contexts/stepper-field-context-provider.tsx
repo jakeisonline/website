@@ -72,8 +72,17 @@ export default function StepperFieldContextProvider({
       const stepDirection = e.code === "ArrowUp" ? "up" : "down"
       handleStep(stepDirection, shiftKeyHeld)
       e.preventDefault()
-      // User is pressing home or end within the stepper field
-    } else if (e.code == "Home") {
+    }
+    // User is using page up or page down to step
+    else if (e.code == "PageUp") {
+      handleStep("up", true)
+      e.preventDefault()
+    } else if (e.code == "PageDown") {
+      handleStep("down", true)
+      e.preventDefault()
+    }
+    // User is pressing home or end within the stepper field
+    else if (e.code == "Home") {
       setValueToMin()
       e.preventDefault()
     } else if (e.code == "End") {

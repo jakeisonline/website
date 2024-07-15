@@ -159,6 +159,22 @@ export default function StepperPage() {
           </TableRow>
           <TableRow>
             <TableCell>
+              <Keeb>PageUp</Keeb>
+            </TableCell>
+            <TableCell>
+              Increment value by <Code>stepShiftSize</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>PageDown</Keeb>
+            </TableCell>
+            <TableCell>
+              Decrement value by <Code>stepShiftSize</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <Keeb>Home</Keeb>
             </TableCell>
             <TableCell>
