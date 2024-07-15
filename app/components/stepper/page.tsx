@@ -50,7 +50,7 @@ export default function StepperPage() {
         <FeatureItem>Custom step size and range (optional)</FeatureItem>
         <FeatureItem>Shift stepping for power users (optional)</FeatureItem>
       </FeatureList>
-      <Tabs defaultValue="example" className="w-3/5 mt-8">
+      <Tabs defaultValue="example" className="mt-8">
         <TabsList>
           <TabsTrigger value="example">Example</TabsTrigger>
           <TabsTrigger value="code">Code</TabsTrigger>
@@ -83,8 +83,8 @@ export default function StepperPage() {
         </TabsContent>
       </Tabs>
       <H2>Usage</H2>
-      <CodeBlock className="mb-4 w-3/5">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
-      <CodeBlock className="w-3/5">{`<StepperField startNum={0} />`}</CodeBlock>
+      <CodeBlock className="mb-4">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
+      <CodeBlock>{`<StepperField startNum={0} />`}</CodeBlock>
       <H2>Props</H2>
       <Table>
         <TableHead>
@@ -149,7 +149,7 @@ export default function StepperPage() {
         example, when ordering multiple product variants in bulk, or providing
         measurements for a product.
       </P>
-      <Tabs defaultValue="example" className="w-3/5 mt-8">
+      <Tabs defaultValue="example" className="mt-8">
         <TabsList>
           <TabsTrigger value="example">Example</TabsTrigger>
           <TabsTrigger value="code">Code</TabsTrigger>
