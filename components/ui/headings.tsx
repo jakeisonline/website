@@ -43,3 +43,16 @@ export function H3({ className, children }: HeadingProps) {
     </h3>
   )
 }
+
+export function H4({ className, children }: HeadingProps) {
+  return (
+    <h4
+      className={cn(
+        "font-heading mt-4 pb-2 scroll-m-20 text-sm font-semibold tracking-tight",
+        className,
+      )}
+    >
+      {children}
+    </h4>
+  )
+}
