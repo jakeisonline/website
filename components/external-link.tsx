@@ -4,21 +4,24 @@ import Link from "next/link"
 
 type ExternalLinkProps = {
   children: React.ReactNode
-  props: React.ComponentPropsWithoutRef<typeof ExternalLink>
+  href: string
+  className?: string
 }
 
 export default function ExternalLink({
   children,
+  href,
+  className,
   ...props
 }: ExternalLinkProps) {
   return (
     <Link
-      href={props.href}
+      href={href}
       target="_blank"
       rel="noreferrer"
       className={cn(
         "text-blue-600 hover:text-blue-800 transition-colors duration-200 inline-flex",
-        props.className,
+        className,
       )}
       {...props}
     >
