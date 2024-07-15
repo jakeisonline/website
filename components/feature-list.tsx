@@ -10,7 +10,7 @@ export function FeatureItem({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex items-start">
       <svg
-        className="w-3.5 h-3.5 mt-1 mr-2 text-green-500 dark:text-green-400 flex-shrink-0"
+        className="w-3.5 h-3.5 mt-1 mr-2 text-green-500 flex-shrink-0"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
