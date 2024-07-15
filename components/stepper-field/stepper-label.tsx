@@ -17,8 +17,9 @@ const StepperLabel = ({
 
   const labelClass = clsx(
     "cursor-pointer pl-1.5 text-sm",
+    // TODO: collapsed should have a border when expanded
     collapsible && "pr-1.5",
-    !collapsible && "pr-2 border-r",
+    !collapsible && "pr-2 mr-1 border-r",
     !fieldLabel && "sr-only",
   )
 
