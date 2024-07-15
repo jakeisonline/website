@@ -23,6 +23,7 @@ import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import ExternalLink from "@/components/external-link"
+import Keeb from "@/components/keeb"
 
 export default function StepperPage() {
   return (
@@ -113,6 +114,35 @@ export default function StepperPage() {
         . The component is designed to be used with a screen reader, and the
         screen reader will announce the component as a number input.
       </P>
+      <H3>Keyboard interaction</H3>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Key</TableHeadCell>
+            <TableHeadCell>Action</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Keeb>ArrowUp</Keeb>
+            </TableCell>
+            <TableCell>Increment value</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>ArrowDown</Keeb>
+            </TableCell>
+            <TableCell>Decrement value</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>Shift</Keeb>
+            </TableCell>
+            <TableCell>Shift step value</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <H2>Examples</H2>
       <H3>Collapsing stepper fields</H3>
       <P>
