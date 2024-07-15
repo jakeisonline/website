@@ -8,7 +8,9 @@ export default function Code({
 }) {
   return (
     <code
-      className={cn("font-mono p-0.5 text-sm bg-[#D2F8F0] text-[#0B6E58]")}
+      className={cn(
+        "font-mono p-0.5 text-sm bg-code text-code-foreground rounded",
+      )}
       {...props}
     >
       {children}
