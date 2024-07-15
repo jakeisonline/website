@@ -109,12 +109,15 @@ export default function StepperPage() {
       </Table>
       <H2>Accessibility</H2>
       <P>
-        At its core, this component is simply a{" "}
+        Adheres to the{" "}
+        <ExternalLink href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/">
+          Spinbutton WAI-ARIA design pattern
+        </ExternalLink>
+        . At its core, this component is simply a{" "}
         <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">
           native number field
         </ExternalLink>
-        . The component is designed to be used with a screen reader, and the
-        screen reader will announce the component as a number input.
+        .
       </P>
       <H3>Keyboard interaction</H3>
       <Table>
