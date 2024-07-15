@@ -21,13 +21,12 @@ import CodeBlock from "@/components/ui/code-block"
 import { H1, H2, H3 } from "@/components/ui/headings"
 import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Link from "next/link"
 import ExternalLink from "@/components/external-link"
 import Keeb from "@/components/keeb"
 
 export default function StepperPage() {
   return (
-    <main className="container flex-1 pb-20 pt-6">
+    <div className="mx-auto w-full min-w-0">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -234,6 +233,6 @@ export default function StepperPage() {
 </div>`}</CodeBlock>
         </TabsContent>
       </Tabs>
-    </main>
+    </div>
   )
 }

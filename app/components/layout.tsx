@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import ThemeToggle, { ThemeContextProvider } from "@/components/ui/theme-toggle"
 import { Navigation, NavigationItem } from "@/components/ui/navigation"
+import { H4 } from "@/components/ui/headings"
 
 const font = Urbanist({ subsets: ["latin"] })
 
@@ -52,7 +53,18 @@ export default function RootLayout({
               </div>
             </div>
           </header>
-          {children}
+          <div className="container flex-1 pt-6 pb-20 items-start md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
+            <aside className="top-20 z-30 -ml-2 h-[calc(100vh-3.5rem)] w-full shrink-0 sticky block">
+              <H4 className="mt-0">Components</H4>
+              <div className="grid gap-1 text-sm">
+                <Link href="/components/range">Range</Link>
+                <Link href="/components/stepper">Stepper</Link>
+              </div>
+            </aside>
+            <main className="relative grid xl:grid-cols-[1fr_300px]">
+              {children}
+            </main>
+          </div>
         </ThemeContextProvider>
       </body>
     </html>
