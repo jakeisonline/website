@@ -1,12 +1,12 @@
 import { FeatureItem, FeatureList } from "@/components/feature-list"
 import {
-  PropsTable,
-  PropsTableBody,
-  PropsTableCell,
-  PropsTableHead,
-  PropsTableHeadCell,
-  PropsTableRow,
-} from "@/components/props-table"
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from "@/components/ui/table"
 import StepperField from "@/components/stepper-field"
 import {
   Breadcrumb,
@@ -84,24 +84,24 @@ export default function StepperPage() {
       <CodeBlock className="mb-4 w-3/5">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
       <CodeBlock className="w-3/5">{`<StepperField startNum={0} />`}</CodeBlock>
       <H2>Props</H2>
-      <PropsTable>
-        <PropsTableHead>
-          <PropsTableRow>
-            <PropsTableHeadCell>Prop</PropsTableHeadCell>
-            <PropsTableHeadCell>Type</PropsTableHeadCell>
-            <PropsTableHeadCell>Default</PropsTableHeadCell>
-            <PropsTableHeadCell>Description</PropsTableHeadCell>
-          </PropsTableRow>
-        </PropsTableHead>
-        <PropsTableBody>
-          <PropsTableRow>
-            <PropsTableCell>collapsible</PropsTableCell>
-            <PropsTableCell>boolean</PropsTableCell>
-            <PropsTableCell>false</PropsTableCell>
-            <PropsTableCell>Collapsed or not?</PropsTableCell>
-          </PropsTableRow>
-        </PropsTableBody>
-      </PropsTable>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Prop</TableHeadCell>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Default</TableHeadCell>
+            <TableHeadCell>Description</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>collapsible</TableCell>
+            <TableCell>boolean</TableCell>
+            <TableCell>false</TableCell>
+            <TableCell>Collapsed or not?</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <H2>Examples</H2>
       <H3>Collapsing stepper fields</H3>
       <P>

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-export function PropsTable({
+export function Table({
   className,
   children,
 }: {
@@ -14,7 +14,7 @@ export function PropsTable({
   )
 }
 
-export function PropsTableHead({
+export function TableHead({
   children,
   className,
 }: {
@@ -24,7 +24,7 @@ export function PropsTableHead({
   return <thead className={className}>{children}</thead>
 }
 
-export function PropsTableBody({
+export function TableBody({
   className,
   children,
 }: {
@@ -34,7 +34,7 @@ export function PropsTableBody({
   return <tbody className={cn("align-baseline", className)}>{children}</tbody>
 }
 
-export function PropsTableRow({
+export function TableRow({
   className,
   children,
 }: {
@@ -44,7 +44,7 @@ export function PropsTableRow({
   return <tr className={className}>{children}</tr>
 }
 
-export function PropsTableCell({
+export function TableCell({
   className,
   children,
 }: {
@@ -54,7 +54,7 @@ export function PropsTableCell({
   return <td className={className}>{children}</td>
 }
 
-export function PropsTableHeadCell({
+export function TableHeadCell({
   className,
   children,
 }: {
