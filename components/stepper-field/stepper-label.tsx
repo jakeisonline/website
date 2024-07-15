@@ -16,7 +16,7 @@ const StepperLabel = ({
   const ariaLabel = fieldLabelReader ? fieldLabelReader : fieldLabel
 
   const labelClass = clsx(
-    "cursor-pointer pl-1.5",
+    "cursor-pointer pl-1.5 text-sm",
     collapsible && "pr-1.5",
     !collapsible && "pr-2 border-r",
     !fieldLabel && "sr-only",
