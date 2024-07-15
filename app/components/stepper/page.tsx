@@ -23,6 +23,7 @@ import P from "@/components/ui/p"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ExternalLink from "@/components/external-link"
 import Keeb from "@/components/keeb"
+import Code from "@/components/ui/code"
 
 export default function StepperPage() {
   return (
@@ -97,7 +98,9 @@ export default function StepperPage() {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>collapsible</TableCell>
+            <TableCell>
+              <Code>collapsible</Code>
+            </TableCell>
             <TableCell>boolean</TableCell>
             <TableCell>false</TableCell>
             <TableCell>Collapsed or not?</TableCell>
@@ -144,13 +147,17 @@ export default function StepperPage() {
             <TableCell>
               <Keeb>Home</Keeb>
             </TableCell>
-            <TableCell>Set value to minNum</TableCell>
+            <TableCell>
+              Set value to <Code>minNum</Code>
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
               <Keeb>End</Keeb>
             </TableCell>
-            <TableCell>Set value to maxNum</TableCell>
+            <TableCell>
+              Set value to <Code>maxNum</Code>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
