@@ -129,19 +129,33 @@ export default function StepperPage() {
             <TableCell>
               <Keeb>ArrowUp</Keeb>
             </TableCell>
-            <TableCell>Increment value</TableCell>
+            <TableCell>
+              Increment value by <Code>stepSize</Code>, or <Code>1</Code>
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
               <Keeb>ArrowDown</Keeb>
             </TableCell>
-            <TableCell>Decrement value</TableCell>
+            <TableCell>
+              Decrement value by <Code>stepSize</Code>, or <Code>1</Code>
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              <Keeb>Shift</Keeb>
+              <Keeb>Shift</Keeb>+<Keeb>ArrowUp</Keeb>
             </TableCell>
-            <TableCell>Shift step value</TableCell>
+            <TableCell>
+              Increment value by <Code>stepShiftSize</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>Shift</Keeb>+<Keeb>ArrowDown</Keeb>
+            </TableCell>
+            <TableCell>
+              Decrement value by <Code>stepShiftSize</Code>
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
