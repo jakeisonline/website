@@ -83,7 +83,7 @@ export default function StepperPage() {
 />`}</CodeBlock>
         </TabsContent>
       </Tabs>
-      <H2>Usage</H2>
+      <H2 permalink>Usage</H2>
       <CodeBlock className="mb-4">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
       <CodeBlock>{`<StepperField startNum={0} />`}</CodeBlock>
       <H2>Props</H2>
@@ -144,7 +144,7 @@ export default function StepperPage() {
           </TableRow>
         </TableBody>
       </Table>
-      <H2>Accessibility</H2>
+      <H2 permalink>Accessibility</H2>
       <P>
         Adheres to the{" "}
         <Link
@@ -162,7 +162,7 @@ export default function StepperPage() {
         </Link>
         .
       </P>
-      <H3>Keyboard interaction</H3>
+      <H3 permalink>Keyboard interaction</H3>
       <Table>
         <TableHead>
           <TableRow>
@@ -237,8 +237,8 @@ export default function StepperPage() {
           </TableRow>
         </TableBody>
       </Table>
-      <H2>Examples</H2>
-      <H3>Collapsing stepper fields</H3>
+      <H2 permalink>Examples</H2>
+      <H3 permalink>Collapsing stepper fields</H3>
       <P>
         You might want to display multiple quantities in a single row. For
         example, when ordering multiple product variants in bulk, or providing
