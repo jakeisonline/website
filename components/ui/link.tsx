@@ -26,7 +26,7 @@ export default function Link({
     <NextLink
       href={href}
       className={cn(
-        "text-blue-600 hover:text-blue-800 transition-colors duration-200 inline-flex",
+        "text-link hover:text-link-hover transition-colors duration-200 inline-flex",
         className,
       )}
       {...newProps}
@@ -36,10 +36,3 @@ export default function Link({
     </NextLink>
   )
 }
-
-// target="_blank"
-//       rel="noreferrer"
-//       className={cn(
-//         "text-blue-600 hover:text-blue-800 transition-colors duration-200 inline-flex",
-//         className,
-//       )}
