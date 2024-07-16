@@ -40,8 +40,6 @@ export default function StepperFieldContextProvider({
 }: StepperFieldContextProviderProps) {
   const [stepValue, setStepValue] = useState<number | "">(startNum)
 
-  console.log("minNum", minNum)
-
   const handleStep = (direction: string, shiftStep?: boolean) => {
     let newValue: number
     if (direction === "up") {
