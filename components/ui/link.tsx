@@ -26,7 +26,7 @@ export default function Link({
     <NextLink
       href={href}
       className={cn(
-        "text-link hover:text-link-hover transition-colors duration-200 inline-flex",
+        "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out inline-flex hover:decoration-link-hover",
         className,
       )}
       {...newProps}
