@@ -92,17 +92,54 @@ export default function StepperPage() {
           <TableRow>
             <TableHeadCell>Prop</TableHeadCell>
             <TableHeadCell>Type</TableHeadCell>
-            <TableHeadCell>Default</TableHeadCell>
             <TableHeadCell>Description</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
             <TableCell>
+              <Code>startNum</Code>
+            </TableCell>
+            <TableCell>number</TableCell>
+            <TableCell>The initial value of the field. Required.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Code>minNum</Code>
+            </TableCell>
+            <TableCell>number</TableCell>
+            <TableCell>Lowest allowed value of the field.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Code>maxNum</Code>
+            </TableCell>
+            <TableCell>number</TableCell>
+            <TableCell>Highest allowed value of the field</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Code>stepSize</Code>
+            </TableCell>
+            <TableCell>number</TableCell>
+            <TableCell>Amount the value is adjusted by.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Code>stepSize</Code>
+            </TableCell>
+            <TableCell>number</TableCell>
+            <TableCell>
+              Amount the value is adjusted TableBody, when using{" "}
+              <Keeb>Shift</Keeb> arrow keys or <Keeb>PageUp</Keeb>/
+              <Keeb>PageDown</Keeb>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <Code>collapsible</Code>
             </TableCell>
             <TableCell>boolean</TableCell>
-            <TableCell>false</TableCell>
             <TableCell>Collapsed or not?</TableCell>
           </TableRow>
         </TableBody>
