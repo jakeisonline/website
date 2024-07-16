@@ -43,7 +43,11 @@ export default function RootLayout({
                   className="hover:bg-accent"
                   asChild
                 >
-                  <Link href="https://github.com/jakeisonline/playground">
+                  <Link
+                    external
+                    noIcon
+                    href="https://github.com/jakeisonline/playground"
+                  >
                     <GitHubLogoIcon className="h-4 w-4" />
                   </Link>
                 </Button>

@@ -5,6 +5,7 @@ import NextLink from "next/link"
 type LinkProps = {
   href: string
   external?: boolean
+  noIcon?: boolean
   className?: string
   children: React.ReactNode
 }
@@ -12,6 +13,7 @@ type LinkProps = {
 export default function Link({
   href,
   external,
+  noIcon,
   className,
   children,
   ...props
@@ -30,7 +32,7 @@ export default function Link({
       {...newProps}
     >
       {children}
-      {external && <ExternalLinkIcon className="ml-1 w-3 h-3" />}
+      {external && !noIcon && <ExternalLinkIcon className="ml-1 w-3 h-3" />}
     </NextLink>
   )
 }
