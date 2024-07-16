@@ -1,6 +1,6 @@
 import { Urbanist } from "next/font/google"
 import "./globals.css"
-import Link from "next/link"
+import Link from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import ThemeToggle, { ThemeContextProvider } from "@/components/ui/theme-toggle"
@@ -31,9 +31,7 @@ export default function RootLayout({
           <header className="sticky top-0 z-50 w-full bg-background/20 backdrop-blur supports[backdrop-filter]:bg-background/20">
             <div className="container flex h-14 max-w-screen-2xl items-center text-sm font-bold">
               <div className="flex items-center gap-8">
-                <Link href="/" rel="noreferrer" target="_blank">
-                  🛝 jakeisonline/playground
-                </Link>
+                <Link href="/">🛝 jakeisonline/playground</Link>
                 <Navigation>
                   <NavigationItem href="/components">Components</NavigationItem>
                 </Navigation>

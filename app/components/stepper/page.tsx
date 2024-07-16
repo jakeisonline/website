@@ -24,6 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ExternalLink from "@/components/external-link"
 import Keeb from "@/components/keeb"
 import Code from "@/components/ui/code"
+import Link from "@/components/ui/link"
 
 export default function StepperPage() {
   return (
@@ -147,13 +148,19 @@ export default function StepperPage() {
       <H2>Accessibility</H2>
       <P>
         Adheres to the{" "}
-        <ExternalLink href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/">
+        <Link
+          external
+          href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/"
+        >
           Spinbutton WAI-ARIA design pattern
-        </ExternalLink>
+        </Link>
         . At its core, this component is simply a{" "}
-        <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">
+        <Link
+          external
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number"
+        >
           native number field
-        </ExternalLink>
+        </Link>
         .
       </P>
       <H3>Keyboard interaction</H3>
