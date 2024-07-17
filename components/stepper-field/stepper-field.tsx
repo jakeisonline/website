@@ -47,31 +47,6 @@ export default function StepperField({
       >
         {children}
       </div>
-      {/* <StepperFieldLabel
-          fieldId={fieldId}
-          fieldLabel={fieldLabel}
-          fieldLabelReader={fieldLabelReader}
-          collapsible={collapsible}
-        />
-        <StepperFieldCollapsible collapsible={collapsible}>
-          <StepperFieldController direction="down">
-            <StepperMinusIcon className="fill-foreground" />
-          </StepperFieldController>
-          <StepperFieldValue
-            fieldId={fieldId}
-            fieldName={fieldName}
-            fieldLabelReader={fieldLabelReader}
-          />
-          <StepperFieldController direction="up">
-            <StepperPlusIcon className="fill-foreground" />
-          </StepperFieldController>
-        </StepperFieldCollapsible>
-        <StepperFieldBadge
-          hideBadge={hideBadge}
-          hideBadgeNum={hideBadgeNum}
-          collapsible={collapsible}
-        />
-      </div> */}
     </StepperFieldContextProvider>
   )
 }
