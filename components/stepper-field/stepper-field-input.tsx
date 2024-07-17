@@ -2,17 +2,17 @@
 
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 
-type StepperFieldValueProps = {
+type StepperFieldInputProps = {
   fieldId?: string
   fieldName?: string
   fieldLabelReader?: string
 }
 
-export default function StepperFieldValue({
+export default function StepperFieldInput({
   fieldId,
   fieldName,
   fieldLabelReader,
-}: StepperFieldValueProps) {
+}: StepperFieldInputProps) {
   const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
     useStepperFieldContext()
 
