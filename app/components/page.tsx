@@ -1,5 +1,10 @@
 import RangeField from "@/components/range-field"
-import StepperField from "@/components/stepper-field"
+import {
+  StepperField,
+  StepperFieldController,
+  StepperFieldInput,
+  StepperFieldLabel,
+} from "@/components/stepper-field"
 import TaggerField from "@/components/tagger-field"
 
 export default function ComponentsPage() {
@@ -12,7 +17,14 @@ export default function ComponentsPage() {
             <span className="text-xs py-0.5 px-1.5">Stepper</span>
           </div>
           <div className="flex justify-center m-auto">
-            <StepperField start={0} min={0} fieldLabelReader="Quantity" />
+            <StepperField min={0} start={0} shift={10}>
+              <StepperFieldLabel>Quantity</StepperFieldLabel>
+              <StepperFieldController direction="down">
+                -
+              </StepperFieldController>
+              <StepperFieldInput />
+              <StepperFieldController direction="up">+</StepperFieldController>
+            </StepperField>
           </div>
         </div>
         <div className="group w-full h-40 border border-slate-300 rounded-md hover:shadow-md transition-all transition-300 cursor-pointer ease-in-out bg-white hover:border-indigo-300 hover:shadow-indigo-300/40 relative p-6">
