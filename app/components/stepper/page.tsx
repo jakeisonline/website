@@ -53,10 +53,11 @@ export default function StepperPage() {
         numerical values, such as quantities or prices.
       </P>
       <FeatureList>
-        <FeatureItem>Native form element (number input)</FeatureItem>
+        <FeatureItem>Native form element</FeatureItem>
+
+        <FeatureItem>Optional step size and range</FeatureItem>
         <FeatureItem>Keyboard editable, controllable & accessible</FeatureItem>
-        <FeatureItem>Custom step size and range (optional)</FeatureItem>
-        <FeatureItem>Shift stepping for power users (optional)</FeatureItem>
+        <FeatureItem>Optional shift stepping</FeatureItem>
       </FeatureList>
       <Tabs defaultValue="example" className="mt-8">
         <TabsList>

@@ -1,6 +1,6 @@
 export function FeatureList({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="max-w-md gap-x-4 gap-y-2 list-inside mt-6 grid grid-cols-2">
+    <ul className="w-full gap-x-4 gap-y-2 list-inside mt-6 grid grid-cols-2">
       {children}
     </ul>
   )
