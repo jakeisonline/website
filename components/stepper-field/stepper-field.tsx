@@ -16,13 +16,7 @@ type StepperFieldProps = {
   max?: number
   step?: number
   shift?: number
-  fieldId?: string
-  fieldName?: string
-  fieldLabel?: string
-  fieldLabelReader?: string
-  collapsible?: boolean
-  hideBadge?: boolean
-  hideBadgeNum?: number
+  children?: React.ReactNode
 }
 
 export default function StepperField({
@@ -31,13 +25,7 @@ export default function StepperField({
   max,
   step,
   shift,
-  fieldId,
-  fieldName,
-  fieldLabel,
-  fieldLabelReader,
-  collapsible,
-  hideBadge,
-  hideBadgeNum,
+  children,
 }: StepperFieldProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -64,7 +52,9 @@ export default function StepperField({
           "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
         }
       >
-        <StepperFieldLabel
+        {children}
+      </div>
+      {/* <StepperFieldLabel
           fieldId={fieldId}
           fieldLabel={fieldLabel}
           fieldLabelReader={fieldLabelReader}
@@ -88,7 +78,7 @@ export default function StepperField({
           hideBadgeNum={hideBadgeNum}
           collapsible={collapsible}
         />
-      </div>
+      </div> */}
     </StepperFieldContextProvider>
   )
 }

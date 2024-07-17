@@ -24,6 +24,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Keeb from "@/components/keeb"
 import Code from "@/components/ui/code"
 import Link from "@/components/ui/link"
+import StepperFieldCollapsible from "@/components/stepper-field/stepper-field-collapsible"
+import StepperFieldController from "@/components/stepper-field/stepper-field-controller"
+import StepperFieldLabel from "@/components/stepper-field/stepper-field-label"
+import StepperFieldValue from "@/components/stepper-field/stepper-field-value"
+import StepperMinusIcon from "@/svgs/StepperMinusIcon"
+import StepperPlusIcon from "@/svgs/StepperPlusIcon"
 
 export default function StepperPage() {
   return (
@@ -59,15 +65,16 @@ export default function StepperPage() {
         <TabsContent value="example">
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
-              <StepperField
-                min={0}
-                start={0}
-                shift={10}
-                fieldId={"quantity"}
-                fieldName={"quantity"}
-                fieldLabel={"Quantity"}
-                fieldLabelReader={"Quantity"}
-              />
+              <StepperField min={0} start={0} shift={10}>
+                <StepperFieldLabel>Quantity</StepperFieldLabel>
+                <StepperFieldController direction="down">
+                  <StepperMinusIcon className="fill-foreground" />
+                </StepperFieldController>
+                <StepperFieldValue />
+                <StepperFieldController direction="up">
+                  <StepperPlusIcon className="fill-foreground" />
+                </StepperFieldController>
+              </StepperField>
             </CardContent>
           </Card>
         </TabsContent>
@@ -253,7 +260,7 @@ export default function StepperPage() {
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <div className="flex gap-3">
-                <StepperField
+                {/* <StepperField
                   collapsible={true}
                   hideBadgeNum={0}
                   fieldId="sizes_small"
@@ -285,7 +292,7 @@ export default function StepperPage() {
                   start={0}
                   min={0}
                   max={100}
-                />
+                /> */}
               </div>
             </CardContent>
           </Card>

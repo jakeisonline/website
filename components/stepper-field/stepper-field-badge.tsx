@@ -1,3 +1,5 @@
+"use client"
+
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 
 type StepperFieldBadgeProps = {
