@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false)
@@ -27,8 +28,8 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <ThemeToggleWrapper>
-        <Skeleton className="rounded-md bg-white/10" />
+      <ThemeToggleWrapper className="h-10 w-10">
+        <Skeleton className="rounded-full bg-accent h-4 w-4 mt-3 mr-3" />
       </ThemeToggleWrapper>
     )
   }
@@ -70,6 +71,12 @@ export function ThemeContextProvider({
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
 
-function ThemeToggleWrapper({ children }: { children: React.ReactNode }) {
-  return <div className="flex justify-end">{children}</div>
+function ThemeToggleWrapper({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
+  return <div className={cn("flex justify-end", className)}>{children}</div>
 }
