@@ -26,7 +26,7 @@ import Code from "@/components/ui/code"
 import Link from "@/components/ui/link"
 import StepperFieldController from "@/components/stepper-field/stepper-field-controller"
 import StepperFieldLabel from "@/components/stepper-field/stepper-field-label"
-import StepperFieldValue from "@/components/stepper-field/stepper-field-value"
+import StepperFieldInput from "@/components/stepper-field/stepper-field-input"
 import StepperFieldCollapsibleContainer from "@/components/stepper-field/stepper-field-collapsible-container"
 import StepperFieldBadge from "@/components/stepper-field/stepper-field-badge"
 
@@ -69,7 +69,7 @@ export default function StepperPage() {
                 <StepperFieldController direction="down">
                   -
                 </StepperFieldController>
-                <StepperFieldValue />
+                <StepperFieldInput />
                 <StepperFieldController direction="up">
                   +
                 </StepperFieldController>
@@ -83,7 +83,7 @@ export default function StepperPage() {
   <StepperFieldController direction="down">
     -
   </StepperFieldController>
-  <StepperFieldValue />
+  <StepperFieldInput />
   <StepperFieldController direction="up">
     +
   </StepperFieldController>
@@ -259,7 +259,7 @@ export default function StepperPage() {
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
-                    <StepperFieldValue />
+                    <StepperFieldInput />
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
@@ -272,7 +272,7 @@ export default function StepperPage() {
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
-                    <StepperFieldValue />
+                    <StepperFieldInput />
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
@@ -285,7 +285,7 @@ export default function StepperPage() {
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
-                    <StepperFieldValue />
+                    <StepperFieldInput />
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
@@ -304,7 +304,7 @@ export default function StepperPage() {
       <StepperFieldController direction="down">
         -
       </StepperFieldController>
-      <StepperFieldValue />
+      <StepperFieldInput />
       <StepperFieldController direction="up">
         +
       </StepperFieldController>
@@ -317,7 +317,7 @@ export default function StepperPage() {
       <StepperFieldController direction="down">
         -
       </StepperFieldController>
-      <StepperFieldValue />
+      <StepperFieldInput />
       <StepperFieldController direction="up">
         +
       </StepperFieldController>
@@ -330,7 +330,7 @@ export default function StepperPage() {
       <StepperFieldController direction="down">
         -
       </StepperFieldController>
-      <StepperFieldValue />
+      <StepperFieldInput />
       <StepperFieldController direction="up">
         +
       </StepperFieldController>
