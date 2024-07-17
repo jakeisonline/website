@@ -6,7 +6,10 @@ type StepperControllerProps = {
   children: any
 }
 
-const StepperValue = ({ direction, children }: StepperControllerProps) => {
+const StepperFieldController = ({
+  direction,
+  children,
+}: StepperControllerProps) => {
   const { minNum, maxNum, stepValue, handleStep } = useStepperFieldContext()
   const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const shiftKeyHeld = e.shiftKey
@@ -43,4 +46,4 @@ const StepperValue = ({ direction, children }: StepperControllerProps) => {
   )
 }
 
-export default StepperValue
+export default StepperFieldController

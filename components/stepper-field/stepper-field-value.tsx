@@ -1,16 +1,16 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 
-type StepperValueProps = {
+type StepperFieldValueProps = {
   fieldId?: string
   fieldName?: string
   fieldLabelReader?: string
 }
 
-const StepperValue = ({
+const StepperFieldValue = ({
   fieldId,
   fieldName,
   fieldLabelReader,
-}: StepperValueProps) => {
+}: StepperFieldValueProps) => {
   const {
     minNum,
     maxNum,
@@ -40,4 +40,4 @@ const StepperValue = ({
   )
 }
 
-export default StepperValue
+export default StepperFieldValue

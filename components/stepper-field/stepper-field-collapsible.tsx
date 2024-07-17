@@ -1,14 +1,14 @@
 import clsx from "clsx"
 
-type StepperCollapsibleContainerProps = {
+type StepperFieldCollapsibleContainerProps = {
   collapsible?: boolean
   children: any
 }
 
-const StepperCollapsibleContainer = ({
+const StepperFieldCollapsibleContainer = ({
   collapsible,
   children,
-}: StepperCollapsibleContainerProps) => {
+}: StepperFieldCollapsibleContainerProps) => {
   const divClass = clsx(
     "flex flex-row items-center gap-1",
     collapsible &&
@@ -18,4 +18,4 @@ const StepperCollapsibleContainer = ({
   return <div className={divClass}>{children}</div>
 }
 
-export default StepperCollapsibleContainer
+export default StepperFieldCollapsibleContainer

@@ -1,18 +1,18 @@
 import clsx from "clsx"
 
-type StepperLabelProps = {
+type StepperFieldLabelProps = {
   fieldId?: string
   fieldLabel?: string
   fieldLabelReader?: string
   collapsible?: boolean | false
 }
 
-const StepperLabel = ({
+const StepperFieldLabel = ({
   fieldId,
   fieldLabel,
   fieldLabelReader,
   collapsible,
-}: StepperLabelProps) => {
+}: StepperFieldLabelProps) => {
   const ariaLabel = fieldLabelReader ? fieldLabelReader : fieldLabel
 
   const labelClass = clsx(
@@ -30,4 +30,4 @@ const StepperLabel = ({
   )
 }
 
-export default StepperLabel
+export default StepperFieldLabel

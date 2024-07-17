@@ -2,12 +2,12 @@
 
 import StepperPlusIcon from "@/svgs/StepperPlusIcon"
 import StepperMinusIcon from "@/svgs/StepperMinusIcon"
-import StepperValue from "./stepper-value"
-import StepperController from "./stepper-controller"
+import StepperFieldValue from "./stepper-field-value"
+import StepperFieldController from "./stepper-field-controller"
 import { useRef } from "react"
-import StepperLabel from "./stepper-label"
-import StepperCollapsible from "./stepper-collapsible"
-import StepperBadge from "./stepper-badge"
+import StepperFieldLabel from "./stepper-field-label"
+import StepperFieldCollapsible from "./stepper-field-collapsible"
+import StepperFieldBadge from "./stepper-field-badge"
 import StepperFieldContextProvider from "@/contexts/stepper-field-context-provider"
 
 type StepperFieldProps = {
@@ -64,26 +64,26 @@ const StepperField = ({
           "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
         }
       >
-        <StepperLabel
+        <StepperFieldLabel
           fieldId={fieldId}
           fieldLabel={fieldLabel}
           fieldLabelReader={fieldLabelReader}
           collapsible={collapsible}
         />
-        <StepperCollapsible collapsible={collapsible}>
-          <StepperController direction="down">
+        <StepperFieldCollapsible collapsible={collapsible}>
+          <StepperFieldController direction="down">
             <StepperMinusIcon className="fill-foreground" />
-          </StepperController>
-          <StepperValue
+          </StepperFieldController>
+          <StepperFieldValue
             fieldId={fieldId}
             fieldName={fieldName}
             fieldLabelReader={fieldLabelReader}
           />
-          <StepperController direction="up">
+          <StepperFieldController direction="up">
             <StepperPlusIcon className="fill-foreground" />
-          </StepperController>
-        </StepperCollapsible>
-        <StepperBadge
+          </StepperFieldController>
+        </StepperFieldCollapsible>
+        <StepperFieldBadge
           hideBadge={hideBadge}
           hideBadgeNum={hideBadgeNum}
           collapsible={collapsible}
