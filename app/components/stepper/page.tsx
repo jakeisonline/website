@@ -78,15 +78,16 @@ export default function StepperPage() {
           </Card>
         </TabsContent>
         <TabsContent value="code">
-          <CodeBlock>{`<StepperField
-  min={0}
-  start={0}
-  shift={10}
-  fieldId={"quantity"}
-  fieldName={"quantity"}
-  fieldLabel={"Quantity"}
-  fieldLabelReader={"Quantity"}
-/>`}</CodeBlock>
+          <CodeBlock>{`<StepperField min={0} start={0} shift={10}>
+  <StepperFieldLabel>Quantity</StepperFieldLabel>
+  <StepperFieldController direction="down">
+    -
+  </StepperFieldController>
+  <StepperFieldValue />
+  <StepperFieldController direction="up">
+    +
+  </StepperFieldController>
+</StepperField>`}</CodeBlock>
         </TabsContent>
       </Tabs>
       <H2 permalink>Usage</H2>
@@ -140,13 +141,6 @@ export default function StepperPage() {
               <Keeb>Shift</Keeb> arrow keys or <Keeb>PageUp</Keeb>/
               <Keeb>PageDown</Keeb>
             </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Code>collapsible</Code>
-            </TableCell>
-            <TableCell>boolean</TableCell>
-            <TableCell>Collapsed or not?</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -304,39 +298,45 @@ export default function StepperPage() {
         </TabsContent>
         <TabsContent value="code">
           <CodeBlock>{`<div className="flex gap-3">
-  <StepperField
-    collapsible={true}
-    hideBadgeNum={0}
-    fieldId="sizes_small"
-    fieldName="sizes_small"
-    fieldLabel="S"
-    fieldLabelReader="Small"
-    start={0}
-    min={0}
-    max={100}
-  />
-  <StepperField
-    collapsible={true}
-    hideBadgeNum={0}
-    fieldId="sizes_med"
-    fieldName="sizes_medium"
-    fieldLabel="M"
-    fieldLabelReader="Medium"
-    start={3}
-    min={0}
-    max={100}
-  />
-  <StepperField
-    collapsible={true}
-    hideBadgeNum={0}
-    fieldId="sizes_large"
-    fieldName="sizes_large"
-    fieldLabel="L"
-    fieldLabelReader="Large"
-    start={0}
-    min={0}
-    max={100}
-  />
+  <StepperField min={0} start={0} shift={10}>
+    <StepperFieldLabel>S</StepperFieldLabel>
+    <StepperFieldCollapsibleContainer>
+      <StepperFieldController direction="down">
+        -
+      </StepperFieldController>
+      <StepperFieldValue />
+      <StepperFieldController direction="up">
+        +
+      </StepperFieldController>
+    </StepperFieldCollapsibleContainer>
+    <StepperFieldBadge />
+  </StepperField>
+  <StepperField min={0} start={3} shift={10}>
+    <StepperFieldLabel>M</StepperFieldLabel>
+    <StepperFieldCollapsibleContainer>
+      <StepperFieldController direction="down">
+        -
+      </StepperFieldController>
+      <StepperFieldValue />
+      <StepperFieldController direction="up">
+        +
+      </StepperFieldController>
+    </StepperFieldCollapsibleContainer>
+    <StepperFieldBadge />
+  </StepperField>
+  <StepperField min={0} start={0} shift={10}>
+    <StepperFieldLabel>L</StepperFieldLabel>
+    <StepperFieldCollapsibleContainer>
+      <StepperFieldController direction="down">
+        -
+      </StepperFieldController>
+      <StepperFieldValue />
+      <StepperFieldController direction="up">
+        +
+      </StepperFieldController>
+    </StepperFieldCollapsibleContainer>
+    <StepperFieldBadge />
+  </StepperField>
 </div>`}</CodeBlock>
         </TabsContent>
       </Tabs>
