@@ -27,6 +27,8 @@ import Link from "@/components/ui/link"
 import StepperFieldController from "@/components/stepper-field/stepper-field-controller"
 import StepperFieldLabel from "@/components/stepper-field/stepper-field-label"
 import StepperFieldValue from "@/components/stepper-field/stepper-field-value"
+import StepperFieldCollapsibleContainer from "@/components/stepper-field/stepper-field-collapsible-container"
+import StepperFieldBadge from "@/components/stepper-field/stepper-field-badge"
 
 export default function StepperPage() {
   return (
@@ -257,39 +259,45 @@ export default function StepperPage() {
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <div className="flex gap-3">
-                {/* <StepperField
-                  collapsible={true}
-                  hideBadgeNum={0}
-                  fieldId="sizes_small"
-                  fieldName="sizes_small"
-                  fieldLabel="S"
-                  fieldLabelReader="Small"
-                  start={0}
-                  min={0}
-                  max={100}
-                />
-                <StepperField
-                  collapsible={true}
-                  hideBadgeNum={0}
-                  fieldId="sizes_med"
-                  fieldName="sizes_medium"
-                  fieldLabel="M"
-                  fieldLabelReader="Medium"
-                  start={3}
-                  min={0}
-                  max={100}
-                />
-                <StepperField
-                  collapsible={true}
-                  hideBadgeNum={0}
-                  fieldId="sizes_large"
-                  fieldName="sizes_large"
-                  fieldLabel="L"
-                  fieldLabelReader="Large"
-                  start={0}
-                  min={0}
-                  max={100}
-                /> */}
+                <StepperField min={0} start={0} shift={10}>
+                  <StepperFieldLabel>S</StepperFieldLabel>
+                  <StepperFieldCollapsibleContainer>
+                    <StepperFieldController direction="down">
+                      -
+                    </StepperFieldController>
+                    <StepperFieldValue />
+                    <StepperFieldController direction="up">
+                      +
+                    </StepperFieldController>
+                  </StepperFieldCollapsibleContainer>
+                  <StepperFieldBadge />
+                </StepperField>
+                <StepperField min={0} start={3} shift={10}>
+                  <StepperFieldLabel>M</StepperFieldLabel>
+                  <StepperFieldCollapsibleContainer>
+                    <StepperFieldController direction="down">
+                      -
+                    </StepperFieldController>
+                    <StepperFieldValue />
+                    <StepperFieldController direction="up">
+                      +
+                    </StepperFieldController>
+                  </StepperFieldCollapsibleContainer>
+                  <StepperFieldBadge />
+                </StepperField>
+                <StepperField min={0} start={0} shift={10}>
+                  <StepperFieldLabel>L</StepperFieldLabel>
+                  <StepperFieldCollapsibleContainer>
+                    <StepperFieldController direction="down">
+                      -
+                    </StepperFieldController>
+                    <StepperFieldValue />
+                    <StepperFieldController direction="up">
+                      +
+                    </StepperFieldController>
+                  </StepperFieldCollapsibleContainer>
+                  <StepperFieldBadge />
+                </StepperField>
               </div>
             </CardContent>
           </Card>
