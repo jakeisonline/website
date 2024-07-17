@@ -24,12 +24,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Keeb from "@/components/keeb"
 import Code from "@/components/ui/code"
 import Link from "@/components/ui/link"
-import StepperFieldCollapsible from "@/components/stepper-field/stepper-field-collapsible"
 import StepperFieldController from "@/components/stepper-field/stepper-field-controller"
 import StepperFieldLabel from "@/components/stepper-field/stepper-field-label"
 import StepperFieldValue from "@/components/stepper-field/stepper-field-value"
-import StepperMinusIcon from "@/svgs/StepperMinusIcon"
-import StepperPlusIcon from "@/svgs/StepperPlusIcon"
 
 export default function StepperPage() {
   return (
@@ -68,11 +65,11 @@ export default function StepperPage() {
               <StepperField min={0} start={0} shift={10}>
                 <StepperFieldLabel>Quantity</StepperFieldLabel>
                 <StepperFieldController direction="down">
-                  <StepperMinusIcon className="fill-foreground" />
+                  -
                 </StepperFieldController>
                 <StepperFieldValue />
                 <StepperFieldController direction="up">
-                  <StepperPlusIcon className="fill-foreground" />
+                  +
                 </StepperFieldController>
               </StepperField>
             </CardContent>

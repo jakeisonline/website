@@ -1,13 +1,6 @@
 "use client"
 
-import StepperPlusIcon from "@/svgs/StepperPlusIcon"
-import StepperMinusIcon from "@/svgs/StepperMinusIcon"
-import StepperFieldValue from "./stepper-field-value"
-import StepperFieldController from "./stepper-field-controller"
 import { useRef } from "react"
-import StepperFieldLabel from "./stepper-field-label"
-import StepperFieldCollapsible from "./stepper-field-collapsible"
-import StepperFieldBadge from "./stepper-field-badge"
 import StepperFieldContextProvider from "@/contexts/stepper-field-context-provider"
 
 type StepperFieldProps = {

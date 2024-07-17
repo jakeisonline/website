@@ -30,7 +30,7 @@ export default function StepperFieldController({
   }
 
   const divClass = clsx(
-    "px-1 py-1 rounded-md",
+    "rounded-md w-6 h-6 flex items-center justify-center",
     isDisabled() &&
       "opacity-40 focus:outline focus:outline-2 focus:outline-muted",
     !isDisabled() &&
