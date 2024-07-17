@@ -1,3 +1,11 @@
+import {
+  StepperField,
+  StepperFieldBadge,
+  StepperFieldCollapsibleContainer,
+  StepperFieldController,
+  StepperFieldInput,
+  StepperFieldLabel,
+} from "@/components/stepper-field"
 import { FeatureItem, FeatureList } from "@/components/feature-list"
 import {
   Table,
@@ -7,7 +15,6 @@ import {
   TableHeadCell,
   TableRow,
 } from "@/components/ui/table"
-import StepperField from "@/components/stepper-field"
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -24,11 +31,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Keeb from "@/components/keeb"
 import Code from "@/components/ui/code"
 import Link from "@/components/ui/link"
-import StepperFieldController from "@/components/stepper-field/stepper-field-controller"
-import StepperFieldLabel from "@/components/stepper-field/stepper-field-label"
-import StepperFieldInput from "@/components/stepper-field/stepper-field-input"
-import StepperFieldCollapsibleContainer from "@/components/stepper-field/stepper-field-collapsible-container"
-import StepperFieldBadge from "@/components/stepper-field/stepper-field-badge"
 
 export default function StepperPage() {
   return (
