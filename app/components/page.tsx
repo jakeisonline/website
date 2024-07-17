@@ -12,7 +12,7 @@ export default function ComponentsPage() {
             <span className="text-xs py-0.5 px-1.5">Stepper</span>
           </div>
           <div className="flex justify-center m-auto">
-            <StepperField startNum={0} minNum={0} fieldLabelReader="Quantity" />
+            <StepperField start={0} min={0} fieldLabelReader="Quantity" />
           </div>
         </div>
         <div className="group w-full h-40 border border-slate-300 rounded-md hover:shadow-md transition-all transition-300 cursor-pointer ease-in-out bg-white hover:border-indigo-300 hover:shadow-indigo-300/40 relative p-6">
