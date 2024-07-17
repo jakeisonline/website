@@ -3,62 +3,56 @@
 import { RefObject, createContext, useContext, useState } from "react"
 
 type StepperFieldContextType = {
-  stepValue: number | ""
+  value: number | ""
   handleStep: (direction: string, shiftStep?: boolean) => void
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   handleBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
-  minNum?: number
-  maxNum?: number
-  startNum?: number
+  min?: number
+  max?: number
+  start?: number
   inputRef?: RefObject<HTMLInputElement>
 }
 
 export const StepperFieldContext = createContext<StepperFieldContextType>({
-  stepValue: 0,
+  value: 0,
   handleStep: () => {},
 })
 
 type StepperFieldContextProviderProps = {
-  minNum?: number
-  maxNum?: number
-  startNum?: number
-  stepSize?: number
-  stepShiftSize?: number
+  min?: number
+  max?: number
+  start?: number
+  step?: number
+  shift?: number
   inputRef: RefObject<HTMLInputElement>
   children: React.ReactElement
 }
 
 export default function StepperFieldContextProvider({
-  minNum,
-  maxNum,
-  startNum = 0,
-  stepSize = 1,
-  stepShiftSize,
+  min,
+  max,
+  start = 0,
+  step = 1,
+  shift,
   inputRef,
   children,
 }: StepperFieldContextProviderProps) {
-  const [stepValue, setStepValue] = useState<number | "">(startNum)
+  const [value, setValue] = useState<number | "">(start)
 
   const handleStep = (direction: string, shiftStep?: boolean) => {
     let newValue: number
     if (direction === "up") {
-      newValue =
-        shiftStep && stepShiftSize
-          ? +stepValue + stepShiftSize
-          : +stepValue + stepSize
+      newValue = shiftStep && shift ? +value + shift : +value + step
       setValueWithinRange(newValue)
     } else if (direction === "down") {
-      newValue =
-        shiftStep && stepShiftSize
-          ? +stepValue - stepShiftSize
-          : +stepValue - stepSize
+      newValue = shiftStep && shift ? +value - shift : +value - step
       setValueWithinRange(newValue)
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "") return setStepValue("")
+    if (e.target.value === "") return setValue("")
     const newValue = +e.target.value
     !isNaN(newValue) && setValueWithinRange(newValue)
   }
@@ -89,7 +83,7 @@ export default function StepperFieldContextProvider({
     }
     // User is pressing enter within the stepper field
     else if (e.code == "Enter") {
-      setValueWithinRange(stepValue)
+      setValueWithinRange(value)
       e.preventDefault()
     }
     return
@@ -100,15 +94,15 @@ export default function StepperFieldContextProvider({
   }
 
   const setValueToStart = () => {
-    setStepValue(startNum)
+    setValue(start)
   }
 
   const setValueToMax = () => {
-    if (typeof maxNum === "number") setStepValue(maxNum)
+    if (typeof max === "number") setValue(max)
   }
 
   const setValueToMin = () => {
-    if (typeof minNum === "number") setStepValue(minNum)
+    if (typeof min === "number") setValue(min)
   }
 
   const setValueWithinRange = (value: number | "") => {
@@ -116,28 +110,28 @@ export default function StepperFieldContextProvider({
     if (isBelowMin(value)) return setValueToMin()
     if (isAboveMax(value)) return setValueToMax()
 
-    return setStepValue(value)
+    return setValue(value)
   }
 
   const isBelowMin = (value: number) => {
-    return (minNum || minNum === 0) && value < minNum
+    return (min || min === 0) && value < min
   }
 
   const isAboveMax = (value: number) => {
-    return maxNum && value > maxNum
+    return max && value > max
   }
 
   return (
     <StepperFieldContext.Provider
       value={{
-        stepValue,
+        value,
         handleStep,
         handleChange,
         handleKeyDown,
         handleBlur,
-        minNum,
-        maxNum,
-        startNum,
+        min,
+        max,
+        start,
         inputRef,
       }}
     >

@@ -11,12 +11,12 @@ export default function StepperFieldBadge({
   hideBadgeNum,
   collapsible,
 }: StepperFieldBadgeProps) {
-  const { stepValue } = useStepperFieldContext()
-  if (!collapsible || hideBadge || stepValue == hideBadgeNum) return
+  const { value } = useStepperFieldContext()
+  if (!collapsible || hideBadge || value == hideBadgeNum) return
 
   return (
     <div className="group-has-[:focus]:hidden py-0 px-1.5 absolute -top-2 -right-2.5 bg-primary text-background rounded-full text-2xs font-medium">
-      {stepValue}
+      {value}
     </div>
   )
 }

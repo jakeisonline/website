@@ -11,11 +11,11 @@ import StepperFieldBadge from "./stepper-field-badge"
 import StepperFieldContextProvider from "@/contexts/stepper-field-context-provider"
 
 type StepperFieldProps = {
-  startNum: number
-  minNum?: number
-  maxNum?: number
-  stepSize?: number
-  stepShiftSize?: number
+  start: number
+  min?: number
+  max?: number
+  step?: number
+  shift?: number
   fieldId?: string
   fieldName?: string
   fieldLabel?: string
@@ -26,11 +26,11 @@ type StepperFieldProps = {
 }
 
 export default function StepperField({
-  startNum,
-  minNum,
-  maxNum,
-  stepSize,
-  stepShiftSize,
+  start,
+  min,
+  max,
+  step,
+  shift,
   fieldId,
   fieldName,
   fieldLabel,
@@ -51,11 +51,11 @@ export default function StepperField({
 
   return (
     <StepperFieldContextProvider
-      minNum={minNum}
-      maxNum={maxNum}
-      startNum={startNum}
-      stepSize={stepSize}
-      stepShiftSize={stepShiftSize}
+      min={min}
+      max={max}
+      start={start}
+      step={step}
+      shift={shift}
       inputRef={inputRef}
     >
       <div

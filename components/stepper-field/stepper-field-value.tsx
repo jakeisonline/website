@@ -11,30 +11,23 @@ export default function StepperFieldValue({
   fieldName,
   fieldLabelReader,
 }: StepperFieldValueProps) {
-  const {
-    minNum,
-    maxNum,
-    stepValue,
-    handleChange,
-    handleKeyDown,
-    handleBlur,
-    inputRef,
-  } = useStepperFieldContext()
+  const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
+    useStepperFieldContext()
 
   return (
     <input
       type="number"
       id={fieldId}
       name={fieldName}
-      value={stepValue}
+      value={value}
       ref={inputRef}
-      min={minNum}
-      max={maxNum}
+      min={min}
+      max={max}
       onKeyDown={handleKeyDown}
       onChange={handleChange}
       onBlur={handleBlur}
       aria-label={fieldLabelReader}
-      style={{ width: String(stepValue).length + "ch" }}
+      style={{ width: String(value).length + "ch" }}
       className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer text-sm"
     />
   )

@@ -10,7 +10,7 @@ export default function StepperFieldController({
   direction,
   children,
 }: StepperControllerProps) {
-  const { minNum, maxNum, stepValue, handleStep } = useStepperFieldContext()
+  const { min, max, value, handleStep } = useStepperFieldContext()
   const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const shiftKeyHeld = e.shiftKey
     handleStep(direction, shiftKeyHeld)
@@ -18,13 +18,9 @@ export default function StepperFieldController({
   }
 
   const isDisabled = () => {
-    if (
-      direction === "down" &&
-      (minNum || minNum === 0) &&
-      +stepValue <= minNum
-    ) {
+    if (direction === "down" && (min || min === 0) && +value <= min) {
       return true
-    } else if (direction === "up" && maxNum && +stepValue >= maxNum) {
+    } else if (direction === "up" && max && +value >= max) {
       return true
     } else {
       return false

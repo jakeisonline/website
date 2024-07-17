@@ -60,9 +60,9 @@ export default function StepperPage() {
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <StepperField
-                minNum={0}
-                startNum={0}
-                stepShiftSize={10}
+                min={0}
+                start={0}
+                shift={10}
                 fieldId={"quantity"}
                 fieldName={"quantity"}
                 fieldLabel={"Quantity"}
@@ -73,9 +73,9 @@ export default function StepperPage() {
         </TabsContent>
         <TabsContent value="code">
           <CodeBlock>{`<StepperField
-  minNum={0}
-  startNum={0}
-  stepShiftSize={10}
+  min={0}
+  start={0}
+  shift={10}
   fieldId={"quantity"}
   fieldName={"quantity"}
   fieldLabel={"Quantity"}
@@ -98,35 +98,35 @@ export default function StepperPage() {
         <TableBody>
           <TableRow>
             <TableCell>
-              <Code>startNum</Code>
+              <Code>start</Code>
             </TableCell>
             <TableCell>number</TableCell>
             <TableCell>The initial value of the field. Required.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              <Code>minNum</Code>
+              <Code>min</Code>
             </TableCell>
             <TableCell>number</TableCell>
             <TableCell>Lowest allowed value of the field.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              <Code>maxNum</Code>
+              <Code>max</Code>
             </TableCell>
             <TableCell>number</TableCell>
             <TableCell>Highest allowed value of the field</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              <Code>stepSize</Code>
+              <Code>step</Code>
             </TableCell>
             <TableCell>number</TableCell>
             <TableCell>Amount the value is adjusted by.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              <Code>stepSize</Code>
+              <Code>shift</Code>
             </TableCell>
             <TableCell>number</TableCell>
             <TableCell>
@@ -176,7 +176,7 @@ export default function StepperPage() {
               <Keeb>ArrowUp</Keeb>
             </TableCell>
             <TableCell>
-              Increment value by <Code>stepSize</Code>, or <Code>1</Code>
+              Increment value by <Code>step</Code>, or <Code>1</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -184,7 +184,7 @@ export default function StepperPage() {
               <Keeb>ArrowDown</Keeb>
             </TableCell>
             <TableCell>
-              Decrement value by <Code>stepSize</Code>, or <Code>1</Code>
+              Decrement value by <Code>step</Code>, or <Code>1</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -192,7 +192,7 @@ export default function StepperPage() {
               <Keeb>Shift</Keeb>+<Keeb>ArrowUp</Keeb>
             </TableCell>
             <TableCell>
-              Increment value by <Code>stepShiftSize</Code>
+              Increment value by <Code>shift</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -200,7 +200,7 @@ export default function StepperPage() {
               <Keeb>Shift</Keeb>+<Keeb>ArrowDown</Keeb>
             </TableCell>
             <TableCell>
-              Decrement value by <Code>stepShiftSize</Code>
+              Decrement value by <Code>shift</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -208,7 +208,7 @@ export default function StepperPage() {
               <Keeb>PageUp</Keeb>
             </TableCell>
             <TableCell>
-              Increment value by <Code>stepShiftSize</Code>
+              Increment value by <Code>shift</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -216,7 +216,7 @@ export default function StepperPage() {
               <Keeb>PageDown</Keeb>
             </TableCell>
             <TableCell>
-              Decrement value by <Code>stepShiftSize</Code>
+              Decrement value by <Code>shift</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -224,7 +224,7 @@ export default function StepperPage() {
               <Keeb>Home</Keeb>
             </TableCell>
             <TableCell>
-              Set value to <Code>minNum</Code>
+              Set value to <Code>min</Code>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -232,7 +232,7 @@ export default function StepperPage() {
               <Keeb>End</Keeb>
             </TableCell>
             <TableCell>
-              Set value to <Code>maxNum</Code>
+              Set value to <Code>max</Code>
             </TableCell>
           </TableRow>
         </TableBody>
@@ -260,9 +260,9 @@ export default function StepperPage() {
                   fieldName="sizes_small"
                   fieldLabel="S"
                   fieldLabelReader="Small"
-                  startNum={0}
-                  minNum={0}
-                  maxNum={100}
+                  start={0}
+                  min={0}
+                  max={100}
                 />
                 <StepperField
                   collapsible={true}
@@ -271,9 +271,9 @@ export default function StepperPage() {
                   fieldName="sizes_medium"
                   fieldLabel="M"
                   fieldLabelReader="Medium"
-                  startNum={3}
-                  minNum={0}
-                  maxNum={100}
+                  start={3}
+                  min={0}
+                  max={100}
                 />
                 <StepperField
                   collapsible={true}
@@ -282,9 +282,9 @@ export default function StepperPage() {
                   fieldName="sizes_large"
                   fieldLabel="L"
                   fieldLabelReader="Large"
-                  startNum={0}
-                  minNum={0}
-                  maxNum={100}
+                  start={0}
+                  min={0}
+                  max={100}
                 />
               </div>
             </CardContent>
@@ -299,9 +299,9 @@ export default function StepperPage() {
     fieldName="sizes_small"
     fieldLabel="S"
     fieldLabelReader="Small"
-    startNum={0}
-    minNum={0}
-    maxNum={100}
+    start={0}
+    min={0}
+    max={100}
   />
   <StepperField
     collapsible={true}
@@ -310,9 +310,9 @@ export default function StepperPage() {
     fieldName="sizes_medium"
     fieldLabel="M"
     fieldLabelReader="Medium"
-    startNum={3}
-    minNum={0}
-    maxNum={100}
+    start={3}
+    min={0}
+    max={100}
   />
   <StepperField
     collapsible={true}
@@ -321,9 +321,9 @@ export default function StepperPage() {
     fieldName="sizes_large"
     fieldLabel="L"
     fieldLabelReader="Large"
-    startNum={0}
-    minNum={0}
-    maxNum={100}
+    start={0}
+    min={0}
+    max={100}
   />
 </div>`}</CodeBlock>
         </TabsContent>
