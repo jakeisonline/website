@@ -5,10 +5,10 @@ type StepperFieldCollapsibleContainerProps = {
   children: any
 }
 
-const StepperFieldCollapsibleContainer = ({
+export default function StepperFieldCollapsibleContainer({
   collapsible,
   children,
-}: StepperFieldCollapsibleContainerProps) => {
+}: StepperFieldCollapsibleContainerProps) {
   const divClass = clsx(
     "flex flex-row items-center gap-1",
     collapsible &&
@@ -17,5 +17,3 @@ const StepperFieldCollapsibleContainer = ({
 
   return <div className={divClass}>{children}</div>
 }
-
-export default StepperFieldCollapsibleContainer

@@ -6,11 +6,11 @@ type StepperFieldBadgeProps = {
   collapsible?: boolean
 }
 
-const StepperFieldBadge = ({
+export default function StepperFieldBadge({
   hideBadge,
   hideBadgeNum,
   collapsible,
-}: StepperFieldBadgeProps) => {
+}: StepperFieldBadgeProps) {
   const { stepValue } = useStepperFieldContext()
   if (!collapsible || hideBadge || stepValue == hideBadgeNum) return
 
@@ -20,5 +20,3 @@ const StepperFieldBadge = ({
     </div>
   )
 }
-
-export default StepperFieldBadge

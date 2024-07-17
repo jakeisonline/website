@@ -6,11 +6,11 @@ type StepperFieldValueProps = {
   fieldLabelReader?: string
 }
 
-const StepperFieldValue = ({
+export default function StepperFieldValue({
   fieldId,
   fieldName,
   fieldLabelReader,
-}: StepperFieldValueProps) => {
+}: StepperFieldValueProps) {
   const {
     minNum,
     maxNum,
@@ -39,5 +39,3 @@ const StepperFieldValue = ({
     />
   )
 }
-
-export default StepperFieldValue

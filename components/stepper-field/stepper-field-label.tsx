@@ -7,12 +7,12 @@ type StepperFieldLabelProps = {
   collapsible?: boolean | false
 }
 
-const StepperFieldLabel = ({
+export default function StepperFieldLabel({
   fieldId,
   fieldLabel,
   fieldLabelReader,
   collapsible,
-}: StepperFieldLabelProps) => {
+}: StepperFieldLabelProps) {
   const ariaLabel = fieldLabelReader ? fieldLabelReader : fieldLabel
 
   const labelClass = clsx(
@@ -29,5 +29,3 @@ const StepperFieldLabel = ({
     </label>
   )
 }
-
-export default StepperFieldLabel

@@ -25,7 +25,7 @@ type StepperFieldProps = {
   hideBadgeNum?: number
 }
 
-const StepperField = ({
+export default function StepperField({
   startNum,
   minNum,
   maxNum,
@@ -38,7 +38,7 @@ const StepperField = ({
   collapsible,
   hideBadge,
   hideBadgeNum,
-}: StepperFieldProps) => {
+}: StepperFieldProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   // Handles focus when users click the field's chrome but not neccessarily the input
@@ -92,5 +92,3 @@ const StepperField = ({
     </StepperFieldContextProvider>
   )
 }
-
-export default StepperField
