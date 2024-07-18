@@ -187,6 +187,12 @@ export default function StepperPage() {
         </Link>
         .
       </P>
+      <P className="mt-3">
+        <Code>{`<StepperFieldInput>`}</Code> requires the property{" "}
+        <Code>id</Code> (string) to be set, and should match the{" "}
+        <Code>htmlFor</Code> (string) of the{" "}
+        <Code>{`<StepperFieldLabel>`}</Code>.
+      </P>
       <H3 permalink>Keyboard interaction</H3>
       <Table>
         <TableHead>
