@@ -4,6 +4,7 @@ import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { cn } from "@/lib/utils"
 
 type StepperFieldInputProps = {
+  id: string
   className?: string
 }
 
@@ -31,8 +32,8 @@ export default function StepperFieldInput({
       )}
       role="spinbutton"
       aria-valuenow={value ? value : undefined}
-      // aria-valuemin={min}
-      // aria-valuemax={max}
+      aria-valuemin={min ? min : undefined}
+      aria-valuemax={max ? max : undefined}
       {...props}
     />
   )

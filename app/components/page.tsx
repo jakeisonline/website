@@ -18,11 +18,11 @@ export default function ComponentsPage() {
           </div>
           <div className="flex justify-center m-auto">
             <StepperField min={0} start={0} shift={10}>
-              <StepperFieldLabel>Quantity</StepperFieldLabel>
+              <StepperFieldLabel htmlFor="quantity">Quantity</StepperFieldLabel>
               <StepperFieldController direction="down">
                 -
               </StepperFieldController>
-              <StepperFieldInput />
+              <StepperFieldInput id="quantity" />
               <StepperFieldController direction="up">+</StepperFieldController>
             </StepperField>
           </div>

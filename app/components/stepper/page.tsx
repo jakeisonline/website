@@ -68,11 +68,13 @@ export default function StepperPage() {
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <StepperField min={0} start={0} shift={10}>
-                <StepperFieldLabel>Quantity</StepperFieldLabel>
+                <StepperFieldLabel htmlFor="quantity">
+                  Quantity
+                </StepperFieldLabel>
                 <StepperFieldController direction="down">
                   -
                 </StepperFieldController>
-                <StepperFieldInput />
+                <StepperFieldInput id="quantity" />
                 <StepperFieldController direction="up">
                   +
                 </StepperFieldController>
@@ -82,11 +84,13 @@ export default function StepperPage() {
         </TabsContent>
         <TabsContent value="code">
           <CodeBlock>{`<StepperField min={0} start={0} shift={10}>
-  <StepperFieldLabel>Quantity</StepperFieldLabel>
+  <StepperFieldLabel htmlFor="quantity">
+    Quantity
+  </StepperFieldLabel>
   <StepperFieldController direction="down">
     -
   </StepperFieldController>
-  <StepperFieldInput />
+  <StepperFieldInput id="quantity" />
   <StepperFieldController direction="up">
     +
   </StepperFieldController>
@@ -94,8 +98,26 @@ export default function StepperPage() {
         </TabsContent>
       </Tabs>
       <H2 permalink>Usage</H2>
-      <CodeBlock className="mb-4">{`import { StepperField } from "@/components/ui/stepper-field"`}</CodeBlock>
-      <CodeBlock>{`<StepperField startNum={0} />`}</CodeBlock>
+      <CodeBlock className="mb-4">{`import {
+  StepperField,
+  StepperFieldBadge,
+  StepperFieldCollapsibleContainer,
+  StepperFieldController,
+  StepperFieldInput,
+  StepperFieldLabel,
+} from "@/components/stepper-field"`}</CodeBlock>
+      <CodeBlock>{`<StepperField start={0}>
+  <StepperFieldLabel htmlFor="stepper">
+    Quantity
+  </StepperFieldLabel>
+  <StepperFieldController direction="down">
+    -
+  </StepperFieldController>
+  <StepperFieldInput id="stepper" />
+  <StepperFieldController direction="up">
+    +
+  </StepperFieldController>
+</StepperField>`}</CodeBlock>
       <H2>Props</H2>
       <Table>
         <TableHead>
@@ -257,14 +279,17 @@ export default function StepperPage() {
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <div className="flex gap-3">
                 <StepperField min={0} start={0} shift={10} className="min-w-8">
-                  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+                  <StepperFieldLabel
+                    htmlFor="small"
+                    className="group-has-[:focus]:border-r border-r-0 mr-0"
+                  >
                     S
                   </StepperFieldLabel>
                   <StepperFieldCollapsibleContainer>
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
-                    <StepperFieldInput />
+                    <StepperFieldInput id="small" />
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
@@ -272,14 +297,17 @@ export default function StepperPage() {
                   <StepperFieldBadge />
                 </StepperField>
                 <StepperField min={0} start={3} shift={10} className="min-w-8">
-                  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+                  <StepperFieldLabel
+                    htmlFor="medium"
+                    className="group-has-[:focus]:border-r border-r-0 mr-0"
+                  >
                     M
                   </StepperFieldLabel>
                   <StepperFieldCollapsibleContainer>
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
-                    <StepperFieldInput />
+                    <StepperFieldInput id="medium" />
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
@@ -287,14 +315,17 @@ export default function StepperPage() {
                   <StepperFieldBadge />
                 </StepperField>
                 <StepperField min={0} start={0} shift={10} className="min-w-8">
-                  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+                  <StepperFieldLabel
+                    htmlFor="large"
+                    className="group-has-[:focus]:border-r border-r-0 mr-0"
+                  >
                     L
                   </StepperFieldLabel>
                   <StepperFieldCollapsibleContainer>
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
-                    <StepperFieldInput />
+                    <StepperFieldInput id="large" />
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>

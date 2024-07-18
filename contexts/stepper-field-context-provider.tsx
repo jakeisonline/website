@@ -2,7 +2,7 @@
 
 import { RefObject, createContext, useContext, useState } from "react"
 
-type StepperFieldContextType = {
+export type StepperFieldContextType = {
   value: number | ""
   handleStep: (direction: string, shiftStep?: boolean) => void
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -19,7 +19,7 @@ export const StepperFieldContext = createContext<StepperFieldContextType>({
   handleStep: () => {},
 })
 
-export type StepperFieldContextProviderProps = {
+type StepperFieldContextProviderProps = {
   min?: number
   max?: number
   start?: number
