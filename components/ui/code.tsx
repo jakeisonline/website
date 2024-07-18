@@ -9,7 +9,7 @@ export default function Code({
   return (
     <code
       className={cn(
-        "font-mono p-0.5 text-sm bg-code text-code-foreground rounded",
+        "font-mono p-0.5 text-xs bg-code text-code-foreground rounded",
       )}
       {...props}
     >
