@@ -21,7 +21,7 @@ export default function StepperFieldLabel({
   )
 
   return (
-    <label {...props} className={cn(labelClass, className)}>
+    <label className={cn(labelClass, className)} {...props}>
       {children}
     </label>
   )

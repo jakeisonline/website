@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import StepperFieldContextProvider from "@/contexts/stepper-field-context-provider"
+import { cn } from "@/lib/utils"
 
 type StepperFieldProps = {
   start: number
@@ -9,6 +10,7 @@ type StepperFieldProps = {
   max?: number
   step?: number
   shift?: number
+  className?: string
   children?: React.ReactNode
 }
 
@@ -19,6 +21,8 @@ export default function StepperField({
   step,
   shift,
   children,
+  className,
+  ...props
 }: StepperFieldProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -41,9 +45,11 @@ export default function StepperField({
     >
       <div
         onMouseUp={handleFocus}
-        className={
-          "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group"
-        }
+        className={cn(
+          "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group",
+          className,
+        )}
+        {...props}
       >
         {children}
       </div>

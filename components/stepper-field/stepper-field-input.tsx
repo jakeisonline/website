@@ -1,17 +1,15 @@
 "use client"
 
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
+import { cn } from "@/lib/utils"
 
 type StepperFieldInputProps = {
-  fieldId?: string
-  fieldName?: string
-  fieldLabelReader?: string
+  className?: string
 }
 
 export default function StepperFieldInput({
-  fieldId,
-  fieldName,
-  fieldLabelReader,
+  className,
+  ...props
 }: StepperFieldInputProps) {
   const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
     useStepperFieldContext()
@@ -19,8 +17,6 @@ export default function StepperFieldInput({
   return (
     <input
       type="number"
-      id={fieldId}
-      name={fieldName}
       value={value}
       ref={inputRef}
       min={min}
@@ -28,9 +24,12 @@ export default function StepperFieldInput({
       onKeyDown={handleKeyDown}
       onChange={handleChange}
       onBlur={handleBlur}
-      aria-label={fieldLabelReader}
       style={{ width: String(value).length + "ch" }}
-      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer text-sm"
+      className={cn(
+        "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer text-sm",
+        className,
+      )}
+      {...props}
     />
   )
 }

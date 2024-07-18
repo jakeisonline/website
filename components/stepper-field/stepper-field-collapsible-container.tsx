@@ -16,6 +16,7 @@ export default function StepperFieldCollapsibleContainer({
         "has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1",
         className,
       )}
+      {...props}
     >
       {children}
     </div>
