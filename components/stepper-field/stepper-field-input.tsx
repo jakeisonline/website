@@ -29,6 +29,10 @@ export default function StepperFieldInput({
         "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer text-sm",
         className,
       )}
+      role="spinbutton"
+      aria-valuenow={value ? value : undefined}
+      // aria-valuemin={min}
+      // aria-valuemax={max}
       {...props}
     />
   )

@@ -19,7 +19,7 @@ export const StepperFieldContext = createContext<StepperFieldContextType>({
   handleStep: () => {},
 })
 
-type StepperFieldContextProviderProps = {
+export type StepperFieldContextProviderProps = {
   min?: number
   max?: number
   start?: number
