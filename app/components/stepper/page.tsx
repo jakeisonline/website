@@ -256,8 +256,10 @@ export default function StepperPage() {
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
               <div className="flex gap-3">
-                <StepperField min={0} start={0} shift={10}>
-                  <StepperFieldLabel>S</StepperFieldLabel>
+                <StepperField min={0} start={0} shift={10} className="min-w-8">
+                  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+                    S
+                  </StepperFieldLabel>
                   <StepperFieldCollapsibleContainer>
                     <StepperFieldController direction="down">
                       -
@@ -269,8 +271,10 @@ export default function StepperPage() {
                   </StepperFieldCollapsibleContainer>
                   <StepperFieldBadge />
                 </StepperField>
-                <StepperField min={0} start={3} shift={10}>
-                  <StepperFieldLabel>M</StepperFieldLabel>
+                <StepperField min={0} start={3} shift={10} className="min-w-8">
+                  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+                    M
+                  </StepperFieldLabel>
                   <StepperFieldCollapsibleContainer>
                     <StepperFieldController direction="down">
                       -
@@ -282,8 +286,10 @@ export default function StepperPage() {
                   </StepperFieldCollapsibleContainer>
                   <StepperFieldBadge />
                 </StepperField>
-                <StepperField min={0} start={0} shift={10}>
-                  <StepperFieldLabel>L</StepperFieldLabel>
+                <StepperField min={0} start={0} shift={10} className="min-w-8">
+                  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+                    L
+                  </StepperFieldLabel>
                   <StepperFieldCollapsibleContainer>
                     <StepperFieldController direction="down">
                       -
@@ -301,45 +307,51 @@ export default function StepperPage() {
         </TabsContent>
         <TabsContent value="code">
           <CodeBlock>{`<div className="flex gap-3">
-  <StepperField min={0} start={0} shift={10}>
-    <StepperFieldLabel>S</StepperFieldLabel>
-    <StepperFieldCollapsibleContainer>
-      <StepperFieldController direction="down">
-        -
-      </StepperFieldController>
-      <StepperFieldInput />
-      <StepperFieldController direction="up">
-        +
-      </StepperFieldController>
-    </StepperFieldCollapsibleContainer>
-    <StepperFieldBadge />
-  </StepperField>
-  <StepperField min={0} start={3} shift={10}>
-    <StepperFieldLabel>M</StepperFieldLabel>
-    <StepperFieldCollapsibleContainer>
-      <StepperFieldController direction="down">
-        -
-      </StepperFieldController>
-      <StepperFieldInput />
-      <StepperFieldController direction="up">
-        +
-      </StepperFieldController>
-    </StepperFieldCollapsibleContainer>
-    <StepperFieldBadge />
-  </StepperField>
-  <StepperField min={0} start={0} shift={10}>
-    <StepperFieldLabel>L</StepperFieldLabel>
-    <StepperFieldCollapsibleContainer>
-      <StepperFieldController direction="down">
-        -
-      </StepperFieldController>
-      <StepperFieldInput />
-      <StepperFieldController direction="up">
-        +
-      </StepperFieldController>
-    </StepperFieldCollapsibleContainer>
-    <StepperFieldBadge />
-  </StepperField>
+<StepperField min={0} start={0} shift={10} className="min-w-8">
+  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+    S
+  </StepperFieldLabel>
+  <StepperFieldCollapsibleContainer>
+    <StepperFieldController direction="down">
+      -
+    </StepperFieldController>
+    <StepperFieldInput />
+    <StepperFieldController direction="up">
+      +
+    </StepperFieldController>
+  </StepperFieldCollapsibleContainer>
+  <StepperFieldBadge />
+</StepperField>
+<StepperField min={0} start={3} shift={10} className="min-w-8">
+  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+    M
+  </StepperFieldLabel>
+  <StepperFieldCollapsibleContainer>
+    <StepperFieldController direction="down">
+      -
+    </StepperFieldController>
+    <StepperFieldInput />
+    <StepperFieldController direction="up">
+      +
+    </StepperFieldController>
+  </StepperFieldCollapsibleContainer>
+  <StepperFieldBadge />
+</StepperField>
+<StepperField min={0} start={0} shift={10} className="min-w-8">
+  <StepperFieldLabel className="group-has-[:focus]:border-r border-r-0 mr-0">
+    L
+  </StepperFieldLabel>
+  <StepperFieldCollapsibleContainer>
+    <StepperFieldController direction="down">
+      -
+    </StepperFieldController>
+    <StepperFieldInput />
+    <StepperFieldController direction="up">
+      +
+    </StepperFieldController>
+  </StepperFieldCollapsibleContainer>
+  <StepperFieldBadge />
+</StepperField>
 </div>`}</CodeBlock>
         </TabsContent>
       </Tabs>
