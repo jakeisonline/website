@@ -9,7 +9,7 @@ import TaggerField from "@/components/tagger-field"
 
 export default function ComponentsPage() {
   return (
-    <main className="m-auto max-w-4xl min-h-lvh pt-10">
+    <div className="m-auto max-w-4xl min-h-lvh pt-10">
       <h1 className="font-semibold text-3xl">Components</h1>
       <div className="flex flex-col gap-3 mt-3">
         <div className="group w-full h-40 border border-slate-300 rounded-md hover:shadow-md transition-all transition-300 cursor-pointer ease-in-out bg-white hover:border-indigo-300 hover:shadow-indigo-300/40 relative p-6">
@@ -44,6 +44,6 @@ export default function ComponentsPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
