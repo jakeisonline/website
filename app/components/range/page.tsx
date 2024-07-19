@@ -1,4 +1,9 @@
 import RangeField from "@/components/range-field"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "🛝 Playground - Range",
+}
 
 export default function Home() {
   return (
