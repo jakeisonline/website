@@ -9,6 +9,11 @@ import Link from "@/components/ui/link"
 
 const font = Urbanist({ subsets: ["latin"] })
 
+export const metadata = {
+  title: "🛝 Playground",
+  description: "A playground for testing and developing components",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,7 +23,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Playground</title>
         <link
           href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
           rel="stylesheet"

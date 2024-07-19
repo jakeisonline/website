@@ -30,6 +30,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Keeb from "@/components/keeb"
 import Code from "@/components/ui/code"
 import Link from "@/components/ui/link"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "🛝 Playground - Stepper",
+}
 
 export default function StepperPage() {
   return (

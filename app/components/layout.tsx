@@ -1,6 +1,10 @@
 import Link from "@/components/ui/link"
 import { H4 } from "@/components/ui/headings"
 
+export const metadata = {
+  title: "🛝 Playground - Components",
+}
+
 export default function ComponentsLayout({
   children,
 }: {
