@@ -2,7 +2,7 @@ import { Urbanist } from "next/font/google"
 import "./globals.css"
 import { Button } from "@/components/ui/button"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
-import { Navigation, NavigationItem } from "@/components/ui/navigation"
+import { GlobalNav } from "@/components/global-nav"
 import ThemeToggle, { ThemeContextProvider } from "@/components/ui/theme-toggle"
 import Link from "@/components/ui/link"
 
@@ -44,9 +44,7 @@ export default function RootLayout({
                 <Link href="/" className="text-foreground">
                   🛝 jakeisonline/playground
                 </Link>
-                <Navigation>
-                  <NavigationItem href="/components">Components</NavigationItem>
-                </Navigation>
+                <GlobalNav />
               </div>
               <div className="justify-end flex flex-1 gap-1">
                 <Button
