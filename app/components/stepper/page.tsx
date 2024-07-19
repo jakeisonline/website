@@ -1,7 +1,6 @@
 import {
   StepperField,
   StepperFieldBadge,
-  StepperFieldCollapsibleContainer,
   StepperFieldController,
   StepperFieldInput,
   StepperFieldLabel,
@@ -372,7 +371,7 @@ export default function StepperPage() {
                   >
                     S
                   </StepperFieldLabel>
-                  <StepperFieldCollapsibleContainer>
+                  <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
@@ -380,7 +379,7 @@ export default function StepperPage() {
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
-                  </StepperFieldCollapsibleContainer>
+                  </div>
                   <StepperFieldBadge />
                 </StepperField>
                 <StepperField min={0} start={3} shift={10} className="min-w-8">
@@ -390,7 +389,7 @@ export default function StepperPage() {
                   >
                     M
                   </StepperFieldLabel>
-                  <StepperFieldCollapsibleContainer>
+                  <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
@@ -398,7 +397,7 @@ export default function StepperPage() {
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
-                  </StepperFieldCollapsibleContainer>
+                  </div>
                   <StepperFieldBadge />
                 </StepperField>
                 <StepperField min={0} start={0} shift={10} className="min-w-8">
@@ -408,7 +407,7 @@ export default function StepperPage() {
                   >
                     L
                   </StepperFieldLabel>
-                  <StepperFieldCollapsibleContainer>
+                  <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
                     <StepperFieldController direction="down">
                       -
                     </StepperFieldController>
@@ -416,7 +415,7 @@ export default function StepperPage() {
                     <StepperFieldController direction="up">
                       +
                     </StepperFieldController>
-                  </StepperFieldCollapsibleContainer>
+                  </div>
                   <StepperFieldBadge />
                 </StepperField>
               </div>
