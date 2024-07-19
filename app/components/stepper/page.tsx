@@ -249,6 +249,31 @@ export default function StepperPage() {
           </TableRow>
         </TableBody>
       </Table>
+      <H3 permalink>StepperFieldBadge</H3>
+      <P className="mb-6">
+        An optional floating badge that displays the current value of the field.
+      </P>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Prop</TableHeadCell>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Description</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Code>hideWhen</Code>
+            </TableCell>
+            <TableCell>number</TableCell>
+            <TableCell>
+              Automatically hides the badge when the value is equal to this
+              number. Defaults to <Code>0</Code>.
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <H2 permalink>Accessibility</H2>
       <P>
         Adheres to the{" "}
