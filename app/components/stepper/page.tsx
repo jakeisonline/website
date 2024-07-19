@@ -99,8 +99,6 @@ export default function StepperPage() {
       <H2 permalink>Usage</H2>
       <CodeBlock className="mb-4">{`import {
   StepperField,
-  StepperFieldBadge,
-  StepperFieldCollapsibleContainer,
   StepperFieldController,
   StepperFieldInput,
   StepperFieldLabel,
