@@ -1,9 +1,8 @@
-import "./globals.css"
 import { Urbanist } from "next/font/google"
+import "./globals.css"
 import { Button } from "@/components/ui/button"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import { Navigation, NavigationItem } from "@/components/ui/navigation"
-import "./globals.css"
 import ThemeToggle, { ThemeContextProvider } from "@/components/ui/theme-toggle"
 import Link from "@/components/ui/link"
 
