@@ -1,6 +1,5 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import Link from "@/components/ui/link"
 import { usePathname } from "next/navigation"
 
@@ -22,12 +21,11 @@ export function GlobalNav() {
         <Link
           key={name}
           href={href}
-          className={cn(
-            "transition-colors",
+          className={
             currentPath.includes(href)
               ? "text-foreground"
-              : "text-foreground/60",
-          )}
+              : "text-foreground/60"
+          }
         >
           {name}
         </Link>
