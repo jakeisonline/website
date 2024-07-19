@@ -118,7 +118,12 @@ export default function StepperPage() {
     +
   </StepperFieldController>
 </StepperField>`}</CodeBlock>
-      <H2>Props</H2>
+      <H2 permalink>Component Reference</H2>
+      <H3 permalink>StepperField</H3>
+      <P className="mb-6">
+        Used to wrap a single stepper field. Also provides context for all child
+        components.
+      </P>
       <Table>
         <TableHead>
           <TableRow>
@@ -165,6 +170,82 @@ export default function StepperPage() {
               Amount the value is adjusted TableBody, when using{" "}
               <Keeb>Shift</Keeb> arrow keys or <Keeb>PageUp</Keeb>/
               <Keeb>PageDown</Keeb>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <H3 permalink>StepperFieldLabel</H3>
+      <P className="mb-6">
+        The <Code>{`<label>`}</Code> of the stepper field.
+      </P>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Prop</TableHeadCell>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Description</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Code>htmlFor</Code>
+            </TableCell>
+            <TableCell>string</TableCell>
+            <TableCell>
+              Should match the <Code>id</Code> of the{" "}
+              <Code>StepperFieldInput</Code>.
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <H3 permalink>StepperFieldController</H3>
+      <P className="mb-6">
+        The controller <Code>{`<button>`}</Code> of a stepper field, which users
+        can interact with to step the value up or down.
+      </P>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Prop</TableHeadCell>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Description</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Code>direction</Code>
+            </TableCell>
+            <TableCell>string</TableCell>
+            <TableCell>
+              <Code>up</Code> or <Code>down</Code> depending on desired
+              direction. Required.
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <H3 permalink>StepperFieldInput</H3>
+      <P className="mb-6">
+        The <Code>{`<input>`}</Code> of the stepper field.
+      </P>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Prop</TableHeadCell>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Description</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Code>id</Code>
+            </TableCell>
+            <TableCell>string</TableCell>
+            <TableCell>
+              Should match the <Code>htmlFor</Code> of the{" "}
+              <Code>StepperFieldLabel</Code>.
             </TableCell>
           </TableRow>
         </TableBody>
