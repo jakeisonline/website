@@ -13,8 +13,6 @@ export function GlobalNav() {
     },
   ]
 
-  console.log(currentPath)
-
   return (
     <nav className="flex items-center gap-4 text-sm lg:gap-6">
       {globalNavItems.map(({ name, href }) => (
