@@ -120,6 +120,105 @@ export default function StepperPage() {
     +
   </StepperFieldController>
 </StepperField>`}</CodeBlock>
+      <H2 permalink>Accessibility</H2>
+      <P>
+        Adheres to the{" "}
+        <Link
+          external
+          href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/"
+        >
+          Spinbutton WAI-ARIA design pattern
+        </Link>
+        . At its core, this component is simply a{" "}
+        <Link
+          external
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number"
+        >
+          native number field
+        </Link>
+        .
+      </P>
+      <P className="mt-3">
+        <Code>{`<StepperFieldInput>`}</Code> requires the property{" "}
+        <Code>id</Code> (string) to be set, and should match the{" "}
+        <Code>htmlFor</Code> (string) of the{" "}
+        <Code>{`<StepperFieldLabel>`}</Code>.
+      </P>
+      <H3 permalink>Keyboard interaction</H3>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Key</TableHeadCell>
+            <TableHeadCell>Action</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Keeb>ArrowUp</Keeb>
+            </TableCell>
+            <TableCell>
+              Increment value by <Code>step</Code>, or <Code>1</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>ArrowDown</Keeb>
+            </TableCell>
+            <TableCell>
+              Decrement value by <Code>step</Code>, or <Code>1</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>Shift</Keeb>+<Keeb>ArrowUp</Keeb>
+            </TableCell>
+            <TableCell>
+              Increment value by <Code>shift</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>Shift</Keeb>+<Keeb>ArrowDown</Keeb>
+            </TableCell>
+            <TableCell>
+              Decrement value by <Code>shift</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>PageUp</Keeb>
+            </TableCell>
+            <TableCell>
+              Increment value by <Code>shift</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>PageDown</Keeb>
+            </TableCell>
+            <TableCell>
+              Decrement value by <Code>shift</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>Home</Keeb>
+            </TableCell>
+            <TableCell>
+              Set value to <Code>min</Code>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Keeb>End</Keeb>
+            </TableCell>
+            <TableCell>
+              Set value to <Code>max</Code>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <H2 permalink>Component Reference</H2>
       <H3 permalink>StepperField</H3>
       <P className="mb-6">
@@ -273,105 +372,6 @@ export default function StepperPage() {
             <TableCell>
               Automatically hides the badge when the value is equal to this
               number. Defaults to <Code>0</Code>.
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <H2 permalink>Accessibility</H2>
-      <P>
-        Adheres to the{" "}
-        <Link
-          external
-          href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/"
-        >
-          Spinbutton WAI-ARIA design pattern
-        </Link>
-        . At its core, this component is simply a{" "}
-        <Link
-          external
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number"
-        >
-          native number field
-        </Link>
-        .
-      </P>
-      <P className="mt-3">
-        <Code>{`<StepperFieldInput>`}</Code> requires the property{" "}
-        <Code>id</Code> (string) to be set, and should match the{" "}
-        <Code>htmlFor</Code> (string) of the{" "}
-        <Code>{`<StepperFieldLabel>`}</Code>.
-      </P>
-      <H3 permalink>Keyboard interaction</H3>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableHeadCell>Key</TableHeadCell>
-            <TableHeadCell>Action</TableHeadCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <Keeb>ArrowUp</Keeb>
-            </TableCell>
-            <TableCell>
-              Increment value by <Code>step</Code>, or <Code>1</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>ArrowDown</Keeb>
-            </TableCell>
-            <TableCell>
-              Decrement value by <Code>step</Code>, or <Code>1</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>Shift</Keeb>+<Keeb>ArrowUp</Keeb>
-            </TableCell>
-            <TableCell>
-              Increment value by <Code>shift</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>Shift</Keeb>+<Keeb>ArrowDown</Keeb>
-            </TableCell>
-            <TableCell>
-              Decrement value by <Code>shift</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>PageUp</Keeb>
-            </TableCell>
-            <TableCell>
-              Increment value by <Code>shift</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>PageDown</Keeb>
-            </TableCell>
-            <TableCell>
-              Decrement value by <Code>shift</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>Home</Keeb>
-            </TableCell>
-            <TableCell>
-              Set value to <Code>min</Code>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Keeb>End</Keeb>
-            </TableCell>
-            <TableCell>
-              Set value to <Code>max</Code>
             </TableCell>
           </TableRow>
         </TableBody>
