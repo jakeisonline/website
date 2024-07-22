@@ -6,7 +6,7 @@ import GlobalHeader from "@/components/global-header"
 const font = Urbanist({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "🛝 Playground",
+  title: "Playground",
   description: "A playground for testing and developing components",
 }
 

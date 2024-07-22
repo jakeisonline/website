@@ -33,7 +33,7 @@ import Link from "@/components/ui/link"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "🛝 Playground - Stepper",
+  title: "Playground - Stepper",
 }
 
 export default function StepperPage() {

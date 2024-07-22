@@ -1,7 +1,7 @@
 import SubNav from "@/components/sub-nav"
 
 export const metadata = {
-  title: "🛝 Playground - Components",
+  title: "Playground - Components",
 }
 
 export default async function ComponentsLayout({
