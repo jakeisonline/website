@@ -62,23 +62,21 @@ export function TableCell({
   children: React.ReactNode
 }) {
   return (
-    <td className={cn("[&:not(:last-of-type)]:pr-8", className)} {...props}>
+    <td
+      className={cn("[&:not(:last-of-type)]:pr-8 min-w-20", className)}
+      {...props}
+    >
       {children}
     </td>
   )
 }
 
 export function TableHeadCell({
-  className,
   children,
   ...props
 }: {
   className?: string
   children: React.ReactNode
 }) {
-  return (
-    <th className={cn("[&:not(:last-of-type)]:pr-8", className)} {...props}>
-      {children}
-    </th>
-  )
+  return <th {...props}>{children}</th>
 }
