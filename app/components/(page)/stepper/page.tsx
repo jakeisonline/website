@@ -36,9 +36,10 @@ export const metadata: Metadata = {
   title: "Playground - Stepper",
 }
 
-export default function StepperPage() {
+export default async function StepperPage() {
+  await new Promise((r) => setTimeout(r, 1000))
   return (
-    <div className="mx-auto w-full min-w-0">
+    <>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -500,6 +501,6 @@ export default function StepperPage() {
 </div>`}</CodeBlock>
         </TabsContent>
       </Tabs>
-    </div>
+    </>
   )
 }

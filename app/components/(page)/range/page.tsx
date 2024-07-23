@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full min-w-0">
+    <>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -89,6 +89,6 @@ export default function Home() {
         price grabber with an <Code>{`aria-label="Low price"`}</Code> and a high
         price grabber with an <Code>{`aria-label="High price"`}</Code>.
       </P>
-    </div>
+    </>
   )
 }
