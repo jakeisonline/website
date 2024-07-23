@@ -2,7 +2,6 @@
 
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { cn } from "@/lib/utils"
-import clsx from "clsx"
 
 interface StepperControllerProps extends React.ComponentPropsWithoutRef<"div"> {
   direction: string
