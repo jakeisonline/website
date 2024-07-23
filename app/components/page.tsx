@@ -4,7 +4,7 @@ import {
   StepperFieldController,
   StepperFieldInput,
   StepperFieldLabel,
-} from "@/components/stepper-field"
+} from "@/components/custom/stepper-field"
 import TaggerField from "@/components/tagger-field"
 
 export default function ComponentsPage() {
