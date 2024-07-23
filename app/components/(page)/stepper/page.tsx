@@ -37,7 +37,6 @@ export const metadata: Metadata = {
 }
 
 export default async function StepperPage() {
-  await new Promise((r) => setTimeout(r, 1000))
   return (
     <>
       <Breadcrumb>
