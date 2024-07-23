@@ -147,7 +147,7 @@ export function StepperFieldController({
   }
 
   const divClass = cn(
-    "rounded-md w-6 h-6 flex items-center justify-center",
+    "rounded-md w-6 h-6 flex items-center justify-center mx-0.5",
     isDisabled() &&
       "opacity-40 focus:outline focus:outline-2 focus:outline-muted",
     !isDisabled() &&
