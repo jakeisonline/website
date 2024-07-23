@@ -1,9 +1,8 @@
 "use client"
 
-import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { cn } from "@/lib/utils"
 
-type StepperFieldLabelProps = {
+type StepperFieldLabelProps = React.ComponentPropsWithoutRef<"label"> & {
   htmlFor: string
   className?: string
   children?: React.ReactNode

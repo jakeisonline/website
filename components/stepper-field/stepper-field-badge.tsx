@@ -3,14 +3,16 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { cn } from "@/lib/utils"
 
+type StepperFieldBadgeProps = React.ComponentPropsWithoutRef<"div"> & {
+  hideWhen?: number
+  className?: string
+}
+
 export default function StepperFieldBadge({
   hideWhen = 0,
   className,
   ...props
-}: {
-  hideWhen?: number
-  className?: string
-}) {
+}: StepperFieldBadgeProps) {
   const { value } = useStepperFieldContext()
   if (value == hideWhen) return
 

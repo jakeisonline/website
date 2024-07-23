@@ -3,7 +3,7 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { cn } from "@/lib/utils"
 
-type StepperFieldInputProps = {
+type StepperFieldInputProps = React.ComponentPropsWithoutRef<"input"> & {
   id: string
   className?: string
 }
@@ -38,3 +38,5 @@ export default function StepperFieldInput({
     />
   )
 }
+
+export { StepperFieldInput }
