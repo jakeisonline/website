@@ -4,7 +4,7 @@ import {
   StepperFieldController,
   StepperFieldInput,
   StepperFieldLabel,
-} from "@/components/stepper-field"
+} from "@/components/custom/stepper-field"
 import { FeatureItem, FeatureList } from "@/components/feature-list"
 import {
   Table,
