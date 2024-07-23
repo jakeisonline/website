@@ -2,7 +2,8 @@
 
 import { cn } from "@/lib/utils"
 
-type StepperFieldLabelProps = React.ComponentPropsWithoutRef<"label"> & {
+interface StepperFieldLabelProps
+  extends React.ComponentPropsWithoutRef<"label"> {
   htmlFor: string
   className?: string
   children?: React.ReactNode

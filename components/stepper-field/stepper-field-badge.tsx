@@ -3,7 +3,7 @@
 import useStepperFieldContext from "@/hooks/use-stepper-field-context"
 import { cn } from "@/lib/utils"
 
-type StepperFieldBadgeProps = React.ComponentPropsWithoutRef<"div"> & {
+interface StepperFieldBadgeProps extends React.ComponentPropsWithoutRef<"div"> {
   hideWhen?: number
   className?: string
 }
