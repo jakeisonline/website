@@ -117,7 +117,8 @@ export function StepperFieldInput({
   )
 }
 
-interface StepperControllerProps extends React.ComponentPropsWithoutRef<"div"> {
+interface StepperControllerProps
+  extends React.ComponentPropsWithoutRef<"button"> {
   direction: string
   className?: string
   children: any
@@ -130,7 +131,7 @@ export function StepperFieldController({
   ...props
 }: StepperControllerProps) {
   const { min, max, value, handleStep } = useStepperFieldContext()
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const shiftKeyHeld = e.shiftKey
     handleStep(direction, shiftKeyHeld)
     e.preventDefault()
@@ -156,9 +157,18 @@ export function StepperFieldController({
   )
 
   return (
-    <div onMouseDown={handleClick} className={divClass} {...props}>
+    <button
+      onMouseDown={handleClick}
+      className={divClass}
+      /*
+      "text field is usually the only focusable component because the increase and decrease functions are keyboard accessible via arrow keys"
+      https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/
+      */
+      tabIndex={-1}
+      {...props}
+    >
       {children}
-    </div>
+    </button>
   )
 }
 
