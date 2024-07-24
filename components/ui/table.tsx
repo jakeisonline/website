@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils"
+import React from "react"
 
 export function Table({
   className,
   children,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLTableElement> & {
   className?: string
   children: React.ReactNode
 }) {
@@ -22,7 +23,7 @@ export function TableHead({
   children,
   className,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLTableSectionElement> & {
   children: React.ReactNode
   className?: string
 }) {
@@ -33,7 +34,7 @@ export function TableBody({
   className,
   children,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLTableSectionElement> & {
   className?: string
   children: React.ReactNode
 }) {
@@ -47,7 +48,7 @@ export function TableBody({
 export function TableRow({
   children,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLTableRowElement> & {
   children: React.ReactNode
 }) {
   return <tr {...props}>{children}</tr>
@@ -57,7 +58,7 @@ export function TableCell({
   className,
   children,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLTableCellElement> & {
   className?: string
   children: React.ReactNode
 }) {
@@ -74,7 +75,7 @@ export function TableCell({
 export function TableHeadCell({
   children,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLTableCellElement> & {
   className?: string
   children: React.ReactNode
 }) {
