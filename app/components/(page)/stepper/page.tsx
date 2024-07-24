@@ -235,7 +235,9 @@ export default function StepperPage() {
               <Code>start</Code>
             </TableCell>
             <TableCell>number</TableCell>
-            <TableCell>The initial value of the field. Required.</TableCell>
+            <TableCell>
+              The initial value of the field. Default <Code>0</Code>.
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -249,14 +251,16 @@ export default function StepperPage() {
               <Code>max</Code>
             </TableCell>
             <TableCell>number</TableCell>
-            <TableCell>Highest allowed value of the field</TableCell>
+            <TableCell>Highest allowed value of the field.</TableCell>.
           </TableRow>
           <TableRow>
             <TableCell>
               <Code>step</Code>
             </TableCell>
             <TableCell>number</TableCell>
-            <TableCell>Amount the value is adjusted by.</TableCell>
+            <TableCell>
+              Amount the value is adjusted by. Default <Code>1</Code>.
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -264,9 +268,8 @@ export default function StepperPage() {
             </TableCell>
             <TableCell>number</TableCell>
             <TableCell>
-              Amount the value is adjusted TableBody, when using{" "}
-              <Keeb>Shift</Keeb> arrow keys or <Keeb>PageUp</Keeb>/
-              <Keeb>PageDown</Keeb>
+              Amount the value is adjusted by when using <Keeb>Shift</Keeb> +
+              arrow keys, or <Keeb>PageUp</Keeb>/<Keeb>PageDown</Keeb>.
             </TableCell>
           </TableRow>
         </TableBody>
