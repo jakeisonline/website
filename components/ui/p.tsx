@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-type PProps = {
+type PProps = React.HTMLAttributes<HTMLParagraphElement> & {
   className?: string
   children: React.ReactNode
 }
