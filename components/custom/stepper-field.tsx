@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { createContext, RefObject, useContext, useRef, useState } from "react"
 
 interface StepperFieldProps extends React.ComponentPropsWithoutRef<"div"> {
-  start: number
+  start?: number
   min?: number
   max?: number
   step?: number
