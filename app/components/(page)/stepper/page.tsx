@@ -251,7 +251,7 @@ export default function StepperPage() {
               <Code>max</Code>
             </TableCell>
             <TableCell>number</TableCell>
-            <TableCell>Highest allowed value of the field.</TableCell>.
+            <TableCell>Highest allowed value of the field.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
