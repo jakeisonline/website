@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   title: "Playground - Stepper",
 }
 
-export default async function StepperPage() {
+export default function StepperPage() {
   return (
     <>
       <Breadcrumb>
