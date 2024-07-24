@@ -6,41 +6,34 @@ import {
   StepperFieldLabel,
 } from "@/components/custom/stepper-field"
 import TaggerField from "@/components/tagger-field"
+import {
+  ComponentCard,
+  ComponentCardHeader,
+  ComponentCardContent,
+} from "@/components/component-card"
 
 export default function ComponentsPage() {
   return (
-    <div className="m-auto max-w-4xl min-h-lvh pt-10">
+    <div className="m-auto col-span-full min-h-lvh pt-10">
       <h1 className="font-semibold text-3xl">Components</h1>
-      <div className="flex flex-col gap-3 mt-3">
-        <div className="group w-full h-40 border border-slate-300 rounded-md hover:shadow-md transition-all transition-300 cursor-pointer ease-in-out bg-white hover:border-indigo-300 hover:shadow-indigo-300/40 relative p-6">
-          <div className="absolute left-1 bottom-1">
-            <span className="text-xs py-0.5 px-1.5">Stepper</span>
-          </div>
-          <div className="flex justify-center m-auto">
+      <div className="grid grid-cols-2 gap-3 mt-3">
+        <ComponentCard component="stepper">
+          <ComponentCardHeader>Stepper</ComponentCardHeader>
+          <ComponentCardContent>
             <StepperField min={0} start={0} shift={10}>
               <StepperFieldLabel htmlFor="quantity">Quantity</StepperFieldLabel>
               <StepperFieldButton direction="down">-</StepperFieldButton>
               <StepperFieldInput id="quantity" />
               <StepperFieldButton direction="up">+</StepperFieldButton>
             </StepperField>
-          </div>
-        </div>
-        <div className="group w-full h-40 border border-slate-300 rounded-md hover:shadow-md transition-all transition-300 cursor-pointer ease-in-out bg-white hover:border-indigo-300 hover:shadow-indigo-300/40 relative p-6">
-          <div className="absolute left-1 bottom-1">
-            <span className="text-xs py-0.5 px-1.5">Tagger</span>
-          </div>
-          <div className="flex justify-center m-auto">
-            <TaggerField />
-          </div>
-        </div>
-        <div className="group w-full h-40 border border-slate-300 rounded-md hover:shadow-md transition-all transition-300 cursor-pointer ease-in-out bg-white hover:border-indigo-300 hover:shadow-indigo-300/40 relative p-6">
-          <div className="absolute left-1 bottom-1">
-            <span className="text-xs py-0.5 px-1.5">Range</span>
-          </div>
-          <div className="flex justify-center m-auto">
+          </ComponentCardContent>
+        </ComponentCard>
+        <ComponentCard component="range">
+          <ComponentCardHeader>Range</ComponentCardHeader>
+          <ComponentCardContent>
             <RangeField minRange={0} maxRange={10} />
-          </div>
-        </div>
+          </ComponentCardContent>
+        </ComponentCard>
       </div>
     </div>
   )
