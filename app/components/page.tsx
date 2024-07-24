@@ -31,7 +31,12 @@ export default function ComponentsPage() {
         <ComponentCard component="range">
           <ComponentCardHeader>Range</ComponentCardHeader>
           <ComponentCardContent>
-            <RangeField minRange={0} maxRange={10} />
+            <RangeField
+              minRange={0}
+              maxRange={100}
+              initialLowValue={20}
+              initialHighValue={80}
+            />
           </ComponentCardContent>
         </ComponentCard>
       </div>
