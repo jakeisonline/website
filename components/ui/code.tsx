@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils"
+import React from "react"
 
 export default function Code({
   children,
   ...props
-}: {
+}: React.HTMLAttributes<HTMLElement> & {
   children: React.ReactNode
 }) {
   return (
