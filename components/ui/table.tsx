@@ -21,11 +21,9 @@ export function Table({
 
 export function TableHead({
   children,
-  className,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement> & {
   children: React.ReactNode
-  className?: string
 }) {
   return <thead {...props}>{children}</thead>
 }
@@ -76,7 +74,6 @@ export function TableHeadCell({
   children,
   ...props
 }: React.HTMLAttributes<HTMLTableCellElement> & {
-  className?: string
   children: React.ReactNode
 }) {
   return <th {...props}>{children}</th>
