@@ -14,7 +14,7 @@ export function GlobalNav() {
   ]
 
   return (
-    <nav className="flex items-center gap-4 text-sm lg:gap-6">
+    <nav className="hidden lg:flex items-center gap-4 text-sm lg:gap-6">
       {globalNavItems.map(({ name, href }) => (
         <Link
           key={name}

@@ -14,7 +14,10 @@ export default async function CodeBlock({
 
   return (
     <div
-      className={cn("text-xs rounded-sm bg-[#1b1e28] p-3", className)}
+      className={cn(
+        "text-xs overflow-scroll rounded-sm bg-[#1b1e28] p-3",
+        className,
+      )}
       dangerouslySetInnerHTML={{ __html: highlightedCode }}
     />
   )
