@@ -10,7 +10,7 @@ export default function RangeContainer({
 
   return (
     <div
-      className="bg-white py-9 px-10 rounded-lg"
+      className="bg-white py-4 rounded-lg"
       onMouseMove={handleMouseMove}
       onTouchMove={handleMouseMove}
       onMouseUp={handleMouseUp}

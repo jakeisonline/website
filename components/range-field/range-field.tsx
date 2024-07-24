@@ -28,17 +28,13 @@ const RangeField = ({
       high={initialHighValue}
     >
       <RangeContainer>
-        <div className="mb-12">
-          <p className="text-2xl">Price Range</p>
-        </div>
         <RangeBar>
           <RangeGrabber type={"low"} />
           <RangeFill className="h-1 bg-blue-600 grow" />
           <RangeGrabber type={"high"} />
         </RangeBar>
-        <div className="sm:flex mt-3">
+        <div className="flex mt-3 space-x-5">
           <RangeNumber label="Min Price" type="low" />
-          <div className="w-3 mx-2"></div>
           <RangeNumber label="Max Price" type="high" />
         </div>
       </RangeContainer>
