@@ -13,10 +13,10 @@ export function ComponentCard({ component, children }: ComponentCardProps) {
     <NextLink href={`/components/${component}`} className="">
       <Card
         id={component}
-        className="group hover:inner-border-link-hover/40 hover:shadow-link/30 w-full flex flex-col h-64 relative transition-all duration-300 border-0 inner-border-border inner-border-2"
+        className="group hover:inner-border-link-hover/40 hover:shadow-link/30 w-full flex flex-col h-64 relative transition-all duration-200 border-0 inner-border-border inner-border-2"
       >
         {children}
-        <CardFooter className="justify-end mt-auto text-primary/30 group-hover:text-link group-hover:translate-x-1 transition-all duration-300 ease-out">
+        <CardFooter className="justify-end mt-auto text-primary/30 group-hover:text-link group-hover:translate-x-1 transition-all duration-200 ease-out">
           <ArrowRight className="w-5 h-5" />
         </CardFooter>
       </Card>
