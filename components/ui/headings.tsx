@@ -1,6 +1,6 @@
 import { cn, slugify } from "@/lib/utils"
 
-type HeadingProps = {
+type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
   className?: string
   permalink?: boolean
   children: React.ReactNode
