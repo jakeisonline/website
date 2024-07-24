@@ -62,7 +62,7 @@ export function TableCell({
 }) {
   return (
     <td
-      className={cn("[&:not(:last-of-type)]:pr-8 min-w-20", className)}
+      className={cn("[&:not(:last-of-type)]:pr-8 pt-1.5 min-w-20", className)}
       {...props}
     >
       {children}
