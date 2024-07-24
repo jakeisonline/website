@@ -1,7 +1,7 @@
 import RangeField from "@/components/range-field"
 import {
   StepperField,
-  StepperFieldController,
+  StepperFieldButton,
   StepperFieldInput,
   StepperFieldLabel,
 } from "@/components/custom/stepper-field"
@@ -19,11 +19,9 @@ export default function ComponentsPage() {
           <div className="flex justify-center m-auto">
             <StepperField min={0} start={0} shift={10}>
               <StepperFieldLabel htmlFor="quantity">Quantity</StepperFieldLabel>
-              <StepperFieldController direction="down">
-                -
-              </StepperFieldController>
+              <StepperFieldButton direction="down">-</StepperFieldButton>
               <StepperFieldInput id="quantity" />
-              <StepperFieldController direction="up">+</StepperFieldController>
+              <StepperFieldButton direction="up">+</StepperFieldButton>
             </StepperField>
           </div>
         </div>

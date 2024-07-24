@@ -1,7 +1,7 @@
 import {
   StepperField,
   StepperFieldBadge,
-  StepperFieldController,
+  StepperFieldButton,
   StepperFieldInput,
   StepperFieldLabel,
 } from "@/components/custom/stepper-field"
@@ -75,13 +75,9 @@ export default async function StepperPage() {
                 <StepperFieldLabel htmlFor="quantity">
                   Quantity
                 </StepperFieldLabel>
-                <StepperFieldController direction="down">
-                  -
-                </StepperFieldController>
+                <StepperFieldButton direction="down">-</StepperFieldButton>
                 <StepperFieldInput id="quantity" />
-                <StepperFieldController direction="up">
-                  +
-                </StepperFieldController>
+                <StepperFieldButton direction="up">+</StepperFieldButton>
               </StepperField>
             </CardContent>
           </Card>
@@ -91,20 +87,20 @@ export default async function StepperPage() {
   <StepperFieldLabel htmlFor="quantity">
     Quantity
   </StepperFieldLabel>
-  <StepperFieldController direction="down">
+  <StepperFieldButton direction="down">
     -
-  </StepperFieldController>
+  </StepperFieldButton>
   <StepperFieldInput id="quantity" />
-  <StepperFieldController direction="up">
+  <StepperFieldButton direction="up">
     +
-  </StepperFieldController>
+  </StepperFieldButton>
 </StepperField>`}</CodeBlock>
         </TabsContent>
       </Tabs>
       <H2 permalink>Usage</H2>
       <CodeBlock className="mb-4">{`import {
   StepperField,
-  StepperFieldController,
+  StepperFieldButton,
   StepperFieldInput,
   StepperFieldLabel,
 } from "@/components/stepper-field"`}</CodeBlock>
@@ -112,13 +108,13 @@ export default async function StepperPage() {
   <StepperFieldLabel htmlFor="stepper">
     Quantity
   </StepperFieldLabel>
-  <StepperFieldController direction="down">
+  <StepperFieldButton direction="down">
     -
-  </StepperFieldController>
+  </StepperFieldButton>
   <StepperFieldInput id="stepper" />
-  <StepperFieldController direction="up">
+  <StepperFieldButton direction="up">
     +
-  </StepperFieldController>
+  </StepperFieldButton>
 </StepperField>`}</CodeBlock>
       <H2 permalink>Accessibility</H2>
       <P>
@@ -300,7 +296,7 @@ export default async function StepperPage() {
           </TableRow>
         </TableBody>
       </Table>
-      <H3 permalink>StepperFieldController</H3>
+      <H3 permalink>StepperFieldButton</H3>
       <P className="mb-6">
         The controller <Code>{`<button>`}</Code> of a stepper field, which users
         can interact with to step the value up or down.
@@ -400,13 +396,9 @@ export default async function StepperPage() {
                     S
                   </StepperFieldLabel>
                   <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
-                    <StepperFieldController direction="down">
-                      -
-                    </StepperFieldController>
+                    <StepperFieldButton direction="down">-</StepperFieldButton>
                     <StepperFieldInput id="small" />
-                    <StepperFieldController direction="up">
-                      +
-                    </StepperFieldController>
+                    <StepperFieldButton direction="up">+</StepperFieldButton>
                   </div>
                   <StepperFieldBadge />
                 </StepperField>
@@ -418,13 +410,9 @@ export default async function StepperPage() {
                     M
                   </StepperFieldLabel>
                   <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
-                    <StepperFieldController direction="down">
-                      -
-                    </StepperFieldController>
+                    <StepperFieldButton direction="down">-</StepperFieldButton>
                     <StepperFieldInput id="medium" />
-                    <StepperFieldController direction="up">
-                      +
-                    </StepperFieldController>
+                    <StepperFieldButton direction="up">+</StepperFieldButton>
                   </div>
                   <StepperFieldBadge />
                 </StepperField>
@@ -436,13 +424,9 @@ export default async function StepperPage() {
                     L
                   </StepperFieldLabel>
                   <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
-                    <StepperFieldController direction="down">
-                      -
-                    </StepperFieldController>
+                    <StepperFieldButton direction="down">-</StepperFieldButton>
                     <StepperFieldInput id="large" />
-                    <StepperFieldController direction="up">
-                      +
-                    </StepperFieldController>
+                    <StepperFieldButton direction="up">+</StepperFieldButton>
                   </div>
                   <StepperFieldBadge />
                 </StepperField>
@@ -457,13 +441,13 @@ export default async function StepperPage() {
     S
   </StepperFieldLabel>
   <StepperFieldCollapsibleContainer>
-    <StepperFieldController direction="down">
+    <StepperFieldButton direction="down">
       -
-    </StepperFieldController>
+    </StepperFieldButton>
     <StepperFieldInput />
-    <StepperFieldController direction="up">
+    <StepperFieldButton direction="up">
       +
-    </StepperFieldController>
+    </StepperFieldButton>
   </StepperFieldCollapsibleContainer>
   <StepperFieldBadge />
 </StepperField>
@@ -472,13 +456,13 @@ export default async function StepperPage() {
     M
   </StepperFieldLabel>
   <StepperFieldCollapsibleContainer>
-    <StepperFieldController direction="down">
+    <StepperFieldButton direction="down">
       -
-    </StepperFieldController>
+    </StepperFieldButton>
     <StepperFieldInput />
-    <StepperFieldController direction="up">
+    <StepperFieldButton direction="up">
       +
-    </StepperFieldController>
+    </StepperFieldButton>
   </StepperFieldCollapsibleContainer>
   <StepperFieldBadge />
 </StepperField>
@@ -487,13 +471,13 @@ export default async function StepperPage() {
     L
   </StepperFieldLabel>
   <StepperFieldCollapsibleContainer>
-    <StepperFieldController direction="down">
+    <StepperFieldButton direction="down">
       -
-    </StepperFieldController>
+    </StepperFieldButton>
     <StepperFieldInput />
-    <StepperFieldController direction="up">
+    <StepperFieldButton direction="up">
       +
-    </StepperFieldController>
+    </StepperFieldButton>
   </StepperFieldCollapsibleContainer>
   <StepperFieldBadge />
 </StepperField>

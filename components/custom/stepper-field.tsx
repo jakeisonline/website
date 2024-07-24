@@ -25,7 +25,7 @@ export function StepperField({
 }: StepperFieldProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  // Handles focus when users click the field's chrome but not neccessarily the input
+  // Handles focus when users click the field's chrome but not necessarily the input
   const handleFocus = (e: React.MouseEvent<HTMLInputElement>) => {
     if (e.screenX !== 0 && e.screenY !== 0) {
       inputRef.current && inputRef.current.focus()
@@ -117,19 +117,19 @@ export function StepperFieldInput({
   )
 }
 
-interface StepperControllerProps
+interface StepperFieldButtonProps
   extends React.ComponentPropsWithoutRef<"button"> {
   direction: string
   className?: string
   children: any
 }
 
-export function StepperFieldController({
+export function StepperFieldButton({
   direction,
   className,
   children,
   ...props
-}: StepperControllerProps) {
+}: StepperFieldButtonProps) {
   const { min, max, value, handleStep } = useStepperFieldContext()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const shiftKeyHeld = e.shiftKey
