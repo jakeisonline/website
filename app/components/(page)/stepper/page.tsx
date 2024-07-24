@@ -59,7 +59,7 @@ export default function StepperPage() {
       <FeatureList>
         <FeatureItem>Native form element</FeatureItem>
 
-        <FeatureItem>Optional step size and range</FeatureItem>
+        <FeatureItem>Optional step size and min/max</FeatureItem>
         <FeatureItem>Keyboard editable, controllable & accessible</FeatureItem>
         <FeatureItem>Optional shift stepping</FeatureItem>
       </FeatureList>
@@ -71,7 +71,7 @@ export default function StepperPage() {
         <TabsContent value="example">
           <Card>
             <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
-              <StepperField min={0} start={0} shift={10}>
+              <StepperField min={0} max={10}>
                 <StepperFieldLabel htmlFor="quantity">
                   Quantity
                 </StepperFieldLabel>
@@ -83,7 +83,7 @@ export default function StepperPage() {
           </Card>
         </TabsContent>
         <TabsContent value="code">
-          <CodeBlock>{`<StepperField min={0} start={0} shift={10}>
+          <CodeBlock>{`<StepperField min={0} max={10}>
   <StepperFieldLabel htmlFor="quantity">
     Quantity
   </StepperFieldLabel>
@@ -269,7 +269,7 @@ export default function StepperPage() {
             <TableCell>number</TableCell>
             <TableCell>
               Amount the value is adjusted by when using <Keeb>Shift</Keeb> +
-              arrow keys, or <Keeb>PageUp</Keeb>/<Keeb>PageDown</Keeb>.
+              arrow keys, or <Keeb>PageUp</Keeb>/<Keeb>PageDown</Keeb>
             </TableCell>
           </TableRow>
         </TableBody>
