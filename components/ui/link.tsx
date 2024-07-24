@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { ExternalLinkIcon } from "lucide-react"
 import NextLink from "next/link"
 
-type LinkProps = {
+type LinkProps = React.LinkHTMLAttributes<HTMLAnchorElement> & {
   href: string
   external?: boolean
   noIcon?: boolean
