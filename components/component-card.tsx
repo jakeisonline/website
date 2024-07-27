@@ -41,5 +41,9 @@ type ComponentCardContentProps = React.ComponentPropsWithoutRef<
 >
 
 export function ComponentCardContent({ children }: ComponentCardContentProps) {
-  return <CardContent className="pointer-events-none">{children}</CardContent>
+  return (
+    <CardContent className="pointer-events-none flex w-auto justify-center items-center">
+      {children}
+    </CardContent>
+  )
 }
