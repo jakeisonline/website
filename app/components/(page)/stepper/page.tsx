@@ -42,6 +42,10 @@ export default function StepperPage() {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
             <BreadcrumbLink href="/components">Components</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
