@@ -56,7 +56,7 @@ export default function Home() {
         </TabsList>
         <TabsContent value="example">
           <Card>
-            <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
+            <CardContent className="pt-12 min-h-44 flex w-auto justify-center items-center">
               <RangeField
                 minRange={0}
                 maxRange={100}
