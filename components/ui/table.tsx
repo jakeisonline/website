@@ -11,7 +11,7 @@ export function Table({
 }) {
   return (
     <table
-      className={cn("w-full text-left border-collapse", className)}
+      className={cn("max-w-full text-left border-collapse", className)}
       {...props}
     >
       {children}
