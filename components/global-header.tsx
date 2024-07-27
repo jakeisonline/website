@@ -7,7 +7,7 @@ import ThemeToggle from "./ui/theme-toggle"
 export default function GlobalHeader() {
   return (
     <header className="md:sticky lg:top-0 z-50 w-full bg-background/20 lg:backdrop-blur supports[backdrop-filter]:bg-background/20">
-      <div className="container flex h-14 max-w-screen-2xl items-center text-sm font-bold">
+      <div className="container px-4 md:px-6 flex h-14 max-w-screen-2xl items-center text-sm font-bold">
         <div className="flex items-center gap-8">
           <Link href="/" className="text-foreground">
             🛝 jakeisonline/playground
