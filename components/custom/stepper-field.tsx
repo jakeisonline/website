@@ -28,7 +28,9 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
     const handleFocus = (e: React.MouseEvent<HTMLInputElement>) => {
       if (e.screenX !== 0 && e.screenY !== 0) {
         inputRef.current && inputRef.current.focus()
-        e.preventDefault()
+        // Don't prevent default if the user is clicking on the input, as that may mess with
+        // things like highlighting text within the input
+        if (!(e.target as HTMLInputElement).matches("input")) e.preventDefault()
       }
     }
 
@@ -42,7 +44,7 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
         inputRef={inputRef}
       >
         <div
-          onMouseUp={handleFocus}
+          onMouseDown={handleFocus}
           className={cn(
             "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group justify-center",
             className,
