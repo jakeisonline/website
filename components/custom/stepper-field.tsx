@@ -91,15 +91,17 @@ interface StepperFieldInputProps
 export const StepperFieldInput = forwardRef<
   HTMLInputElement,
   StepperFieldInputProps
->(({ className, ...props }) => {
+>(({ className, ...props }, ref) => {
   const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
     useStepperFieldContext()
+
+  const computedRef = ref ? ref : inputRef
 
   return (
     <input
       type="number"
       value={value}
-      ref={inputRef}
+      ref={computedRef}
       min={min}
       max={max}
       onKeyDown={handleKeyDown}
