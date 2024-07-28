@@ -1,7 +1,14 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { createContext, RefObject, useContext, useRef, useState } from "react"
+import {
+  createContext,
+  forwardRef,
+  RefObject,
+  useContext,
+  useRef,
+  useState,
+} from "react"
 
 interface StepperFieldProps extends React.ComponentPropsWithoutRef<"div"> {
   start?: number
@@ -13,48 +20,43 @@ interface StepperFieldProps extends React.ComponentPropsWithoutRef<"div"> {
   children?: React.ReactNode
 }
 
-export function StepperField({
-  start,
-  min,
-  max,
-  step,
-  shift,
-  children,
-  className,
-  ...props
-}: StepperFieldProps) {
-  const inputRef = useRef<HTMLInputElement | null>(null)
+export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
+  ({ start, min, max, step, shift, children, className, ...props }, ref) => {
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
-  // Handles focus when users click the field's chrome but not necessarily the input
-  const handleFocus = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (e.screenX !== 0 && e.screenY !== 0) {
-      inputRef.current && inputRef.current.focus()
-      e.preventDefault()
+    // Handles focus when users click the field's chrome but not necessarily the input
+    const handleFocus = (e: React.MouseEvent<HTMLInputElement>) => {
+      if (e.screenX !== 0 && e.screenY !== 0) {
+        inputRef.current && inputRef.current.focus()
+        e.preventDefault()
+      }
     }
-  }
 
-  return (
-    <StepperFieldContextProvider
-      min={min}
-      max={max}
-      start={start}
-      step={step}
-      shift={shift}
-      inputRef={inputRef}
-    >
-      <div
-        onMouseUp={handleFocus}
-        className={cn(
-          "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group justify-center",
-          className,
-        )}
-        {...props}
+    return (
+      <StepperFieldContextProvider
+        min={min}
+        max={max}
+        start={start}
+        step={step}
+        shift={shift}
+        inputRef={inputRef}
       >
-        {children}
-      </div>
-    </StepperFieldContextProvider>
-  )
-}
+        <div
+          onMouseUp={handleFocus}
+          className={cn(
+            "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group justify-center",
+            className,
+          )}
+          {...props}
+          ref={ref}
+        >
+          {children}
+        </div>
+      </StepperFieldContextProvider>
+    )
+  },
+)
+StepperField.displayName = "StepperField"
 
 interface StepperFieldLabelProps
   extends React.ComponentPropsWithoutRef<"label"> {
@@ -63,22 +65,22 @@ interface StepperFieldLabelProps
   children?: React.ReactNode
 }
 
-export function StepperFieldLabel({
-  htmlFor,
-  className,
-  children,
-  ...props
-}: StepperFieldLabelProps) {
+export const StepperFieldLabel = forwardRef<
+  HTMLLabelElement,
+  StepperFieldLabelProps
+>(({ htmlFor, className, children, ...props }, ref) => {
   return (
     <label
       htmlFor={htmlFor}
       className={cn("cursor-pointer px-2 text-sm border-r mr-1", className)}
+      ref={ref}
       {...props}
     >
       {children}
     </label>
   )
-}
+})
+StepperFieldLabel.displayName = "StepperFieldLabel"
 
 interface StepperFieldInputProps
   extends React.ComponentPropsWithoutRef<"input"> {
@@ -86,10 +88,10 @@ interface StepperFieldInputProps
   className?: string
 }
 
-export function StepperFieldInput({
-  className,
-  ...props
-}: StepperFieldInputProps) {
+export const StepperFieldInput = forwardRef<
+  HTMLInputElement,
+  StepperFieldInputProps
+>(({ className, ...props }) => {
   const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
     useStepperFieldContext()
 
@@ -115,7 +117,8 @@ export function StepperFieldInput({
       {...props}
     />
   )
-}
+})
+StepperFieldInput.displayName = "StepperFieldInput"
 
 interface StepperFieldButtonProps
   extends React.ComponentPropsWithoutRef<"button"> {
@@ -124,12 +127,10 @@ interface StepperFieldButtonProps
   children: any
 }
 
-export function StepperFieldButton({
-  direction,
-  className,
-  children,
-  ...props
-}: StepperFieldButtonProps) {
+export const StepperFieldButton = forwardRef<
+  HTMLButtonElement,
+  StepperFieldButtonProps
+>(({ direction, className, children, ...props }, ref) => {
   const { min, max, value, handleStep } = useStepperFieldContext()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const shiftKeyHeld = e.shiftKey
@@ -165,23 +166,24 @@ export function StepperFieldButton({
       https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/
       */
       tabIndex={-1}
+      ref={ref}
       {...props}
     >
       {children}
     </button>
   )
-}
+})
+StepperFieldButton.displayName = "StepperFieldButton"
 
 interface StepperFieldBadgeProps extends React.ComponentPropsWithoutRef<"div"> {
   hideWhen?: number
   className?: string
 }
 
-export function StepperFieldBadge({
-  hideWhen = 0,
-  className,
-  ...props
-}: StepperFieldBadgeProps) {
+export const StepperFieldBadge = forwardRef<
+  HTMLDivElement,
+  StepperFieldBadgeProps
+>(({ hideWhen = 0, className, ...props }, ref) => {
   const { value } = useStepperFieldContext()
   if (value == hideWhen) return
 
@@ -196,9 +198,10 @@ export function StepperFieldBadge({
       {value}
     </div>
   )
-}
+})
+StepperFieldBadge.displayName = "StepperFieldBadge"
 
-function useStepperFieldContext() {
+export const useStepperFieldContext = () => {
   const context = useContext(StepperFieldContext)
 
   if (!context) {
@@ -237,7 +240,7 @@ interface StepperFieldContextProviderProps {
   children: React.ReactElement
 }
 
-function StepperFieldContextProvider({
+const StepperFieldContextProvider = ({
   min,
   max,
   start = 0,
@@ -245,7 +248,7 @@ function StepperFieldContextProvider({
   shift,
   inputRef,
   children,
-}: StepperFieldContextProviderProps) {
+}: StepperFieldContextProviderProps) => {
   const [value, setValue] = useState<number | "">(start)
 
   const handleStep = (direction: string, shiftStep?: boolean) => {
