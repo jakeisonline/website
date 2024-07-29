@@ -109,7 +109,7 @@ export const StepperFieldInput = forwardRef<
       onKeyDown={handleKeyDown}
       onChange={handleChange}
       onBlur={handleBlur}
-      style={{ width: String(value).length + "ch; ", ...props.style }}
+      style={{ width: String(value).length + "ch", ...props.style }}
       className={cn(
         "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer text-sm",
         className,
