@@ -380,6 +380,46 @@ export default function StepperPage() {
         </TableBody>
       </Table>
       <H2 permalink>Examples</H2>
+      <H3 permalink>Allow shift stepping</H3>
+      <P>
+        Shift stepping allowing users to increment or decrement a value by a
+        larger amount. When <Code>shift</Code> is set, users can shift step by
+        holding <Keeb>Shift</Keeb> while clicking a{" "}
+        <Code>{`<StepperFieldButton>`}</Code>, or by using the{" "}
+        <Link href="#keyboard-interaction">keyboard interactions</Link>.
+      </P>
+      <Tabs defaultValue="example" className="mt-8">
+        <TabsList>
+          <TabsTrigger value="example">Example</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+        <TabsContent value="example">
+          <Card>
+            <CardContent className="pt-6 min-h-44 flex w-auto justify-center items-center">
+              <StepperField min={0} shift={10} max={100}>
+                <StepperFieldLabel htmlFor="shift">Shift</StepperFieldLabel>
+                <StepperFieldButton direction="down">-</StepperFieldButton>
+                <StepperFieldInput id="shift" />
+                <StepperFieldButton direction="up">+</StepperFieldButton>
+              </StepperField>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="code">
+          <CodeBlock>{`<StepperField min={0} shift={10} max={100}>
+  <StepperFieldLabel htmlFor="shift">
+    Shift
+  </StepperFieldLabel>
+  <StepperFieldButton direction="down">
+    -
+  </StepperFieldButton>
+  <StepperFieldInput id="shift" />
+  <StepperFieldButton direction="up">
+    +
+  </StepperFieldButton>
+</StepperField>`}</CodeBlock>
+        </TabsContent>
+      </Tabs>
       <H3 permalink>Collapsing stepper fields</H3>
       <P>
         You might want to display multiple quantities in a single row. For
