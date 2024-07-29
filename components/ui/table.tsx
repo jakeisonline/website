@@ -10,12 +10,16 @@ export function Table({
   children: React.ReactNode
 }) {
   return (
-    <table
-      className={cn("max-w-full text-left border-collapse", className)}
-      {...props}
-    >
-      {children}
-    </table>
+    <div className="overflow-x-auto flex lg:block">
+      <div className="flex-none min-w-full overflow-hidden lg:overflow-auto">
+        <table
+          className={cn("w-full text-left border-collapse", className)}
+          {...props}
+        >
+          {children}
+        </table>
+      </div>
+    </div>
   )
 }
 
@@ -62,7 +66,10 @@ export function TableCell({
 }) {
   return (
     <td
-      className={cn("[&:not(:last-of-type)]:pr-8 pt-1.5 min-w-20", className)}
+      className={cn(
+        "[&:not(:last-of-type)]:pr-4 md:[&:not(:last-of-type)]:pr-8 pt-1.5 md:min-w-20 min-w-16 max-w-48",
+        className,
+      )}
       {...props}
     >
       {children}
