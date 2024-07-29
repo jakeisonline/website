@@ -25,7 +25,7 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     // Handles focus when users click the field's chrome but not necessarily the input
-    const handleFocus = (e: React.MouseEvent<HTMLInputElement>) => {
+    const handleFocus = (e: React.PointerEvent<HTMLInputElement>) => {
       if (e.screenX !== 0 && e.screenY !== 0) {
         inputRef.current && inputRef.current.focus()
         // Don't prevent default if the user is clicking on the input, as that may mess with
@@ -44,7 +44,7 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
         inputRef={inputRef}
       >
         <div
-          onMouseDown={handleFocus}
+          onPointerDown={handleFocus}
           className={cn(
             "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group justify-center",
             className,
@@ -136,7 +136,7 @@ export const StepperFieldButton = forwardRef<
   StepperFieldButtonProps
 >(({ direction, className, children, ...props }, ref) => {
   const { min, max, value, handleStep } = useStepperFieldContext()
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
     const shiftKeyHeld = e.shiftKey
     handleStep(direction, shiftKeyHeld)
     e.preventDefault()
@@ -153,17 +153,15 @@ export const StepperFieldButton = forwardRef<
   }
 
   const divClass = cn(
-    "rounded-md w-6 h-6 flex items-center justify-center mx-0.5",
-    isDisabled() &&
-      "opacity-40 focus:outline focus:outline-2 focus:outline-muted",
-    !isDisabled() &&
-      "group hover:bg-accent hover:cursor-pointer focus:outline focus:outline-2 focus:outline-primary",
+    "group rounded-md w-6 h-6 flex items-center justify-center mx-0.5",
+    isDisabled() && "opacity-40",
+    !isDisabled() && "hover:bg-accent hover:cursor-pointer",
     className,
   )
 
   return (
     <button
-      onMouseDown={handleClick}
+      onPointerDown={handleClick}
       className={divClass}
       /*
       "text field is usually the only focusable component because the increase and decrease functions are keyboard accessible via arrow keys"
@@ -204,19 +202,6 @@ export const StepperFieldBadge = forwardRef<
   )
 })
 StepperFieldBadge.displayName = "StepperFieldBadge"
-
-export const useStepperFieldContext = () => {
-  const context = useContext(StepperFieldContext)
-
-  if (!context) {
-    throw new Error(
-      "useStepperFieldContext must be used within a StepperFieldContextProvider",
-    )
-  }
-
-  return context
-}
-
 interface StepperFieldContextType {
   value: number | ""
   handleStep: (direction: string, shiftStep?: boolean) => void
@@ -233,6 +218,18 @@ const StepperFieldContext = createContext<StepperFieldContextType>({
   value: 0,
   handleStep: () => {},
 })
+
+const useStepperFieldContext = () => {
+  const context = useContext(StepperFieldContext)
+
+  if (!context) {
+    throw new Error(
+      "useStepperFieldContext must be used within a StepperFieldContextProvider",
+    )
+  }
+
+  return context
+}
 
 interface StepperFieldContextProviderProps {
   min?: number
