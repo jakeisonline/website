@@ -26,13 +26,15 @@ export default function Link({
     <NextLink
       href={href}
       className={cn(
-        "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out inline-flex hover:decoration-link-hover",
+        "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover",
         className,
       )}
       {...newProps}
     >
       {children}
-      {external && !noIcon && <ExternalLinkIcon className="ml-1 w-3 h-3" />}
+      {external && !noIcon && (
+        <ExternalLinkIcon className="ml-0.5 w-3 h-3 inline-flex -mt-3" />
+      )}
     </NextLink>
   )
 }
