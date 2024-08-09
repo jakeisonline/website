@@ -1,9 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Waving from "../assets/images/waving.svg?raw";
 ---
 
 <Layout title="Welcome to Astro.">
 	<div class="w-full mt-8">
-		<h1 class="text-8xl">Hello, I make <span class="">things</span>.</h1>
+		<h1 class="text-8xl flex items-center justify-center">
+			<span class="w-32 wave">
+				<Fragment set:html={Waving} />
+			</span>
+			<span class="-ml-2">Hello, I make <span class="">things</span>.</span></h1>
 	</div>
 </Layout>
