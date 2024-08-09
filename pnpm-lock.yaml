@@ -20,12 +20,21 @@ importers:
       '@astrojs/vercel':
         specifier: ^7.7.2
         version: 7.7.2(astro@4.13.2(@types/node@17.0.45)(typescript@5.5.4))
+      '@fontsource/urbanist':
+        specifier: ^5.0.20
+        version: 5.0.20
       astro:
         specifier: ^4.13.2
         version: 4.13.2(@types/node@17.0.45)(typescript@5.5.4)
       tailwindcss:
         specifier: ^3.4.9
         version: 3.4.9
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.9)
+      tailwindcss-inner-border:
+        specifier: ^0.2.0
+        version: 0.2.0(tailwindcss@3.4.9)
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -341,6 +350,9 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/urbanist@5.0.20':
+    resolution: {integrity: sha512-cTbD74+OiR9Y7CCWN7shaaEMgrv6ujgDRbMO6/PUszdND7wWPz+/Dot/MBkdDzkW68i73i3LqQ/5G+iAeyJUVQ==}
 
   '@img/sharp-darwin-arm64@0.33.4':
     resolution: {integrity: sha512-p0suNqXufJs9t3RqLBO6vvrgr5OhgbWp76s5gTRvdmxmuv9E1rcaqGUsl3l4mKVmXPkTkTErXediAui4x+8PSA==}
@@ -1968,6 +1980,16 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
+  tailwindcss-animate@1.0.7:
+    resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+
+  tailwindcss-inner-border@0.2.0:
+    resolution: {integrity: sha512-IrKWoSHMisGY1FGfwD3+5nzPu1N9gWqUopqma72rS/5wp+DGxUltXhMm84TLpUeaUJyW6NDSHUO/qWh/+puZvg==}
+    peerDependencies:
+      tailwindcss: '>=3'
+
   tailwindcss@3.4.9:
     resolution: {integrity: sha512-1SEOvRr6sSdV5IDf9iC+NU4dhwdqzF4zKKq3sAbasUWHEM6lsMhX+eNN5gkPx1BvLFEnZQEUFbXnGj8Qlp83Pg==}
     engines: {node: '>=14.0.0'}
@@ -2632,6 +2654,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@fontsource/urbanist@5.0.20': {}
 
   '@img/sharp-darwin-arm64@0.33.4':
     optionalDependencies:
@@ -4543,6 +4567,14 @@ snapshots:
       has-flag: 3.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.9):
+    dependencies:
+      tailwindcss: 3.4.9
+
+  tailwindcss-inner-border@0.2.0(tailwindcss@3.4.9):
+    dependencies:
+      tailwindcss: 3.4.9
 
   tailwindcss@3.4.9:
     dependencies:
