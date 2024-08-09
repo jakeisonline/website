@@ -22,7 +22,9 @@ const { title } = Astro.props
 	</head>
 	<body class="min-h-screen bg-background overflow-y-scroll">
 		<GlobalHeader />
-		<slot />
+		<main class="container w-full mx-auto flex flex-row justify-center items-center">
+			<slot />
+		</main>
 	</body>
 </html>
 <style is:global>
