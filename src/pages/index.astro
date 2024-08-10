@@ -5,8 +5,8 @@ import Waving from "../assets/images/waving.svg?raw";
 
 <Layout title="Welcome to Astro.">
 	<div class="w-full mt-8">
-		<h1 class="text-8xl flex items-center justify-center">
-			<span class="w-32 wave">
+		<h1 class="text-8xl flex items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+			<span class="w-32 animate-wave hover:repeat-infinite hover:delay-0">
 				<Fragment set:html={Waving} />
 			</span>
 			<span class="-ml-2">Hello, I make <span class="">things</span>.</span></h1>
