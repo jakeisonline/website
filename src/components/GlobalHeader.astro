@@ -1,6 +1,7 @@
 ---
 import { SiGithub as GitHubIcon } from "@icons-pack/react-simple-icons"
 import Link from "./ui/link.astro"
+import ThemeToggle from "./ui/theme-toggle"
 
 interface Props {
 
@@ -20,6 +21,7 @@ interface Props {
         className="underline-offset-4 underline decoration-transparent decoration-dotted duration-300 ease-out hover:decoration-link-hover inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-10 w-10 hover:bg-accent text-foreground">
         <GitHubIcon className="h-4 w-4" />
       </Link>
+      <ThemeToggle client:load />
       <!-- theme toggle -->
     </div>
   </div>
