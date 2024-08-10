@@ -1,0 +1,27 @@
+---
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
+import { LinkedInLogoIcon } from "@radix-ui/react-icons"
+import Link from "./ui/link.astro"
+
+interface Props {
+
+}
+---
+
+<footer class="mx-auto mt-auto grid w-full mb-4 grid-cols-3 container px-4 md:px-6 max-w-screen-2xl text-sm ">
+  <div class="col-start-2 place-self-center">&copy; 2023 Jake</div>
+  <div class="place-self-end flex items-center space-x-2">
+    <Link
+      href="https://github.com/jakeisonline"
+      external
+      noIcon>
+      <GitHubLogoIcon className="h-4 w-4" />
+    </Link>
+    <Link
+      href="https://www.linkedin.com/in/jakeisonline/"
+      external
+      noIcon>
+      <LinkedInLogoIcon className="h-4 w-4" />
+    </Link>
+  </div>
+</footer>
