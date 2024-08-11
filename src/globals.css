@@ -103,8 +103,8 @@
 
 .animate-wave {
   animation-name: wave-animation;
-  animation-duration: 2.5s;
+  animation-duration: 2.8s;
   animation-iteration-count: 1;
-  animation-delay: 600ms;
+  animation-delay: 350ms;
   transform-origin: 70% 70%;
 }
