@@ -110,7 +110,7 @@
 }
 
 .rotate .word {
-  animation: rotateWordInOut 10s ease-in-out 1 forwards;
+  animation: rotateWordInOut 12s ease-in-out 1 forwards;
 }
 
 .words .word:nth-child(1) {
@@ -127,8 +127,11 @@
   animation-delay: 6s;
 }
 .words .word:nth-child(5) {
-  animation-name: rotateWordIn;
   animation-delay: 8s;
+}
+.words .word:nth-child(6) {
+  animation-name: rotateWordIn;
+  animation-delay: 10s;
 }
 
 @keyframes rotateWordInOut {
@@ -137,7 +140,7 @@
   }
   2% {
     opacity: 0;
-    transform: translateY(-15px);
+    transform: translateY(15px);
   }
   5% {
     opacity: 1;
@@ -149,7 +152,7 @@
   }
   20% {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(-15px);
   }
   100% {
     opacity: 0;
@@ -167,7 +170,7 @@
   }
   20% {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(-15px);
   }
   100% {
     opacity: 0;
@@ -180,7 +183,7 @@
   }
   2% {
     opacity: 0;
-    transform: translateY(-15px);
+    transform: translateY(15px);
   }
   5% {
     opacity: 1;
