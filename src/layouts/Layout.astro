@@ -30,7 +30,7 @@ const { title } = Astro.props
 </script>
 
 <!doctype html>
-<html lang="en" class="font-sans h-full">
+<html lang="en" class="font-sans h-dvh">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -39,7 +39,7 @@ const { title } = Astro.props
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="flex m-auto flex-col max-w-screen-2xl min-h-screen bg-background overflow-y-scroll px-4 2xl:px-0 items-center">
+	<body class="flex m-auto flex-col max-w-screen-2xl min-h-dvh bg-background overflow-y-scroll px-4 2xl:px-0 items-center">
 		<GlobalHeader />
 		<main class="w-full px-0 flex flex-row justify-center items-center">
 			<slot />
