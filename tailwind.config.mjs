@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import defaultTheme from "tailwindcss/defaultTheme"
+import plugin from "tailwindcss/plugin"
 
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -83,5 +84,10 @@ export default {
   plugins: [
     require("tailwindcss-animate"),
     require("tailwindcss-inner-border"),
+    plugin(function ({ addBase }) {
+      addBase({
+        html: { fontSize: "22px" },
+      })
+    }),
   ],
 }
