@@ -6,10 +6,10 @@ type Props = {
   href: string
   external?: boolean
   noIcon?: boolean
-  className?: string
+  class?: string
 }
 
-const { href, external, noIcon, className, ...props }: Props = Astro.props
+const { href, external, noIcon, class:className, ...props }: Props = Astro.props
 const newProps = !external
     ? props
     : { target: "_blank", rel: "noreferrer", ...props }
