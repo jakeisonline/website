@@ -5,14 +5,25 @@ import { ExternalLinkIcon } from "lucide-react"
 type Props = {
   href: string
   external?: boolean
+  referrer?: boolean
   noIcon?: boolean
   class?: string
 }
 
-const { href, external, noIcon, class:className, ...props }: Props = Astro.props
-const newProps = !external
-    ? props
-    : { target: "_blank", rel: "noreferrer", ...props }
+const { href, external, referrer, noIcon, class:className, ...props }: Props = Astro.props
+
+const processProps = () => {
+  const props = {} as any
+
+  if (external) {
+    props["target"] = "_blank";
+    props["rel"] = !referrer ? "noreferrer" : undefined
+  }
+
+  return props
+}
+
+const newProps = processProps()
 ---
 
 <a
