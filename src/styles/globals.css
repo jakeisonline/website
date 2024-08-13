@@ -71,6 +71,12 @@
   }
 }
 
+@layer components {
+  .container-page {
+    @apply max-w-screen-2xl px-4 2xl:px-0;
+  }
+}
+
 @keyframes wave-animation {
   0% {
     transform: rotate(0deg);
