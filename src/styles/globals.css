@@ -81,7 +81,7 @@
   }
 
   .paragraph {
-    @apply mt-4 lg:mt-8 2xl:mt-12 text-lg lg:text-2xl 2xl:text-3xl;
+    @apply mt-4 lg:mt-8 2xl:mt-12 text-base md:text-lg lg:text-2xl 2xl:text-3xl;
   }
 }
 
