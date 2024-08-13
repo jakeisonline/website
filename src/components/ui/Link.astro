@@ -29,9 +29,9 @@ const newProps = processProps()
 <a
   href={href}
   class={cn(
-    "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover",
+    "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover inline-flex",
     className,
   )}
   {...newProps}
 >
-  <slot />{external && !noIcon && <ExternalLinkIcon className="ml-0.5 inline-flex -mt-5 hover:decoration-none" />}</a>
+  <slot />{external && !noIcon && <ExternalLinkIcon className="ml-0.5 hover:decoration-none w-2.5 h-2.5 md:w-3 md:h-3 xl:w-4 lg:h-4" />}</a>
