@@ -1,4 +1,5 @@
 ---
+import Link from '@/components/ui/Link.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -19,8 +20,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 				</ul>
 			</div>
 		</h1>
-		<div class="max-w-4xl animate-in fade-in slide-in-from-top-2 duration-1000">
-			<p class="mt-4 lg:mt-12 text-lg lg:text-3xl">My name is <strong class="font-semibold bg-gradient-to-r from-[#72A7EB] to-[#5F94E3] inline-block text-transparent bg-clip-text">Jake Holman</strong>. I've been doing software stuff for ages. I'm one of those coding, designing, product people. 🤹</p>
+		<div class="max-w-4xl mb-20 animate-in fade-in slide-in-from-top-2 duration-1000">
+			<p class="mt-4 lg:mt-12 text-lg lg:text-3xl">My name is <strong class="font-semibold inline-block">Jake Holman</strong>. I've been doing software stuff for ages. I'm one of those coding, designing, product people. 🤹</p>
+			<p class="mt-4 lg:mt-12 text-lg lg:text-3xl">I recently made <Link href="https://numberformat.app" external>numberformat.app</Link> to help people understand the various ways of localising numbers.</p>
+			<p class="mt-4 lg:mt-12 text-lg lg:text-3xl">Consider checking out my <Link href="https://playground.jakeisonline.com">🛝 playground</Link> too, where I provide some free components and experiments for you to play with.</p>
+			<p class="mt-4 lg:mt-12 text-lg lg:text-3xl">I currently work at <Link href="https://www.akqaleap.com" external>AKQA Leap</Link> as their Head of Product.</p>
 		</div>
 	</div>
 </BaseLayout>
