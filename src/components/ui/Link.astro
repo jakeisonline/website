@@ -23,8 +23,4 @@ const newProps = !external
   )}
   {...newProps}
 >
-  <slot />
-  {external && !noIcon && (
-    <ExternalLinkIcon className="ml-0.5 w-3 h-3 inline-flex -mt-3" />
-  )}
-</a>
+  <slot />{external && !noIcon && <ExternalLinkIcon className="ml-0.5 inline-flex -mt-5 hover:decoration-none" />}</a>
