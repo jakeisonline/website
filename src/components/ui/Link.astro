@@ -23,7 +23,8 @@ const processProps = () => {
   return props
 }
 
-const newProps = processProps()
+const processedProps = processProps()
+const newProps = { ...props, ...processedProps }
 ---
 
 <a
