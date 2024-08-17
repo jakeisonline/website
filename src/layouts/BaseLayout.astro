@@ -44,6 +44,19 @@ const { title, description } = Astro.props
     <SEO
       title={title}
       description={description}
+      extend={{
+        link: [
+          {
+            rel: "icon",
+            type: "image/svg+xml",
+            href: "/favicon.svg",
+          },
+          {
+            rel: "sitemap",
+            href: "/sitemap-index.xml",
+          },
+        ],
+      }}
       openGraph={{
         basic: {
           type: "website",
@@ -57,18 +70,11 @@ const { title, description } = Astro.props
           siteName: "jakeisonline",
         },
       }}
-      extend={{
-        link: [
-          {
-            rel: "icon",
-            type: "image/svg+xml",
-            href: "/favicon.svg",
-          },
-          {
-            rel: "sitemap",
-            href: "/sitemap-index.xml",
-          },
-        ],
+      twitter={{
+        card: "summary",
+        title: title,
+        description: description,
+        image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
       }}
     />
   </head>
