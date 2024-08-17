@@ -5,21 +5,15 @@ import Link from "@/components/ui/Link.astro"
 import { LINKS } from "@/lib/const"
 ---
 
-<footer class="container-page mt-auto grid w-full mb-4 grid-cols-2 lg:text-sm text-xs">
+<footer
+  class="container-page mt-auto grid w-full mb-4 grid-cols-2 lg:text-sm text-xs"
+>
   <div>&copy; 2024 Jake Holman</div>
   <div class="place-self-end flex items-center space-x-2">
-    <Link
-      href={LINKS.GITHUB}
-      class="text-foreground"
-      external
-      noIcon>
+    <Link href={LINKS.GITHUB} class="text-foreground" external noIcon>
       <GitHubLogoIcon className="h-4 w-4" />
     </Link>
-    <Link
-      href={LINKS.LINKEDIN}
-      class="text-foreground"
-      external
-      noIcon>
+    <Link href={LINKS.LINKEDIN} class="text-foreground" external noIcon>
       <LinkedInLogoIcon className="h-4 w-4" />
     </Link>
   </div>

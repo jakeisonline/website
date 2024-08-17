@@ -1,33 +1,56 @@
 ---
-import Link from '@/components/ui/Link.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Link from "@/components/ui/Link.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
 ---
 
 <BaseLayout
-	title="jakeisonline.com | Hello, I make things."
-	description="Jake Holman is a software guy based in England. He's one of those coding, designing, product people."
+  title="jakeisonline.com | Hello, I make things."
+  description="Jake Holman is a software guy based in England. He's one of those coding, designing, product people."
 >
-	<div class="w-full mt-4 lg:mt-8">
-		<h1 class="text-2xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl flex items-center animate-in fade-in slide-in-from-bottom-4 duration-700 tracking-tight">
-			<span class="w-auto animate-wave hover:repeat-infinite hover:delay-0">
-				👋
-			</span>
-			<div class="ml-1.5 md:ml-3 lg:ml-4 relative flex">Hello, I make&nbsp;
-				<ul class="words rotate inline-block overflow-clip">
-					<li class="absolute word opacity-1 inline-block">things.</li>
-					<li class="absolute word opacity-0">interfaces.</li>
-					<li class="absolute word opacity-0">software.</li>
-					<li class="absolute word opacity-0">products.</li>
-					<li class="absolute word opacity-0">stuff.</li>
-					<li class="absolute word opacity-0">things.</li>
-				</ul>
-			</div>
-		</h1>
-		<div class="max-w-4xl mb-20 animate-in fade-in slide-in-from-top-2 duration-1000">
-			<p class="paragraph">My name is <strong class="font-semibold inline-block">Jake Holman</strong>. I've been doing software stuff for ages. I'm one of those coding, designing, product people. 🤹</p>
-			<p class="paragraph">I recently made <Link href="https://numberformat.app" external referrer>numberformat.app</Link> to help people understand the various ways of localising numbers.</p>
-			<p class="paragraph">Consider checking out my <Link href="https://playground.jakeisonline.com">🛝 playground</Link> too, where I provide some free components and experiments for you to play with.</p>
-			<p class="paragraph">I currently work at <Link href="https://www.akqa.com/leap/" external>AKQA Leap</Link> as their Head of Product.</p>
-		</div>
-	</div>
+  <div class="w-full mt-4 lg:mt-8">
+    <h1
+      class="text-2xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl flex items-center animate-in fade-in slide-in-from-bottom-4 duration-700 tracking-tight"
+    >
+      <span class="w-auto animate-wave hover:repeat-infinite hover:delay-0">
+        👋
+      </span>
+      <div class="ml-1.5 md:ml-3 lg:ml-4 relative flex">
+        Hello, I make&nbsp;
+        <ul class="words rotate inline-block overflow-clip">
+          <li class="absolute word opacity-1 inline-block">things.</li>
+          <li class="absolute word opacity-0">interfaces.</li>
+          <li class="absolute word opacity-0">software.</li>
+          <li class="absolute word opacity-0">products.</li>
+          <li class="absolute word opacity-0">stuff.</li>
+          <li class="absolute word opacity-0">things.</li>
+        </ul>
+      </div>
+    </h1>
+    <div
+      class="max-w-4xl mb-20 animate-in fade-in slide-in-from-top-2 duration-1000"
+    >
+      <p class="paragraph">
+        My name is <strong class="font-semibold inline-block"
+          >Jake Holman</strong
+        >. I've been doing software stuff for ages. I'm one of those coding,
+        designing, product people. 🤹
+      </p>
+      <p class="paragraph">
+        I recently made <Link href="https://numberformat.app" external referrer
+          >numberformat.app</Link
+        > to help people understand the various ways of localising numbers.
+      </p>
+      <p class="paragraph">
+        Consider checking out my <Link
+          href="https://playground.jakeisonline.com">🛝 playground</Link
+        > too, where I provide some free components and experiments for you to play
+        with.
+      </p>
+      <p class="paragraph">
+        I currently work at <Link href="https://www.akqa.com/leap/" external
+          >AKQA Leap</Link
+        > as their Head of Product.
+      </p>
+    </div>
+  </div>
 </BaseLayout>
