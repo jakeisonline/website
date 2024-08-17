@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 import vercel from "@astrojs/vercel/serverless"
 import react from "@astrojs/react"
+import playformCompress from "@playform/compress"
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,9 +16,12 @@ export default defineConfig({
     sitemap(),
     robotsTxt(),
     react(),
+    playformCompress(),
   ],
   output: "server",
   adapter: vercel({
-    webAnalytics: { enabled: true },
+    webAnalytics: {
+      enabled: true,
+    },
   }),
 })
