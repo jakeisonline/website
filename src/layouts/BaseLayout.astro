@@ -6,10 +6,12 @@ import GlobalFooter from "@/components/GlobalFooter.astro"
 
 interface Props {
   title: string
+  ogTitle?: string
   description: string
+  ogDescription?: string
 }
 
-const { title, description } = Astro.props
+const { title, ogTitle, description, ogDescription } = Astro.props
 ---
 
 <script is:inline>
@@ -60,20 +62,20 @@ const { title, description } = Astro.props
       openGraph={{
         basic: {
           type: "website",
-          title: title,
+          title: ogTitle || title,
           url: "https://jakeisonline.com",
           image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
         },
         optional: {
-          description: description,
+          description: ogDescription || description,
           locale: "en_GB",
           siteName: "jakeisonline",
         },
       }}
       twitter={{
         card: "summary",
-        title: title,
-        description: description,
+        title: ogTitle || title,
+        description: ogDescription || description,
         image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
       }}
     />
