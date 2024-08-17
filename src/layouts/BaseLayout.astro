@@ -1,7 +1,6 @@
 ---
 import "../styles/globals.css"
 import { SEO } from "astro-seo"
-import { getImagePath } from "astro-opengraph-images"
 import GlobalHeader from "../components/GlobalHeader.astro"
 import GlobalFooter from "@/components/GlobalFooter.astro"
 
@@ -13,8 +12,6 @@ interface Props {
 }
 
 const { title, ogTitle, description, ogDescription } = Astro.props
-const { url, site } = Astro
-const openGraphImageUrl = getImagePath({ url, site })
 ---
 
 <script is:inline>
@@ -67,7 +64,7 @@ const openGraphImageUrl = getImagePath({ url, site })
           type: "website",
           title: ogTitle || title,
           url: "https://jakeisonline.com",
-          image: openGraphImageUrl, // TODO: actually generate this image
+          image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
         },
         optional: {
           description: ogDescription || description,
