@@ -87,6 +87,12 @@ importers:
       astro-robots-txt:
         specifier: ^1.0.0
         version: 1.0.0
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      prettier-plugin-astro:
+        specifier: ^0.14.1
+        version: 0.14.1
 
 packages:
 
@@ -5517,10 +5523,8 @@ snapshots:
       '@astrojs/compiler': 2.10.2
       prettier: 3.3.3
       sass-formatter: 0.7.9
-    optional: true
 
-  prettier@3.3.3:
-    optional: true
+  prettier@3.3.3: {}
 
   prismjs@1.29.0: {}
 
@@ -5729,15 +5733,13 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
-  s.color@0.0.15:
-    optional: true
+  s.color@0.0.15: {}
 
   safe-buffer@5.2.1: {}
 
   sass-formatter@0.7.9:
     dependencies:
       suf-log: 2.5.3
-    optional: true
 
   sax@1.4.1: {}
 
@@ -5885,7 +5887,6 @@ snapshots:
   suf-log@2.5.3:
     dependencies:
       s.color: 0.0.15
-    optional: true
 
   supports-color@5.5.0:
     dependencies:
