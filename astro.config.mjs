@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 import vercel from "@astrojs/vercel/serverless"
 import react from "@astrojs/react"
+import { astroOgImagesGenerator } from "og-images-generator/astro"
 import playformCompress from "@playform/compress"
 
 // https://astro.build/config
@@ -16,6 +17,7 @@ export default defineConfig({
     sitemap(),
     robotsTxt(),
     react(),
+    astroOgImagesGenerator(),
     playformCompress(),
   ],
   output: "server",
