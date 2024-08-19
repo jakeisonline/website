@@ -64,7 +64,7 @@ const { title, ogTitle, description, ogDescription } = Astro.props
           type: "website",
           title: ogTitle || title,
           url: "https://jakeisonline.com",
-          image: "https://jakeisonline.com/og-image.png",
+          image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
         },
         optional: {
           description: ogDescription || description,
@@ -76,7 +76,7 @@ const { title, ogTitle, description, ogDescription } = Astro.props
         card: "summary",
         title: ogTitle || title,
         description: ogDescription || description,
-        image: "https://jakeisonline.com/og-image.png",
+        image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
       }}
     />
   </head>
