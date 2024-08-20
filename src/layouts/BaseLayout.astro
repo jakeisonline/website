@@ -9,9 +9,16 @@ interface Props {
   ogTitle?: string
   description: string
   ogDescription?: string
+  ogImage?: string
 }
 
-const { title, ogTitle, description, ogDescription } = Astro.props
+const {
+  title,
+  ogTitle,
+  description,
+  ogDescription,
+  ogImage = "og.png",
+} = Astro.props
 ---
 
 <script is:inline>
@@ -63,8 +70,8 @@ const { title, ogTitle, description, ogDescription } = Astro.props
         basic: {
           type: "website",
           title: ogTitle || title,
-          url: "https://jakeisonline.com",
-          image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
+          url: `${import.meta.env.SITE}`,
+          image: `${import.meta.env.SITE}/${ogImage}`,
         },
         optional: {
           description: ogDescription || description,
@@ -76,7 +83,7 @@ const { title, ogTitle, description, ogDescription } = Astro.props
         card: "summary",
         title: ogTitle || title,
         description: ogDescription || description,
-        image: "https://jakeisonline.com/og-image.png", // TODO: actually generate this image
+        image: `${import.meta.env.SITE}/${ogImage}`,
       }}
     />
   </head>
