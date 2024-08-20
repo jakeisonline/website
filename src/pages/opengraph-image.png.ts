@@ -38,7 +38,7 @@ export async function GET() {
         {
           type: "div",
           props: {
-            tw: "absolute right-[40px] bottom-[40px] flex items-center",
+            tw: "absolute right-[55px] bottom-[40px] flex items-center",
             children: [
               {
                 type: "div",
