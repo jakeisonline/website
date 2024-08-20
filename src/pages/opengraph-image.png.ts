@@ -23,13 +23,13 @@ export async function GET() {
         {
           type: "div",
           props: {
-            tw: "flex flex-col justify-center -mt-16 text-5xl",
+            tw: "flex flex-col justify-center -mt-16 -ml-10 text-9xl",
             children: [
               {
                 type: "h1",
                 tw: "tracking-tight",
                 props: {
-                  children: "👋 Hello, I make things.",
+                  children: "👋",
                 },
               },
             ],
