@@ -20,6 +20,7 @@ export default defineConfig({
   ],
   output: "server",
   adapter: vercel({
+    includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
     webAnalytics: {
       enabled: true,
     },

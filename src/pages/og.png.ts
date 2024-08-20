@@ -7,8 +7,11 @@ import { ImageResponse } from "@vercel/og"
 
 export async function GET() {
   const UrbanistRegular = fs.readFileSync(
-    path.resolve(
-      "node_modules/@fontsource/urbanist/files/urbanist-latin-400-normal.woff",
+    path.join(
+      process.cwd(),
+      "public",
+      "fonts",
+      "urbanist-latin-400-normal.woff",
     ),
   )
 
@@ -41,9 +44,6 @@ export async function GET() {
                 type: "div",
                 props: {
                   tw: "text-blue-600 text-3xl",
-                  style: {
-                    fontFamily: "Urbanist Regular",
-                  },
                   children: "Jake Holman",
                 },
               },
@@ -66,9 +66,6 @@ export async function GET() {
         },
       ],
       tw: "w-full h-full flex items-center justify-center relative px-22 bg-white",
-      style: {
-        fontFamily: "Urbanist Regular",
-      },
     },
   }
 
@@ -77,7 +74,7 @@ export async function GET() {
     height: 600,
     fonts: [
       {
-        name: "Urbanist Regular",
+        name: "Urbanist",
         data: UrbanistRegular.buffer,
         style: "normal",
       },
