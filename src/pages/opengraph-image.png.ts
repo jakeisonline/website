@@ -71,7 +71,7 @@ export async function GET() {
 
   return new ImageResponse(html, {
     width: 1200,
-    height: 600,
+    height: 630,
     fonts: [
       {
         name: "Urbanist",
