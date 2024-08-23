@@ -1,6 +1,7 @@
 ---
 import SubNav from "@/components/SubNav.astro"
 import BaseLayout from "@/layouts/BaseLayout.astro"
+import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
 
 const navItems = [
   { name: "Range", href: "/components/range" },
@@ -9,12 +10,5 @@ const navItems = [
 ---
 
 <BaseLayout title="It's my playground" description="Weeeeee">
-  <div
-    class="container px-4 md:px-6 flex-1 pt-6 pb-20 items-start md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
-  >
-    <SubNav title="Components" navItems={navItems} />
-    <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
-      👋
-    </div>
-  </div>
+  <ComponentsLayout>👋</ComponentsLayout>
 </BaseLayout>
