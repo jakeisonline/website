@@ -1,0 +1,28 @@
+---
+import { SITE_CONFIG } from "../config/site"
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
+import Link from "@/components/ui/Link.astro"
+import ThemeToggle from "@/components/ui/theme-toggle"
+---
+
+<header
+  class="container-page md:sticky lg:top-0 z-50 w-full bg-background/20 lg:backdrop-blur supports[backdrop-filter]:bg-background/20"
+>
+  <div class="flex h-14 items-center lg:text-sm text-xs font-bold">
+    <div class="flex items-center">
+      🛝
+      <Link href="/" class="text-foreground ml-1">jakeisonline/playground</Link>
+    </div>
+    <div class="justify-end flex flex-1 gap-1">
+      <Link
+        href={SITE_CONFIG.links.github}
+        external
+        noIcon
+        class="underline-offset-4 underline decoration-transparent decoration-dotted duration-300 ease-out hover:decoration-link-hover inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-10 w-10 hover:bg-accent text-foreground"
+      >
+        <GitHubLogoIcon className="h-4 w-4" />
+      </Link>
+      <ThemeToggle client:load />
+    </div>
+  </div>
+</header>

@@ -1,0 +1,21 @@
+---
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
+import Link from "@/components/ui/Link.astro"
+import { SITE_CONFIG } from "../config/site"
+---
+
+<footer
+  class="container-page mt-auto grid w-full mb-4 grid-cols-2 lg:text-sm text-xs"
+>
+  <div>&copy; 2024 Jake Holman</div>
+  <div class="place-self-end flex items-center space-x-2">
+    <Link
+      href={SITE_CONFIG.links.github}
+      class="text-foreground"
+      external
+      noIcon
+    >
+      <GitHubLogoIcon className="h-4 w-4" />
+    </Link>
+  </div>
+</footer>
