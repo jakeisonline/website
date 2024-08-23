@@ -3,15 +3,16 @@ import { SITE_CONFIG } from "../config/site"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import Link from "@/components/ui/Link.astro"
 import ThemeToggle from "@/components/ui/theme-toggle"
+import GlobalNav from "@/components/GlobalNav.astro"
 ---
 
 <header
   class="container-page md:sticky lg:top-0 z-50 w-full bg-background/20 lg:backdrop-blur supports[backdrop-filter]:bg-background/20"
 >
   <div class="flex h-14 items-center lg:text-sm text-xs font-bold">
-    <div class="flex items-center">
-      🛝
-      <Link href="/" class="text-foreground ml-1">jakeisonline/playground</Link>
+    <div class="flex items-center gap-8">
+      <Link href="/" class="text-foreground">🛝 jakeisonline/playground</Link>
+      <GlobalNav />
     </div>
     <div class="justify-end flex flex-1 gap-1">
       <Link
