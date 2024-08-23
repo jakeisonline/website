@@ -12,7 +12,11 @@ const currentPath = Astro.url.pathname
 ---
 
 <aside class="hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block">
-  <h4 class="mt-0 pl-1.5">{title}</h4>
+  <h4
+    class="font-heading pb-2 scroll-m-20 text-sm font-semibold tracking-tight mt-0 pl-1.5"
+  >
+    {title}
+  </h4>
   <div class="grid gap-1 text-sm">
     {
       navItems.map(({ name, href }) => (
