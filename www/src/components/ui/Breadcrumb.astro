@@ -1,0 +1,54 @@
+---
+import { ChevronRight } from "lucide-react"
+import { toTitleCase } from "@/lib/utils"
+import Link from "@/components/ui/Link.astro"
+
+const path = Astro.url.pathname
+let crumbs: { name: string; href: string }[] = []
+
+if (path) {
+  const paths: string[] = path.split("/")
+
+  crumbs.push({ name: "Home", href: "/" })
+
+  for (let i = 1; i < paths.length; i++) {
+    const name = toTitleCase(paths[i].replace(/-/g, " ") as string)
+    crumbs.push({ name, href: `${paths.slice(0, i + 1).join("/")}` })
+  }
+}
+---
+
+<nav aria-label="Breadcrumb">
+  <ol
+    class="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5"
+  >
+    {
+      crumbs.map((crumb) => (
+        <>
+          <li class="inline-flex items-center gap-1.5">
+            <Link
+              href={crumb.href}
+              class={
+                crumb.href === path
+                  ? "text-foreground"
+                  : "text-muted-foreground"
+              }
+            >
+              {crumb.name}
+            </Link>
+          </li>
+          {crumb.href !== path && (
+            <li
+              role="presentation"
+              aria-hidden="true"
+              class="[&>svg]:size-3.5"
+              {...Astro.props}
+            >
+              <ChevronRight />
+            </li>
+          )}
+        </>
+      ))
+    }
+  </ol>
+</nav>
