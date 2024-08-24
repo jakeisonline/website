@@ -1,8 +1,17 @@
 ---
+import { cn } from "@/lib/utils"
 
+interface Props {
+  class?: string
+}
+
+const { class: className, ...props }: Props = Astro.props
 ---
 
 <code
-  class="not-prose font-mono font-normal p-0.5 text-xs bg-code text-code-foreground rounded break-all md:break-normal"
-  ><slot /></code
+  class={cn(
+    "not-prose font-mono font-normal p-0.5 text-xs bg-code text-code-foreground rounded break-all md:break-normal",
+    className,
+  )}
+  {...props}><slot /></code
 >
