@@ -80,6 +80,7 @@ export default {
     },
   },
   plugins: [
+    require("@tailwindcss/typography"),
     require("tailwindcss-animate"),
     require("tailwindcss-inner-border"),
     plugin(function ({ addBase }) {

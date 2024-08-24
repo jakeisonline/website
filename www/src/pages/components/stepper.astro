@@ -1,8 +1,24 @@
 ---
+import FeatureList from "@/components/FeatureList.astro"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
 ---
 
 <BaseLayout title="It's my playground" description="Weeeeee">
-  <ComponentsLayout>👋</ComponentsLayout>
+  <ComponentsLayout>
+    <h1>Stepper</h1>
+    <p>
+      The Stepper component is a user interface element that allows users to
+      increment or decrement a value. It is commonly used for inputting
+      numerical values, such as quantities or prices.
+    </p>
+    <FeatureList
+      features={[
+        "Native form element",
+        "Optional step size and min/max",
+        "Keyboard editable, controllable & accessible",
+        "Optional shift stepping",
+      ]}
+    />
+  </ComponentsLayout>
 </BaseLayout>
