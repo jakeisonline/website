@@ -2,6 +2,7 @@
 import FeatureList from "@/components/FeatureList.astro"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
+import CodeBlock from "@/components/ui/CodeBlock.astro"
 
 const features = [
   "Native form element",
@@ -20,5 +21,28 @@ const features = [
       numerical values, such as quantities or prices.
     </p>
     <FeatureList features={features} />
+    <h2>Usage</h2>
+    <CodeBlock
+      code={`import {
+  StepperField,
+  StepperFieldButton,
+  StepperFieldInput,
+  StepperFieldLabel,
+} from "@/components/stepper-field"`}
+    />
+    <CodeBlock
+      code={`<StepperField start={0}>
+  <StepperFieldLabel htmlFor="stepper">
+    Quantity
+  </StepperFieldLabel>
+  <StepperFieldButton direction="down">
+    -
+  </StepperFieldButton>
+  <StepperFieldInput id="stepper" />
+  <StepperFieldButton direction="up">
+    +
+  </StepperFieldButton>
+</StepperField>`}
+    />
   </ComponentsLayout>
 </BaseLayout>
