@@ -1,0 +1,11 @@
+---
+import { Code } from "astro:components"
+
+interface Props {
+  code: string
+}
+
+const { code } = Astro.props
+---
+
+<Code class="text-sm" lang="js" theme="poimandres" code={code} />
