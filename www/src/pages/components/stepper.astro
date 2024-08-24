@@ -3,6 +3,8 @@ import FeatureList from "@/components/FeatureList.astro"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
 import CodeBlock from "@/components/ui/CodeBlock.astro"
+import Link from "@/components/ui/Link.astro"
+import Code from "@/components/ui/Code.astro"
 
 const features = [
   "Native form element",
@@ -44,5 +46,22 @@ const features = [
   </StepperFieldButton>
 </StepperField>`}
     />
+    <h2>Accessibility</h2>
+    <p>
+      Adheres to the <Link
+        href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/"
+        external>Spinbutton WAI-ARIA design pattern</Link
+      >. At its core, this component is simply a <Link
+        href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number"
+        external
+      >
+        native number field
+      </Link>.
+    </p>
+    <p>
+      <Code>{`<StepperFieldInput>`}</Code> requires the property <Code>id</Code>
+      (string) to be set, and should match the <Code>htmlFor</Code> (string) of the
+      <Code>{`<StepperFieldLabel>`}</Code>.
+    </p>
   </ComponentsLayout>
 </BaseLayout>
