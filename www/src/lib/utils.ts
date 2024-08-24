@@ -11,3 +11,11 @@ export function toTitleCase(str: string) {
     (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(),
   )
 }
+
+export function sanitizePathname(pathname: string) {
+  const noHash = pathname.split("#")[0]
+  const noQueryParams = noHash.split("?")[0]
+  const noTrailingSlash = noQueryParams.replace(/\/$/, "")
+  const pathSegments = noTrailingSlash.split("/")
+  return pathSegments.join("/")
+}
