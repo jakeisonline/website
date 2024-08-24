@@ -1,9 +1,9 @@
 ---
 import { ChevronRight } from "lucide-react"
-import { toTitleCase } from "@/lib/utils"
+import { sanitizePathname, toTitleCase } from "@/lib/utils"
 import Link from "@/components/ui/Link.astro"
 
-const path = Astro.url.pathname
+const path = sanitizePathname(Astro.url.pathname)
 let crumbs: { name: string; href: string }[] = []
 
 if (path) {
@@ -13,7 +13,10 @@ if (path) {
 
   for (let i = 1; i < paths.length; i++) {
     const name = toTitleCase(paths[i].replace(/-/g, " ") as string)
-    crumbs.push({ name, href: `${paths.slice(0, i + 1).join("/")}` })
+    crumbs.push({
+      name,
+      href: `${paths.slice(0, i + 1).join("/")}`,
+    })
   }
 }
 ---
@@ -38,12 +41,7 @@ if (path) {
             </Link>
           </li>
           {crumb.href !== path && (
-            <li
-              role="presentation"
-              aria-hidden="true"
-              class="[&>svg]:size-3.5"
-              {...Astro.props}
-            >
+            <li role="presentation" aria-hidden="true" class="[&>svg]:size-3.5">
               <ChevronRight />
             </li>
           )}
