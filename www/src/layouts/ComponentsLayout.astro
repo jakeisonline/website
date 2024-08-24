@@ -1,5 +1,6 @@
 ---
 import SubNav from "@/components/SubNav.astro"
+import Breadcrumb from "@/components/ui/Breadcrumb.astro"
 
 const navItems = [
   { name: "Range", href: "/components/range" },
@@ -12,6 +13,9 @@ const navItems = [
 >
   <SubNav title="Components" navItems={navItems} />
   <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
-    <slot />
+    <div class="mx-auto w-full min-w-0">
+      <Breadcrumb />
+      <slot />
+    </div>
   </div>
 </div>
