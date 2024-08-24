@@ -3,22 +3,6 @@ import "@/styles/global.css"
 import { ViewTransitions } from "astro:transitions"
 import GlobalHeader from "@/components/GlobalHeader.astro"
 import GlobalFooter from "@/components/GlobalFooter.astro"
-
-interface Props {
-  title: string
-  ogTitle?: string
-  description: string
-  ogDescription?: string
-  ogImage?: string
-}
-
-const {
-  title,
-  ogTitle,
-  description,
-  ogDescription,
-  ogImage = "opengraph-image.png",
-} = Astro.props
 ---
 
 <script is:inline>
