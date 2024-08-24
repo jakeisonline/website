@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
-import vercel from "@astrojs/vercel/serverless"
+import vercel from "@astrojs/vercel/static"
 import react from "@astrojs/react"
 
 // https://astro.build/config
@@ -11,7 +11,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
-  output: "server",
+  output: "static",
   adapter: vercel({
     includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
   }),
