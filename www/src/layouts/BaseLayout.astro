@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css"
+import { ViewTransitions } from "astro:transitions"
 import GlobalHeader from "@/components/GlobalHeader.astro"
 import GlobalFooter from "@/components/GlobalFooter.astro"
 
@@ -49,6 +50,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <ViewTransitions transition:animate="none" />
   </head>
   <body
     class="min-h-dvh bg-background overflow-y-scroll flex flex-col items-center"
