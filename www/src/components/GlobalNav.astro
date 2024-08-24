@@ -2,27 +2,26 @@
 import Link from "@/components/ui/Link.astro"
 
 const globalNavItems = [
-    {
-      name: "Components",
-      href: "/components",
-    },
-  ]
+  {
+    name: "Components",
+    href: "/components",
+  },
+]
 
 const currentPath = Astro.url.pathname
-console.log(currentPath)
 ---
 
 <nav class="hidden lg:flex items-center gap-4 text-sm lg:gap-6">
-  {globalNavItems.map(({ name, href }) => (
-    <Link
-      href={href}
-      class={
-        currentPath.includes(href)
-          ? "text-foreground"
-          : "text-foreground/60"
-      }
-    >
-      {name}
-    </Link>
-  ))}
+  {
+    globalNavItems.map(({ name, href }) => (
+      <Link
+        href={href}
+        class={
+          currentPath.includes(href) ? "text-foreground" : "text-foreground/60"
+        }
+      >
+        {name}
+      </Link>
+    ))
+  }
 </nav>
