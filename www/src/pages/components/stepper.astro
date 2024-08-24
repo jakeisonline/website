@@ -5,6 +5,7 @@ import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
 import CodeBlock from "@/components/ui/CodeBlock.astro"
 import Link from "@/components/ui/Link.astro"
 import Code from "@/components/ui/Code.astro"
+import Keeb from "@/components/ui/Keeb.astro"
 
 const features = [
   "Native form element",
@@ -62,6 +63,14 @@ const features = [
       <Code>{`<StepperFieldInput>`}</Code> requires the property <Code>id</Code>
       (string) to be set, and should match the <Code>htmlFor</Code> (string) of the
       <Code>{`<StepperFieldLabel>`}</Code>.
+    </p>
+    <h2>Examples</h2>
+    <h3>Allow shift stepping</h3>
+    <p>
+      Shift stepping allowing users to increment or decrement a value by a
+      larger amount. When <Code>shift</Code> is set, users can shift step by holding
+      <Keeb>Shift</Keeb> while clicking a <Code>{`<StepperFieldButton>`}</Code>,
+      or by using the keyboard interactions.
     </p>
   </ComponentsLayout>
 </BaseLayout>
