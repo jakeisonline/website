@@ -14,5 +14,6 @@ export default defineConfig({
   output: "static",
   adapter: vercel({
     includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
+    excludeFiles: ["./components.json"],
   }),
 })
