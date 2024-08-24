@@ -2,6 +2,13 @@
 import FeatureList from "@/components/FeatureList.astro"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
+
+const features = [
+  "Native form element",
+  "Optional step size and min/max",
+  "Keyboard editable, controllable & accessible",
+  "Optional shift stepping",
+]
 ---
 
 <BaseLayout title="It's my playground" description="Weeeeee">
@@ -12,13 +19,6 @@ import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
       increment or decrement a value. It is commonly used for inputting
       numerical values, such as quantities or prices.
     </p>
-    <FeatureList
-      features={[
-        "Native form element",
-        "Optional step size and min/max",
-        "Keyboard editable, controllable & accessible",
-        "Optional shift stepping",
-      ]}
-    />
+    <FeatureList features={features} />
   </ComponentsLayout>
 </BaseLayout>
