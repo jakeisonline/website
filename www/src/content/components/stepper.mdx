@@ -1,0 +1,100 @@
+---
+title: "Stepper"
+slug: "stepper"
+layout: "../../layouts/ComponentsLayout.astro"
+---
+
+# Stepper
+
+The Stepper component is a user interface element that allows users to increment or decrement a value. It is commonly used for inputting numerical values, such as quantities or prices.
+
+## Usage
+
+```javascript
+import {
+  StepperField,
+  StepperFieldButton,
+  StepperFieldInput,
+  StepperFieldLabel,
+} from "@/components/stepper-field"
+```
+
+```javascript
+<StepperField start={0}>
+  <StepperFieldLabel htmlFor="stepper">Quantity</StepperFieldLabel>
+  <StepperFieldButton direction="down">-</StepperFieldButton>
+  <StepperFieldInput id="stepper" />
+  <StepperFieldButton direction="up">+</StepperFieldButton>
+</StepperField>
+```
+
+## Accessibility
+
+Adheres to the [Spinbutton WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/). At its core, this component is simply a [native number field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number).
+
+`<StepperFieldInput>` requires the property `id` (string) to be set, and should match the `htmlFor` (string) of the `<StepperFieldLabel>`.
+
+### Keyboard interactions
+
+| Key                                     | Action                            |
+| --------------------------------------- | --------------------------------- |
+| <kbd>ArrowUp</kbd>                      | Increment value by `step`, or `1` |
+| <kbd>ArrowDown</kbd>                    | Decrement value by `step`, or `1` |
+| <kbd>Shift</kbd> + <kbd>ArrowUp</kbd>   | Increment value by `shift`        |
+| <kbd>Shift</kbd> + <kbd>ArrowDown</kbd> | Decrement value by `shift`        |
+| <kbd>PageUp</kbd>                       | Increment value by `shift`        |
+| <kbd>PageDown</kbd>                     | Decrement value by `shift`        |
+| <kbd>Home</kbd>                         | Set value to `min`                |
+| <kbd>End</kbd>                          | Set value to `max`                |
+
+## Component Reference
+
+### StepperField
+
+Used to wrap a single stepper field. Also provides context for all child components.
+
+| Prop    | Type   | Description                                                                                        |
+| ------- | ------ | -------------------------------------------------------------------------------------------------- |
+| `start` | number | The initial value of the field. Default `0`.                                                       |
+| `step`  | number | The step size of the field. Default `1`.                                                           |
+| `shift` | number | The step size of the field when holding <kbd>Shift</kbd> or <kbd>PageUp</kbd>/<kbd>PageDown</kbd>. |
+| `min`   | number | The minimum value of the field.                                                                    |
+| `max`   | number | The maximum value of the field.                                                                    |
+
+### StepperFieldLabel
+
+The `<label>` of the stepper field.
+
+| Prop      | Type   | Description                                       |
+| --------- | ------ | ------------------------------------------------- |
+| `htmlFor` | string | Should match the `id` of the `StepperFieldInput`. |
+
+### StepperFieldButton
+
+The controller `<button>` of a stepper field, which users can interact with to step the value up or down.
+
+| Prop        | Type   | Description                                              |
+| ----------- | ------ | -------------------------------------------------------- |
+| `direction` | string | `up` or `down` depending on desired direction. Required. |
+
+### StepperFieldInput
+
+The `<input>` of the stepper field.
+
+| Prop | Type   | Description                                            |
+| ---- | ------ | ------------------------------------------------------ |
+| `id` | string | Should match the `htmlFor` of the `StepperFieldLabel`. |
+
+### StepperFieldBadge
+
+An optional floating badge that displays the current value of the field.
+
+| Prop       | Type   | Description                                                                            |
+| ---------- | ------ | -------------------------------------------------------------------------------------- |
+| `hideWhen` | number | Automatically hides the badge when the value is equal to this number. Defaults to `0`. |
+
+## Examples
+
+### Allow shift stepping
+
+Shift stepping allowing users to increment or decrement a value by a larger amount. When `shift` is set, users can shift step by holding <kbd>Shift</kbd> while clicking a `<StepperFieldButton>`, or by using the keyboard interactions.
