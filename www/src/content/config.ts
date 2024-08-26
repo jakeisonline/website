@@ -4,6 +4,7 @@ export const componentDocsCollection = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
+    component: z.string(),
     layout: z.string(),
   }),
 })
