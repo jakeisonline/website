@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { codeToHtml } from "shiki"
 import { Index } from "@/components/examples/react"
+import ExampleSource from "@/components/example-source"
 
 interface ExampleComponentProps {
   name: string
 }
 
 export default function ExampleComponent({ name }: ExampleComponentProps) {
-  const [html, setHtml] = useState("")
-
   const Example = React.useMemo(() => {
     const Component = Index[name]?.component
 
@@ -17,19 +15,6 @@ export default function ExampleComponent({ name }: ExampleComponentProps) {
 
     return <Component />
   }, [name])
-
-  useEffect(() => {
-    if (!Example) return
-    const source = Index[name]?.source
-    const getHighlightedCode = async () => {
-      const html = await highlightCode(source)
-      setHtml(html)
-    }
-
-    getHighlightedCode()
-  }, [name, html, Example])
-
-  if (!html) return
 
   return (
     <Tabs defaultValue="example">
@@ -49,17 +34,8 @@ export default function ExampleComponent({ name }: ExampleComponentProps) {
         </React.Suspense>
       </TabsContent>
       <TabsContent value="code" className="mt-0">
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+        <ExampleSource name={name} />
       </TabsContent>
     </Tabs>
   )
-}
-
-async function highlightCode(code: string) {
-  const html = codeToHtml(code, {
-    lang: "typescript",
-    theme: "poimandres",
-  })
-
-  return html
 }
