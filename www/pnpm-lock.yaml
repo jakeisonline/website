@@ -87,6 +87,9 @@ importers:
       prettier-plugin-astro:
         specifier: ^0.14.1
         version: 0.14.1
+      shiki:
+        specifier: ^1.14.1
+        version: 1.14.1
 
 packages:
 
