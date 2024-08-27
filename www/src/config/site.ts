@@ -1,6 +1,7 @@
 export const SITE_CONFIG = {
   name: "jakeisonline/playground",
-  url: "https://jakeisonline.com/playground",
+  baseUrl: "https://jakeisonline.com",
+  siteUrl: "https://jakeisonline.com/playground",
   links: {
     github: "https://github.com/jakeisonline/playground",
   },

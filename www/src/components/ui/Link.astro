@@ -1,10 +1,10 @@
 ---
+import { SITE_CONFIG } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { ExternalLinkIcon } from "lucide-react"
 
 type Props = {
   href: string
-  external?: boolean
   referrer?: boolean
   noIcon?: boolean
   class?: string
@@ -12,17 +12,19 @@ type Props = {
 
 const {
   href,
-  external,
   referrer,
   noIcon,
   class: className,
   ...props
 }: Props = Astro.props
 
+const baseUrl = SITE_CONFIG.baseUrl
+const isExternal = !href.startsWith(baseUrl) && /^(https?:)?\/\//i.test(href)
+
 const processProps = () => {
   const props = {} as any
 
-  if (external) {
+  if (isExternal) {
     props["target"] = "_blank"
     props["rel"] = !referrer ? "noreferrer" : undefined
   }
@@ -42,9 +44,10 @@ const newProps = { ...props, ...processedProps }
   )}
   {...newProps}
 >
-  <slot />{
-    external && !noIcon && (
+  <slot />
+  {
+    isExternal && !noIcon && (
       <ExternalLinkIcon className="ml-0.5 hover:decoration-none w-2.5 h-2.5 md:w-3 md:h-3 xl:w-4 lg:h-4" />
     )
-  }</a
->
+  }
+</a>
