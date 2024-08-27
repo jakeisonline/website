@@ -11,16 +11,18 @@ import ExampleComponent from "@/components/example-component"
 
 The Stepper component is a user interface element that allows users to increment or decrement a value. It is commonly used for inputting numerical values, such as quantities or prices.
 
-<ExampleComponent componentName={frontmatter.component} client:load>
-  ```javascript
-  <StepperField start={0}>
-    <StepperFieldLabel htmlFor="stepper">Quantity</StepperFieldLabel>
-    <StepperFieldButton direction="down">-</StepperFieldButton>
-    <StepperFieldInput id="stepper" />
-    <StepperFieldButton direction="up">+</StepperFieldButton>
-  </StepperField>
-  ```
-</ExampleComponent>
+export const exampleCode = `<StepperField start={0}>
+  <StepperFieldLabel htmlFor="stepper">Quantity</StepperFieldLabel>
+  <StepperFieldButton direction="down">-</StepperFieldButton>
+  <StepperFieldInput id="stepper" />
+  <StepperFieldButton direction="up">+</StepperFieldButton>
+</StepperField>`
+
+<ExampleComponent
+  componentName={frontmatter.component}
+  exampleCode={exampleCode}
+  client:load
+/>
 
 ## Usage
 
