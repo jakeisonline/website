@@ -1,6 +1,7 @@
 ---
 import { SITE_CONFIG } from "@/config/site"
 import { cn } from "@/lib/utils"
+import type { HTMLAttributes } from "astro/types"
 import { ExternalLinkIcon } from "lucide-react"
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
   referrer?: boolean
   noIcon?: boolean
   class?: string
+  props?: HTMLAttributes<"a">
 }
 
 const {
@@ -22,7 +24,7 @@ const baseUrl = SITE_CONFIG.baseUrl
 const isExternal = !href.startsWith(baseUrl) && /^(https?:)?\/\//i.test(href)
 
 const processProps = () => {
-  const props = {} as any
+  const props = {} as HTMLAttributes<"a">
 
   if (isExternal) {
     props["target"] = "_blank"
