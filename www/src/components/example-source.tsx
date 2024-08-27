@@ -45,7 +45,7 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
 
 async function highlightCode(code: string) {
   const html = codeToHtml(code, {
-    lang: "typescript",
+    lang: "jsx",
     theme: "poimandres",
   })
 
