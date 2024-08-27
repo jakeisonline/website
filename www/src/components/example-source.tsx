@@ -9,7 +9,7 @@ interface ExampleSourceProps {
 export default function ExampleSource({ name }: ExampleSourceProps) {
   const [html, setHtml] = useState("")
 
-  const Source = React.useMemo(() => {
+  const rawSource = React.useMemo(() => {
     const source = Index[name]?.source
 
     if (!source) return <p>Source not found: {name}</p>
@@ -18,7 +18,7 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
   }, [name])
 
   useEffect(() => {
-    if (!Source) return
+    if (!rawSource) return
     const source = Index[name]?.source
     const getHighlightedCode = async () => {
       const html = await highlightCode(source)
@@ -26,7 +26,7 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
     }
 
     getHighlightedCode()
-  }, [name, html, Source])
+  }, [name, html, rawSource])
 
   if (!html) return
 
