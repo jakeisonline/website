@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { codeToHtml } from "shiki"
+import { Index } from "@/components/examples/react"
 
 interface ExampleComponentProps {
-  componentName: string
-  exampleCode: string
-  children: React.ReactNode
+  name: string
 }
 
-export default function ExampleComponent({
-  exampleCode,
-}: ExampleComponentProps) {
+export default function ExampleComponent({ name }: ExampleComponentProps) {
   const [html, setHtml] = useState("")
 
+  const Example = React.useMemo(() => {
+    const Component = Index[name]?.component
+
+    if (!Component) return <p>Component not found: {name}</p>
+
+    return <Component />
+  }, [name])
+
   useEffect(() => {
+    if (!Example) return
+    const source = Index[name]?.source
     const getHighlightedCode = async () => {
-      const html = await highlightCode(exampleCode)
+      const html = await highlightCode(source)
       setHtml(html)
     }
 
     getHighlightedCode()
-  }, [exampleCode, html])
+  }, [name, html, Example])
 
   if (!html) return
 
@@ -30,7 +37,17 @@ export default function ExampleComponent({
         <TabsTrigger value="example">Example</TabsTrigger>
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
-      <TabsContent value="example">{exampleCode}</TabsContent>
+      <TabsContent value="example">
+        <React.Suspense
+          fallback={
+            <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
+              Loading...
+            </div>
+          }
+        >
+          {Example}
+        </React.Suspense>
+      </TabsContent>
       <TabsContent value="code" className="mt-0">
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </TabsContent>

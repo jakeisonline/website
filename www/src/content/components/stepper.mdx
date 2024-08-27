@@ -16,13 +16,10 @@ export const exampleCode = `<StepperField start={0}>
   <StepperFieldButton direction="down">-</StepperFieldButton>
   <StepperFieldInput id="stepper" />
   <StepperFieldButton direction="up">+</StepperFieldButton>
-</StepperField>`
+</StepperField>
+`
 
-<ExampleComponent
-  componentName={frontmatter.component}
-  exampleCode={exampleCode}
-  client:load
-/>
+<ExampleComponent name={frontmatter.component} client:load />
 
 ## Usage
 
