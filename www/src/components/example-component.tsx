@@ -23,15 +23,19 @@ export default function ExampleComponent({ name }: ExampleComponentProps) {
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
       <TabsContent value="example">
-        <React.Suspense
-          fallback={
-            <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
-              Loading...
-            </div>
-          }
-        >
-          {Example}
-        </React.Suspense>
+        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div className="p-6 pt-6 min-h-44 flex w-auto justify-center items-center">
+            <React.Suspense
+              fallback={
+                <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
+                  Loading...
+                </div>
+              }
+            >
+              {Example}
+            </React.Suspense>
+          </div>
+        </div>
       </TabsContent>
       <TabsContent value="code" className="mt-0">
         <ExampleSource name={name} />

@@ -28,18 +28,18 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
     getHighlightedCode()
   }, [name, html, rawSource])
 
-  if (!html) return
+  if (!html)
+    return (
+      <div className="flex w-full rounded-lg border bg-card text-card-foreground shadow-sm min-h-44 mt-2 items-center justify-center">
+        Loading...
+      </div>
+    )
 
   return (
-    <React.Suspense
-      fallback={
-        <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
-          Loading...
-        </div>
-      }
-    >
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </React.Suspense>
+    <div
+      style={{ marginTop: "-0.8rem" }}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   )
 }
 
