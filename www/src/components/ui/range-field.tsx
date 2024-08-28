@@ -1,13 +1,4 @@
-"use client"
-
-import {
-  useRef,
-  useState,
-  useEffect,
-  createContext,
-  ReactNode,
-  useContext,
-} from "react"
+import { useRef, useState, useEffect, createContext, useContext } from "react"
 
 interface RangeFieldProps {
   minRange: number
@@ -37,10 +28,10 @@ export const RangeField = ({
 }
 
 interface RangeBarProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
-export const RangeBarWidthContext = createContext(0)
+const RangeBarWidthContext = createContext(0)
 
 export const RangeBar = ({ children }: RangeBarProps) => {
   const { setBarWidth } = useRangeFieldContext()
