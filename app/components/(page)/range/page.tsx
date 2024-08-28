@@ -1,5 +1,11 @@
 import { FeatureList, FeatureItem } from "@/components/feature-list"
-import RangeField from "@/components/range-field"
+import {
+  RangeField,
+  RangeBar,
+  RangeFill,
+  RangeGrabber,
+  RangeNumber,
+} from "@/components/custom/range-field"
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -62,7 +68,17 @@ export default function Home() {
                 maxRange={100}
                 initialLowValue={20}
                 initialHighValue={80}
-              />
+              >
+                <RangeBar>
+                  <RangeGrabber type={"low"} />
+                  <RangeFill className="h-1 bg-blue-600 grow" />
+                  <RangeGrabber type={"high"} />
+                </RangeBar>
+                <div className="flex mt-3 space-x-5">
+                  <RangeNumber label="Min Price" type="low" />
+                  <RangeNumber label="Max Price" type="high" />
+                </div>
+              </RangeField>
             </CardContent>
           </Card>
         </TabsContent>
