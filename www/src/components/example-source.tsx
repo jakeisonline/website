@@ -32,11 +32,10 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
   if (!html) return <Loading />
 
   return (
-    <Loading />
-    // <div
-    //   style={{ marginTop: "-0.8rem" }}
-    //   dangerouslySetInnerHTML={{ __html: html }}
-    // />
+    <div
+      style={{ marginTop: "-0.8rem" }}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   )
 }
 
