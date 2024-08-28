@@ -7,7 +7,7 @@ import {
   StepperFieldLabel,
 } from "@/components/ui/stepper-field"
 
-export default function StepperDemo() {
+export default function StepperShift() {
   return (
     <StepperField min={0} shift={10} max={100}>
       <StepperFieldLabel htmlFor="shift">Quantity</StepperFieldLabel>
