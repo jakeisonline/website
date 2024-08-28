@@ -26,4 +26,11 @@ export const Index: Record<string, any> = {
       await import(`@/components/examples/react/stepper-collapse.tsx?raw`)
     ).default,
   },
+  "range": {
+    component: React.lazy(
+      () => import("@/components/examples/react/range-demo"),
+    ),
+    source: (await import(`@/components/examples/react/range-demo.tsx?raw`))
+      .default,
+  },
 }

@@ -1,0 +1,40 @@
+---
+title: "Range"
+slug: "range"
+component: "range"
+layout: "../../layouts/ComponentsLayout.astro"
+---
+
+import ExampleComponent from "@/components/example-component"
+
+# Range
+
+The Range component is a user interface element that allows users to easily set a minimum and maximum value (a range), using interactive sliders.
+
+<ExampleComponent name={frontmatter.component} client:load />
+
+## Usage
+
+```jsx
+import {
+  StepperField,
+  StepperFieldButton,
+  StepperFieldInput,
+  StepperFieldLabel,
+} from "@/components/stepper-field"
+```
+
+```jsx
+<StepperField start={0}>
+  <StepperFieldLabel htmlFor="stepper">Quantity</StepperFieldLabel>
+  <StepperFieldButton direction="down">-</StepperFieldButton>
+  <StepperFieldInput id="stepper" />
+  <StepperFieldButton direction="up">+</StepperFieldButton>
+</StepperField>
+```
+
+## Accessibility
+
+Adheres to the [Slider (multi-thumb) WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/).
+
+Each `<RangeGrabber>` should have an aria-label prop, describing what that grabber represents. For example, if you have a price range, you might have a low price grabber with an `aria-label="Low price"` and a high price grabber with an `aria-label="High price"`.
