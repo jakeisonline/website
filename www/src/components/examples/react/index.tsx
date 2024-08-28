@@ -17,4 +17,13 @@ export const Index: Record<string, any> = {
     source: (await import(`@/components/examples/react/stepper-shift.tsx?raw`))
       .default,
   },
+  "stepper-collapse": {
+    name: "stepper-collapse",
+    component: React.lazy(
+      () => import("@/components/examples/react/stepper-collapse"),
+    ),
+    source: (
+      await import(`@/components/examples/react/stepper-collapse.tsx?raw`)
+    ).default,
+  },
 }
