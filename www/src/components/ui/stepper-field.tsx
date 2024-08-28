@@ -1,14 +1,5 @@
-"use client"
-
 import { cn } from "@/lib/utils"
-import {
-  createContext,
-  forwardRef,
-  RefObject,
-  useContext,
-  useRef,
-  useState,
-} from "react"
+import { createContext, forwardRef, useContext, useRef, useState } from "react"
 
 interface StepperFieldProps extends React.ComponentPropsWithoutRef<"div"> {
   start?: number
@@ -211,7 +202,7 @@ interface StepperFieldContextType {
   min?: number
   max?: number
   start?: number
-  inputRef?: RefObject<HTMLInputElement>
+  inputRef?: React.RefObject<HTMLInputElement>
 }
 
 const StepperFieldContext = createContext<StepperFieldContextType>({
@@ -237,7 +228,7 @@ interface StepperFieldContextProviderProps {
   start?: number
   step?: number
   shift?: number
-  inputRef: RefObject<HTMLInputElement>
+  inputRef: React.RefObject<HTMLInputElement>
   children: React.ReactElement
 }
 
