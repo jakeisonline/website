@@ -1,8 +1,21 @@
 ---
 import "@/styles/global.css"
+import { SEO } from "astro-seo"
 import { ViewTransitions } from "astro:transitions"
 import GlobalHeader from "@/components/GlobalHeader.astro"
 import GlobalFooter from "@/components/GlobalFooter.astro"
+
+interface Props {
+  frontmatter?: Record<string, string>
+  title?: string
+  description?: string
+}
+
+const {
+  frontmatter,
+  title = frontmatter?.title,
+  description = frontmatter?.description,
+} = Astro.props
 ---
 
 <script is:inline>
@@ -34,6 +47,19 @@ import GlobalFooter from "@/components/GlobalFooter.astro"
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <SEO
+      title={title}
+      description={description}
+      extend={{
+        link: [
+          {
+            rel: "icon",
+            type: "image/svg+xml",
+            href: "/favicon.svg",
+          },
+        ],
+      }}
+    />
     <ViewTransitions transition:animate="none" />
   </head>
   <body

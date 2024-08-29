@@ -7,9 +7,21 @@ const navItems = [
   { name: "Range", href: "/components/range" },
   { name: "Stepper", href: "/components/stepper" },
 ]
+
+interface Props {
+  frontmatter?: Record<string, string>
+  title: string
+  description: string
+}
+
+const {
+  frontmatter,
+  title = frontmatter?.title,
+  description = frontmatter?.description,
+} = Astro.props
 ---
 
-<BaseLayout title="It's my playground" description="Weeeeee">
+<BaseLayout title={title} description={description}>
   <div
     class="container px-4 md:px-6 flex-1 pt-6 pb-20 items-start md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
   >
