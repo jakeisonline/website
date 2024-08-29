@@ -1,5 +1,27 @@
 ---
+import ExampleComponent from "@/components/example-component"
 import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
+
+export const componentExamples = ["stepper", "range"]
 ---
 
-<ComponentsLayout>👋</ComponentsLayout>
+<ComponentsLayout>
+  <div
+    class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
+  >
+    <h1>Components</h1>
+    <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
+      {
+        componentExamples.map((componentExample) => (
+          <a href={`/components/${componentExample}`}>
+            <ExampleComponent
+              name={componentExample}
+              inclSource={false}
+              client:load
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</ComponentsLayout>
