@@ -33,4 +33,11 @@ export const Index: Record<string, any> = {
     source: (await import(`@/components/examples/react/range-demo.tsx?raw`))
       .default,
   },
+  "cells": {
+    component: React.lazy(
+      () => import("@/components/examples/react/cells-demo"),
+    ),
+    source: (await import(`@/components/examples/react/cells-demo.tsx?raw`))
+      .default,
+  },
 }
