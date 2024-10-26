@@ -34,21 +34,12 @@ export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
 CellRow.displayName = "CellRow"
 
 interface CellProps extends React.ComponentPropsWithoutRef<"div"> {
-  type?: HTMLInputTypeAttribute
-  name: string
-  label: string
+  children: React.ReactNode
   className?: string
-  initialValue?: string
 }
 
 export const Cell = forwardRef<HTMLInputElement, CellProps>(
-  ({ type = "text", name, label, className, initialValue, ...props }, ref) => {
-    const [value, setValue] = useState<string | undefined>(initialValue)
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value)
-    }
-
+  ({ className, children, ...props }, ref) => {
     return (
       <div
         className={cn(
@@ -56,6 +47,31 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           className,
         )}
       >
+        {children}
+      </div>
+    )
+  },
+)
+Cell.displayName = "Cell"
+
+interface CellInput extends React.ComponentPropsWithoutRef<"input"> {
+  name: string
+  label: string
+  type?: HTMLInputTypeAttribute
+  initialValue?: string
+  className?: string
+}
+
+export const CellInput = forwardRef<HTMLInputElement, CellInput>(
+  ({ type = "text", name, label, initialValue, className, ...props }, ref) => {
+    const [value, setValue] = useState<string | undefined>(initialValue)
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value)
+    }
+
+    return (
+      <>
         <label htmlFor={name} className="sr-only">
           {label}
         </label>
@@ -68,8 +84,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           value={value}
           onChange={handleChange}
         />
-      </div>
+      </>
     )
   },
 )
-Cell.displayName = "Cell"
