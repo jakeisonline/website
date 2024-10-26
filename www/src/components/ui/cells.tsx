@@ -30,7 +30,7 @@ interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
   children: React.ReactNode
 }
 
-export const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
+const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
     const { handleMouseDown } = useCellsContext()
 
