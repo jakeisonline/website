@@ -15,9 +15,11 @@ interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
 export const Cells = forwardRef<HTMLFormElement, CellsProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <form className={cn("", className)} {...props} ref={ref}>
-        {children}
-      </form>
+      <CellsContextProvider>
+        <form className={cn("", className)} {...props} ref={ref}>
+          {children}
+        </form>
+      </CellsContextProvider>
     )
   },
 )
@@ -133,4 +135,28 @@ const CellContextProvider = ({
       {children}
     </CellContext.Provider>
   )
+}
+
+interface CellsContextType {}
+
+const CellsContext = createContext<CellsContextType>({})
+
+const useCellsContext = () => {
+  const context = useContext(CellsContext)
+
+  if (!context) {
+    throw new Error(
+      "useCellsContext must be used within a CellsContextProvider",
+    )
+  }
+
+  return context
+}
+
+interface CellsContextProviderProps {
+  children: React.ReactElement
+}
+
+const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
+  return <CellsContext.Provider value={{}}>{children}</CellsContext.Provider>
 }
