@@ -16,14 +16,36 @@ export const Cells = forwardRef<HTMLFormElement, CellsProps>(
   ({ className, children, ...props }, ref) => {
     return (
       <CellsContextProvider>
-        <form className={cn("", className)} {...props} ref={ref}>
+        <CellsForm className={cn("", className)} {...props} ref={ref}>
           {children}
-        </form>
+        </CellsForm>
       </CellsContextProvider>
     )
   },
 )
 Cells.displayName = "Cells"
+
+interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
+  className?: string
+  children: React.ReactNode
+}
+
+export const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
+  ({ className, children, ...props }, ref) => {
+    const { handleMouseDown } = useCellsContext()
+
+    return (
+      <form
+        onMouseDown={handleMouseDown}
+        className={cn("", className)}
+        {...props}
+        ref={ref}
+      >
+        {children}
+      </form>
+    )
+  },
+)
 
 interface CellRowProps extends React.ComponentPropsWithoutRef<"div"> {
   className?: string
@@ -137,7 +159,9 @@ const CellContextProvider = ({
   )
 }
 
-interface CellsContextType {}
+interface CellsContextType {
+  handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
+}
 
 const CellsContext = createContext<CellsContextType>({})
 
@@ -158,5 +182,24 @@ interface CellsContextProviderProps {
 }
 
 const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
-  return <CellsContext.Provider value={{}}>{children}</CellsContext.Provider>
+  const [mouseDownStartPoint, setMouseDownStartPoint] = useState<
+    { x: number; y: number } | undefined
+  >(undefined)
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLFormElement>) => {
+    setMouseDownStartPoint({
+      x: e.pageX,
+      y: e.pageY,
+    })
+  }
+
+  return (
+    <CellsContext.Provider
+      value={{
+        handleMouseDown,
+      }}
+    >
+      {children}
+    </CellsContext.Provider>
+  )
 }
