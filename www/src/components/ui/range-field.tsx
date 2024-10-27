@@ -201,27 +201,23 @@ const RangeFieldContextProvider = ({
     low: low ? low : min,
     high: high ? high : max,
   })
+
   const grabberPositions = useRef({
     low: 0,
     high: 0,
   })
+
   const mouseOffset = useRef({
     low: 0,
     high: 0,
   })
+
   const [barWidth, setBarWidth] = useState(0)
 
   const draggingEvent = useRef({
     isDragging: false,
     draggingType: "",
   })
-
-  const updateDraggingEvent = (newEvent: {
-    isDragging: boolean
-    draggingType: string
-  }) => {
-    draggingEvent.current = newEvent
-  }
 
   const handleMouseDown = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -233,6 +229,53 @@ const RangeFieldContextProvider = ({
     })
 
     updateMouseOffset(grabberType, getXOffset(e))
+  }
+
+  const handleMouseMove = (e: Event) => {
+    if (!draggingEvent.current.isDragging) return
+    const grabberType = draggingEvent.current.draggingType
+
+    handleGrabberMove(grabberType, e)
+  }
+
+  const handleMouseUp = () => {
+    updateDraggingEvent({
+      isDragging: false,
+      draggingType: "",
+    })
+
+    document.removeEventListener("mousemove", handleMouseMove)
+    document.removeEventListener("mouseup", handleMouseUp)
+  }
+
+  const handleGrabberMove = (type: string, e: Event) => {
+    const newPosition =
+      mouseOffset.current[type as keyof typeof mouseOffset.current] !== 0
+        ? getXOffset(e) -
+          mouseOffset.current[type as keyof typeof mouseOffset.current]
+        : getNewGrabberPosition(currentValues.low)
+    const newValue = Math.round(newPosition / (barWidth / currentValues.max))
+
+    if (!canMoveGrabber(type, newValue)) return
+
+    const updatedPosition = { [type]: newPosition }
+    grabberPositions.current = {
+      ...grabberPositions.current,
+      ...updatedPosition,
+    }
+
+    const updatedValue = { [type]: newValue }
+    setCurrentValues((currentValues) => ({
+      ...currentValues,
+      ...updatedValue,
+    }))
+  }
+
+  const updateDraggingEvent = (newEvent: {
+    isDragging: boolean
+    draggingType: string
+  }) => {
+    draggingEvent.current = newEvent
   }
 
   const updateMouseOffset = (grabberType: string, clientX: number) => {
@@ -261,36 +304,6 @@ const RangeFieldContextProvider = ({
     }
   }
 
-  const handleMouseMove = (e: Event) => {
-    if (!draggingEvent.current.isDragging) return
-    const grabberType = draggingEvent.current.draggingType
-
-    handleGrabberMove(grabberType, e)
-  }
-
-  const handleGrabberMove = (type: string, e: Event) => {
-    const newPosition =
-      mouseOffset.current[type as keyof typeof mouseOffset.current] !== 0
-        ? getXOffset(e) -
-          mouseOffset.current[type as keyof typeof mouseOffset.current]
-        : getNewGrabberPosition(currentValues.low)
-    const newValue = Math.round(newPosition / (barWidth / currentValues.max))
-
-    if (!canMoveGrabber(type, newValue)) return
-
-    const updatedPosition = { [type]: newPosition }
-    grabberPositions.current = {
-      ...grabberPositions.current,
-      ...updatedPosition,
-    }
-
-    const updatedValue = { [type]: newValue }
-    setCurrentValues((currentValues) => ({
-      ...currentValues,
-      ...updatedValue,
-    }))
-  }
-
   const canMoveGrabber = (type: string, newValue: number) => {
     if (type === "low") {
       return (
@@ -313,16 +326,6 @@ const RangeFieldContextProvider = ({
     return e.type == "touchmove" || e.type == "touchstart"
       ? e.touches[0].clientX
       : e.clientX
-  }
-
-  const handleMouseUp = () => {
-    updateDraggingEvent({
-      isDragging: false,
-      draggingType: "",
-    })
-
-    document.removeEventListener("mousemove", handleMouseMove)
-    document.removeEventListener("mouseup", handleMouseUp)
   }
 
   return (
