@@ -164,9 +164,7 @@ interface RangeFieldContextType {
     e: React.MouseEvent<HTMLDivElement>,
     grabberType: string,
   ) => void
-  handleMouseMove: (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
-  ) => void
+  handleMouseMove: (e: Event) => void
   handleMouseUp: () => void
   setBarWidth: (width: number) => void
   getGrabberPosition: (value: number) => number
@@ -263,19 +261,14 @@ const RangeFieldContextProvider = ({
     }
   }
 
-  const handleMouseMove = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
-  ) => {
+  const handleMouseMove = (e: Event) => {
     if (!draggingEvent.current.isDragging) return
     const grabberType = draggingEvent.current.draggingType
 
     handleGrabberMove(grabberType, e)
   }
 
-  const handleGrabberMove = (
-    type: string,
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
-  ) => {
+  const handleGrabberMove = (type: string, e: Event) => {
     const newPosition =
       mouseOffset.current[type as keyof typeof mouseOffset.current] !== 0
         ? getXOffset(e) -
