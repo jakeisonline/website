@@ -14,11 +14,11 @@ export default function StepperCollapse() {
       <StepperField min={0} start={0} shift={10} className="min-w-8">
         <StepperFieldLabel
           htmlFor="small"
-          className="group-has-[:focus]:border-r border-r-0 mr-0"
+          className="mr-0 border-r-0 group-has-[:focus]:border-r"
         >
           S
         </StepperFieldLabel>
-        <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
+        <div className="flex w-0 flex-row items-center gap-1 overflow-hidden opacity-0 has-[:focus]:w-full has-[:focus]:overflow-auto has-[:focus]:opacity-100">
           <StepperFieldButton direction="down">-</StepperFieldButton>
           <StepperFieldInput id="small" />
           <StepperFieldButton direction="up">+</StepperFieldButton>
@@ -28,11 +28,11 @@ export default function StepperCollapse() {
       <StepperField min={0} start={3} shift={10} className="min-w-8">
         <StepperFieldLabel
           htmlFor="medium"
-          className="group-has-[:focus]:border-r border-r-0 mr-0"
+          className="mr-0 border-r-0 group-has-[:focus]:border-r"
         >
           M
         </StepperFieldLabel>
-        <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
+        <div className="flex w-0 flex-row items-center gap-1 overflow-hidden opacity-0 has-[:focus]:w-full has-[:focus]:overflow-auto has-[:focus]:opacity-100">
           <StepperFieldButton direction="down">-</StepperFieldButton>
           <StepperFieldInput id="medium" />
           <StepperFieldButton direction="up">+</StepperFieldButton>
@@ -42,11 +42,11 @@ export default function StepperCollapse() {
       <StepperField min={0} start={0} shift={10} className="min-w-8">
         <StepperFieldLabel
           htmlFor="large"
-          className="group-has-[:focus]:border-r border-r-0 mr-0"
+          className="mr-0 border-r-0 group-has-[:focus]:border-r"
         >
           L
         </StepperFieldLabel>
-        <div className="has-[:focus]:opacity-100 has-[:focus]:w-full has-[:focus]:overflow-auto opacity-0 w-0 overflow-hidden flex flex-row items-center gap-1">
+        <div className="flex w-0 flex-row items-center gap-1 overflow-hidden opacity-0 has-[:focus]:w-full has-[:focus]:overflow-auto has-[:focus]:opacity-100">
           <StepperFieldButton direction="down">-</StepperFieldButton>
           <StepperFieldInput id="large" />
           <StepperFieldButton direction="up">+</StepperFieldButton>

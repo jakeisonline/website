@@ -34,7 +34,7 @@ export default function ThemeToggle() {
   if (!mounted) {
     return (
       <ThemeToggleWrapper className="h-10 w-10">
-        <Skeleton className="rounded-full bg-accent h-4 w-4 mt-3 mr-3" />
+        <Skeleton className="bg-accent mr-3 mt-3 h-4 w-4 rounded-full" />
       </ThemeToggleWrapper>
     )
   }
@@ -48,8 +48,8 @@ export default function ThemeToggle() {
             size="icon"
             aria-label="Choose between dark and light modes"
           >
-            <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 h-4 w-4" />
-            <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 h-4 w-4" />
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
         </DropdownMenuTrigger>

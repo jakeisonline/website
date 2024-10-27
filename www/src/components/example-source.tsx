@@ -41,13 +41,13 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
 
 function Loading() {
   return (
-    <div className="flex flex-col gap-1 w-full rounded-lg border bg-[#1b1e28] shadow-sm min-h-44 mt-2 p-3">
-      <Skeleton className="w-52 h-4" />
-      <Skeleton className="mt-5 w-20 h-4" />
-      <Skeleton className="ml-5 w-28 h-4" />
-      <Skeleton className="ml-5 w-28 h-4" />
-      <Skeleton className="w-28 h-4" />
-      <Skeleton className="mt-5 w-52 h-4" />
+    <div className="mt-2 flex min-h-44 w-full flex-col gap-1 rounded-lg border bg-[#1b1e28] p-3 shadow-sm">
+      <Skeleton className="h-4 w-52" />
+      <Skeleton className="mt-5 h-4 w-20" />
+      <Skeleton className="ml-5 h-4 w-28" />
+      <Skeleton className="ml-5 h-4 w-28" />
+      <Skeleton className="h-4 w-28" />
+      <Skeleton className="mt-5 h-4 w-52" />
     </div>
   )
 }

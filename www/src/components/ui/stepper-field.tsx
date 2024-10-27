@@ -37,7 +37,7 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
         <div
           onPointerDown={handleFocus}
           className={cn(
-            "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:cursor-pointer hover:inner-border-2 px-1 py-1 inner-border rounded-md select-none text-xs flex flex-row items-center relative group justify-center",
+            "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:inner-border-2 inner-border group relative flex select-none flex-row items-center justify-center rounded-md px-1 py-1 text-xs hover:cursor-pointer",
             className,
           )}
           {...props}
@@ -65,7 +65,7 @@ export const StepperFieldLabel = forwardRef<
   return (
     <label
       htmlFor={htmlFor}
-      className={cn("cursor-pointer px-2 text-sm border-r mr-1", className)}
+      className={cn("mr-1 cursor-pointer border-r px-2 text-sm", className)}
       ref={ref}
       {...props}
     >
@@ -102,7 +102,7 @@ export const StepperFieldInput = forwardRef<
       onBlur={handleBlur}
       style={{ width: String(value).length + "ch", ...props.style }}
       className={cn(
-        "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center  focus:border-0 focus:outline-none cursor-pointer text-sm",
+        "min-w-4 cursor-pointer text-center text-sm [appearance:textfield] focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
         className,
       )}
       role="spinbutton"
@@ -144,7 +144,7 @@ export const StepperFieldButton = forwardRef<
   }
 
   const divClass = cn(
-    "group rounded-md w-6 h-6 flex items-center justify-center mx-0.5",
+    "group mx-0.5 flex h-6 w-6 items-center justify-center rounded-md",
     isDisabled() && "opacity-40",
     !isDisabled() && "hover:bg-accent hover:cursor-pointer",
     className,
@@ -183,7 +183,7 @@ export const StepperFieldBadge = forwardRef<
   return (
     <div
       className={cn(
-        "group-has-[:focus]:hidden py-0 px-1.5 absolute -top-2 -right-2.5 bg-primary text-background rounded-full text-2xs font-medium",
+        "bg-primary text-background text-2xs absolute -right-2.5 -top-2 rounded-full px-1.5 py-0 font-medium group-has-[:focus]:hidden",
         className,
       )}
       {...props}

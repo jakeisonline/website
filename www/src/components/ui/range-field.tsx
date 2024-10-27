@@ -22,7 +22,7 @@ export const RangeField = ({
       low={initialLowValue}
       high={initialHighValue}
     >
-      <div className="bg-white py-4 rounded-lg">{children}</div>
+      <div className="rounded-lg bg-white py-4">{children}</div>
     </RangeFieldContextProvider>
   )
 }
@@ -49,7 +49,7 @@ export const RangeBar = ({ children }: RangeBarProps) => {
     <RangeBarWidthContext.Provider value={width}>
       <div
         ref={ref}
-        className="touch-none flex flex-row flex-none items-center bg-blue-100 h-1 rounded-full"
+        className="flex h-1 flex-none touch-none flex-row items-center rounded-full bg-blue-100"
       >
         {children}
       </div>
@@ -108,10 +108,10 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
       onTouchStart={doMouseDown}
     >
       <div className="flex flex-col items-center">
-        <div className="group-active:shadow-lg group-hover:bg-slate-900 absolute bg-black inline-block rounded-md -translate-y-7">
-          <span className="text-sm py-1 px-1.5 text-white">{initialValue}</span>
+        <div className="absolute inline-block -translate-y-7 rounded-md bg-black group-hover:bg-slate-900 group-active:shadow-lg">
+          <span className="px-1.5 py-1 text-sm text-white">{initialValue}</span>
         </div>
-        <div className="group-active:shadow-md group-hover:border-blue-500 group-active:shadow-blue-600/20 w-3.5 h-3.5 rounded-full border-4 bg-white border-blue-600"></div>
+        <div className="h-3.5 w-3.5 rounded-full border-4 border-blue-600 bg-white group-hover:border-blue-500 group-active:shadow-md group-active:shadow-blue-600/20"></div>
       </div>
     </div>
   )
@@ -128,16 +128,16 @@ export const RangeNumber = ({ label, type }: RangeNumberProps) => {
   return (
     <div className="w-full">
       <label className="text-sm">{label}</label>
-      <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 flex inner-border inner-border-slate-500 rounded-md py-2 px-2.5">
+      <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 inner-border inner-border-slate-500 flex rounded-md px-2.5 py-2">
         <input
           type="number"
-          className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::selection]:bg-blue-100 bg-white focus:outline-none text-sm w-full"
+          className="w-full bg-white text-sm [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::selection]:bg-blue-100"
           {...(type === "low"
             ? { value: currentValues.low }
             : { value: currentValues.high })}
           readOnly
         />
-        <span className="text-slate-600 pl-2 border-l border-slate-400">$</span>
+        <span className="border-l border-slate-400 pl-2 text-slate-600">$</span>
       </div>
     </div>
   )
