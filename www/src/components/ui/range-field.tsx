@@ -22,7 +22,7 @@ export const RangeField = ({
       low={initialLowValue}
       high={initialHighValue}
     >
-      <RangeContainer>{children}</RangeContainer>
+      <div className="bg-white py-4 rounded-lg">{children}</div>
     </RangeFieldContextProvider>
   )
 }
@@ -60,12 +60,6 @@ export const RangeBar = ({ children }: RangeBarProps) => {
 export const useRangeBarContext = () => {
   const context = useContext(RangeBarWidthContext)
   return context
-}
-
-export function RangeContainer({ children }: { children: React.ReactNode }) {
-  const { handleMouseMove } = useRangeFieldContext()
-
-  return <div className="bg-white py-4 rounded-lg">{children}</div>
 }
 
 export const RangeFill = ({ ...props }) => {
