@@ -101,7 +101,7 @@ const CellInput = forwardRef<HTMLInputElement, CellProps>(
         <input
           type={type}
           name={name}
-          className="px-3 py-2 w-20 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none min-w-4 text-center hover:inner-border-2 focus:inner-border-primary focus:inner-border-2 inner-border focus:outline-none cursor-pointer"
+          className="hover:inner-border-2 focus:inner-border-primary focus:inner-border-2 inner-border w-20 min-w-4 cursor-pointer px-3 py-2 text-center [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           {...props}
           ref={ref}
           value={value}
