@@ -234,13 +234,7 @@ const RangeFieldContextProvider = ({
       draggingType: grabberType,
     })
 
-    const xOffset = (e) => {
-      return e.type == "touchmove" || e.type == "touchstart"
-        ? e.touches[0].clientX
-        : e.clientX
-    }
-
-    updateMouseOffset(grabberType, xOffset(e))
+    updateMouseOffset(grabberType, getXOffset(e))
   }
 
   const updateMouseOffset = (grabberType: string, clientX: number) => {
@@ -282,15 +276,9 @@ const RangeFieldContextProvider = ({
     type: string,
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ) => {
-    const xOffset = (e) => {
-      return e.type == "touchmove" || e.type == "touchstart"
-        ? e.touches[0].clientX
-        : e.clientX
-    }
-
     const newPosition =
       mouseOffset.current[type as keyof typeof mouseOffset.current] !== 0
-        ? xOffset(e) -
+        ? getXOffset(e) -
           mouseOffset.current[type as keyof typeof mouseOffset.current]
         : getNewGrabberPosition(currentValues.low)
     const newValue = Math.round(newPosition / (barWidth / currentValues.max))
@@ -326,6 +314,12 @@ const RangeFieldContextProvider = ({
 
   const getNewGrabberPosition = (value: number) => {
     return (barWidth / currentValues.max) * value
+  }
+
+  const getXOffset = (e: any) => {
+    return e.type == "touchmove" || e.type == "touchstart"
+      ? e.touches[0].clientX
+      : e.clientX
   }
 
   const handleMouseUp = () => {
