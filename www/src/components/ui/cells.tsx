@@ -93,6 +93,29 @@ const CellInput = forwardRef<HTMLInputElement, CellProps>(
   ({ type = "text", name, label, className, ...props }, ref) => {
     const { value, handleChange } = useCellContext()
 
+    const { isSelectedCell, toggleSelectedCell, clearSelectedCells } =
+      useCellsContext()
+
+    const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+      if (e.ctrlKey || e.metaKey) {
+        toggleSelectedCell(name)
+        return
+      }
+    }
+
+    const handleMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault()
+        return
+      }
+    }
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      clearSelectedCells()
+    }
+
+    const isSelected = isSelectedCell(name)
+
     return (
       <>
         <label htmlFor={name} className="sr-only">
@@ -101,11 +124,15 @@ const CellInput = forwardRef<HTMLInputElement, CellProps>(
         <input
           type={type}
           name={name}
-          className="hover:inner-border-2 focus:inner-border-primary focus:inner-border-2 inner-border w-20 min-w-4 cursor-pointer px-3 py-2 text-center [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="hover:inner-border-2 focus:inner-border-primary focus:inner-border-2 inner-border data-[is-selected=true]:inner-border-primary data-[is-selected=true]:inner-border-2 w-20 min-w-4 cursor-pointer px-3 py-2 text-center [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           {...props}
           ref={ref}
           value={value}
           onChange={handleChange}
+          onMouseDown={handleMouseDown}
+          onClick={handleClick}
+          onBlur={handleBlur}
+          data-is-selected={isSelected}
         />
       </>
     )
@@ -161,9 +188,16 @@ const CellContextProvider = ({
 
 interface CellsContextType {
   handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
+  isSelectedCell: (name: string) => boolean
+  toggleSelectedCell: (name: string) => void
+  clearSelectedCells: () => void
 }
 
-const CellsContext = createContext<CellsContextType>({})
+const CellsContext = createContext<CellsContextType>({
+  isSelectedCell: () => false,
+  toggleSelectedCell: () => {},
+  clearSelectedCells: () => {},
+})
 
 const useCellsContext = () => {
   const context = useContext(CellsContext)
@@ -185,6 +219,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   const [mouseDownStartPoint, setMouseDownStartPoint] = useState<
     { x: number; y: number } | undefined
   >(undefined)
+  const [selectedCells, setSelectedCells] = useState<string[]>([])
 
   const handleMouseDown = (e: React.MouseEvent<HTMLFormElement>) => {
     setMouseDownStartPoint({
@@ -193,10 +228,37 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     })
   }
 
+  const isSelectedCell = (name: string) => {
+    return selectedCells.includes(name)
+  }
+
+  const addSelectedCell = (name: string) => {
+    setSelectedCells([...selectedCells, name])
+  }
+
+  const removeSelectedCell = (name: string) => {
+    setSelectedCells(selectedCells.filter((cell) => cell !== name))
+  }
+
+  const toggleSelectedCell = (name: string) => {
+    if (isSelectedCell(name)) {
+      removeSelectedCell(name)
+    } else {
+      addSelectedCell(name)
+    }
+  }
+
+  const clearSelectedCells = () => {
+    setSelectedCells([])
+  }
+
   return (
     <CellsContext.Provider
       value={{
         handleMouseDown,
+        isSelectedCell,
+        toggleSelectedCell,
+        clearSelectedCells,
       }}
     >
       {children}
