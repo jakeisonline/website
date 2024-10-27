@@ -80,7 +80,9 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
     handleMouseUp,
     getGrabberPosition,
   } = useRangeFieldContext()
+
   const barWidth = useRangeBarContext()
+
   if (!barWidth) return
 
   const initialValue = type === "low" ? currentValues.low : currentValues.high
@@ -163,6 +165,12 @@ interface RangeFieldContextType {
   setBarWidth: (width: number) => void
   getGrabberPosition: (value: number) => number
   currentValues: { min: number; max: number; low: number; high: number }
+  setCurrentValues: (values: {
+    min: number
+    max: number
+    low: number
+    high: number
+  }) => void
 }
 
 const RangeFieldContext = createContext<RangeFieldContextType>({
@@ -172,6 +180,7 @@ const RangeFieldContext = createContext<RangeFieldContextType>({
   setBarWidth: () => {},
   getGrabberPosition: () => 0,
   currentValues: { min: 0, max: 100, low: 0, high: 100 },
+  setCurrentValues: () => {},
 })
 
 interface RangeFieldContextProviderProps {
@@ -331,6 +340,7 @@ const RangeFieldContextProvider = ({
         setBarWidth,
         getGrabberPosition,
         currentValues,
+        setCurrentValues,
       }}
     >
       {children}
