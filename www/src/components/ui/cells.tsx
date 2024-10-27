@@ -96,6 +96,12 @@ const CellInput = forwardRef<HTMLInputElement, CellProps>(
     const { isSelectedCell, toggleSelectedCell, clearSelectedCells } =
       useCellsContext()
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Escape") {
+        clearSelectedCells()
+      }
+    }
+
     const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
       if (e.ctrlKey || e.metaKey) {
         toggleSelectedCell(name)
@@ -128,6 +134,7 @@ const CellInput = forwardRef<HTMLInputElement, CellProps>(
           {...props}
           ref={ref}
           value={value}
+          onKeyDown={handleKeyDown}
           onChange={handleChange}
           onMouseDown={handleMouseDown}
           onClick={handleClick}
