@@ -68,8 +68,8 @@ export function RangeContainer({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="bg-white py-4 rounded-lg"
-      onMouseMove={handleMouseMove}
-      onTouchMove={handleMouseMove}
+      // onMouseMove={handleMouseMove}
+      // onTouchMove={handleMouseMove}
     >
       {children}
     </div>
@@ -87,8 +87,13 @@ interface RangeGrabberProps {
 }
 
 export const RangeGrabber = ({ type }: RangeGrabberProps) => {
-  const { currentValues, handleMouseDown, handleMouseUp, getGrabberPosition } =
-    useRangeFieldContext()
+  const {
+    currentValues,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    getGrabberPosition,
+  } = useRangeFieldContext()
   const barWidth = useRangeBarContext()
   if (!barWidth) return
 
@@ -99,6 +104,7 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
     handleMouseDown(e, type)
 
     document.addEventListener("mouseup", handleMouseUp)
+    document.addEventListener("mousemove", handleMouseMove)
   }
 
   const style =
@@ -214,16 +220,24 @@ const RangeFieldContextProvider = ({
     high: 0,
   })
   const [barWidth, setBarWidth] = useState(0)
-  const [draggingEvent, setDraggingEvent] = useState({
+
+  const draggingEvent = useRef({
     isDragging: false,
     draggingType: "",
   })
+
+  const updateDraggingEvent = (newEvent: {
+    isDragging: boolean
+    draggingType: string
+  }) => {
+    draggingEvent.current = newEvent
+  }
 
   const handleMouseDown = (
     e: React.MouseEvent<HTMLDivElement>,
     grabberType: string,
   ) => {
-    setDraggingEvent({
+    updateDraggingEvent({
       isDragging: true,
       draggingType: grabberType,
     })
@@ -259,8 +273,10 @@ const RangeFieldContextProvider = ({
   const handleMouseMove = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ) => {
-    if (!draggingEvent.isDragging) return
-    const grabberType = draggingEvent.draggingType
+    console.log("handleMouseMove")
+    console.log("newDraggingEvent", draggingEvent.current)
+    if (!draggingEvent.current.isDragging) return
+    const grabberType = draggingEvent.current.draggingType
 
     handleGrabberMove(grabberType, e)
   }
@@ -269,6 +285,7 @@ const RangeFieldContextProvider = ({
     type: string,
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ) => {
+    console.log("handleGrabberMove")
     const newPosition =
       mouseOffset[type as keyof typeof mouseOffset] !== 0
         ? getXOffset(e) - mouseOffset[type as keyof typeof mouseOffset]
@@ -304,12 +321,15 @@ const RangeFieldContextProvider = ({
   }
 
   const handleMouseUp = () => {
-    setDraggingEvent({
+    updateDraggingEvent({
       isDragging: false,
       draggingType: "",
     })
 
-    window.document.removeEventListener("mouseup", handleMouseUp)
+    console.log("newDraggingEvent", draggingEvent.current)
+
+    document.removeEventListener("mousemove", handleMouseMove)
+    document.removeEventListener("mouseup", handleMouseUp)
   }
 
   return (
