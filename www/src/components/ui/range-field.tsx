@@ -87,7 +87,7 @@ interface RangeGrabberProps {
 }
 
 export const RangeGrabber = ({ type }: RangeGrabberProps) => {
-  const { currentValues, handleMouseDown, getGrabberPosition } =
+  const { currentValues, handleMouseDown, handleMouseUp, getGrabberPosition } =
     useRangeFieldContext()
   const barWidth = useRangeBarContext()
   if (!barWidth) return
@@ -97,6 +97,8 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
 
   const doMouseDown = (e: any) => {
     handleMouseDown(e, type)
+
+    document.addEventListener("mouseup", handleMouseUp)
   }
 
   const style =
@@ -167,6 +169,7 @@ interface RangeFieldContextType {
   handleMouseMove: (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ) => void
+  handleMouseUp: () => void
   setBarWidth: (width: number) => void
   getGrabberPosition: (value: number) => number
   currentValues: { min: number; max: number; low: number; high: number }
@@ -175,6 +178,7 @@ interface RangeFieldContextType {
 const RangeFieldContext = createContext<RangeFieldContextType>({
   handleMouseDown: () => {},
   handleMouseMove: () => {},
+  handleMouseUp: () => {},
   setBarWidth: () => {},
   getGrabberPosition: () => 0,
   currentValues: { min: 0, max: 100, low: 0, high: 100 },
@@ -225,8 +229,6 @@ const RangeFieldContextProvider = ({
     })
 
     updateMouseOffset(grabberType, getXOffset(e))
-
-    document.addEventListener("mouseup", handleMouseUp)
   }
 
   const updateMouseOffset = (grabberType: string, clientX: number) => {
@@ -315,6 +317,7 @@ const RangeFieldContextProvider = ({
       value={{
         handleMouseDown,
         handleMouseMove,
+        handleMouseUp,
         setBarWidth,
         getGrabberPosition,
         currentValues,
