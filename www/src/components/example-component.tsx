@@ -41,11 +41,11 @@ export default function ExampleComponent({
 
 function ExampleComponentWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-      <div className="p-6 pt-6 min-h-44 flex w-auto justify-center items-center">
+    <div className="bg-card text-card-foreground rounded-lg border shadow-sm">
+      <div className="flex min-h-44 w-auto items-center justify-center p-6 pt-6">
         <React.Suspense
           fallback={
-            <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex w-full items-center justify-center text-sm">
               Loading...
             </div>
           }

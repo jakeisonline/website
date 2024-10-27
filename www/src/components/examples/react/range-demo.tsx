@@ -18,10 +18,10 @@ export default function StepperDemo() {
     >
       <RangeBar>
         <RangeGrabber type={"low"} />
-        <RangeFill className="h-1 bg-blue-600 grow" />
+        <RangeFill className="h-1 grow bg-blue-600" />
         <RangeGrabber type={"high"} />
       </RangeBar>
-      <div className="flex mt-3 space-x-5">
+      <div className="mt-3 flex space-x-5">
         <RangeNumber label="Min Price" type="low" />
         <RangeNumber label="Max Price" type="high" />
       </div>
