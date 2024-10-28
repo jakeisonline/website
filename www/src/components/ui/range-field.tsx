@@ -88,7 +88,7 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   const initialValue = type === "low" ? currentValues.low : currentValues.high
   const grabberPosition = getGrabberPosition(initialValue)
 
-  const doPointerDown = (e: any) => {
+  const doPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     handlePointerDown(e, type)
 
     document.addEventListener("pointerup", handlePointerUp)
@@ -156,7 +156,7 @@ const useRangeFieldContext = () => {
 
 interface RangeFieldContextType {
   handlePointerDown: (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.PointerEvent<HTMLDivElement>,
     grabberType: string,
   ) => void
   handlePointerMove: (e: Event) => void
@@ -222,7 +222,7 @@ const RangeFieldContextProvider = ({
   })
 
   const handlePointerDown = (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.PointerEvent<HTMLDivElement>,
     grabberType: string,
   ) => {
     updateDraggingEvent({
@@ -230,10 +230,11 @@ const RangeFieldContextProvider = ({
       draggingType: grabberType,
     })
 
-    updateMouseOffset(grabberType, getXOffset(e))
+    updateMouseOffset(grabberType, e.clientX)
   }
 
-  const handlePointerMove = (e: Event) => {
+  // TODO: correctly type, but events suck and this works
+  const handlePointerMove = (e: any) => {
     if (!draggingEvent.current.isDragging) return
     const grabberType = draggingEvent.current.draggingType
 
@@ -250,10 +251,13 @@ const RangeFieldContextProvider = ({
     document.removeEventListener("mouseup", handlePointerUp)
   }
 
-  const handleGrabberMove = (type: string, e: Event) => {
+  const handleGrabberMove = (
+    type: string,
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     const newPosition =
       mouseOffset.current[type as keyof typeof mouseOffset.current] !== 0
-        ? getXOffset(e) -
+        ? e.clientX -
           mouseOffset.current[type as keyof typeof mouseOffset.current]
         : getNewGrabberPosition(currentValues.low)
     const newValue = Math.round(newPosition / (barWidth / currentValues.max))
@@ -322,12 +326,6 @@ const RangeFieldContextProvider = ({
 
   const getNewGrabberPosition = (value: number) => {
     return (barWidth / currentValues.max) * value
-  }
-
-  const getXOffset = (e: any) => {
-    return e.type == "touchmove" || e.type == "touchstart"
-      ? e.touches[0].clientX
-      : e.clientX
   }
 
   return (
