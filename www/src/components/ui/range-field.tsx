@@ -76,8 +76,8 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   const {
     currentValues,
     handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
+    handlePointerMove,
+    handlePointerUp,
     getGrabberPosition,
   } = useRangeFieldContext()
 
@@ -88,11 +88,11 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   const initialValue = type === "low" ? currentValues.low : currentValues.high
   const grabberPosition = getGrabberPosition(initialValue)
 
-  const doMouseDown = (e: any) => {
+  const doPointerDown = (e: any) => {
     handleMouseDown(e, type)
 
-    document.addEventListener("mouseup", handleMouseUp)
-    document.addEventListener("mousemove", handleMouseMove)
+    document.addEventListener("pointerup", handlePointerUp)
+    document.addEventListener("pointermove", handlePointerMove)
   }
 
   const style =
@@ -104,8 +104,7 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
     <div
       style={style}
       className="group relative cursor-pointer select-none"
-      onMouseDown={doMouseDown}
-      onTouchStart={doMouseDown}
+      onPointerDown={doPointerDown}
     >
       <div className="flex flex-col items-center">
         <div className="absolute inline-block -translate-y-7 rounded-md bg-black group-hover:bg-slate-900 group-active:shadow-lg">
@@ -160,8 +159,8 @@ interface RangeFieldContextType {
     e: React.MouseEvent<HTMLDivElement>,
     grabberType: string,
   ) => void
-  handleMouseMove: (e: Event) => void
-  handleMouseUp: () => void
+  handlePointerMove: (e: Event) => void
+  handlePointerUp: () => void
   setBarWidth: (width: number) => void
   getGrabberPosition: (value: number) => number
   currentValues: { min: number; max: number; low: number; high: number }
@@ -175,8 +174,8 @@ interface RangeFieldContextType {
 
 const RangeFieldContext = createContext<RangeFieldContextType>({
   handleMouseDown: () => {},
-  handleMouseMove: () => {},
-  handleMouseUp: () => {},
+  handlePointerMove: () => {},
+  handlePointerUp: () => {},
   setBarWidth: () => {},
   getGrabberPosition: () => 0,
   currentValues: { min: 0, max: 100, low: 0, high: 100 },
@@ -234,21 +233,21 @@ const RangeFieldContextProvider = ({
     updateMouseOffset(grabberType, getXOffset(e))
   }
 
-  const handleMouseMove = (e: Event) => {
+  const handlePointerMove = (e: Event) => {
     if (!draggingEvent.current.isDragging) return
     const grabberType = draggingEvent.current.draggingType
 
     handleGrabberMove(grabberType, e)
   }
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     updateDraggingEvent({
       isDragging: false,
       draggingType: "",
     })
 
-    document.removeEventListener("mousemove", handleMouseMove)
-    document.removeEventListener("mouseup", handleMouseUp)
+    document.removeEventListener("mousemove", handlePointerMove)
+    document.removeEventListener("mouseup", handlePointerUp)
   }
 
   const handleGrabberMove = (type: string, e: Event) => {
@@ -335,8 +334,8 @@ const RangeFieldContextProvider = ({
     <RangeFieldContext.Provider
       value={{
         handleMouseDown,
-        handleMouseMove,
-        handleMouseUp,
+        handlePointerMove,
+        handlePointerUp,
         setBarWidth,
         getGrabberPosition,
         currentValues,
