@@ -69,7 +69,8 @@ export const RangeFill = ({ ...props }) => {
 }
 
 interface RangeGrabberProps {
-  type: string
+  "type": string
+  "aria-label": string
 }
 
 export const RangeGrabber = ({ type }: RangeGrabberProps) => {

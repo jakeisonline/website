@@ -16,9 +16,9 @@ export default function StepperDemo() {
       initialHighValue={80}
     >
       <RangeBar>
-        <RangeGrabber type={"low"} />
+        <RangeGrabber type={"low"} aria-label="Low Value" />
         <RangeFill className="h-1 grow bg-blue-600" />
-        <RangeGrabber type={"high"} />
+        <RangeGrabber type={"high"} aria-label="High Value" />
       </RangeBar>
     </RangeField>
   )

@@ -33,9 +33,9 @@ import {
   initialHighValue={80}
 >
   <RangeBar>
-    <RangeGrabber type={"low"} />
+    <RangeGrabber type={"low"} aria-label="Low Value" />
     <RangeFill className="h-1 grow bg-blue-600" />
-    <RangeGrabber type={"high"} />
+    <RangeGrabber type={"high"} aria-label="High Value" />
   </RangeBar>
 </RangeField>
 ```
@@ -54,8 +54,8 @@ Used to wrap a single range field. Also provides context for all child component
 
 | Prop               | Type   | Description                                                           |
 | ------------------ | ------ | --------------------------------------------------------------------- |
-| `minRange`         | number | The minumum number a user can select.                                 |
-| `maxRange`         | number | The maximum number a user can select.                                 |
+| `minRange`         | number | The minumum number a user can select. Required.                       |
+| `maxRange`         | number | The maximum number a user can select. Required.                       |
 | `initialLowValue`  | number | The initial low value of the range. Uses `minRange` if not provided.  |
 | `initialHighValue` | number | The initial high value of the range. Uses `maxRange` if not provided. |
 
@@ -63,9 +63,10 @@ Used to wrap a single range field. Also provides context for all child component
 
 An interactive element that represents a single value in a range. It is used to allow users to select a value within a range.
 
-| Prop   | Type              | Description                                                  |
-| ------ | ----------------- | ------------------------------------------------------------ |
-| `type` | `"low" \| "high"` | The type of the grabber. Must be either `"low"` or `"high"`. |
+| Prop         | Type              | Description                                                              |
+| ------------ | ----------------- | ------------------------------------------------------------------------ |
+| `type`       | `"low" \| "high"` | The type of the grabber. Must be either `"low"` or `"high"`. Required.   |
+| `aria-label` | string            | Label for screen readers. See [accessibility](#accessibility). Required. |
 
 ### RangeFill
 
