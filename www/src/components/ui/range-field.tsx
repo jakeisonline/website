@@ -118,32 +118,6 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   )
 }
 
-interface RangeNumberProps {
-  label: string
-  type: string
-}
-
-export const RangeNumber = ({ label, type }: RangeNumberProps) => {
-  const { currentValues } = useRangeFieldContext()
-
-  return (
-    <div className="w-full">
-      <label className="text-sm">{label}</label>
-      <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 inner-border inner-border-slate-500 flex rounded-md px-2.5 py-2">
-        <input
-          type="number"
-          className="w-full bg-white text-sm [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::selection]:bg-blue-100"
-          {...(type === "low"
-            ? { value: currentValues.low }
-            : { value: currentValues.high })}
-          readOnly
-        />
-        <span className="border-l border-slate-400 pl-2 text-slate-600">$</span>
-      </div>
-    </div>
-  )
-}
-
 const useRangeFieldContext = () => {
   const context = useContext(RangeFieldContext)
 
