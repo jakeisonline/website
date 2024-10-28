@@ -22,7 +22,7 @@ export const RangeField = ({
       low={initialLowValue}
       high={initialHighValue}
     >
-      <div className="rounded-lg bg-white py-4">{children}</div>
+      <div className="min-h-8 w-full py-4">{children}</div>
     </RangeFieldContextProvider>
   )
 }
@@ -107,8 +107,10 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
       onPointerDown={doPointerDown}
     >
       <div className="flex flex-col items-center">
-        <div className="absolute inline-block -translate-y-7 rounded-md bg-black group-hover:bg-slate-900 group-active:shadow-lg">
-          <span className="px-1.5 py-1 text-sm text-white">{initialValue}</span>
+        <div className="bg-foreground group-hover:bg-foreground/80 absolute inline-block -translate-y-7 rounded-md group-active:shadow-lg">
+          <span className="text-background px-1.5 py-1 text-sm">
+            {initialValue}
+          </span>
         </div>
         <div className="h-3.5 w-3.5 rounded-full border-4 border-blue-600 bg-white group-hover:border-blue-500 group-active:shadow-md group-active:shadow-blue-600/20"></div>
       </div>
