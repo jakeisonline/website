@@ -1,5 +1,6 @@
 ---
 import SubNav from "@/components/SubNav.astro"
+import ToC, { type AstroHeadingsType } from "@/components/ToC.astro"
 import Breadcrumb from "@/components/ui/Breadcrumb.astro"
 import BaseLayout from "./BaseLayout.astro"
 
@@ -12,12 +13,14 @@ interface Props {
   frontmatter?: Record<string, string>
   title: string
   description: string
+  headings?: AstroHeadingsType
 }
 
 const {
   frontmatter,
   title = frontmatter?.title,
   description = frontmatter?.description,
+  headings,
 } = Astro.props
 ---
 
@@ -35,6 +38,7 @@ const {
           <slot />
         </article>
       </div>
+      <ToC headings={headings} />
     </div>
   </div>
 </BaseLayout>

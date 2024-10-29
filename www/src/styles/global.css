@@ -113,7 +113,7 @@
     @apply bg-background text-foreground;
   }
   code {
-    @apply font-mono p-0.5 text-xs bg-code text-code-foreground rounded break-all md:break-normal before:hidden after:hidden;
+    @apply bg-code text-code-foreground break-all rounded p-0.5 font-mono text-xs before:hidden after:hidden md:break-normal;
   }
 }
 
@@ -123,6 +123,10 @@
   }
 
   .paragraph {
-    @apply mt-4 lg:mt-8 2xl:mt-12 text-base md:text-lg lg:text-2xl 2xl:text-3xl;
+    @apply mt-4 text-base md:text-lg lg:mt-8 lg:text-2xl 2xl:mt-12 2xl:text-3xl;
+  }
+
+  .indented-list {
+    @apply pl-4;
   }
 }

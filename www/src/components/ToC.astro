@@ -1,0 +1,50 @@
+---
+import ToCHeading from "./ToCHeading.astro"
+
+export type AstroHeadingsType = {
+  depth: number
+  slug: string
+  text: string
+}[]
+
+interface Props {
+  headings?: AstroHeadingsType
+}
+
+const { headings } = Astro.props
+
+if (!headings) return null
+
+function buildToC(headings: AstroHeadingsType) {
+  const toc: AstroHeadingsType = []
+  const parentHeadings = new Map()
+
+  headings.forEach((h: any) => {
+    const heading = { ...h, subheadings: [] }
+    parentHeadings.set(heading.depth, heading)
+    // Change 2 to 1 if your markdown includes your <h1>
+    if (heading.depth === 1) {
+      toc.push(heading)
+    } else {
+      parentHeadings.get(heading.depth - 1).subheadings.push(heading)
+    }
+  })
+  return toc
+}
+
+const toc = buildToC(headings)
+---
+
+<nav
+  aria-labelledby="doc-outline-aria-label"
+  class="text-sm sticky top-20 h-[calc(100vh-3.5rem)] pl-3"
+>
+  <div>On this page</div>
+  <ul>
+    {
+      toc.map((heading) => {
+        return <ToCHeading heading={heading} />
+      })
+    }
+  </ul>
+</nav>
