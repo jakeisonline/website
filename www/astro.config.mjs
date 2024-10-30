@@ -24,5 +24,8 @@ export default defineConfig({
   adapter: vercel({
     includeFiles: ["./public/playground/fonts/urbanist-latin-400-normal.woff"],
     excludeFiles: ["./components.json"],
+    webAnalytics: {
+      enabled: true,
+    },
   }),
 })
