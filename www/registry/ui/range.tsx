@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, createContext, useContext } from "react"
 
-interface RangeFieldProps {
+interface RangeProps {
   minRange: number
   maxRange: number
   initialLowValue?: number
@@ -10,22 +10,22 @@ interface RangeFieldProps {
   children?: React.ReactNode
 }
 
-export const RangeField = ({
+export const Range = ({
   minRange,
   maxRange,
   initialLowValue,
   initialHighValue,
   children,
-}: RangeFieldProps) => {
+}: RangeProps) => {
   return (
-    <RangeFieldContextProvider
+    <RangeContextProvider
       min={minRange}
       max={maxRange}
       low={initialLowValue}
       high={initialHighValue}
     >
       <div className="min-h-8 w-full py-4">{children}</div>
-    </RangeFieldContextProvider>
+    </RangeContextProvider>
   )
 }
 
@@ -36,7 +36,7 @@ interface RangeBarProps {
 const RangeBarWidthContext = createContext(0)
 
 export const RangeBar = ({ children }: RangeBarProps) => {
-  const { setBarWidth } = useRangeFieldContext()
+  const { setBarWidth } = useRangeContext()
   const ref = useRef<HTMLInputElement | null>(null)
   const [width, setWidth] = useState(0)
 
@@ -82,7 +82,7 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
     handlePointerMove,
     handlePointerUp,
     getGrabberPosition,
-  } = useRangeFieldContext()
+  } = useRangeContext()
 
   const barWidth = useRangeBarContext()
 
@@ -121,19 +121,19 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   )
 }
 
-const useRangeFieldContext = () => {
-  const context = useContext(RangeFieldContext)
+const useRangeContext = () => {
+  const context = useContext(RangeContext)
 
   if (!context) {
     throw new Error(
-      "useRangeFieldContext must be used within a RangeFieldContextProvider",
+      "useRangeContext must be used within a RangeContextProvider",
     )
   }
 
   return context
 }
 
-interface RangeFieldContextType {
+interface RangeContextType {
   handlePointerDown: (
     e: React.PointerEvent<HTMLDivElement>,
     grabberType: string,
@@ -151,7 +151,7 @@ interface RangeFieldContextType {
   }) => void
 }
 
-const RangeFieldContext = createContext<RangeFieldContextType>({
+const RangeContext = createContext<RangeContextType>({
   handlePointerDown: () => {},
   handlePointerMove: () => {},
   handlePointerUp: () => {},
@@ -161,7 +161,7 @@ const RangeFieldContext = createContext<RangeFieldContextType>({
   setCurrentValues: () => {},
 })
 
-interface RangeFieldContextProviderProps {
+interface RangeContextProviderProps {
   min: number
   max: number
   low?: number
@@ -169,13 +169,13 @@ interface RangeFieldContextProviderProps {
   children: React.ReactNode
 }
 
-const RangeFieldContextProvider = ({
+const RangeContextProvider = ({
   min,
   max,
   low,
   high,
   children,
-}: RangeFieldContextProviderProps) => {
+}: RangeContextProviderProps) => {
   const [currentValues, setCurrentValues] = useState({
     min: min,
     max: max,
@@ -308,7 +308,7 @@ const RangeFieldContextProvider = ({
   }
 
   return (
-    <RangeFieldContext.Provider
+    <RangeContext.Provider
       value={{
         handlePointerDown,
         handlePointerMove,
@@ -320,6 +320,6 @@ const RangeFieldContextProvider = ({
       }}
     >
       {children}
-    </RangeFieldContext.Provider>
+    </RangeContext.Provider>
   )
 }
