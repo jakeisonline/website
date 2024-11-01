@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import { createContext, forwardRef, useContext, useRef, useState } from "react"
 
-interface StepperFieldProps extends React.ComponentPropsWithoutRef<"div"> {
+interface StepperProps extends React.ComponentPropsWithoutRef<"div"> {
   start?: number
   min?: number
   max?: number
@@ -13,7 +13,7 @@ interface StepperFieldProps extends React.ComponentPropsWithoutRef<"div"> {
   children?: React.ReactNode
 }
 
-export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
+export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
   ({ start, min, max, step, shift, children, className, ...props }, ref) => {
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -28,7 +28,7 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
     }
 
     return (
-      <StepperFieldContextProvider
+      <StepperContextProvider
         min={min}
         max={max}
         start={start}
@@ -47,22 +47,22 @@ export const StepperField = forwardRef<HTMLDivElement, StepperFieldProps>(
         >
           {children}
         </div>
-      </StepperFieldContextProvider>
+      </StepperContextProvider>
     )
   },
 )
-StepperField.displayName = "StepperField"
+Stepper.displayName = "Stepper"
 
-interface StepperFieldLabelProps
+interface StepperLabelProps
   extends React.ComponentPropsWithoutRef<"label"> {
   htmlFor: string
   className?: string
   children?: React.ReactNode
 }
 
-export const StepperFieldLabel = forwardRef<
+export const StepperLabel = forwardRef<
   HTMLLabelElement,
-  StepperFieldLabelProps
+  StepperLabelProps
 >(({ htmlFor, className, children, ...props }, ref) => {
   return (
     <label
@@ -75,20 +75,20 @@ export const StepperFieldLabel = forwardRef<
     </label>
   )
 })
-StepperFieldLabel.displayName = "StepperFieldLabel"
+StepperLabel.displayName = "StepperLabel"
 
-interface StepperFieldInputProps
+interface StepperInputProps
   extends React.ComponentPropsWithoutRef<"input"> {
   id: string
   className?: string
 }
 
-export const StepperFieldInput = forwardRef<
+export const StepperInput = forwardRef<
   HTMLInputElement,
-  StepperFieldInputProps
+  StepperInputProps
 >(({ className, ...props }, ref) => {
   const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
-    useStepperFieldContext()
+    useStepperContext()
 
   const computedRef = ref ? ref : inputRef
 
@@ -115,20 +115,20 @@ export const StepperFieldInput = forwardRef<
     />
   )
 })
-StepperFieldInput.displayName = "StepperFieldInput"
+StepperInput.displayName = "StepperInput"
 
-interface StepperFieldButtonProps
+interface StepperButtonProps
   extends React.ComponentPropsWithoutRef<"button"> {
   direction: string
   className?: string
   children: any
 }
 
-export const StepperFieldButton = forwardRef<
+export const StepperButton = forwardRef<
   HTMLButtonElement,
-  StepperFieldButtonProps
+  StepperButtonProps
 >(({ direction, className, children, ...props }, ref) => {
-  const { min, max, value, handleStep } = useStepperFieldContext()
+  const { min, max, value, handleStep } = useStepperContext()
   const handleClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
     const shiftKeyHeld = e.shiftKey
     handleStep(direction, shiftKeyHeld)
@@ -168,18 +168,18 @@ export const StepperFieldButton = forwardRef<
     </button>
   )
 })
-StepperFieldButton.displayName = "StepperFieldButton"
+StepperButton.displayName = "StepperButton"
 
-interface StepperFieldBadgeProps extends React.ComponentPropsWithoutRef<"div"> {
+interface StepperBadgeProps extends React.ComponentPropsWithoutRef<"div"> {
   hideWhen?: number
   className?: string
 }
 
-export const StepperFieldBadge = forwardRef<
+export const StepperBadge = forwardRef<
   HTMLDivElement,
-  StepperFieldBadgeProps
+  StepperBadgeProps
 >(({ hideWhen = 0, className, ...props }, ref) => {
-  const { value } = useStepperFieldContext()
+  const { value } = useStepperContext()
   if (value == hideWhen) return
 
   return (
@@ -194,8 +194,8 @@ export const StepperFieldBadge = forwardRef<
     </div>
   )
 })
-StepperFieldBadge.displayName = "StepperFieldBadge"
-interface StepperFieldContextType {
+StepperBadge.displayName = "StepperBadge"
+interface StepperContextType {
   value: number | ""
   handleStep: (direction: string, shiftStep?: boolean) => void
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -207,24 +207,24 @@ interface StepperFieldContextType {
   inputRef?: React.RefObject<HTMLInputElement>
 }
 
-const StepperFieldContext = createContext<StepperFieldContextType>({
+const StepperContext = createContext<StepperContextType>({
   value: 0,
   handleStep: () => {},
 })
 
-const useStepperFieldContext = () => {
-  const context = useContext(StepperFieldContext)
+const useStepperContext = () => {
+  const context = useContext(StepperContext)
 
   if (!context) {
     throw new Error(
-      "useStepperFieldContext must be used within a StepperFieldContextProvider",
+      "useStepperContext must be used within a StepperContextProvider",
     )
   }
 
   return context
 }
 
-interface StepperFieldContextProviderProps {
+interface StepperContextProviderProps {
   min?: number
   max?: number
   start?: number
@@ -234,7 +234,7 @@ interface StepperFieldContextProviderProps {
   children: React.ReactElement
 }
 
-const StepperFieldContextProvider = ({
+const StepperContextProvider = ({
   min,
   max,
   start = 0,
@@ -242,7 +242,7 @@ const StepperFieldContextProvider = ({
   shift,
   inputRef,
   children,
-}: StepperFieldContextProviderProps) => {
+}: StepperContextProviderProps) => {
   const [value, setValue] = useState<number | "">(start)
 
   const handleStep = (direction: string, shiftStep?: boolean) => {
@@ -327,7 +327,7 @@ const StepperFieldContextProvider = ({
   }
 
   return (
-    <StepperFieldContext.Provider
+    <StepperContext.Provider
       value={{
         value,
         handleStep,
@@ -341,6 +341,6 @@ const StepperFieldContextProvider = ({
       }}
     >
       {children}
-    </StepperFieldContext.Provider>
+    </StepperContext.Provider>
   )
 }
