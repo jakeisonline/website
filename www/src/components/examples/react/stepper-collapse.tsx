@@ -6,7 +6,7 @@ import {
   StepperFieldInput,
   StepperFieldLabel,
   StepperFieldBadge,
-} from "@/components/ui/stepper-field"
+} from "@/registry/ui/stepper"
 
 export default function StepperCollapse() {
   return (

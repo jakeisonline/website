@@ -5,7 +5,7 @@ import {
   RangeField,
   RangeFill,
   RangeGrabber,
-} from "@/components/ui/range-field"
+} from "@/registry/ui/range"
 
 export default function StepperDemo() {
   return (

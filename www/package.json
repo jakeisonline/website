@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:registry": "tsx ./scripts/build-registry.ts",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -33,12 +34,14 @@
     "tailwindcss": "^3.4.10",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-inner-border": "^0.2.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.14",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
-    "shiki": "^1.14.1"
+    "shiki": "^1.14.1",
+    "tsx": "^4.19.2"
   }
 }

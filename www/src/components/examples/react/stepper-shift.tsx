@@ -5,7 +5,7 @@ import {
   StepperFieldButton,
   StepperFieldInput,
   StepperFieldLabel,
-} from "@/components/ui/stepper-field"
+} from "@/registry/ui/stepper"
 
 export default function StepperShift() {
   return (

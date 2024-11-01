@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useState, useEffect, createContext, useContext } from "react"
 
 interface RangeFieldProps {

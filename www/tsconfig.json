@@ -5,12 +5,13 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/registry/*": ["../www/registry/*"]
     },
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"
-      },
-    ],
+      }
+    ]
   }
 }
