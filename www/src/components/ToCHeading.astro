@@ -1,17 +1,22 @@
 ---
 import Link from "./ui/Link.astro"
+import { type ToCHeadingTypeWithSubItems } from "@/components/ToC.astro"
 
-const { heading } = Astro.props
+interface Props {
+  heading: ToCHeadingTypeWithSubItems
+  excludeTitle?: boolean
+}
+
+const { heading, excludeTitle } = Astro.props
 ---
 
 <li class="mb-0.5">
-  {/* We don't want the page title in the ToC */}
-  {heading.depth !== 1 && <Link href={`#${heading.slug}`}>{heading.text}</Link>}
+  {!excludeTitle && <Link href={`#${heading.slug}`}>{heading.text}</Link>}
 
   {
-    heading.subheadings.length > 0 && (
+    heading.subHeadings.length > 0 && (
       <ul class={heading.depth > 1 ? "indented-list" : null}>
-        {heading.subheadings.map((subheading: any) => (
+        {heading.subHeadings.map((subheading: any) => (
           <Astro.self heading={subheading} />
         ))}
       </ul>

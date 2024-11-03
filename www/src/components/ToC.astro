@@ -1,32 +1,36 @@
 ---
 import ToCHeading from "./ToCHeading.astro"
 
-export type AstroHeadingsType = {
+export type ToCHeadingType = {
   depth: number
   slug: string
   text: string
-}[]
-
-interface Props {
-  headings?: AstroHeadingsType
 }
 
-const { headings } = Astro.props
+export type ToCHeadingsType = ToCHeadingType[]
+export type ToCHeadingTypeWithSubItems = ToCHeadingType & { subHeadings: ToCHeadingType[] }
 
-if (!headings || headings.length === 0) return null
+interface Props {
+  headings?: ToCHeadingsType
+  excludeTitle?: boolean
+}
 
-function buildToC(headings: AstroHeadingsType) {
-  const toc: AstroHeadingsType = []
+const { headings, excludeTitle = false } = Astro.props
+
+if (!headings || headings.length === 0 || (headings.length === 1 && excludeTitle)) return null
+
+function buildToC(headings: ToCHeadingsType) {
+  const toc: ToCHeadingsType = []
   const parentHeadings = new Map()
 
   headings.forEach((h: any) => {
-    const heading = { ...h, subheadings: [] }
+    const heading = { ...h, subHeadings: [] }
     parentHeadings.set(heading.depth, heading)
     // Change 2 to 1 if your markdown includes your <h1>
     if (heading.depth === 1) {
       toc.push(heading)
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading)
+      parentHeadings.get(heading.depth - 1).subHeadings.push(heading)
     }
   })
   return toc
@@ -43,7 +47,7 @@ const toc = buildToC(headings)
   <ul>
     {
       toc.map((heading) => {
-        return <ToCHeading heading={heading} />
+        return <ToCHeading heading={heading as ToCHeadingTypeWithSubItems} excludeTitle={excludeTitle} />
       })
     }
   </ul>
