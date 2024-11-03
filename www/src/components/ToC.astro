@@ -13,7 +13,7 @@ interface Props {
 
 const { headings } = Astro.props
 
-if (!headings) return null
+if (!headings || headings.length === 0) return null
 
 function buildToC(headings: AstroHeadingsType) {
   const toc: AstroHeadingsType = []
