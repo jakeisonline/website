@@ -1,12 +1,13 @@
 ---
-import SubNav from "@/components/SubNav.astro"
+import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
 import ToC, { type AstroHeadingsType } from "@/components/ToC.astro"
 import Breadcrumb from "@/components/ui/Breadcrumb.astro"
 import BaseLayout from "./BaseLayout.astro"
 
 const navItems = [
-  { name: "Range", href: "/playground/components/range" },
-  { name: "Stepper", href: "/playground/components/stepper" },
+  { type: "heading", text: "Components" },
+  { type: "item", href: "/playground/components/range", text: "Range" },
+  { type: "item", href: "/playground/components/stepper", text: "Stepper" },
 ]
 
 interface Props {
@@ -28,7 +29,7 @@ const {
   <div
     class="container px-4 md:px-6 flex-1 pt-6 pb-20 items-start md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
   >
-    <SubNav title="Components" navItems={navItems} />
+    <SubNav navItems={navItems as SubNavItems} />
     <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
       <div class="mx-auto w-full min-w-0">
         <Breadcrumb homeOverridePath="/playground" ignorePaths={["playground"]} />
