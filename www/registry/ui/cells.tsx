@@ -1,11 +1,12 @@
 import { cn } from "@/lib/utils"
-import {
+import React, {
   createContext,
   forwardRef,
   useContext,
   useState,
   type HTMLInputTypeAttribute,
 } from "react"
+import * as ReactDOM from "react-dom"
 
 interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
   className?: string
@@ -17,7 +18,7 @@ export const Cells = forwardRef<HTMLFormElement, CellsProps>(
     return (
       <CellsContextProvider>
         <CellsForm className={cn("", className)} {...props} ref={ref}>
-          {children}
+          {_renderCellsChildren(children)}
         </CellsForm>
       </CellsContextProvider>
     )
@@ -28,6 +29,43 @@ Cells.displayName = "Cells"
 interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
   className?: string
   children: React.ReactNode
+}
+
+const _renderCellsChildren = (children: React.ReactElement[]) => {
+  if (!children) throw new Error("No children provided to Cells")
+
+  let rowIndex = 0
+  let tmpChild
+
+  return React.Children.map(children, (child) => {
+    if (!child) throw new Error("Failed to find child when iterating Cells children")
+
+    if (child.type.displayName !== "CellRow") throw new Error("Invalid child type, only CellRow is allowed")
+
+    const tmpKey = child.key ? child.key : rowIndex
+
+    rowIndex++
+
+    return (
+      <CellRow key={tmpKey}>{_renderCellRowChildren(rowIndex, child.props.children)}</CellRow>
+    )
+  })
+}
+
+const _renderCellRowChildren = (rowIndex: number, children: React.ReactElement[]) => {
+  if (!children) throw new Error("No children provided to CellRow")
+
+  let cellIndex = 0
+
+  return React.Children.map(children, (child) => {
+    if (child.type.displayName !== "Cell") throw new Error("Invalid child type, only Cell is allowed")
+
+    const tmpKey = child.key ? child.key : cellIndex
+
+    return (
+      <Cell key={tmpKey} parentRowIndex={rowIndex} {...child.props}>{child.props.children}</Cell>
+    )
+  })
 }
 
 const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
@@ -48,12 +86,13 @@ const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
 )
 
 interface CellRowProps extends React.ComponentPropsWithoutRef<"div"> {
+  parentRow?: any
   className?: string
   children: React.ReactNode
 }
 
 export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ parentRow, className, children, ...props }, ref) => {
     return (
       <div className={cn("flex flex-row", className)} {...props} ref={ref}>
         {children}
@@ -73,6 +112,7 @@ interface CellProps extends React.ComponentPropsWithoutRef<"div"> {
 
 export const Cell = forwardRef<HTMLInputElement, CellProps>(
   ({ type = "text", name, label, initialValue, className, ...props }, ref) => {
+
     return (
       <CellContextProvider initialValue={initialValue}>
         <CellInput type={type} name={name} label={label} {...props} ref={ref} />
