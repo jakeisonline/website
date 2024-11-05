@@ -1,37 +1,54 @@
 ---
-import Link from "@/components/ui/Link.astro"
-import { cn } from "@/lib/utils"
+import SubNavItem from "@/components/SubNavItem.astro"
+
+type SubNavItemConditionals =
+| {
+  type: "heading"
+}
+| {
+  type: "item"
+  href: string
+};
+
+export type SubNavItem = { text: string } & SubNavItemConditionals
+export type SubNavItems = SubNavItem[]
+export type SubNavItemWithSubItems = SubNavItem & { subItems: SubNavItem[] }
 
 interface Props {
-  title: string
-  navItems: Array<{ name: string; href: string }>
+  navItems: SubNavItems
 }
 
-const { title, navItems } = Astro.props
-const currentPath = Astro.url.pathname
+const { navItems } = Astro.props
+
+if (!navItems) return null
+
+function buildNav(items: SubNavItems) {
+  const nav: SubNavItems = []
+  const parentItems = new Map()
+  let prevHeading: string = ""
+
+  items.forEach((i: any) => {
+    const item = { ...i, subItems: [] }
+    parentItems.set(item.text, item)
+    if (item.type === "heading") {
+      prevHeading = item.text
+      nav.push(item)
+    } else {
+      parentItems.get(prevHeading).subItems.push(item)
+    }
+  })
+  return nav
+}
+
+const nav: SubNavItems = buildNav(navItems)
 ---
 
 <aside class="hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block">
-  <h4
-    class="font-heading pb-2 scroll-m-20 text-sm font-semibold tracking-tight mt-0 pl-1.5"
-  >
-    {title}
-  </h4>
-  <div class="grid gap-1 text-sm">
+  <ul>
     {
-      navItems.map(({ name, href }) => (
-        <Link
-          href={href}
-          class={cn(
-            "pl-1.5 py-1 rounded-sm",
-            currentPath === href
-              ? "text-foreground bg-accent"
-              : "text-foreground/60",
-          )}
-        >
-          {name}
-        </Link>
-      ))
+      nav.map((item) => {
+        return <SubNavItem item={item as SubNavItemWithSubItems} />
+      })
     }
-  </div>
+  </ul>
 </aside>

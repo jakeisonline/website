@@ -15,14 +15,16 @@ export default function ExampleSource({ name }: ExampleSourceProps) {
 
     if (!source) return <p>Source not found: {name}</p>
 
-    return source
+    const fixedSource = fixImports(source)
+
+    return fixedSource
   }, [name])
 
   useEffect(() => {
     if (!rawSource) return
-    const source = Index[name]?.source
+
     const getHighlightedCode = async () => {
-      const html = await highlightCode(source)
+      const html = await highlightCode(rawSource.toString())
       setHtml(html)
     }
 
@@ -59,4 +61,8 @@ async function highlightCode(code: string) {
   })
 
   return html
+}
+
+function fixImports(code: string) {
+  return code.replace("@/registry", "@/components")
 }

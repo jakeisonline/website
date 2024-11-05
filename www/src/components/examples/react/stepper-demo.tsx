@@ -1,19 +1,17 @@
-import * as React from "react"
-
 import {
-  StepperField,
-  StepperFieldButton,
-  StepperFieldInput,
-  StepperFieldLabel,
-} from "@/components/ui/stepper-field"
+  Stepper,
+  StepperButton,
+  StepperInput,
+  StepperLabel,
+} from "@/registry/ui/stepper"
 
 export default function StepperDemo() {
   return (
-    <StepperField start={0}>
-      <StepperFieldLabel htmlFor="stepper">Quantity</StepperFieldLabel>
-      <StepperFieldButton direction="down">-</StepperFieldButton>
-      <StepperFieldInput id="stepper" />
-      <StepperFieldButton direction="up">+</StepperFieldButton>
-    </StepperField>
+    <Stepper start={0}>
+      <StepperLabel htmlFor="stepper">Quantity</StepperLabel>
+      <StepperButton direction="down">-</StepperButton>
+      <StepperInput id="stepper" />
+      <StepperButton direction="up">+</StepperButton>
+    </Stepper>
   )
 }

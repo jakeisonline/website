@@ -1,0 +1,48 @@
+---
+import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
+import ToC, { type ToCHeadingsType } from "@/components/ToC.astro"
+import Breadcrumb from "@/components/ui/Breadcrumb.astro"
+import BaseLayout from "./BaseLayout.astro"
+
+const navItems = [
+  { type: "heading", text: "About" },
+  { type: "item", href: "/playground/introduction", text: "Introduction" },
+  { type: "item", href: "/playground/installing-components", text: "Installing components" },
+  { type: "heading", text: "Components" },
+  { type: "item", href: "/playground/components/range", text: "Range" },
+  { type: "item", href: "/playground/components/stepper", text: "Stepper" },
+]
+
+interface Props {
+  frontmatter?: Record<string, string>
+  title: string
+  description: string
+  headings?: ToCHeadingsType
+}
+
+const {
+  frontmatter,
+  title = frontmatter?.title,
+  description = frontmatter?.description,
+  headings,
+} = Astro.props
+---
+
+<BaseLayout title={title} description={description}>
+  <div
+    class="container px-4 md:px-6 flex-1 pt-6 pb-20 items-start md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
+  >
+    <SubNav navItems={navItems as SubNavItems} />
+    <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
+      <div class="mx-auto w-full min-w-0">
+        <Breadcrumb homeOverridePath="/playground" ignorePaths={["playground"]} />
+        <article
+          class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
+        >
+          <slot />
+        </article>
+      </div>
+      <ToC headings={headings} excludeTitle />
+    </div>
+  </div>
+</BaseLayout>

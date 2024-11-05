@@ -19,9 +19,13 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
+  base: "/playground",
   output: "static",
   adapter: vercel({
-    includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
+    includeFiles: ["./public/playground/fonts/urbanist-latin-400-normal.woff"],
     excludeFiles: ["./components.json"],
+    webAnalytics: {
+      enabled: true,
+    },
   }),
 })

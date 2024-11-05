@@ -9,6 +9,16 @@ export const componentDocsCollection = defineCollection({
   }),
 })
 
+export const generalDocsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    layout: z.string(),
+  }),
+})
+
 export const collections = {
+  general: generalDocsCollection,
   components: componentDocsCollection,
 }

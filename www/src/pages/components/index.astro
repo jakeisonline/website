@@ -1,11 +1,11 @@
 ---
 import ExampleComponent from "@/components/example-component"
-import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
+import DocsLayout from "@/layouts/DocsLayout.astro"
 
 export const componentExamples = ["stepper", "range"]
 ---
 
-<ComponentsLayout
+<DocsLayout
   title="Playground - Components"
   description="Free components and rides from Jake Holman (@jakeisonline)."
 >
@@ -16,10 +16,11 @@ export const componentExamples = ["stepper", "range"]
     <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
       {
         componentExamples.map((componentExample) => (
-          <a href={`/components/${componentExample}`}>
+          <a href={`/playground/components/${componentExample}`}>
             <ExampleComponent
               name={componentExample}
               inclSource={false}
+              isInteractive={false}
               client:load
             />
           </a>
@@ -27,4 +28,4 @@ export const componentExamples = ["stepper", "range"]
       }
     </div>
   </div>
-</ComponentsLayout>
+</DocsLayout>

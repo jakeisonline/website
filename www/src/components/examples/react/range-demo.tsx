@@ -1,30 +1,23 @@
-import * as React from "react"
-
 import {
+  Range,
   RangeBar,
-  RangeField,
   RangeFill,
   RangeGrabber,
-  RangeNumber,
-} from "@/components/ui/range-field"
+} from "@/registry/ui/range"
 
 export default function StepperDemo() {
   return (
-    <RangeField
+    <Range
       minRange={0}
       maxRange={100}
       initialLowValue={20}
       initialHighValue={80}
     >
       <RangeBar>
-        <RangeGrabber type={"low"} />
+        <RangeGrabber type={"low"} aria-label="Low Value" />
         <RangeFill className="h-1 grow bg-blue-600" />
-        <RangeGrabber type={"high"} />
+        <RangeGrabber type={"high"} aria-label="High Value" />
       </RangeBar>
-      <div className="mt-3 flex space-x-5">
-        <RangeNumber label="Min Price" type="low" />
-        <RangeNumber label="Max Price" type="high" />
-      </div>
-    </RangeField>
+    </Range>
   )
 }

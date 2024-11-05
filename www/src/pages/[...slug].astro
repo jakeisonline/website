@@ -3,9 +3,9 @@ import { getCollection } from "astro:content"
 import Link from "@/components/ui/Link.astro"
 
 export async function getStaticPaths() {
-  const componentDocs = await getCollection("components")
+  const generalDocs = await getCollection("general")
 
-  return componentDocs.map((doc) => ({
+  return generalDocs.map((doc) => ({
     params: { slug: doc.slug },
     props: { doc },
   }))

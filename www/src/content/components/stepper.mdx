@@ -3,7 +3,7 @@ title: "Playground - Stepper"
 description: "A fully interactive, accessible, user interface element that allows users to increment or decrement a value. It is commonly used for inputting numerical values, such as quantities or prices."
 slug: "stepper"
 component: "stepper"
-layout: "../../layouts/ComponentsLayout.astro"
+layout: "@/layouts/DocsLayout.astro"
 ---
 
 import ExampleComponent from "@/components/example-component"
@@ -14,31 +14,39 @@ The Stepper component is a user interface element that allows users to increment
 
 <ExampleComponent name={frontmatter.component} client:load />
 
+## Installation
+
+You can install this component via the shadcn CLI.
+
+```bash
+npx shadcn@latest add https://jakeisonline.com/playground/registry/stepper.json
+```
+
 ## Usage
 
 ```jsx
 import {
-  StepperField,
-  StepperFieldButton,
-  StepperFieldInput,
-  StepperFieldLabel,
-} from "@/components/stepper-field"
+  Stepper,
+  StepperButton,
+  StepperInput,
+  StepperLabel,
+} from "@/components/ui/stepper"
 ```
 
 ```jsx
-<StepperField start={0}>
-  <StepperFieldLabel htmlFor="stepper">Quantity</StepperFieldLabel>
-  <StepperFieldButton direction="down">-</StepperFieldButton>
-  <StepperFieldInput id="stepper" />
-  <StepperFieldButton direction="up">+</StepperFieldButton>
-</StepperField>
+<Stepper start={0}>
+  <StepperLabel htmlFor="stepper">Quantity</StepperLabel>
+  <StepperButton direction="down">-</StepperButton>
+  <StepperInput id="stepper" />
+  <StepperButton direction="up">+</StepperButton>
+</Stepper>
 ```
 
 ## Accessibility
 
 Adheres to the [Spinbutton WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/). At its core, this component is simply a [native number field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number).
 
-`<StepperFieldInput>` requires the property `id` (string) to be set, and should match the `htmlFor` (string) of the `<StepperFieldLabel>`.
+`<StepperInput>` requires the property `id` (string) to be set, and should match the `htmlFor` (string) of the `<StepperLabel>`.
 
 ### Keyboard interactions
 
@@ -55,7 +63,7 @@ Adheres to the [Spinbutton WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/
 
 ## Component Reference
 
-### StepperField
+### Stepper
 
 Used to wrap a single stepper field. Also provides context for all child components.
 
@@ -67,15 +75,15 @@ Used to wrap a single stepper field. Also provides context for all child compone
 | `min`   | number | The minimum value of the field.                                                                    |
 | `max`   | number | The maximum value of the field.                                                                    |
 
-### StepperFieldLabel
+### StepperLabel
 
 The `<label>` of the stepper field.
 
 | Prop      | Type   | Description                                       |
 | --------- | ------ | ------------------------------------------------- |
-| `htmlFor` | string | Should match the `id` of the `StepperFieldInput`. |
+| `htmlFor` | string | Should match the `id` of the `StepperInput`. |
 
-### StepperFieldButton
+### StepperButton
 
 The controller `<button>` of a stepper field, which users can interact with to step the value up or down.
 
@@ -83,15 +91,15 @@ The controller `<button>` of a stepper field, which users can interact with to s
 | ----------- | ------ | -------------------------------------------------------- |
 | `direction` | string | `up` or `down` depending on desired direction. Required. |
 
-### StepperFieldInput
+### StepperInput
 
 The `<input>` of the stepper field.
 
 | Prop | Type   | Description                                            |
 | ---- | ------ | ------------------------------------------------------ |
-| `id` | string | Should match the `htmlFor` of the `StepperFieldLabel`. |
+| `id` | string | Should match the `htmlFor` of the `StepperLabel`. |
 
-### StepperFieldBadge
+### StepperBadge
 
 An optional floating badge that displays the current value of the field.
 
@@ -103,7 +111,7 @@ An optional floating badge that displays the current value of the field.
 
 ### Allow shift stepping
 
-Shift stepping allowing users to increment or decrement a value by a larger amount. When `shift` is set, users can shift step by holding <kbd>Shift</kbd> while clicking a `<StepperFieldButton>`, or by using the keyboard interactions.
+Shift stepping allowing users to increment or decrement a value by a larger amount. When `shift` is set, users can shift step by holding <kbd>Shift</kbd> while clicking a `<StepperButton>`, or by using the keyboard interactions.
 
 <ExampleComponent name="stepper-shift" client:visible />
 

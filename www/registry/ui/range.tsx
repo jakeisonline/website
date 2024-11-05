@@ -1,6 +1,8 @@
+"use client"
+
 import { useRef, useState, useEffect, createContext, useContext } from "react"
 
-interface RangeFieldProps {
+interface RangeProps {
   minRange: number
   maxRange: number
   initialLowValue?: number
@@ -8,22 +10,22 @@ interface RangeFieldProps {
   children?: React.ReactNode
 }
 
-export const RangeField = ({
+export const Range = ({
   minRange,
   maxRange,
   initialLowValue,
   initialHighValue,
   children,
-}: RangeFieldProps) => {
+}: RangeProps) => {
   return (
-    <RangeFieldContextProvider
+    <RangeContextProvider
       min={minRange}
       max={maxRange}
       low={initialLowValue}
       high={initialHighValue}
     >
-      <div className="rounded-lg bg-white py-4">{children}</div>
-    </RangeFieldContextProvider>
+      <div className="min-h-8 w-full py-4">{children}</div>
+    </RangeContextProvider>
   )
 }
 
@@ -34,7 +36,7 @@ interface RangeBarProps {
 const RangeBarWidthContext = createContext(0)
 
 export const RangeBar = ({ children }: RangeBarProps) => {
-  const { setBarWidth } = useRangeFieldContext()
+  const { setBarWidth } = useRangeContext()
   const ref = useRef<HTMLInputElement | null>(null)
   const [width, setWidth] = useState(0)
 
@@ -69,17 +71,18 @@ export const RangeFill = ({ ...props }) => {
 }
 
 interface RangeGrabberProps {
-  type: string
+  "type": string
+  "aria-label": string
 }
 
 export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   const {
     currentValues,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp,
     getGrabberPosition,
-  } = useRangeFieldContext()
+  } = useRangeContext()
 
   const barWidth = useRangeBarContext()
 
@@ -88,11 +91,11 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   const initialValue = type === "low" ? currentValues.low : currentValues.high
   const grabberPosition = getGrabberPosition(initialValue)
 
-  const doMouseDown = (e: any) => {
-    handleMouseDown(e, type)
+  const doPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    handlePointerDown(e, type)
 
-    document.addEventListener("mouseup", handleMouseUp)
-    document.addEventListener("mousemove", handleMouseMove)
+    document.addEventListener("pointerup", handlePointerUp)
+    document.addEventListener("pointermove", handlePointerMove)
   }
 
   const style =
@@ -104,12 +107,13 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
     <div
       style={style}
       className="group relative cursor-pointer select-none"
-      onMouseDown={doMouseDown}
-      onTouchStart={doMouseDown}
+      onPointerDown={doPointerDown}
     >
       <div className="flex flex-col items-center">
-        <div className="absolute inline-block -translate-y-7 rounded-md bg-black group-hover:bg-slate-900 group-active:shadow-lg">
-          <span className="px-1.5 py-1 text-sm text-white">{initialValue}</span>
+        <div className="bg-foreground group-hover:bg-foreground/80 absolute inline-block -translate-y-7 rounded-md group-active:shadow-lg">
+          <span className="text-background px-1.5 py-1 text-sm">
+            {initialValue}
+          </span>
         </div>
         <div className="h-3.5 w-3.5 rounded-full border-4 border-blue-600 bg-white group-hover:border-blue-500 group-active:shadow-md group-active:shadow-blue-600/20"></div>
       </div>
@@ -117,51 +121,25 @@ export const RangeGrabber = ({ type }: RangeGrabberProps) => {
   )
 }
 
-interface RangeNumberProps {
-  label: string
-  type: string
-}
-
-export const RangeNumber = ({ label, type }: RangeNumberProps) => {
-  const { currentValues } = useRangeFieldContext()
-
-  return (
-    <div className="w-full">
-      <label className="text-sm">{label}</label>
-      <div className="has-[:focus]:inner-border-blue-500 has-[:focus]:inner-border-2 inner-border inner-border-slate-500 flex rounded-md px-2.5 py-2">
-        <input
-          type="number"
-          className="w-full bg-white text-sm [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::selection]:bg-blue-100"
-          {...(type === "low"
-            ? { value: currentValues.low }
-            : { value: currentValues.high })}
-          readOnly
-        />
-        <span className="border-l border-slate-400 pl-2 text-slate-600">$</span>
-      </div>
-    </div>
-  )
-}
-
-const useRangeFieldContext = () => {
-  const context = useContext(RangeFieldContext)
+const useRangeContext = () => {
+  const context = useContext(RangeContext)
 
   if (!context) {
     throw new Error(
-      "useRangeFieldContext must be used within a RangeFieldContextProvider",
+      "useRangeContext must be used within a RangeContextProvider",
     )
   }
 
   return context
 }
 
-interface RangeFieldContextType {
-  handleMouseDown: (
-    e: React.MouseEvent<HTMLDivElement>,
+interface RangeContextType {
+  handlePointerDown: (
+    e: React.PointerEvent<HTMLDivElement>,
     grabberType: string,
   ) => void
-  handleMouseMove: (e: Event) => void
-  handleMouseUp: () => void
+  handlePointerMove: (e: Event) => void
+  handlePointerUp: () => void
   setBarWidth: (width: number) => void
   getGrabberPosition: (value: number) => number
   currentValues: { min: number; max: number; low: number; high: number }
@@ -173,17 +151,17 @@ interface RangeFieldContextType {
   }) => void
 }
 
-const RangeFieldContext = createContext<RangeFieldContextType>({
-  handleMouseDown: () => {},
-  handleMouseMove: () => {},
-  handleMouseUp: () => {},
+const RangeContext = createContext<RangeContextType>({
+  handlePointerDown: () => {},
+  handlePointerMove: () => {},
+  handlePointerUp: () => {},
   setBarWidth: () => {},
   getGrabberPosition: () => 0,
   currentValues: { min: 0, max: 100, low: 0, high: 100 },
   setCurrentValues: () => {},
 })
 
-interface RangeFieldContextProviderProps {
+interface RangeContextProviderProps {
   min: number
   max: number
   low?: number
@@ -191,13 +169,13 @@ interface RangeFieldContextProviderProps {
   children: React.ReactNode
 }
 
-const RangeFieldContextProvider = ({
+const RangeContextProvider = ({
   min,
   max,
   low,
   high,
   children,
-}: RangeFieldContextProviderProps) => {
+}: RangeContextProviderProps) => {
   const [currentValues, setCurrentValues] = useState({
     min: min,
     max: max,
@@ -222,8 +200,8 @@ const RangeFieldContextProvider = ({
     draggingType: "",
   })
 
-  const handleMouseDown = (
-    e: React.MouseEvent<HTMLDivElement>,
+  const handlePointerDown = (
+    e: React.PointerEvent<HTMLDivElement>,
     grabberType: string,
   ) => {
     updateDraggingEvent({
@@ -231,30 +209,34 @@ const RangeFieldContextProvider = ({
       draggingType: grabberType,
     })
 
-    updateMouseOffset(grabberType, getXOffset(e))
+    updateMouseOffset(grabberType, e.clientX)
   }
 
-  const handleMouseMove = (e: Event) => {
+  // TODO: correctly type, but events suck and this works
+  const handlePointerMove = (e: any) => {
     if (!draggingEvent.current.isDragging) return
     const grabberType = draggingEvent.current.draggingType
 
     handleGrabberMove(grabberType, e)
   }
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     updateDraggingEvent({
       isDragging: false,
       draggingType: "",
     })
 
-    document.removeEventListener("mousemove", handleMouseMove)
-    document.removeEventListener("mouseup", handleMouseUp)
+    document.removeEventListener("mousemove", handlePointerMove)
+    document.removeEventListener("mouseup", handlePointerUp)
   }
 
-  const handleGrabberMove = (type: string, e: Event) => {
+  const handleGrabberMove = (
+    type: string,
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     const newPosition =
       mouseOffset.current[type as keyof typeof mouseOffset.current] !== 0
-        ? getXOffset(e) -
+        ? e.clientX -
           mouseOffset.current[type as keyof typeof mouseOffset.current]
         : getNewGrabberPosition(currentValues.low)
     const newValue = Math.round(newPosition / (barWidth / currentValues.max))
@@ -325,18 +307,12 @@ const RangeFieldContextProvider = ({
     return (barWidth / currentValues.max) * value
   }
 
-  const getXOffset = (e: any) => {
-    return e.type == "touchmove" || e.type == "touchstart"
-      ? e.touches[0].clientX
-      : e.clientX
-  }
-
   return (
-    <RangeFieldContext.Provider
+    <RangeContext.Provider
       value={{
-        handleMouseDown,
-        handleMouseMove,
-        handleMouseUp,
+        handlePointerDown,
+        handlePointerMove,
+        handlePointerUp,
         setBarWidth,
         getGrabberPosition,
         currentValues,
@@ -344,6 +320,6 @@ const RangeFieldContextProvider = ({
       }}
     >
       {children}
-    </RangeFieldContext.Provider>
+    </RangeContext.Provider>
   )
 }

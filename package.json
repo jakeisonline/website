@@ -1,5 +1,4 @@
 {
-	"dependencies": {
-		"prettier-plugin-tailwindcss": "^0.6.8"
-	}
+  "dependencies": {},
+  "devDependencies": {}
 }

@@ -3,16 +3,29 @@ import { ChevronRight } from "lucide-react"
 import { sanitizePathname, toTitleCase } from "@/lib/utils"
 import Link from "@/components/ui/Link.astro"
 
+interface Props {
+  homeOverridePath?: string
+  ignorePaths?: string[]
+}
+
+const { homeOverridePath, ignorePaths }: Props = Astro.props
+
 const path = sanitizePathname(Astro.url.pathname)
 let crumbs: { name: string; href: string }[] = []
 
 if (path) {
   const paths: string[] = path.split("/")
 
-  crumbs.push({ name: "Home", href: "/" })
+  // Add home to the crumbs, and override the path if the homeOverridePath prop is set
+  crumbs.push({ name: "Home", href: homeOverridePath || "/" })
 
   for (let i = 1; i < paths.length; i++) {
+    // Ignore paths that are defined in the ignorePaths prop
+    if (ignorePaths?.includes(paths[i])) continue
+
+    // We'll use the path name as the crumb name
     const name = toTitleCase(paths[i].replace(/-/g, " ") as string)
+
     crumbs.push({
       name,
       href: `${paths.slice(0, i + 1).join("/")}`,
