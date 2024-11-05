@@ -3,6 +3,7 @@ import React, {
   createContext,
   forwardRef,
   useContext,
+  useRef,
   useState,
   type HTMLInputTypeAttribute,
 } from "react"
@@ -15,6 +16,8 @@ interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
 
 export const Cells = forwardRef<HTMLFormElement, CellsProps>(
   ({ className, children, ...props }, ref) => {
+    if (!children) throw new Error("No children provided to Cells")
+
     return (
       <CellsContextProvider>
         <CellsForm className={cn("", className)} {...props} ref={ref}>
@@ -34,6 +37,8 @@ interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
 const _renderCellsChildren = (children: React.ReactElement[]) => {
   if (!children) throw new Error("No children provided to Cells")
 
+  const { cellsMap } = useCellsContext()
+
   let rowIndex = 0
   let tmpChild
 
@@ -44,10 +49,11 @@ const _renderCellsChildren = (children: React.ReactElement[]) => {
 
     const tmpKey = child.key ? child.key : rowIndex
 
+    cellsMap.current.set(`row-${rowIndex.toString()}`, new Map())
     rowIndex++
 
     return (
-      <CellRow key={tmpKey}>{_renderCellRowChildren(rowIndex, child.props.children)}</CellRow>
+      <CellRow key={tmpKey}>{_renderCellRowChildren(rowIndex - 1, child.props.children)}</CellRow>
     )
   })
 }
@@ -55,12 +61,17 @@ const _renderCellsChildren = (children: React.ReactElement[]) => {
 const _renderCellRowChildren = (rowIndex: number, children: React.ReactElement[]) => {
   if (!children) throw new Error("No children provided to CellRow")
 
+  const { cellsMap } = useCellsContext()
+
   let cellIndex = 0
 
   return React.Children.map(children, (child) => {
     if (child.type.displayName !== "Cell") throw new Error("Invalid child type, only Cell is allowed")
 
     const tmpKey = child.key ? child.key : cellIndex
+
+    cellsMap.current.get(`row-${rowIndex.toString()}`)?.set(`cell-${cellIndex.toString()}`, child.props.initialValue)
+    cellIndex++
 
     return (
       <Cell key={tmpKey} parentRowIndex={rowIndex} {...child.props}>{child.props.children}</Cell>
@@ -238,12 +249,14 @@ interface CellsContextType {
   isSelectedCell: (name: string) => boolean
   toggleSelectedCell: (name: string) => void
   clearSelectedCells: () => void
+  cellsMap: React.MutableRefObject<Map<string, Map<string, string>>>
 }
 
 const CellsContext = createContext<CellsContextType>({
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
+  cellsMap: { current: new Map() },
 })
 
 const useCellsContext = () => {
@@ -267,6 +280,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     { x: number; y: number } | undefined
   >(undefined)
   const [selectedCells, setSelectedCells] = useState<string[]>([])
+  const cellsMap = useRef<Map<string, Map<string, string>>>(new Map())
 
   const handleMouseDown = (e: React.MouseEvent<HTMLFormElement>) => {
     setMouseDownStartPoint({
@@ -306,6 +320,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
         isSelectedCell,
         toggleSelectedCell,
         clearSelectedCells,
+        cellsMap,
       }}
     >
       {children}
