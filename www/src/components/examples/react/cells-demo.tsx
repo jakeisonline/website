@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { Cell, CellRow, Cells } from "@/components/ui/cells"
+import { Cell, CellRow, Cells } from "@/registry/ui/cells"
 
 export default function StepperDemo() {
   return (
