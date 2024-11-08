@@ -166,6 +166,14 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const keyMap = {
+        Escape: "escape",
+        ArrowLeft: "left",
+        ArrowRight: "right",
+        ArrowUp: "up",
+        ArrowDown: "down",
+      }
+
       switch (e.key) {
         case "Escape":
           clearSelectedCells()
@@ -174,7 +182,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         case "ArrowUp":
         case "ArrowDown":
           if (parentRowIndex !== undefined && cellIndex !== undefined)
-            focusNextSelectableCell(e.key, parentRowIndex, cellIndex)
+            focusNextSelectableCell(keyMap[e.key], parentRowIndex, cellIndex)
       }
     }
 
@@ -316,18 +324,18 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   ) => {
     const directionCalc = (direction: string, a: number, b: number) => {
       switch (direction) {
-        case "ArrowLeft":
-        case "ArrowUp":
+        case "left":
+        case "up":
           return a - b
-        case "ArrowRight":
-        case "ArrowDown":
+        case "right":
+        case "down":
           return a + b
       }
     }
 
     switch (direction) {
-      case "ArrowLeft":
-      case "ArrowRight":
+      case "left":
+      case "right":
         const currentCell = cellsMap.current
           .get(`row-${currentRowIndex}`)
           ?.get(`cell-${currentCellIndex.toString()}`)
@@ -348,7 +356,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
         )
 
         if (nextSelectableRow) {
-          if (direction === "ArrowRight") {
+          if (direction === "right") {
             const nextCell = nextSelectableRow.values().next().value
 
             nextCell.current.focus()
@@ -368,8 +376,8 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
 
         return null
 
-      case "ArrowUp":
-      case "ArrowDown":
+      case "up":
+      case "down":
         const nextRow = cellsMap.current.get(
           `row-${directionCalc(direction, currentRowIndex, 1)}`,
         )
