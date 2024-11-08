@@ -83,7 +83,7 @@ const _renderCellRowChildren = (
     return (
       <Cell
         cellIndex={cellIndex - 1}
-        parentRowIndex={rowIndex}
+        rowIndex={rowIndex}
         ref={childRef}
         {...child.props}
       >
@@ -137,7 +137,7 @@ interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   label: string
   type?: HTMLInputTypeAttribute
   cellIndex?: number
-  parentRowIndex?: number
+  rowIndex?: number
   initialValue?: string
   className?: string
 }
@@ -150,7 +150,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       label,
       initialValue,
       cellIndex,
-      parentRowIndex,
+      rowIndex,
       className,
       ...props
     },
@@ -181,8 +181,8 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         case "ArrowRight":
         case "ArrowUp":
         case "ArrowDown":
-          if (parentRowIndex !== undefined && cellIndex !== undefined)
-            focusNextSelectableCell(keyMap[e.key], parentRowIndex, cellIndex)
+          if (rowIndex !== undefined && cellIndex !== undefined)
+            focusNextSelectableCell(keyMap[e.key], rowIndex, cellIndex)
       }
     }
 
@@ -240,13 +240,13 @@ interface CellInputProps extends React.ComponentPropsWithoutRef<"input"> {
   label: string
   type?: HTMLInputTypeAttribute
   cellIndex?: number
-  parentRowIndex?: number
+  rowIndex?: number
   className?: string
 }
 
 interface CellsContextType {
   addRowIndex: (index: number, value: any) => void
-  addCellIndex: (parentRowIndex: number, index: number, value: any) => void
+  addCellIndex: (rowIndex: number, index: number, value: any) => void
   handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
   isSelectedCell: (name: string) => boolean
   toggleSelectedCell: (name: string) => void
@@ -307,13 +307,9 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     cellsMap.current.set(`row-${index.toString()}`, new Map(value))
   }
 
-  const addCellIndex = (
-    parentRowIndex: number,
-    index: number,
-    inputRef: any,
-  ) => {
+  const addCellIndex = (rowIndex: number, index: number, inputRef: any) => {
     cellsMap.current
-      .get(`row-${parentRowIndex}`)
+      .get(`row-${rowIndex}`)
       ?.set(`cell-${index.toString()}`, inputRef)
   }
 
