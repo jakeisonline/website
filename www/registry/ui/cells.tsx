@@ -6,8 +6,6 @@ import React, {
   useRef,
   useState,
   type HTMLInputTypeAttribute,
-  type JSXElementConstructor,
-  type ReactElement,
   type RefAttributes,
 } from "react"
 
