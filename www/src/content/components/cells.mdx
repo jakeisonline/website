@@ -13,3 +13,27 @@ import ExampleComponent from "@/components/example-component"
 The Cells component is a user interface element that allows user to select and edit values across table-like cells.
 
 <ExampleComponent name={frontmatter.component} client:load />
+
+## Accessibility
+
+Not 100% sure yet
+
+### Keyboard interactions
+
+| Key                                   | Action                                                                                |
+| ------------------------------------- | ------------------------------------------------------------------------------------- |
+| <kbd>ArrowRight</kbd>                 | Moves focus to the next cell if caret is at the end of the current cell's input       |
+| <kbd>ArrowLeft</kbd>                  | Moves focus to the previous cell if caret is at the start of the current cell's input |
+| <kbd>ArrowUp</kbd>                    | Moves focus to the cell directly above the current cell, if it exists                 |
+| <kbd>ArrowDown</kbd>                  | Moves focus to the cell directly below the current cell, if it exists                 |
+| <kbd>ArrowUp</kbd>                    | Increment value by `step`, or `1`                                                     |
+| <kbd>ArrowDown</kbd>                  | Decrement value by `step`, or `1`                                                     |
+| <kbd>Shift</kbd> + <kbd>ArrowUp</kbd> | Increment value by `shift`                                                            |
+
+#### Modifiers
+
+The following modifiers - keys you hold while pressing other keys - can be used to modify the behavior of the keyboard interactions documented above.
+
+| Key             | Action                                                                                                                                              |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>Ctrl</kbd> | When <kbd>Ctrl</kbd> is held, and any <kbd>Arrow</kbd> key is pressed, the focus will change to the further cell in the direction of the arrow key. |
