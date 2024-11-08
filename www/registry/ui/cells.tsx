@@ -132,7 +132,7 @@ export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
 )
 CellRow.displayName = "CellRow"
 
-interface CellProps extends React.ComponentPropsWithoutRef<"div"> {
+interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   name: string
   label: string
   type?: HTMLInputTypeAttribute
