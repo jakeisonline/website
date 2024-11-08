@@ -6,12 +6,14 @@ import React, {
   useRef,
   useState,
   type HTMLInputTypeAttribute,
+  type JSXElementConstructor,
+  type ReactElement,
   type RefAttributes,
 } from "react"
 
 interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
   className?: string
-  children: React.ReactNode
+  children: React.ReactNode & { [key: string]: any }
 }
 
 export const Cells = forwardRef<HTMLFormElement, CellsProps>(
@@ -29,12 +31,9 @@ export const Cells = forwardRef<HTMLFormElement, CellsProps>(
 )
 Cells.displayName = "Cells"
 
-interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
-  className?: string
-  children: React.ReactNode
-}
-
-const _renderCellsChildren = (children: React.ReactElement[]) => {
+const _renderCellsChildren = (
+  children: React.ReactNode & { [key: string]: any },
+) => {
   if (!children) throw new Error("No children provided to Cells")
 
   const { addRowIndex } = useCellsContext()
@@ -45,7 +44,6 @@ const _renderCellsChildren = (children: React.ReactElement[]) => {
     if (!child)
       throw new Error("Failed to find child when iterating Cells children")
 
-    // @ts-ignore: it DOES have a displayName!
     if (child.type.displayName !== "CellRow")
       throw new Error("Invalid child type, only CellRow is allowed")
 
@@ -64,7 +62,7 @@ const _renderCellsChildren = (children: React.ReactElement[]) => {
 
 const _renderCellRowChildren = (
   rowIndex: number,
-  children: React.ReactElement[],
+  children: React.ReactNode & { [key: string]: any },
 ) => {
   if (!children) throw new Error("No children provided to CellRow")
 
@@ -73,7 +71,9 @@ const _renderCellRowChildren = (
   let cellIndex = 0
 
   return React.Children.map(children, (child) => {
-    // @ts-ignore: it DOES have a displayName!
+    if (!child)
+      throw new Error("Failed to find child when iterating Cells children")
+
     if (child.type.displayName !== "Cell")
       throw new Error("Invalid child type, only Cell is allowed")
 
@@ -93,6 +93,11 @@ const _renderCellRowChildren = (
       </Cell>
     )
   })
+}
+
+interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
+  className?: string
+  children: React.ReactNode & { [key: string]: any }
 }
 
 const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
@@ -170,20 +175,22 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         clearSelectedCells()
       }
 
-      if (e.key === "ArrowRight") {
-        const nextCell = focusNextCell(parentRowIndex, cellIndex)
-      }
+      if (parentRowIndex && cellIndex) {
+        if (e.key === "ArrowRight") {
+          const nextCell = focusNextCell(parentRowIndex, cellIndex)
+        }
 
-      if (e.key === "ArrowLeft") {
-        const previousCell = focusPreviousCell(parentRowIndex, cellIndex)
-      }
+        if (e.key === "ArrowLeft") {
+          const previousCell = focusPreviousCell(parentRowIndex, cellIndex)
+        }
 
-      if (e.key === "ArrowDown") {
-        const nextRow = focusNextRow(parentRowIndex, cellIndex)
-      }
+        if (e.key === "ArrowDown") {
+          const nextRow = focusNextRow(parentRowIndex, cellIndex)
+        }
 
-      if (e.key === "ArrowUp") {
-        const previousRow = focusPreviousRow(parentRowIndex, cellIndex)
+        if (e.key === "ArrowUp") {
+          const previousRow = focusPreviousRow(parentRowIndex, cellIndex)
+        }
       }
     }
 
@@ -303,7 +310,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     { x: number; y: number } | undefined
   >(undefined)
   const [selectedCells, setSelectedCells] = useState<string[]>([])
-  const cellsMap = useRef<Map<string, Map<string, string>>>(new Map())
+  const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
 
   const handleMouseDown = (e: React.MouseEvent<HTMLFormElement>) => {
     setMouseDownStartPoint({
