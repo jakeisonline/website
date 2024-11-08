@@ -174,6 +174,16 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         ArrowDown: "down",
       }
 
+      const modifier = () => {
+        if (e.ctrlKey || e.metaKey) {
+          return "ctrl"
+        }
+        if (e.shiftKey) {
+          return "shift"
+        }
+        return undefined
+      }
+
       switch (e.key) {
         case "Escape":
           clearSelectedCells()
@@ -182,7 +192,12 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         case "ArrowUp":
         case "ArrowDown":
           if (rowIndex !== undefined && cellIndex !== undefined)
-            focusNextSelectableCell(keyMap[e.key], rowIndex, cellIndex)
+            focusNextSelectableCell({
+              direction: keyMap[e.key],
+              currentRowIndex: rowIndex,
+              currentCellIndex: cellIndex,
+              modifier: modifier(),
+            })
       }
     }
 
@@ -252,11 +267,17 @@ interface CellsContextType {
   toggleSelectedCell: (name: string) => void
   clearSelectedCells: () => void
   cellsMap: React.MutableRefObject<Map<string, Map<string, string>>>
-  focusNextSelectableCell: (
-    direction: string,
-    currentRowIndex: number,
-    currentCellIndex: number,
-  ) => void
+  focusNextSelectableCell: ({
+    direction,
+    currentRowIndex,
+    currentCellIndex,
+    modifier,
+  }: {
+    direction: string
+    currentRowIndex: number
+    currentCellIndex: number
+    modifier?: string
+  }) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -313,11 +334,17 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       ?.set(`cell-${index.toString()}`, inputRef)
   }
 
-  const focusNextSelectableCell = (
-    direction: string,
-    currentRowIndex: number,
-    currentCellIndex: number,
-  ) => {
+  const focusNextSelectableCell = ({
+    direction,
+    currentRowIndex,
+    currentCellIndex,
+    modifier,
+  }: {
+    direction: string
+    currentRowIndex: number
+    currentCellIndex: number
+    modifier?: string
+  }) => {
     const directionCalc = (direction: string, a: number, b: number) => {
       switch (direction) {
         case "left":
@@ -332,19 +359,36 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     switch (direction) {
       case "left":
       case "right":
+        let nextSelectableCell: any
         const currentCell = cellsMap.current
           .get(`row-${currentRowIndex}`)
           ?.get(`cell-${currentCellIndex.toString()}`)
 
         if (!currentCell) return null
 
-        const nextSelectableCell = cellsMap.current
-          .get(`row-${currentRowIndex}`)
-          ?.get(`cell-${directionCalc(direction, currentCellIndex, 1)}`)
+        if (modifier === "ctrl") {
+          const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
 
-        if (nextSelectableCell) {
+          if (direction === "left") {
+            const firstCell = currentRow?.entries().next().value
+            nextSelectableCell = firstCell?.[1]
+          } else if (direction === "right") {
+            nextSelectableCell = currentRow?.get(`cell-${currentRow.size - 1}`)
+          }
+
+          if (!nextSelectableCell) return null
+
           nextSelectableCell.current.focus()
           return nextSelectableCell.current
+        } else {
+          nextSelectableCell = cellsMap.current
+            .get(`row-${currentRowIndex}`)
+            ?.get(`cell-${directionCalc(direction, currentCellIndex, 1)}`)
+
+          if (nextSelectableCell) {
+            nextSelectableCell.current.focus()
+            return nextSelectableCell.current
+          }
         }
 
         const nextSelectableRow = cellsMap.current.get(
