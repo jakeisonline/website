@@ -173,7 +173,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         clearSelectedCells()
       }
 
-      if (parentRowIndex && cellIndex) {
+      if (parentRowIndex !== undefined && cellIndex !== undefined) {
         if (e.key === "ArrowRight") {
           const nextCell = focusNextCell(parentRowIndex, cellIndex)
         }
