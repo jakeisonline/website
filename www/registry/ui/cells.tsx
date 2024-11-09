@@ -5,6 +5,7 @@ import React, {
   useContext,
   useRef,
   useState,
+  type HTMLInputAutoCompleteAttribute,
   type HTMLInputTypeAttribute,
   type RefAttributes,
 } from "react"
@@ -418,18 +419,33 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
 
       case "up":
       case "down":
-        const nextRow = cellsMap.current.get(
-          `row-${directionCalc(direction, currentRowIndex, 1)}`,
-        )
+        let nextRow: Map<string, any> | undefined
+        let nextCell: any | undefined
 
-        if (!nextRow) return null
+        if (modifier === "ctrl") {
+          if (direction === "up") {
+            const firstRowIndex = 0
+            nextRow = cellsMap.current.get(`row-${firstRowIndex}`)
+          } else if (direction === "down") {
+            const lastRowIndex = cellsMap.current.size - 1
+            nextRow = cellsMap.current.get(`row-${lastRowIndex}`)
+          }
+        } else {
+          nextRow = cellsMap.current.get(
+            `row-${directionCalc(direction, currentRowIndex, 1)}`,
+          )
+        }
 
-        const nextCell = nextRow.get(`cell-${currentCellIndex}`)
+        if (nextRow) {
+          nextCell = nextRow.get(`cell-${currentCellIndex}`)
+        }
 
-        if (!nextCell) return null
+        if (nextCell) {
+          nextCell.current.focus()
+          return nextCell
+        }
 
-        nextCell.current.focus()
-        return nextCell.current
+        return null
     }
   }
 
