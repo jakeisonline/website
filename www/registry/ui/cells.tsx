@@ -163,7 +163,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       isSelectedCell,
       toggleSelectedCell,
       clearSelectedCells,
-      focusnextCell,
+      focusNextCell,
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -193,7 +193,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         case "ArrowUp":
         case "ArrowDown":
           if (rowIndex !== undefined && cellIndex !== undefined)
-            focusnextCell({
+            focusNextCell({
               direction: keyMap[e.key],
               currentRowIndex: rowIndex,
               currentCellIndex: cellIndex,
@@ -268,7 +268,7 @@ interface CellsContextType {
   toggleSelectedCell: (name: string) => void
   clearSelectedCells: () => void
   cellsMap: React.MutableRefObject<Map<string, Map<string, string>>>
-  focusnextCell: ({
+  focusNextCell: ({
     direction,
     currentRowIndex,
     currentCellIndex,
@@ -288,7 +288,7 @@ const CellsContext = createContext<CellsContextType>({
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
   cellsMap: { current: new Map() },
-  focusnextCell: () => null,
+  focusNextCell: () => null,
 })
 
 const useCellsContext = () => {
@@ -335,7 +335,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       ?.set(`cell-${index.toString()}`, inputRef)
   }
 
-  const focusnextCell = ({
+  const focusNextCell = ({
     direction,
     currentRowIndex,
     currentCellIndex,
@@ -472,7 +472,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
         toggleSelectedCell,
         clearSelectedCells,
         cellsMap,
-        focusnextCell,
+        focusNextCell,
       }}
     >
       {children}
