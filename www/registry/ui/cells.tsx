@@ -5,9 +5,7 @@ import React, {
   useContext,
   useRef,
   useState,
-  type HTMLInputAutoCompleteAttribute,
   type HTMLInputTypeAttribute,
-  type RefAttributes,
 } from "react"
 
 interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
@@ -278,7 +276,7 @@ interface CellsContextType {
     currentRowIndex: number
     currentCellIndex: number
     modifier?: string
-  }) => void
+  }) => HTMLInputElement | undefined
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -288,7 +286,7 @@ const CellsContext = createContext<CellsContextType>({
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
   cellsMap: { current: new Map() },
-  focusNextCell: () => null,
+  focusNextCell: () => undefined,
 })
 
 const useCellsContext = () => {
@@ -357,7 +355,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       }
     }
 
-    let nextCell: any | undefined
+    let nextCell: { current: HTMLInputElement } | undefined
     let nextRow: Map<string, any> | undefined
 
     switch (direction) {
@@ -367,7 +365,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
           .get(`row-${currentRowIndex}`)
           ?.get(`cell-${currentCellIndex.toString()}`)
 
-        if (!currentCell) return null
+        if (!currentCell) return undefined
 
         if (modifier === "ctrl") {
           const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
@@ -407,7 +405,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
           }
         }
 
-        return null
+        return undefined
 
       case "up":
       case "down":
@@ -434,7 +432,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
           return nextCell.current
         }
 
-        return null
+        return undefined
     }
   }
 
@@ -444,6 +442,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
 
   const addSelectedCell = (name: string) => {
     setSelectedCells([...selectedCells, name])
+    console.log(selectedCells)
   }
 
   const removeSelectedCell = (name: string) => {
