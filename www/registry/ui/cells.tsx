@@ -101,12 +101,14 @@ const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
     const { handleMouseDown } = useCellsContext()
 
+    const formRef = useRef<HTMLFormElement>(null)
+
     return (
       <form
         onMouseDown={handleMouseDown}
         className={cn("", className)}
         {...props}
-        ref={ref}
+        ref={formRef}
       >
         {_renderCellsChildren(children)}
       </form>
@@ -162,6 +164,9 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       toggleSelectedCell,
       clearSelectedCells,
       focusNextCell,
+      setCellShiftFocus,
+      clearCellShiftFocus,
+      handleCellFocus,
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -171,6 +176,14 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         ArrowRight: "right",
         ArrowUp: "up",
         ArrowDown: "down",
+      }
+
+      if (e.key === "Shift") {
+        if (rowIndex !== undefined && cellIndex !== undefined)
+          setCellShiftFocus({
+            startRowIndex: rowIndex,
+            startCellIndex: cellIndex,
+          })
       }
 
       const modifier = () => {
@@ -200,9 +213,15 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
     }
 
+    const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Shift") {
+        clearCellShiftFocus()
+      }
+    }
+
     const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
       if (e.ctrlKey || e.metaKey) {
-        toggleSelectedCell(name)
+        toggleSelectedCell(rowIndex, cellIndex)
         return
       }
     }
@@ -214,6 +233,10 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
     }
 
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+      handleCellFocus(rowIndex, cellIndex)
+    }
+
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
       clearSelectedCells()
     }
@@ -222,7 +245,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       setValue(e.target.value)
     }
 
-    const isSelected = isSelectedCell(name)
+    const isSelected = isSelectedCell(rowIndex, cellIndex)
 
     return (
       <>
@@ -237,10 +260,12 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           ref={ref}
           value={value}
           onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
           onChange={handleNewChange}
           onMouseDown={handleMouseDown}
           onClick={handleClick}
           onBlur={handleBlur}
+          onFocus={handleFocus}
           data-is-selected={isSelected}
         />
       </>
@@ -262,8 +287,8 @@ interface CellsContextType {
   addRowIndex: (index: number, value: any) => void
   addCellIndex: (rowIndex: number, index: number, value: any) => void
   handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
-  isSelectedCell: (name: string) => boolean
-  toggleSelectedCell: (name: string) => void
+  isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
+  toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
   clearSelectedCells: () => void
   cellsMap: React.MutableRefObject<Map<string, Map<string, string>>>
   focusNextCell: ({
@@ -277,6 +302,15 @@ interface CellsContextType {
     currentCellIndex: number
     modifier?: string
   }) => HTMLInputElement | undefined
+  setCellShiftFocus: ({
+    startRowIndex,
+    startCellIndex,
+  }: {
+    startRowIndex: number
+    startCellIndex: number
+  }) => void
+  clearCellShiftFocus: () => void
+  handleCellFocus: (rowIndex: number, cellIndex: number) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -287,6 +321,9 @@ const CellsContext = createContext<CellsContextType>({
   clearSelectedCells: () => {},
   cellsMap: { current: new Map() },
   focusNextCell: () => undefined,
+  setCellShiftFocus: () => {},
+  clearCellShiftFocus: () => {},
+  handleCellFocus: () => {},
 })
 
 const useCellsContext = () => {
@@ -313,7 +350,13 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   const [mouseDownStartPoint, setMouseDownStartPoint] = useState<
     { x: number; y: number } | undefined
   >(undefined)
+  const shiftFocusCell = useRef<
+    { startRowIndex: number; startCellIndex: number } | undefined
+  >(undefined)
   const [selectedCells, setSelectedCells] = useState<string[]>([])
+  const [selectedCellsMap, setSelectedCellsMap] = useState<
+    Map<string, string[]>
+  >(new Map())
   const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
 
   const handleMouseDown = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -384,6 +427,10 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
 
         if (nextCell) {
           nextCell.current.focus()
+
+          if (shiftFocusCell.current) {
+            const { startRowIndex, startCellIndex } = shiftFocusCell.current
+          }
           return nextCell.current
         }
 
@@ -436,29 +483,157 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     }
   }
 
-  const isSelectedCell = (name: string) => {
-    return selectedCells.includes(name)
+  const getMappedCellRef = (rowIndex: number, cellIndex: number) => {
+    const cell = cellsMap.current
+      .get(`row-${rowIndex}`)
+      ?.get(`cell-${cellIndex}`)
+
+    return cell?.current
   }
 
-  const addSelectedCell = (name: string) => {
-    setSelectedCells([...selectedCells, name])
-    console.log(selectedCells)
+  const isSelectedCell = (rowIndex: number, cellIndex: number) => {
+    const selectedCells = selectedCellsMap.get(`row-${rowIndex}`)
+
+    if (selectedCells) {
+      return selectedCells.includes(`cell-${cellIndex}`)
+    }
+
+    return false
   }
 
-  const removeSelectedCell = (name: string) => {
-    setSelectedCells(selectedCells.filter((cell) => cell !== name))
-  }
+  const addSelectedCell = (rowIndex: number, cellIndex: number) => {
+    const newSelectedCellsMap = selectedCellsMap
+    const selectedRowIndex = newSelectedCellsMap.get(`row-${rowIndex}`)
 
-  const toggleSelectedCell = (name: string) => {
-    if (isSelectedCell(name)) {
-      removeSelectedCell(name)
+    if (!selectedRowIndex) {
+      newSelectedCellsMap.set(`row-${rowIndex}`, [`cell-${cellIndex}`])
     } else {
-      addSelectedCell(name)
+      const rowSelectedCells = selectedRowIndex
+      if (!rowSelectedCells.includes(`cell-${cellIndex}`)) {
+        newSelectedCellsMap.set(`row-${rowIndex}`, [
+          ...rowSelectedCells,
+          `cell-${cellIndex}`,
+        ])
+      }
+    }
+
+    setSelectedCellsMap(newSelectedCellsMap)
+
+    const selectedCellRef = getMappedCellRef(rowIndex, cellIndex)
+    selectedCellRef?.setAttribute("data-is-selected", "true")
+  }
+
+  const removeSelectedCell = (rowIndex: number, cellIndex: number) => {
+    const newSelectedCellsMap = selectedCellsMap
+    const selectedRowIndex = newSelectedCellsMap.get(`row-${rowIndex}`)
+
+    if (selectedRowIndex) {
+      const rowSelectedCells = selectedRowIndex
+      const newRowSelectedCells = rowSelectedCells.filter(
+        (cell) => cell !== `cell-${cellIndex}`,
+      )
+
+      if (newRowSelectedCells.length === 0) {
+        newSelectedCellsMap.delete(`row-${rowIndex}`)
+      } else {
+        newSelectedCellsMap.set(`row-${rowIndex}`, newRowSelectedCells)
+      }
+    }
+
+    setSelectedCellsMap(newSelectedCellsMap)
+
+    const selectedCellRef = getMappedCellRef(rowIndex, cellIndex)
+    selectedCellRef?.setAttribute("data-is-selected", "false")
+  }
+
+  const toggleSelectedCell = (rowIndex: number, cellIndex: number) => {
+    if (isSelectedCell(rowIndex, cellIndex)) {
+      removeSelectedCell(rowIndex, cellIndex)
+    } else {
+      addSelectedCell(rowIndex, cellIndex)
     }
   }
 
   const clearSelectedCells = () => {
-    setSelectedCells([])
+    selectedCellsMap.forEach((rowContent, rowKey) => {
+      const rowIndex = rowKey.split("-")[1]
+      rowContent.forEach((cell) => {
+        const cellIndex = cell.split("-")[1]
+        const cellRef = getMappedCellRef(rowIndex, cellIndex)
+        cellRef?.setAttribute("data-is-selected", "false")
+      })
+    })
+
+    setSelectedCellsMap(new Map())
+  }
+
+  const setSelectedCellRange = ({
+    startRowIndex = shiftFocusCell.current?.startRowIndex,
+    startCellIndex = shiftFocusCell.current?.startCellIndex,
+    endRowIndex,
+    endCellIndex,
+  }: {
+    startRowIndex?: number
+    startCellIndex?: number
+    endRowIndex: number
+    endCellIndex: number
+  }) => {
+    const startingCell = cellsMap.current
+      .get(`row-${startRowIndex}`)
+      ?.get(`cell-${startCellIndex}`)
+
+    if (startingCell) {
+      let currentRowIndex = startRowIndex
+      let currentCellIndex = startCellIndex
+
+      addSelectedCell(currentRowIndex, currentCellIndex)
+
+      while (currentRowIndex <= endRowIndex) {
+        const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
+
+        if (currentRow) {
+          while (currentCellIndex < endCellIndex) {
+            const currentCell = currentRow.get(`cell-${currentCellIndex}`)
+
+            if (currentCell) {
+              const currentCellName = currentCell.current.name
+              addSelectedCell(currentRowIndex, currentCellIndex)
+            }
+
+            currentCellIndex++
+          }
+        }
+
+        currentRowIndex++
+      }
+    }
+  }
+
+  const setCellShiftFocus = ({
+    startRowIndex,
+    startCellIndex,
+  }: {
+    startRowIndex: number
+    startCellIndex: number
+  }) => {
+    shiftFocusCell.current = { startRowIndex, startCellIndex }
+  }
+
+  const handleCellFocus = (rowIndex: number, cellIndex: number) => {
+    if (shiftFocusCell.current) {
+      const { startRowIndex, startCellIndex } = shiftFocusCell.current
+
+      setSelectedCellRange({
+        startRowIndex,
+        startCellIndex,
+        endRowIndex: rowIndex,
+        endCellIndex: cellIndex,
+      })
+    }
+  }
+
+  const clearCellShiftFocus = () => {
+    shiftFocusCell.current = undefined
   }
 
   return (
@@ -472,6 +647,9 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
         clearSelectedCells,
         cellsMap,
         focusNextCell,
+        setCellShiftFocus,
+        clearCellShiftFocus,
+        handleCellFocus,
       }}
     >
       {children}
