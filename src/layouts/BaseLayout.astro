@@ -30,6 +30,7 @@ const {
       ? "dark"
       : "light"
   }
+
   const isDark = getThemePreference() === "dark"
   document.documentElement.classList[isDark ? "add" : "remove"]("dark")
 
@@ -43,6 +44,14 @@ const {
       attributeFilter: ["class"],
     })
   }
+
+  document.addEventListener("astro:before-swap", function (event) {
+    const prefersDarkMode = getThemePreference() === "dark"
+
+    event.newDocument.documentElement.classList[
+      prefersDarkMode ? "add" : "remove"
+    ]("dark")
+  })
 </script>
 
 <html lang="en" class="font-sans">
