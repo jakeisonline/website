@@ -264,7 +264,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         <input
           type={type}
           name={name}
-          className="w-20 min-w-4 cursor-pointer px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 data-[is-selected=true]:inner-border-primary/25 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&:not(:last-child)]:border-r"
+          className="w-20 min-w-4 cursor-pointer bg-background px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 data-[is-selected=true]:inner-border-primary/25 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&:not(:last-child)]:border-r"
           {...props}
           ref={ref}
           value={value}
