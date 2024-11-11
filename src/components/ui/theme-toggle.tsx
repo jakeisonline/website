@@ -17,6 +17,14 @@ export default function ThemeToggle() {
   /* We don't want this component to render until it's mounted,
   as the server doesn't understand nor care about a user's theme preference */
 
+  const prefersDarkMode = () => {
+    return (
+      theme === "dark" ||
+      (theme === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    )
+  }
+
   useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains("dark")
     setTheme(isDarkMode ? "dark" : "light")
@@ -24,20 +32,24 @@ export default function ThemeToggle() {
   }, [])
 
   useEffect(() => {
-    const isDark =
-      theme === "dark" ||
-      (theme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark")
+    document.documentElement.classList[prefersDarkMode() ? "add" : "remove"](
+      "dark",
+    )
   }, [theme])
 
   if (!mounted) {
     return (
       <ThemeToggleWrapper className="h-10 w-10">
-        <Skeleton className="rounded-full bg-accent h-4 w-4 mt-3 mr-3" />
+        <Skeleton className="mr-3 mt-3 h-4 w-4 rounded-full bg-accent" />
       </ThemeToggleWrapper>
     )
   }
+
+  document.addEventListener("astro:before-swap", function (event) {
+    event.newDocument.documentElement.classList[
+      prefersDarkMode() ? "add" : "remove"
+    ]("dark")
+  })
 
   return (
     <ThemeToggleWrapper>
