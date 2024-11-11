@@ -164,6 +164,8 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     },
     ref,
   ) => {
+    if (!cellIndex || !rowIndex)
+      throw new Error("cellIndex and rowIndex are required props for Cell")
     const [value, setValue] = useState<string | undefined>(initialValue)
 
     const {
@@ -566,7 +568,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       const rowIndex = rowKey.split("-")[1]
       rowContent.forEach((cell) => {
         const cellIndex = cell.split("-")[1]
-        const cellRef = getMappedCellRef(rowIndex, cellIndex)
+        const cellRef = getMappedCellRef(Number(rowIndex), Number(cellIndex))
         cellRef?.setAttribute("data-is-selected", "false")
       })
     })
@@ -575,13 +577,13 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   }
 
   const setSelectedCellRange = ({
-    startRowIndex = shiftFocusCell.current?.startRowIndex,
-    startCellIndex = shiftFocusCell.current?.startCellIndex,
+    startRowIndex,
+    startCellIndex,
     endRowIndex,
     endCellIndex,
   }: {
-    startRowIndex?: number
-    startCellIndex?: number
+    startRowIndex: number
+    startCellIndex: number
     endRowIndex: number
     endCellIndex: number
   }) => {
@@ -603,7 +605,6 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
             const currentCell = currentRow.get(`cell-${currentCellIndex}`)
 
             if (currentCell) {
-              const currentCellName = currentCell.current.name
               addSelectedCell(currentRowIndex, currentCellIndex)
             }
 
