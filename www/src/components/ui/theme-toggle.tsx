@@ -45,12 +45,6 @@ export default function ThemeToggle() {
     )
   }
 
-  document.addEventListener("astro:before-swap", function (event) {
-    event.newDocument.documentElement.classList[
-      prefersDarkMode() ? "add" : "remove"
-    ]("dark")
-  })
-
   return (
     <ThemeToggleWrapper>
       <DropdownMenu>
