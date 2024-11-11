@@ -164,7 +164,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     },
     ref,
   ) => {
-    if (!cellIndex || !rowIndex)
+    if (cellIndex === undefined || rowIndex === undefined)
       throw new Error("cellIndex and rowIndex are required props for Cell")
     const [value, setValue] = useState<string | undefined>(initialValue)
 
@@ -242,11 +242,11 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
     }
 
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleFocus = () => {
       handleCellFocus(rowIndex, cellIndex)
     }
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = () => {
       clearSelectedCells()
     }
 
@@ -282,15 +282,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
   },
 )
 Cell.displayName = "Cell"
-
-interface CellInputProps extends React.ComponentPropsWithoutRef<"input"> {
-  name: string
-  label: string
-  type?: HTMLInputTypeAttribute
-  cellIndex?: number
-  rowIndex?: number
-  className?: string
-}
 
 interface CellsContextType {
   addRowIndex: (index: number, value: any) => void
@@ -347,33 +338,18 @@ const useCellsContext = () => {
   return context
 }
 
-interface CellsMapType {
-  current: string
-}
-
 interface CellsContextProviderProps {
   children: React.ReactElement
 }
 
 const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
-  const [mouseDownStartPoint, setMouseDownStartPoint] = useState<
-    { x: number; y: number } | undefined
-  >(undefined)
   const shiftFocusCell = useRef<
     { startRowIndex: number; startCellIndex: number } | undefined
   >(undefined)
-  const [selectedCells, setSelectedCells] = useState<string[]>([])
   const [selectedCellsMap, setSelectedCellsMap] = useState<
     Map<string, string[]>
   >(new Map())
   const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLFormElement>) => {
-    setMouseDownStartPoint({
-      x: e.pageX,
-      y: e.pageY,
-    })
-  }
 
   const addRowIndex = (index: number, value: any) => {
     cellsMap.current.set(`row-${index.toString()}`, new Map(value))
@@ -647,7 +623,6 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   return (
     <CellsContext.Provider
       value={{
-        handleMouseDown,
         addRowIndex,
         addCellIndex,
         isSelectedCell,
