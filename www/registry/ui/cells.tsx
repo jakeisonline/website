@@ -125,7 +125,14 @@ interface CellRowProps extends React.ComponentPropsWithoutRef<"div"> {
 export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
   ({ parentRow, className, children, ...props }, ref) => {
     return (
-      <div className={cn("flex flex-row", className)} {...props} ref={ref}>
+      <div
+        className={cn(
+          "flex flex-row border-b border-l border-r first:border-t",
+          className,
+        )}
+        {...props}
+        ref={ref}
+      >
         {children}
       </div>
     )
@@ -255,7 +262,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         <input
           type={type}
           name={name}
-          className="w-20 min-w-4 cursor-pointer px-3 py-2 text-center inner-border [appearance:textfield] hover:inner-border-2 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:inner-border-2 data-[is-selected=true]:inner-border-primary [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="w-20 min-w-4 cursor-pointer px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 data-[is-selected=true]:inner-border-primary/25 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&:not(:last-child)]:border-r"
           {...props}
           ref={ref}
           value={value}
