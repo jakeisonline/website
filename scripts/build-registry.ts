@@ -1,13 +1,13 @@
 // Heavily inspired by and with great thanks to @bwestwood11 (https://github.com/bwestwood11/ui-cart/blob/main/scripts/build-registry.ts)
 
-import { registry } from "../registry"
+import { registry } from "@/www/registry"
 import { promises as fs } from "fs"
 import { z } from "zod"
-import { registryItemFileSchema } from "@/registry/schema"
+import { registryItemFileSchema } from "@/www/registry/schema"
 import path from "path"
 
-const REGISTRY_BASE_PATH = "registry"
-const PUBLIC_FOLDER_BASE_PATH = "public/registry"
+const REGISTRY_BASE_PATH = "www/registry"
+const PUBLIC_FOLDER_BASE_PATH = "www/public/registry"
 const COMPONENT_FOLDER_PATH = "components"
 
 type File = z.infer<typeof registryItemFileSchema>
