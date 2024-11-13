@@ -190,8 +190,8 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       if (e.key === "Shift") {
         if (rowIndex !== undefined && cellIndex !== undefined)
           setCellShiftFocus({
-            startRowIndex: rowIndex,
-            startCellIndex: cellIndex,
+            rowIndex: rowIndex,
+            cellIndex: cellIndex,
           })
       }
 
@@ -264,7 +264,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         <input
           type={type}
           name={name}
-          className="w-20 min-w-4 cursor-pointer bg-background px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 data-[is-selected=true]:inner-border-primary/25 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&:not(:last-child)]:border-r"
+          className="w-20 min-w-4 cursor-pointer bg-background px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
           {...props}
           ref={ref}
           value={value}
@@ -303,11 +303,11 @@ interface CellsContextType {
     modifier?: string
   }) => HTMLInputElement | undefined
   setCellShiftFocus: ({
-    startRowIndex,
-    startCellIndex,
+    rowIndex,
+    cellIndex,
   }: {
-    startRowIndex: number
-    startCellIndex: number
+    rowIndex: number
+    cellIndex: number
   }) => void
   clearCellShiftFocus: () => void
   handleCellFocus: (rowIndex: number, cellIndex: number) => void
@@ -343,8 +343,8 @@ interface CellsContextProviderProps {
 }
 
 const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
-  const shiftFocusCell = useRef<
-    { startRowIndex: number; startCellIndex: number } | undefined
+  const shiftSelectCell = useRef<
+    { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
   const [selectedCellsMap, setSelectedCellsMap] = useState<
     Map<string, string[]>
@@ -373,98 +373,121 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     modifier?: string
   }) => {
     const directionCalc = (direction: string, a: number, b: number) => {
-      switch (direction) {
-        case "left":
-        case "up":
-          return a - b
-        case "right":
-        case "down":
-          return a + b
-      }
+      return ["left", "up"].includes(direction) ? a - b : a + b
     }
+
+    const currentShiftCell = shiftSelectCell.current
+    const currentCellsMap = cellsMap.current
+    const isShiftHeld = !!currentShiftCell
+    const isCtrlHeld = modifier === "ctrl"
+
+    const getCellInRow = (row: Map<string, any>, index: number) => {
+      return row?.get(`cell-${index}`)
+    }
+
+    const getBoundaryCell = (
+      row: Map<string, any>,
+      boundary: "first" | "last",
+    ) => {
+      if (!row) return undefined
+      return boundary === "first"
+        ? row.entries().next().value?.[1]
+        : row.get(`cell-${row.size - 1}`)
+    }
+
+    let focusCellIndex =
+      isShiftHeld && shiftSelectCell.current
+        ? currentShiftCell.cellIndex
+        : currentCellIndex
+    let focusRowIndex =
+      isShiftHeld && currentShiftCell
+        ? currentShiftCell.rowIndex
+        : currentRowIndex
+    const currentRow = currentCellsMap.get(`row-${focusRowIndex}`)
 
     let nextCell: { current: HTMLInputElement } | undefined
     let nextRow: Map<string, any> | undefined
 
-    switch (direction) {
-      case "left":
-      case "right":
-        const currentCell = cellsMap.current
-          .get(`row-${currentRowIndex}`)
-          ?.get(`cell-${currentCellIndex.toString()}`)
+    const setSelectionRange = (
+      startRowIndex: number,
+      startCellIndex: number,
+      endRowIndex: number,
+      endCellIndex: number,
+    ) => {
+      setSelectedCellRange({
+        startRowIndex,
+        startCellIndex,
+        endRowIndex,
+        endCellIndex,
+      })
+    }
 
-        if (!currentCell) return undefined
+    const focusCell = (cell: { current: HTMLInputElement } | undefined) => {
+      if (cell) cell.current.focus()
+    }
 
-        if (modifier === "ctrl") {
-          const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
+    if (["left", "right"].includes(direction)) {
+      if (isCtrlHeld && currentRow) {
+        nextCell = getBoundaryCell(
+          currentRow,
+          direction === "left" ? "first" : "last",
+        )
+      } else if (currentRow) {
+        nextCell = getCellInRow(
+          currentRow,
+          directionCalc(direction, focusCellIndex, 1),
+        )
+      }
 
-          if (direction === "left") {
-            const firstCell = currentRow?.entries().next().value
-            nextCell = firstCell?.[1]
-          } else if (direction === "right") {
-            nextCell = currentRow?.get(`cell-${currentRow.size - 1}`)
-          }
+      if (nextCell && currentRow) {
+        if (isShiftHeld) {
+          const endCellIndex = isCtrlHeld
+            ? direction === "left"
+              ? 0
+              : currentRow.size - 1
+            : directionCalc(direction, focusCellIndex, 1)
+          setSelectionRange(
+            currentRowIndex,
+            currentCellIndex,
+            focusRowIndex,
+            endCellIndex,
+          )
         } else {
-          nextCell = cellsMap.current
-            .get(`row-${currentRowIndex}`)
-            ?.get(`cell-${directionCalc(direction, currentCellIndex, 1)}`)
+          focusCell(nextCell)
         }
+      } else if (!isShiftHeld) {
+        clearSelectedCells()
+      }
+    }
 
-        if (nextCell) {
-          nextCell.current.focus()
+    if (["up", "down"].includes(direction)) {
+      const targetRowIndex = directionCalc(direction, focusRowIndex, 1)
 
-          if (shiftFocusCell.current) {
-            const { startRowIndex, startCellIndex } = shiftFocusCell.current
-          }
-          return nextCell.current
-        }
+      nextRow = isCtrlHeld
+        ? currentCellsMap.get(
+            `row-${direction === "up" ? 0 : currentCellsMap.size - 1}`,
+          )
+        : currentCellsMap.get(`row-${targetRowIndex}`)
 
-        nextRow = cellsMap.current.get(
-          `row-${directionCalc(direction, currentRowIndex, 1)}`,
+      if (nextRow) {
+        nextCell = getCellInRow(
+          nextRow,
+          isShiftHeld ? currentShiftCell.cellIndex : currentCellIndex,
         )
 
-        if (nextRow) {
-          if (direction === "right") {
-            nextCell = nextRow.values().next().value
-          } else {
-            const lastRowIndex = directionCalc(direction, nextRow.size, 1)
-            nextCell = nextRow.get(`cell-${lastRowIndex}`)
-          }
-
-          if (nextCell) {
-            nextCell.current.focus()
-            return nextCell.current
-          }
-        }
-
-        return undefined
-
-      case "up":
-      case "down":
-        if (modifier === "ctrl") {
-          if (direction === "up") {
-            const firstRowIndex = 0
-            nextRow = cellsMap.current.get(`row-${firstRowIndex}`)
-          } else if (direction === "down") {
-            const lastRowIndex = cellsMap.current.size - 1
-            nextRow = cellsMap.current.get(`row-${lastRowIndex}`)
-          }
-        } else {
-          nextRow = cellsMap.current.get(
-            `row-${directionCalc(direction, currentRowIndex, 1)}`,
-          )
-        }
-
-        if (nextRow) {
-          nextCell = nextRow.get(`cell-${currentCellIndex}`)
-        }
-
         if (nextCell) {
-          nextCell.current.focus()
-          return nextCell.current
+          if (isShiftHeld) {
+            setSelectionRange(
+              currentRowIndex,
+              currentCellIndex,
+              targetRowIndex,
+              currentShiftCell.cellIndex,
+            )
+          } else {
+            focusCell(nextCell)
+          }
         }
-
-        return undefined
+      }
     }
   }
 
@@ -571,17 +594,24 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       let currentRowIndex = startRowIndex
       let currentCellIndex = startCellIndex
 
+      clearSelectedCells()
       addSelectedCell(currentRowIndex, currentCellIndex)
 
       while (currentRowIndex <= endRowIndex) {
         const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
 
         if (currentRow) {
-          while (currentCellIndex < endCellIndex) {
+          currentCellIndex = startCellIndex
+
+          while (currentCellIndex <= endCellIndex) {
             const currentCell = currentRow.get(`cell-${currentCellIndex}`)
 
             if (currentCell) {
               addSelectedCell(currentRowIndex, currentCellIndex)
+              shiftSelectCell.current = {
+                rowIndex: endRowIndex,
+                cellIndex: endCellIndex,
+              }
             }
 
             currentCellIndex++
@@ -594,30 +624,29 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   }
 
   const setCellShiftFocus = ({
-    startRowIndex,
-    startCellIndex,
+    rowIndex,
+    cellIndex,
   }: {
-    startRowIndex: number
-    startCellIndex: number
+    rowIndex: number
+    cellIndex: number
   }) => {
-    shiftFocusCell.current = { startRowIndex, startCellIndex }
+    shiftSelectCell.current = { rowIndex, cellIndex }
   }
 
   const handleCellFocus = (rowIndex: number, cellIndex: number) => {
-    if (shiftFocusCell.current) {
-      const { startRowIndex, startCellIndex } = shiftFocusCell.current
-
-      setSelectedCellRange({
-        startRowIndex,
-        startCellIndex,
-        endRowIndex: rowIndex,
-        endCellIndex: cellIndex,
-      })
-    }
+    // if (shiftFocusCell.current) {
+    //   const { startRowIndex, startCellIndex } = shiftFocusCell.current
+    //   setSelectedCellRange({
+    //     startRowIndex,
+    //     startCellIndex,
+    //     endRowIndex: rowIndex,
+    //     endCellIndex: cellIndex,
+    //   })
+    // }
   }
 
   const clearCellShiftFocus = () => {
-    shiftFocusCell.current = undefined
+    shiftSelectCell.current = undefined
   }
 
   return (
