@@ -175,7 +175,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       focusNextCell,
       setCellShiftFocus,
       clearCellShiftFocus,
-      handleCellFocus,
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -242,10 +241,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
     }
 
-    const handleFocus = () => {
-      handleCellFocus(rowIndex, cellIndex)
-    }
-
     const handleBlur = () => {
       clearSelectedCells()
     }
@@ -274,7 +269,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           onMouseDown={handleMouseDown}
           onClick={handleClick}
           onBlur={handleBlur}
-          onFocus={handleFocus}
           data-is-selected={isSelected}
         />
       </>
@@ -301,7 +295,7 @@ interface CellsContextType {
     currentRowIndex: number
     currentCellIndex: number
     modifier?: string
-  }) => HTMLInputElement | undefined
+  }) => void
   setCellShiftFocus: ({
     rowIndex,
     cellIndex,
@@ -310,7 +304,6 @@ interface CellsContextType {
     cellIndex: number
   }) => void
   clearCellShiftFocus: () => void
-  handleCellFocus: (rowIndex: number, cellIndex: number) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -323,7 +316,6 @@ const CellsContext = createContext<CellsContextType>({
   focusNextCell: () => undefined,
   setCellShiftFocus: () => {},
   clearCellShiftFocus: () => {},
-  handleCellFocus: () => {},
 })
 
 const useCellsContext = () => {
@@ -633,18 +625,6 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     shiftSelectCell.current = { rowIndex, cellIndex }
   }
 
-  const handleCellFocus = (rowIndex: number, cellIndex: number) => {
-    // if (shiftFocusCell.current) {
-    //   const { startRowIndex, startCellIndex } = shiftFocusCell.current
-    //   setSelectedCellRange({
-    //     startRowIndex,
-    //     startCellIndex,
-    //     endRowIndex: rowIndex,
-    //     endCellIndex: cellIndex,
-    //   })
-    // }
-  }
-
   const clearCellShiftFocus = () => {
     shiftSelectCell.current = undefined
   }
@@ -661,7 +641,6 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
         focusNextCell,
         setCellShiftFocus,
         clearCellShiftFocus,
-        handleCellFocus,
       }}
     >
       {children}
