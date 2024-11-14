@@ -453,13 +453,18 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     }
 
     if (["up", "down"].includes(direction)) {
-      const targetRowIndex = directionCalc(direction, focusRowIndex, 1)
+      let targetRowIndex: number
+      let nextRow: Map<string, any> | undefined
 
-      nextRow = isCtrlHeld
-        ? currentCellsMap.get(
-            `row-${direction === "up" ? 0 : currentCellsMap.size - 1}`,
-          )
-        : currentCellsMap.get(`row-${targetRowIndex}`)
+      if (isCtrlHeld) {
+        targetRowIndex = direction === "up" ? 0 : currentCellsMap.size - 1
+        nextRow = currentCellsMap.get(
+          `row-${direction === "up" ? 0 : currentCellsMap.size - 1}`,
+        )
+      } else {
+        targetRowIndex = directionCalc(direction, focusRowIndex, 1)
+        nextRow = currentCellsMap.get(`row-${targetRowIndex}`)
+      }
 
       if (nextRow) {
         nextCell = getCellInRow(
