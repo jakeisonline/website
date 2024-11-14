@@ -587,10 +587,8 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       .get(`row-${startRowIndex}`)
       ?.get(`cell-${startCellIndex}`)
 
-    const traverseDirection =
-      startRowIndex > endRowIndex || startCellIndex > endCellIndex
-        ? "backward"
-        : "forward"
+    const traverseDirection = (startIndex: number, endIndex: number) =>
+      startIndex > endIndex ? "backward" : "forward"
 
     if (startingCell) {
       let currentRowIndex = startRowIndex
@@ -599,49 +597,85 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       clearSelectedCells()
       addSelectedCell(currentRowIndex, currentCellIndex)
 
-      if (traverseDirection === "forward") {
+      if (traverseDirection(startRowIndex, endRowIndex) === "forward") {
         while (currentRowIndex <= endRowIndex) {
           const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
 
           if (currentRow) {
             currentCellIndex = startCellIndex
 
-            while (currentCellIndex <= endCellIndex) {
-              const currentCell = currentRow.get(`cell-${currentCellIndex}`)
+            if (traverseDirection(startCellIndex, endCellIndex) === "forward") {
+              while (currentCellIndex <= endCellIndex) {
+                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
 
-              if (currentCell) {
-                addSelectedCell(currentRowIndex, currentCellIndex)
-                shiftSelectCell.current = {
-                  rowIndex: endRowIndex,
-                  cellIndex: endCellIndex,
+                if (currentCell) {
+                  addSelectedCell(currentRowIndex, currentCellIndex)
+                  shiftSelectCell.current = {
+                    rowIndex: endRowIndex,
+                    cellIndex: endCellIndex,
+                  }
                 }
-              }
 
-              currentCellIndex++
+                currentCellIndex++
+              }
+            } else if (
+              traverseDirection(startCellIndex, endCellIndex) === "backward"
+            ) {
+              while (currentCellIndex >= endCellIndex) {
+                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
+
+                if (currentCell) {
+                  addSelectedCell(currentRowIndex, currentCellIndex)
+                  shiftSelectCell.current = {
+                    rowIndex: endRowIndex,
+                    cellIndex: endCellIndex,
+                  }
+                }
+
+                currentCellIndex--
+              }
             }
           }
 
           currentRowIndex++
         }
-      } else if (traverseDirection === "backward") {
+      } else if (traverseDirection(startRowIndex, endRowIndex) === "backward") {
         while (currentRowIndex >= endRowIndex) {
           const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
 
           if (currentRow) {
             currentCellIndex = startCellIndex
 
-            while (currentCellIndex >= endCellIndex) {
-              const currentCell = currentRow.get(`cell-${currentCellIndex}`)
+            if (traverseDirection(startCellIndex, endCellIndex) === "forward") {
+              while (currentCellIndex <= endCellIndex) {
+                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
 
-              if (currentCell) {
-                addSelectedCell(currentRowIndex, currentCellIndex)
-                shiftSelectCell.current = {
-                  rowIndex: endRowIndex,
-                  cellIndex: endCellIndex,
+                if (currentCell) {
+                  addSelectedCell(currentRowIndex, currentCellIndex)
+                  shiftSelectCell.current = {
+                    rowIndex: endRowIndex,
+                    cellIndex: endCellIndex,
+                  }
                 }
-              }
 
-              currentCellIndex--
+                currentCellIndex++
+              }
+            } else if (
+              traverseDirection(startCellIndex, endCellIndex) === "backward"
+            ) {
+              while (currentCellIndex >= endCellIndex) {
+                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
+
+                if (currentCell) {
+                  addSelectedCell(currentRowIndex, currentCellIndex)
+                  shiftSelectCell.current = {
+                    rowIndex: endRowIndex,
+                    cellIndex: endCellIndex,
+                  }
+                }
+
+                currentCellIndex--
+              }
             }
           }
 
