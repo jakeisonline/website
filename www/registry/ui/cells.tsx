@@ -33,7 +33,7 @@ const _renderCellsChildren = (
 ) => {
   if (!children) throw new Error("No children provided to Cells")
 
-  const { addRowIndex } = useCellsContext()
+  const { mapRowIndex } = useCellsContext()
 
   let rowIndex = 0
 
@@ -46,7 +46,7 @@ const _renderCellsChildren = (
 
     const tmpKey = child.key ? child.key : rowIndex
 
-    addRowIndex(rowIndex, null)
+    mapRowIndex(rowIndex, null)
     rowIndex++
 
     return (
@@ -63,7 +63,7 @@ const _renderCellRowChildren = (
 ) => {
   if (!children) throw new Error("No children provided to CellRow")
 
-  const { addCellIndex } = useCellsContext()
+  const { mapCellIndex } = useCellsContext()
 
   let cellIndex = 0
 
@@ -76,7 +76,7 @@ const _renderCellRowChildren = (
 
     const childRef = useRef<HTMLInputElement>(null)
 
-    addCellIndex(rowIndex, cellIndex, childRef)
+    mapCellIndex(rowIndex, cellIndex, childRef)
     cellIndex++
 
     return (
@@ -278,8 +278,8 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
 Cell.displayName = "Cell"
 
 interface CellsContextType {
-  addRowIndex: (index: number, value: any) => void
-  addCellIndex: (rowIndex: number, index: number, value: any) => void
+  mapRowIndex: (index: number, value: any) => void
+  mapCellIndex: (rowIndex: number, index: number, value: any) => void
   handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
@@ -307,8 +307,8 @@ interface CellsContextType {
 }
 
 const CellsContext = createContext<CellsContextType>({
-  addRowIndex: () => {},
-  addCellIndex: () => {},
+  mapRowIndex: () => {},
+  mapCellIndex: () => {},
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
@@ -343,11 +343,11 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   >(new Map())
   const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
 
-  const addRowIndex = (index: number, value: any) => {
+  const mapRowIndex = (index: number, value: any) => {
     cellsMap.current.set(`row-${index.toString()}`, new Map(value))
   }
 
-  const addCellIndex = (rowIndex: number, index: number, inputRef: any) => {
+  const mapCellIndex = (rowIndex: number, index: number, inputRef: any) => {
     cellsMap.current
       .get(`row-${rowIndex}`)
       ?.set(`cell-${index.toString()}`, inputRef)
@@ -632,8 +632,8 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
   return (
     <CellsContext.Provider
       value={{
-        addRowIndex,
-        addCellIndex,
+        mapRowIndex,
+        mapCellIndex,
         isSelectedCell,
         toggleSelectedCell,
         clearSelectedCells,
