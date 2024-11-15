@@ -587,101 +587,55 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
       .get(`row-${startRowIndex}`)
       ?.get(`cell-${startCellIndex}`)
 
+    if (!startingCell) return
+
     const traverseDirection = (startIndex: number, endIndex: number) =>
       startIndex > endIndex ? "backward" : "forward"
 
-    if (startingCell) {
-      let currentRowIndex = startRowIndex
-      let currentCellIndex = startCellIndex
+    const processCell = (rowIndex: number, cellIndex: number) => {
+      const currentRow = cellsMap.current.get(`row-${rowIndex}`)
+      const currentCell = currentRow?.get(`cell-${cellIndex}`)
 
-      clearSelectedCells()
-      addSelectedCell(currentRowIndex, currentCellIndex)
-
-      if (traverseDirection(startRowIndex, endRowIndex) === "forward") {
-        while (currentRowIndex <= endRowIndex) {
-          const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
-
-          if (currentRow) {
-            currentCellIndex = startCellIndex
-
-            if (traverseDirection(startCellIndex, endCellIndex) === "forward") {
-              while (currentCellIndex <= endCellIndex) {
-                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
-
-                if (currentCell) {
-                  addSelectedCell(currentRowIndex, currentCellIndex)
-                  shiftSelectCell.current = {
-                    rowIndex: endRowIndex,
-                    cellIndex: endCellIndex,
-                  }
-                }
-
-                currentCellIndex++
-              }
-            } else if (
-              traverseDirection(startCellIndex, endCellIndex) === "backward"
-            ) {
-              while (currentCellIndex >= endCellIndex) {
-                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
-
-                if (currentCell) {
-                  addSelectedCell(currentRowIndex, currentCellIndex)
-                  shiftSelectCell.current = {
-                    rowIndex: endRowIndex,
-                    cellIndex: endCellIndex,
-                  }
-                }
-
-                currentCellIndex--
-              }
-            }
-          }
-
-          currentRowIndex++
-        }
-      } else if (traverseDirection(startRowIndex, endRowIndex) === "backward") {
-        while (currentRowIndex >= endRowIndex) {
-          const currentRow = cellsMap.current.get(`row-${currentRowIndex}`)
-
-          if (currentRow) {
-            currentCellIndex = startCellIndex
-
-            if (traverseDirection(startCellIndex, endCellIndex) === "forward") {
-              while (currentCellIndex <= endCellIndex) {
-                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
-
-                if (currentCell) {
-                  addSelectedCell(currentRowIndex, currentCellIndex)
-                  shiftSelectCell.current = {
-                    rowIndex: endRowIndex,
-                    cellIndex: endCellIndex,
-                  }
-                }
-
-                currentCellIndex++
-              }
-            } else if (
-              traverseDirection(startCellIndex, endCellIndex) === "backward"
-            ) {
-              while (currentCellIndex >= endCellIndex) {
-                const currentCell = currentRow.get(`cell-${currentCellIndex}`)
-
-                if (currentCell) {
-                  addSelectedCell(currentRowIndex, currentCellIndex)
-                  shiftSelectCell.current = {
-                    rowIndex: endRowIndex,
-                    cellIndex: endCellIndex,
-                  }
-                }
-
-                currentCellIndex--
-              }
-            }
-          }
-
-          currentRowIndex--
+      if (currentCell) {
+        addSelectedCell(rowIndex, cellIndex)
+        shiftSelectCell.current = {
+          rowIndex: endRowIndex,
+          cellIndex: endCellIndex,
         }
       }
+    }
+
+    const processCellsInRow = (rowIndex: number) => {
+      const direction = traverseDirection(startCellIndex, endCellIndex)
+      const [start, end, step] =
+        direction === "forward"
+          ? [startCellIndex, endCellIndex, 1]
+          : [startCellIndex, endCellIndex, -1]
+
+      for (
+        let cellIndex = start;
+        direction === "forward" ? cellIndex <= end : cellIndex >= end;
+        cellIndex += step
+      ) {
+        processCell(rowIndex, cellIndex)
+      }
+    }
+
+    clearSelectedCells()
+    addSelectedCell(startRowIndex, startCellIndex)
+
+    const direction = traverseDirection(startRowIndex, endRowIndex)
+    const [start, end, step] =
+      direction === "forward"
+        ? [startRowIndex, endRowIndex, 1]
+        : [startRowIndex, endRowIndex, -1]
+
+    for (
+      let rowIndex = start;
+      direction === "forward" ? rowIndex <= end : rowIndex >= end;
+      rowIndex += step
+    ) {
+      processCellsInRow(rowIndex)
     }
   }
 
