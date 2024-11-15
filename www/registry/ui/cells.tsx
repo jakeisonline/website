@@ -181,7 +181,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      const keyMap = {
+      const keyMap: Record<string, string> = {
         Escape: "escape",
         ArrowLeft: "left",
         ArrowRight: "right",
@@ -189,30 +189,31 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         ArrowDown: "down",
       }
 
+      if (rowIndex === undefined || cellIndex === undefined) return
+
       if (e.key === "Shift") {
-        if (rowIndex !== undefined && cellIndex !== undefined)
-          startShiftTraverse({
-            rowIndex: rowIndex,
-            cellIndex: cellIndex,
-          })
+        startShiftTraverse({
+          rowIndex,
+          cellIndex,
+        })
+        return
       }
 
-      switch (e.key) {
-        case "Escape":
-          clearSelectedCells()
-        case "ArrowLeft":
-        case "ArrowRight":
-        case "ArrowUp":
-        case "ArrowDown":
-          if (rowIndex !== undefined && cellIndex !== undefined)
-            focusNextCell({
-              direction: keyMap[e.key],
-              currentRowIndex: rowIndex,
-              currentCellIndex: cellIndex,
-              isShiftHeld: e.shiftKey,
-              isCtrlHeld: e.ctrlKey || e.metaKey,
-            })
+      const direction = keyMap[e.key]
+      if (!direction) return
+
+      if (e.key === "Escape") {
+        clearSelectedCells()
+        return
       }
+
+      focusNextCell({
+        direction,
+        currentRowIndex: rowIndex,
+        currentCellIndex: cellIndex,
+        isShiftHeld: e.shiftKey,
+        isCtrlHeld: e.ctrlKey || e.metaKey,
+      })
     }
 
     const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
