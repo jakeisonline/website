@@ -398,7 +398,6 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     const currentRow = currentCellsMap.get(`row-${focusRowIndex}`)
 
     let nextCell: { current: HTMLInputElement } | undefined
-    let nextRow: Map<string, any> | undefined
 
     const setSelectionRange = (
       startRowIndex: number,
