@@ -173,8 +173,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       toggleSelectedCell,
       clearSelectedCells,
       focusNextCell,
-      setCellShiftFocus,
-      clearCellShiftFocus,
+      startShiftTraverse,
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -188,21 +187,21 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
 
       if (e.key === "Shift") {
         if (rowIndex !== undefined && cellIndex !== undefined)
-          setCellShiftFocus({
+          startShiftTraverse({
             rowIndex: rowIndex,
             cellIndex: cellIndex,
           })
       }
 
-      const modifier = () => {
-        if (e.ctrlKey || e.metaKey) {
-          return "ctrl"
-        }
-        if (e.shiftKey) {
-          return "shift"
-        }
-        return undefined
-      }
+      // const modifier = () => {
+      //   if (e.ctrlKey || e.metaKey) {
+      //     return "ctrl"
+      //   }
+      //   if (e.shiftKey) {
+      //     return "shift"
+      //   }
+      //   return undefined
+      // }
 
       switch (e.key) {
         case "Escape":
@@ -216,14 +215,9 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
               direction: keyMap[e.key],
               currentRowIndex: rowIndex,
               currentCellIndex: cellIndex,
-              modifier: modifier(),
+              isShiftHeld: e.shiftKey,
+              isCtrlHeld: e.ctrlKey || e.metaKey,
             })
-      }
-    }
-
-    const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Shift") {
-        clearCellShiftFocus()
       }
     }
 
@@ -264,7 +258,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           ref={ref}
           value={value}
           onKeyDown={handleKeyDown}
-          onKeyUp={handleKeyUp}
           onChange={handleNewChange}
           onMouseDown={handleMouseDown}
           onClick={handleClick}
@@ -289,21 +282,22 @@ interface CellsContextType {
     direction,
     currentRowIndex,
     currentCellIndex,
-    modifier,
+    isShiftHeld,
+    isCtrlHeld,
   }: {
     direction: string
     currentRowIndex: number
     currentCellIndex: number
-    modifier?: string
+    isShiftHeld?: boolean
+    isCtrlHeld?: boolean
   }) => void
-  setCellShiftFocus: ({
+  startShiftTraverse: ({
     rowIndex,
     cellIndex,
   }: {
     rowIndex: number
     cellIndex: number
   }) => void
-  clearCellShiftFocus: () => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -314,8 +308,7 @@ const CellsContext = createContext<CellsContextType>({
   clearSelectedCells: () => {},
   cellsMap: { current: new Map() },
   focusNextCell: () => undefined,
-  setCellShiftFocus: () => {},
-  clearCellShiftFocus: () => {},
+  startShiftTraverse: () => {},
 })
 
 const useCellsContext = () => {
@@ -357,12 +350,14 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     direction,
     currentRowIndex,
     currentCellIndex,
-    modifier,
+    isShiftHeld,
+    isCtrlHeld,
   }: {
     direction: string
     currentRowIndex: number
     currentCellIndex: number
-    modifier?: string
+    isShiftHeld?: boolean
+    isCtrlHeld?: boolean
   }) => {
     const directionCalc = (direction: string, a: number, b: number) => {
       return ["left", "up"].includes(direction) ? a - b : a + b
@@ -370,8 +365,6 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
 
     const currentShiftCell = shiftSelectCell.current
     const currentCellsMap = cellsMap.current
-    const isShiftHeld = !!currentShiftCell
-    const isCtrlHeld = modifier === "ctrl"
 
     const getCellInRow = (row: Map<string, any>, index: number) => {
       return row?.get(`cell-${index}`)
@@ -414,7 +407,11 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     }
 
     const focusCell = (cell: { current: HTMLInputElement } | undefined) => {
-      if (cell) cell.current.focus()
+      if (cell) {
+        clearSelectedCells()
+        clearCellShiftFocus()
+        cell.current.focus()
+      }
     }
 
     if (["left", "right"].includes(direction)) {
@@ -648,6 +645,19 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
     shiftSelectCell.current = { rowIndex, cellIndex }
   }
 
+  const startShiftTraverse = ({
+    rowIndex,
+    cellIndex,
+  }: {
+    rowIndex: number
+    cellIndex: number
+  }) => {
+    // Don't clobber an existing shift selection
+    if (!shiftSelectCell.current) {
+      shiftSelectCell.current = { rowIndex, cellIndex }
+    }
+  }
+
   const clearCellShiftFocus = () => {
     shiftSelectCell.current = undefined
   }
@@ -662,8 +672,7 @@ const CellsContextProvider = ({ children }: CellsContextProviderProps) => {
         clearSelectedCells,
         cellsMap,
         focusNextCell,
-        setCellShiftFocus,
-        clearCellShiftFocus,
+        startShiftTraverse,
       }}
     >
       {children}
