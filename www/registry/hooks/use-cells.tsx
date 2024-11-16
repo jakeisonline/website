@@ -60,7 +60,7 @@ interface CellsContextProviderProps {
 export const CellsContextProvider = ({
   children,
 }: CellsContextProviderProps) => {
-  const shiftSelectCell = useRef<
+  const shiftTraverseMarker = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
   const [selectedCellsMap, setSelectedCellsMap] = useState<
@@ -111,10 +111,10 @@ export const CellsContextProvider = ({
     return getRowMap(rowIndex)?.get(`cell-${cellIndex}`).current
   }
 
-  const getShiftCell = ():
+  const getShiftTraverseMarker = ():
     | { rowIndex: number; cellIndex: number }
     | undefined => {
-    return shiftSelectCell.current
+    return shiftTraverseMarker.current
   }
 
   const setFocusCell = (rowIndex: number, cellIndex: number): void => {
@@ -123,7 +123,7 @@ export const CellsContextProvider = ({
     if (!cellRef) return
 
     clearSelectedCells()
-    clearCellShiftFocus()
+    clearShiftTraverseMarker()
     cellRef?.focus()
   }
 
@@ -144,7 +144,7 @@ export const CellsContextProvider = ({
       return ["left", "up"].includes(direction) ? a - b : a + b
     }
 
-    const currentShiftCell = getShiftCell()
+    const currentShiftCell = getShiftTraverseMarker()
 
     let nextCellIndex: number | undefined
     let focusCellIndex =
@@ -313,26 +313,15 @@ export const CellsContextProvider = ({
     endRowIndex: number
     endCellIndex: number
   }) => {
-    const startingCell = cellsMap.current
-      .get(`row-${startRowIndex}`)
-      ?.get(`cell-${startCellIndex}`)
-
-    if (!startingCell) return
-
     const traverseDirection = (startIndex: number, endIndex: number) =>
       startIndex > endIndex ? "backward" : "forward"
 
     const processCell = (rowIndex: number, cellIndex: number) => {
-      const currentRow = cellsMap.current.get(`row-${rowIndex}`)
-      const currentCell = currentRow?.get(`cell-${cellIndex}`)
-
-      if (currentCell) {
-        addSelectedCell(rowIndex, cellIndex)
-        shiftSelectCell.current = {
-          rowIndex: endRowIndex,
-          cellIndex: endCellIndex,
-        }
-      }
+      addSelectedCell(rowIndex, cellIndex)
+      setShiftTraverseMarker({
+        rowIndex: endRowIndex,
+        cellIndex: endCellIndex,
+      })
     }
 
     const processCellsInRow = (rowIndex: number) => {
@@ -369,16 +358,6 @@ export const CellsContextProvider = ({
     }
   }
 
-  const setCellShiftFocus = ({
-    rowIndex,
-    cellIndex,
-  }: {
-    rowIndex: number
-    cellIndex: number
-  }) => {
-    shiftSelectCell.current = { rowIndex, cellIndex }
-  }
-
   const startShiftTraverse = ({
     rowIndex,
     cellIndex,
@@ -387,13 +366,23 @@ export const CellsContextProvider = ({
     cellIndex: number
   }) => {
     // Don't clobber an existing shift selection
-    if (!shiftSelectCell.current) {
-      shiftSelectCell.current = { rowIndex, cellIndex }
+    if (!shiftTraverseMarker.current) {
+      setShiftTraverseMarker({ rowIndex, cellIndex })
     }
   }
 
-  const clearCellShiftFocus = () => {
-    shiftSelectCell.current = undefined
+  const setShiftTraverseMarker = ({
+    rowIndex,
+    cellIndex,
+  }: {
+    rowIndex: number
+    cellIndex: number
+  }) => {
+    shiftTraverseMarker.current = { rowIndex, cellIndex }
+  }
+
+  const clearShiftTraverseMarker = () => {
+    shiftTraverseMarker.current = undefined
   }
 
   return (
