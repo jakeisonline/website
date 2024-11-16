@@ -108,7 +108,7 @@ export const CellsContextProvider = ({
   }
 
   const getCellRef = (rowIndex: number, cellIndex: number) => {
-    return getRowMap(rowIndex)?.get(`cell-${cellIndex}`).current
+    return getRowMap(rowIndex)?.get(`cell-${cellIndex}`)?.current
   }
 
   const getShiftTraverseMarker = ():
