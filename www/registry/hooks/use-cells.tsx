@@ -78,6 +78,55 @@ export const CellsContextProvider = ({
       ?.set(`cell-${index.toString()}`, inputRef)
   }
 
+  const getCellsMap = () => {
+    return cellsMap.current
+  }
+
+  const getRowMap = (rowIndex: number) => {
+    return cellsMap.current.get(`row-${rowIndex}`)
+  }
+
+  const getRowBoundaryCellIndex = (
+    rowIndex: number,
+    boundary: "first" | "last",
+  ) => {
+    const row = getRowMap(rowIndex)
+    if (!row) return undefined
+
+    if (boundary === "first") {
+      return Number(row.entries().next().value?.[0].split("-")[1])
+    } else {
+      const entries = Array.from(row.entries())
+      return Number(entries[entries.length - 1][0].split("-")[1])
+    }
+  }
+
+  const getBoundaryRowIndex = (
+    boundary: "first" | "last",
+  ): number | undefined => {
+    return boundary === "first" ? 0 : cellsMap.current.size - 1
+  }
+
+  const getCellRef = (rowIndex: number, cellIndex: number) => {
+    return getRowMap(rowIndex)?.get(`cell-${cellIndex}`).current
+  }
+
+  const getShiftCell = ():
+    | { rowIndex: number; cellIndex: number }
+    | undefined => {
+    return shiftSelectCell.current
+  }
+
+  const setFocusCell = (rowIndex: number, cellIndex: number): void => {
+    const cellRef = getCellRef(rowIndex, cellIndex)
+
+    if (!cellRef) return
+
+    clearSelectedCells()
+    clearCellShiftFocus()
+    cellRef?.focus()
+  }
+
   const focusNextCell = ({
     direction,
     currentRowIndex,
@@ -95,23 +144,9 @@ export const CellsContextProvider = ({
       return ["left", "up"].includes(direction) ? a - b : a + b
     }
 
-    const currentShiftCell = shiftSelectCell.current
-    const currentCellsMap = cellsMap.current
+    const currentShiftCell = getShiftCell()
 
-    const getCellInRow = (row: Map<string, any>, index: number) => {
-      return row?.get(`cell-${index}`)
-    }
-
-    const getBoundaryCell = (
-      row: Map<string, any>,
-      boundary: "first" | "last",
-    ) => {
-      if (!row) return undefined
-      return boundary === "first"
-        ? row.entries().next().value?.[1]
-        : row.get(`cell-${row.size - 1}`)
-    }
-
+    let nextCellIndex: number | undefined
     let focusCellIndex =
       isShiftHeld && currentShiftCell
         ? currentShiftCell.cellIndex
@@ -120,60 +155,38 @@ export const CellsContextProvider = ({
       isShiftHeld && currentShiftCell
         ? currentShiftCell.rowIndex
         : currentRowIndex
-    const currentRow = currentCellsMap.get(`row-${focusRowIndex}`)
-
-    let nextCell: { current: HTMLInputElement } | undefined
-
-    const setSelectionRange = (
-      startRowIndex: number,
-      startCellIndex: number,
-      endRowIndex: number,
-      endCellIndex: number,
-    ) => {
-      setSelectedCellRange({
-        startRowIndex,
-        startCellIndex,
-        endRowIndex,
-        endCellIndex,
-      })
-    }
-
-    const focusCell = (cell: { current: HTMLInputElement } | undefined) => {
-      if (cell) {
-        clearSelectedCells()
-        clearCellShiftFocus()
-        cell.current.focus()
-      }
-    }
 
     if (["left", "right"].includes(direction)) {
-      if (isCtrlHeld && currentRow) {
-        nextCell = getBoundaryCell(
-          currentRow,
+      if (isCtrlHeld) {
+        nextCellIndex = getRowBoundaryCellIndex(
+          currentRowIndex,
           direction === "left" ? "first" : "last",
         )
-      } else if (currentRow) {
-        nextCell = getCellInRow(
-          currentRow,
-          directionCalc(direction, focusCellIndex, 1),
-        )
+      } else {
+        nextCellIndex = directionCalc(direction, focusCellIndex, 1)
       }
 
-      if (nextCell && currentRow) {
+      if (nextCellIndex !== undefined) {
         if (isShiftHeld) {
-          const endCellIndex = isCtrlHeld
-            ? direction === "left"
-              ? 0
-              : currentRow.size - 1
-            : directionCalc(direction, focusCellIndex, 1)
-          setSelectionRange(
+          const boundaryCellIndex = getRowBoundaryCellIndex(
             currentRowIndex,
-            currentCellIndex,
-            focusRowIndex,
-            endCellIndex,
+            direction === "left" ? "first" : "last",
           )
+
+          if (boundaryCellIndex === undefined) return
+
+          const endCellIndex = isCtrlHeld
+            ? boundaryCellIndex
+            : directionCalc(direction, focusCellIndex, 1)
+
+          setSelectedCellRange({
+            startRowIndex: currentRowIndex,
+            startCellIndex: currentCellIndex,
+            endRowIndex: focusRowIndex,
+            endCellIndex,
+          })
         } else {
-          focusCell(nextCell)
+          setFocusCell(focusRowIndex, nextCellIndex)
         }
       } else if (!isShiftHeld) {
         clearSelectedCells()
@@ -181,49 +194,36 @@ export const CellsContextProvider = ({
     }
 
     if (["up", "down"].includes(direction)) {
-      let targetRowIndex: number
-      let nextRow: Map<string, any> | undefined
+      let nextRowIndex: number | undefined
 
       if (isCtrlHeld) {
-        targetRowIndex = direction === "up" ? 0 : currentCellsMap.size - 1
-        nextRow = currentCellsMap.get(
-          `row-${direction === "up" ? 0 : currentCellsMap.size - 1}`,
+        nextRowIndex = getBoundaryRowIndex(
+          direction === "up" ? "first" : "last",
         )
       } else {
-        targetRowIndex = directionCalc(direction, focusRowIndex, 1)
-        nextRow = currentCellsMap.get(`row-${targetRowIndex}`)
+        nextRowIndex = directionCalc(direction, focusRowIndex, 1)
       }
 
-      if (nextRow) {
-        nextCell = getCellInRow(
-          nextRow,
+      if (nextRowIndex !== undefined) {
+        const nextCellIndex =
           isShiftHeld && currentShiftCell
             ? currentShiftCell.cellIndex
-            : currentCellIndex,
-        )
+            : currentCellIndex
 
-        if (nextCell) {
+        if (nextCellIndex !== undefined) {
           if (isShiftHeld) {
-            setSelectionRange(
-              currentRowIndex,
-              currentCellIndex,
-              targetRowIndex,
-              currentShiftCell?.cellIndex ?? currentCellIndex,
-            )
+            setSelectedCellRange({
+              startRowIndex: currentRowIndex,
+              startCellIndex: currentCellIndex,
+              endRowIndex: nextRowIndex,
+              endCellIndex: currentShiftCell?.cellIndex ?? currentCellIndex,
+            })
           } else {
-            focusCell(nextCell)
+            setFocusCell(nextRowIndex, nextCellIndex)
           }
         }
       }
     }
-  }
-
-  const getMappedCellRef = (rowIndex: number, cellIndex: number) => {
-    const cell = cellsMap.current
-      .get(`row-${rowIndex}`)
-      ?.get(`cell-${cellIndex}`)
-
-    return cell?.current
   }
 
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
@@ -254,7 +254,7 @@ export const CellsContextProvider = ({
 
     setSelectedCellsMap(newSelectedCellsMap)
 
-    const selectedCellRef = getMappedCellRef(rowIndex, cellIndex)
+    const selectedCellRef = getCellRef(rowIndex, cellIndex)
     selectedCellRef?.setAttribute("data-is-selected", "true")
   }
 
@@ -277,8 +277,8 @@ export const CellsContextProvider = ({
 
     setSelectedCellsMap(newSelectedCellsMap)
 
-    const selectedCellRef = getMappedCellRef(rowIndex, cellIndex)
-    selectedCellRef?.setAttribute("data-is-selected", "false")
+    const selectedCellRef = getCellRef(rowIndex, cellIndex)
+    selectedCellRef?.current.setAttribute("data-is-selected", "false")
   }
 
   const toggleSelectedCell = (rowIndex: number, cellIndex: number) => {
@@ -294,7 +294,7 @@ export const CellsContextProvider = ({
       const rowIndex = rowKey.split("-")[1]
       rowContent.forEach((cell) => {
         const cellIndex = cell.split("-")[1]
-        const cellRef = getMappedCellRef(Number(rowIndex), Number(cellIndex))
+        const cellRef = getCellRef(Number(rowIndex), Number(cellIndex))
         cellRef?.setAttribute("data-is-selected", "false")
       })
     })
