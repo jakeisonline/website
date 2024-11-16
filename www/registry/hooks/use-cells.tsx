@@ -179,13 +179,15 @@ export const CellsContextProvider = ({
             ? boundaryCellIndex
             : directionCalc(direction, focusCellIndex, 1)
 
-          setSelectedCellRange({
-            startRowIndex: currentRowIndex,
-            startCellIndex: currentCellIndex,
-            endRowIndex: focusRowIndex,
-            endCellIndex,
-          })
-        } else {
+          if (getCellRef(focusRowIndex, endCellIndex)) {
+            setSelectedCellRange({
+              startRowIndex: currentRowIndex,
+              startCellIndex: currentCellIndex,
+              endRowIndex: focusRowIndex,
+              endCellIndex,
+            })
+          }
+        } else if (getCellRef(focusRowIndex, nextCellIndex)) {
           setFocusCell(focusRowIndex, nextCellIndex)
         }
       } else if (!isShiftHeld) {
@@ -211,14 +213,14 @@ export const CellsContextProvider = ({
             : currentCellIndex
 
         if (nextCellIndex !== undefined) {
-          if (isShiftHeld) {
+          if (isShiftHeld && getCellRef(nextRowIndex, nextCellIndex)) {
             setSelectedCellRange({
               startRowIndex: currentRowIndex,
               startCellIndex: currentCellIndex,
               endRowIndex: nextRowIndex,
               endCellIndex: currentShiftCell?.cellIndex ?? currentCellIndex,
             })
-          } else {
+          } else if (getCellRef(nextRowIndex, nextCellIndex)) {
             setFocusCell(nextRowIndex, nextCellIndex)
           }
         }
