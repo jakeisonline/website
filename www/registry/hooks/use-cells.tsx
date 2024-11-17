@@ -140,15 +140,15 @@ export const CellsContextProvider = ({
     isShiftHeld?: boolean
     isCtrlHeld?: boolean
   }) => {
-    const currentShiftCell = getShiftTraverseMarker()
+    const currentShiftTraverseMarker = getShiftTraverseMarker()
     const focusPosition = {
       cellIndex:
-        isShiftHeld && currentShiftCell
-          ? currentShiftCell.cellIndex
+        isShiftHeld && currentShiftTraverseMarker
+          ? currentShiftTraverseMarker.cellIndex
           : currentCellIndex,
       rowIndex:
-        isShiftHeld && currentShiftCell
-          ? currentShiftCell.rowIndex
+        isShiftHeld && currentShiftTraverseMarker
+          ? currentShiftTraverseMarker.rowIndex
           : currentRowIndex,
     }
 
@@ -198,8 +198,8 @@ export const CellsContextProvider = ({
       if (nextRowIndex === undefined) return
 
       const nextCellIndex =
-        isShiftHeld && currentShiftCell
-          ? currentShiftCell.cellIndex
+        isShiftHeld && currentShiftTraverseMarker
+          ? currentShiftTraverseMarker.cellIndex
           : currentCellIndex
 
       if (nextCellIndex === undefined) return
@@ -209,7 +209,8 @@ export const CellsContextProvider = ({
           startRowIndex: currentRowIndex,
           startCellIndex: currentCellIndex,
           endRowIndex: nextRowIndex,
-          endCellIndex: currentShiftCell?.cellIndex ?? currentCellIndex,
+          endCellIndex:
+            currentShiftTraverseMarker?.cellIndex ?? currentCellIndex,
         })
       } else if (getCellRef(nextRowIndex, nextCellIndex)) {
         setFocusCell(nextRowIndex, nextCellIndex)
