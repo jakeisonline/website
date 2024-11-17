@@ -39,7 +39,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
         <div
           onPointerDown={handleFocus}
           className={cn(
-            "has-[:focus]:inner-border-primary has-[:focus]:inner-border-2 hover:inner-border-2 inner-border group relative flex select-none flex-row items-center justify-center rounded-md px-1 py-1 text-xs hover:cursor-pointer",
+            "group relative flex select-none flex-row items-center justify-center rounded-md px-1 py-1 text-xs inner-border hover:cursor-pointer hover:inner-border-2 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary",
             className,
           )}
           {...props}
@@ -53,121 +53,122 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
 )
 Stepper.displayName = "Stepper"
 
-interface StepperLabelProps
-  extends React.ComponentPropsWithoutRef<"label"> {
+interface StepperLabelProps extends React.ComponentPropsWithoutRef<"label"> {
   htmlFor: string
   className?: string
   children?: React.ReactNode
 }
 
-export const StepperLabel = forwardRef<
-  HTMLLabelElement,
-  StepperLabelProps
->(({ htmlFor, className, children, ...props }, ref) => {
-  return (
-    <label
-      htmlFor={htmlFor}
-      className={cn("mr-1 cursor-pointer border-r px-2 text-sm", className)}
-      ref={ref}
-      {...props}
-    >
-      {children}
-    </label>
-  )
-})
+export const StepperLabel = forwardRef<HTMLLabelElement, StepperLabelProps>(
+  ({ htmlFor, className, children, ...props }, ref) => {
+    return (
+      <label
+        htmlFor={htmlFor}
+        className={cn("mr-1 cursor-pointer border-r px-2 text-sm", className)}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </label>
+    )
+  },
+)
 StepperLabel.displayName = "StepperLabel"
 
-interface StepperInputProps
-  extends React.ComponentPropsWithoutRef<"input"> {
+interface StepperInputProps extends React.ComponentPropsWithoutRef<"input"> {
   id: string
   className?: string
 }
 
-export const StepperInput = forwardRef<
-  HTMLInputElement,
-  StepperInputProps
->(({ className, ...props }, ref) => {
-  const { min, max, value, handleChange, handleKeyDown, handleBlur, inputRef } =
-    useStepperContext()
+export const StepperInput = forwardRef<HTMLInputElement, StepperInputProps>(
+  ({ className, ...props }, ref) => {
+    const {
+      min,
+      max,
+      value,
+      handleChange,
+      handleKeyDown,
+      handleBlur,
+      inputRef,
+    } = useStepperContext()
 
-  const computedRef = ref ? ref : inputRef
+    const computedRef = ref ? ref : inputRef
 
-  return (
-    <input
-      type="number"
-      value={value}
-      ref={computedRef}
-      min={min}
-      max={max}
-      onKeyDown={handleKeyDown}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      style={{ width: String(value).length + "ch", ...props.style }}
-      className={cn(
-        "min-w-4 cursor-pointer text-center text-sm [appearance:textfield] focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
-        className,
-      )}
-      role="spinbutton"
-      aria-valuenow={value ? value : undefined}
-      aria-valuemin={min ? min : undefined}
-      aria-valuemax={max ? max : undefined}
-      {...props}
-    />
-  )
-})
+    return (
+      <input
+        type="number"
+        value={value}
+        ref={computedRef}
+        min={min}
+        max={max}
+        onKeyDown={handleKeyDown}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        style={{ width: String(value).length + "ch", ...props.style }}
+        className={cn(
+          "min-w-4 cursor-pointer text-center text-sm [appearance:textfield] focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
+          className,
+        )}
+        role="spinbutton"
+        aria-valuenow={value ? value : undefined}
+        aria-valuemin={min ? min : undefined}
+        aria-valuemax={max ? max : undefined}
+        {...props}
+      />
+    )
+  },
+)
 StepperInput.displayName = "StepperInput"
 
-interface StepperButtonProps
-  extends React.ComponentPropsWithoutRef<"button"> {
+interface StepperButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   direction: string
   className?: string
   children: any
 }
 
-export const StepperButton = forwardRef<
-  HTMLButtonElement,
-  StepperButtonProps
->(({ direction, className, children, ...props }, ref) => {
-  const { min, max, value, handleStep } = useStepperContext()
-  const handleClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
-    const shiftKeyHeld = e.shiftKey
-    handleStep(direction, shiftKeyHeld)
-    e.preventDefault()
-  }
-
-  const isDisabled = () => {
-    if (direction === "down" && (min || min === 0) && +value <= min) {
-      return true
-    } else if (direction === "up" && max && +value >= max) {
-      return true
-    } else {
-      return false
+export const StepperButton = forwardRef<HTMLButtonElement, StepperButtonProps>(
+  ({ direction, className, children, ...props }, ref) => {
+    const { min, max, value, handleStep } = useStepperContext()
+    const handleClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
+      const shiftKeyHeld = e.shiftKey
+      handleStep(direction, shiftKeyHeld)
+      e.preventDefault()
     }
-  }
 
-  const divClass = cn(
-    "group mx-0.5 flex h-6 w-6 items-center justify-center rounded-md",
-    isDisabled() && "opacity-40",
-    !isDisabled() && "hover:bg-accent hover:cursor-pointer",
-    className,
-  )
+    const isDisabled = () => {
+      if (direction === "down" && (min || min === 0) && +value <= min) {
+        return true
+      } else if (direction === "up" && max && +value >= max) {
+        return true
+      } else {
+        return false
+      }
+    }
 
-  return (
-    <button
-      onPointerDown={handleClick}
-      className={divClass}
-      /*
+    const divClass = cn(
+      "group mx-0.5 flex h-6 w-6 items-center justify-center rounded-md",
+      isDisabled() && "opacity-40",
+      !isDisabled() && "hover:cursor-pointer hover:bg-accent",
+      className,
+    )
+
+    return (
+      <button
+        onPointerDown={handleClick}
+        className={divClass}
+        /*
       "text field is usually the only focusable component because the increase and decrease functions are keyboard accessible via arrow keys"
       https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/
       */
-      tabIndex={-1}
-      ref={ref}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-})
+        tabIndex={-1}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </button>
+    )
+  },
+)
 StepperButton.displayName = "StepperButton"
 
 interface StepperBadgeProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -175,25 +176,24 @@ interface StepperBadgeProps extends React.ComponentPropsWithoutRef<"div"> {
   className?: string
 }
 
-export const StepperBadge = forwardRef<
-  HTMLDivElement,
-  StepperBadgeProps
->(({ hideWhen = 0, className, ...props }, ref) => {
-  const { value } = useStepperContext()
-  if (value == hideWhen) return
+export const StepperBadge = forwardRef<HTMLDivElement, StepperBadgeProps>(
+  ({ hideWhen = 0, className, ...props }, ref) => {
+    const { value } = useStepperContext()
+    if (value == hideWhen) return
 
-  return (
-    <div
-      className={cn(
-        "bg-primary text-background text-2xs absolute -right-2.5 -top-2 rounded-full px-1.5 py-0 font-medium group-has-[:focus]:hidden",
-        className,
-      )}
-      {...props}
-    >
-      {value}
-    </div>
-  )
-})
+    return (
+      <div
+        className={cn(
+          "absolute -right-2.5 -top-2 rounded-full bg-primary px-1.5 py-0 text-2xs font-medium text-background group-has-[:focus]:hidden",
+          className,
+        )}
+        {...props}
+      >
+        {value}
+      </div>
+    )
+  },
+)
 StepperBadge.displayName = "StepperBadge"
 interface StepperContextType {
   value: number | ""
