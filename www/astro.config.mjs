@@ -2,8 +2,8 @@ import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import vercel from "@astrojs/vercel/static"
 import react from "@astrojs/react"
-
 import mdx from "@astrojs/mdx"
+import icon from "astro-icon"
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +18,7 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
+    icon(),
   ],
   base: "/playground",
   output: "static",
