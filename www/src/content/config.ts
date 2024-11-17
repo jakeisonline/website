@@ -9,6 +9,15 @@ export const componentDocsCollection = defineCollection({
   }),
 })
 
+export const toolDocsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    layout: z.string(),
+  }),
+})
+
 export const generalDocsCollection = defineCollection({
   type: "content",
   schema: z.object({
@@ -21,4 +30,5 @@ export const generalDocsCollection = defineCollection({
 export const collections = {
   general: generalDocsCollection,
   components: componentDocsCollection,
+  tools: toolDocsCollection,
 }
