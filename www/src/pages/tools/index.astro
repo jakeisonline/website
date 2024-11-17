@@ -1,0 +1,44 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+import { Icon } from 'astro-icon/components'
+
+export const tools = [{
+  name: "next-auth-template",
+  description: "A template for Next.js with NextAuth, Drizzle ORM, and Tailwind CSS.",
+  icons: ["logos/nextjs", "logos/authjs"],
+  slug: "next-auth-template"
+}]
+---
+
+<DocsLayout
+  title="Playground - Tools"
+  description="Free web development tools from Jake Holman (@jakeisonline)."
+>
+  <div
+    class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
+  >
+    <h1>Tools</h1>
+    <p>A collection of tools for web development, that you might find handy.</p>
+    <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
+      {
+        tools.map((tool) => (
+          <a href={`/playground/tools/${tool.slug}`}>
+            <div class="bg-card text-card-foreground rounded-lg border shadow-sm">
+      <div class="flex flex-col min-h-44 w-auto p-6 pt-6">
+        <div class="flex items-center gap-2 pb-3">
+          {
+            tool.icons.map((icon) => (
+              <Icon name={icon} class="w-12 h-12" />
+            ))
+          }
+        </div>
+        <h3 class="text-lg font-medium">{tool.name}</h3>
+        <p class="text-sm text-muted-foreground">{tool.description}</p>
+      </div>
+    </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</DocsLayout>
