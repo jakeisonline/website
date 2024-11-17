@@ -140,92 +140,85 @@ export const CellsContextProvider = ({
     isShiftHeld?: boolean
     isCtrlHeld?: boolean
   }) => {
-    const directionCalc = (direction: string, a: number, b: number) => {
-      return ["left", "up"].includes(direction) ? a - b : a + b
+    const currentShiftCell = getShiftTraverseMarker()
+    const focusPosition = {
+      cellIndex:
+        isShiftHeld && currentShiftCell
+          ? currentShiftCell.cellIndex
+          : currentCellIndex,
+      rowIndex:
+        isShiftHeld && currentShiftCell
+          ? currentShiftCell.rowIndex
+          : currentRowIndex,
     }
 
-    const currentShiftCell = getShiftTraverseMarker()
-
-    let nextCellIndex: number | undefined
-    let focusCellIndex =
-      isShiftHeld && currentShiftCell
-        ? currentShiftCell.cellIndex
-        : currentCellIndex
-    let focusRowIndex =
-      isShiftHeld && currentShiftCell
-        ? currentShiftCell.rowIndex
-        : currentRowIndex
-
-    if (["left", "right"].includes(direction)) {
-      if (isCtrlHeld) {
-        nextCellIndex = getRowBoundaryCellIndex(
-          currentRowIndex,
-          direction === "left" ? "first" : "last",
-        )
-      } else {
-        nextCellIndex = directionCalc(direction, focusCellIndex, 1)
-      }
-
-      if (nextCellIndex !== undefined) {
-        if (isShiftHeld) {
-          const boundaryCellIndex = getRowBoundaryCellIndex(
+    const handleHorizontalMovement = () => {
+      const nextCellIndex = isCtrlHeld
+        ? getRowBoundaryCellIndex(
             currentRowIndex,
             direction === "left" ? "first" : "last",
           )
+        : ["left", "up"].includes(direction)
+          ? focusPosition.cellIndex - 1
+          : focusPosition.cellIndex + 1
 
-          if (boundaryCellIndex === undefined) return
-
-          const endCellIndex = isCtrlHeld
-            ? boundaryCellIndex
-            : directionCalc(direction, focusCellIndex, 1)
-
-          if (getCellRef(focusRowIndex, endCellIndex)) {
-            setSelectedCellRange({
-              startRowIndex: currentRowIndex,
-              startCellIndex: currentCellIndex,
-              endRowIndex: focusRowIndex,
-              endCellIndex,
-            })
-          }
-        } else if (getCellRef(focusRowIndex, nextCellIndex)) {
-          setFocusCell(focusRowIndex, nextCellIndex)
-        }
-      } else if (!isShiftHeld) {
-        clearSelectedCells()
+      if (nextCellIndex === undefined) {
+        !isShiftHeld && clearSelectedCells()
+        return
       }
-    }
 
-    if (["up", "down"].includes(direction)) {
-      let nextRowIndex: number | undefined
-
-      if (isCtrlHeld) {
-        nextRowIndex = getBoundaryRowIndex(
-          direction === "up" ? "first" : "last",
+      if (isShiftHeld) {
+        const boundaryCellIndex = getRowBoundaryCellIndex(
+          currentRowIndex,
+          direction === "left" ? "first" : "last",
         )
+        if (boundaryCellIndex === undefined) return
+
+        const endCellIndex = isCtrlHeld ? boundaryCellIndex : nextCellIndex
+        getCellRef(focusPosition.rowIndex, endCellIndex) &&
+          setSelectedCellRange({
+            startRowIndex: currentRowIndex,
+            startCellIndex: currentCellIndex,
+            endRowIndex: focusPosition.rowIndex,
+            endCellIndex,
+          })
       } else {
-        nextRowIndex = directionCalc(direction, focusRowIndex, 1)
-      }
-
-      if (nextRowIndex !== undefined) {
-        const nextCellIndex =
-          isShiftHeld && currentShiftCell
-            ? currentShiftCell.cellIndex
-            : currentCellIndex
-
-        if (nextCellIndex !== undefined) {
-          if (isShiftHeld && getCellRef(nextRowIndex, nextCellIndex)) {
-            setSelectedCellRange({
-              startRowIndex: currentRowIndex,
-              startCellIndex: currentCellIndex,
-              endRowIndex: nextRowIndex,
-              endCellIndex: currentShiftCell?.cellIndex ?? currentCellIndex,
-            })
-          } else if (getCellRef(nextRowIndex, nextCellIndex)) {
-            setFocusCell(nextRowIndex, nextCellIndex)
-          }
-        }
+        getCellRef(focusPosition.rowIndex, nextCellIndex) &&
+          setFocusCell(focusPosition.rowIndex, nextCellIndex)
       }
     }
+
+    const handleVerticalMovement = () => {
+      const nextRowIndex = isCtrlHeld
+        ? getBoundaryRowIndex(direction === "up" ? "first" : "last")
+        : ["up"].includes(direction)
+          ? focusPosition.rowIndex - 1
+          : focusPosition.rowIndex + 1
+
+      if (nextRowIndex === undefined) return
+
+      const nextCellIndex =
+        isShiftHeld && currentShiftCell
+          ? currentShiftCell.cellIndex
+          : currentCellIndex
+
+      if (nextCellIndex === undefined) return
+
+      if (isShiftHeld && getCellRef(nextRowIndex, nextCellIndex)) {
+        setSelectedCellRange({
+          startRowIndex: currentRowIndex,
+          startCellIndex: currentCellIndex,
+          endRowIndex: nextRowIndex,
+          endCellIndex: currentShiftCell?.cellIndex ?? currentCellIndex,
+        })
+      } else if (getCellRef(nextRowIndex, nextCellIndex)) {
+        setFocusCell(nextRowIndex, nextCellIndex)
+      }
+    }
+
+    ;["left", "right"].includes(direction)
+      ? handleHorizontalMovement()
+      : handleVerticalMovement()
   }
 
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
