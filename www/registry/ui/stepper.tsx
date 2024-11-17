@@ -106,7 +106,7 @@ export const StepperInput = forwardRef<HTMLInputElement, StepperInputProps>(
         onBlur={handleBlur}
         style={{ width: String(value).length + "ch", ...props.style }}
         className={cn(
-          "min-w-4 cursor-pointer text-center text-sm [appearance:textfield] focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
+          "min-w-4 cursor-pointer bg-transparent text-center text-sm [appearance:textfield] focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
           className,
         )}
         role="spinbutton"
