@@ -178,6 +178,8 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       clearSelectedCells,
       focusNextCell,
       startShiftTraverse,
+      isActiveCell,
+      setActiveCell,
     } = useCellsContext()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -192,6 +194,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       if (rowIndex === undefined || cellIndex === undefined) return
 
       if (e.key === "Shift") {
+        console.log("starting traverse at", rowIndex, cellIndex)
         startShiftTraverse({
           rowIndex,
           cellIndex,
@@ -230,6 +233,10 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
     }
 
+    const handleFocus = () => {
+      setActiveCell(rowIndex, cellIndex)
+    }
+
     const handleBlur = () => {
       clearSelectedCells()
     }
@@ -239,16 +246,22 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     }
 
     const isSelected = isSelectedCell(rowIndex, cellIndex)
+    const isActive = isActiveCell(rowIndex, cellIndex)
 
     return (
-      <>
+      <div
+        tabIndex={0}
+        className="w-20 min-w-4 cursor-pointer bg-background px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
+        data-is-active={isActive}
+        onFocus={handleFocus}
+      >
         <label htmlFor={name} className="sr-only">
           {label}
         </label>
         <input
           type={type}
           name={name}
-          className="w-20 min-w-4 cursor-pointer bg-background px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
+          className="w-full bg-transparent text-center outline-none [appearance:textfield] [&:not(:focus)]:cursor-pointer"
           {...props}
           ref={ref}
           value={value}
@@ -258,8 +271,9 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           onClick={handleClick}
           onBlur={handleBlur}
           data-is-selected={isSelected}
+          tabIndex={-1}
         />
-      </>
+      </div>
     )
   },
 )

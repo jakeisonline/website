@@ -28,6 +28,8 @@ interface CellsContextType {
     rowIndex: number
     cellIndex: number
   }) => void
+  isActiveCell: (rowIndex: number, cellIndex: number) => boolean
+  setActiveCell: (rowIndex: number, cellIndex: number) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -39,6 +41,8 @@ const CellsContext = createContext<CellsContextType>({
   cellsMap: { current: new Map() },
   focusNextCell: () => undefined,
   startShiftTraverse: () => {},
+  isActiveCell: () => false,
+  setActiveCell: () => {},
 })
 
 export const useCellsContext = () => {
@@ -61,6 +65,9 @@ export const CellsContextProvider = ({
   children,
 }: CellsContextProviderProps) => {
   const shiftTraverseMarker = useRef<
+    { rowIndex: number; cellIndex: number } | undefined
+  >(undefined)
+  const activeCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
   const [selectedCellsMap, setSelectedCellsMap] = useState<
@@ -220,6 +227,21 @@ export const CellsContextProvider = ({
     ;["left", "right"].includes(direction)
       ? handleHorizontalMovement()
       : handleVerticalMovement()
+  }
+
+  const isActiveCell = (rowIndex: number, cellIndex: number) => {
+    return (
+      activeCell.current?.rowIndex === rowIndex &&
+      activeCell.current?.cellIndex === cellIndex
+    )
+  }
+
+  const setActiveCell = (rowIndex: number, cellIndex: number) => {
+    activeCell.current = { rowIndex, cellIndex }
+  }
+
+  const clearActiveCell = () => {
+    activeCell.current = undefined
   }
 
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
@@ -392,6 +414,8 @@ export const CellsContextProvider = ({
         cellsMap,
         focusNextCell,
         startShiftTraverse,
+        isActiveCell,
+        setActiveCell,
       }}
     >
       {children}
