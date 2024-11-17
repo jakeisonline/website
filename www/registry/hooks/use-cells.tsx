@@ -30,6 +30,8 @@ interface CellsContextType {
   }) => void
   isActiveCell: (rowIndex: number, cellIndex: number) => boolean
   setActiveCell: (rowIndex: number, cellIndex: number) => void
+  setInputFocus: (rowIndex: number, cellIndex: number) => void
+  setFocusCell: (rowIndex: number, cellIndex: number) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -43,6 +45,8 @@ const CellsContext = createContext<CellsContextType>({
   startShiftTraverse: () => {},
   isActiveCell: () => false,
   setActiveCell: () => {},
+  setInputFocus: () => {},
+  setFocusCell: () => {},
 })
 
 export const useCellsContext = () => {
@@ -244,6 +248,19 @@ export const CellsContextProvider = ({
     activeCell.current = undefined
   }
 
+  const setInputFocus = (rowIndex: number, cellIndex: number) => {
+    const cellRef = getCellRef(rowIndex, cellIndex)
+    if (!cellRef) return
+
+    const input = cellRef.querySelector("input")
+
+    if (input) {
+      const inputCharLength = input.value.length
+      input.setSelectionRange(inputCharLength, inputCharLength)
+      input.focus()
+    }
+  }
+
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
     const selectedCells = selectedCellsMap.get(`row-${rowIndex}`)
 
@@ -416,6 +433,8 @@ export const CellsContextProvider = ({
         startShiftTraverse,
         isActiveCell,
         setActiveCell,
+        setInputFocus,
+        setFocusCell,
       }}
     >
       {children}

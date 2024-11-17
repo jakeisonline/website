@@ -170,6 +170,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
   ) => {
     if (cellIndex === undefined || rowIndex === undefined)
       throw new Error("cellIndex and rowIndex are required props for Cell")
+
     const [value, setValue] = useState<string | undefined>(initialValue)
 
     const {
@@ -180,21 +181,42 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       startShiftTraverse,
       isActiveCell,
       setActiveCell,
+      setInputFocus,
+      setFocusCell,
     } = useCellsContext()
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value)
+    }
+
+    const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Escape") {
+        setFocusCell(rowIndex, cellIndex)
+        return
+      }
+
+      if (e.key === "Enter") {
+        setFocusCell(rowIndex, cellIndex)
+        return
+      }
+    }
+
+    const handleCellKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.target !== e.currentTarget) return
+      if (rowIndex === undefined || cellIndex === undefined) return
+
+      const keyPressed = e.key
+
       const keyMap: Record<string, string> = {
-        Escape: "escape",
         ArrowLeft: "left",
         ArrowRight: "right",
         ArrowUp: "up",
         ArrowDown: "down",
       }
 
-      if (rowIndex === undefined || cellIndex === undefined) return
+      const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
 
-      if (e.key === "Shift") {
-        console.log("starting traverse at", rowIndex, cellIndex)
+      if (keyPressed === "Shift") {
         startShiftTraverse({
           rowIndex,
           cellIndex,
@@ -202,47 +224,69 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         return
       }
 
-      const direction = keyMap[e.key]
-      if (!direction) return
-
-      if (e.key === "Escape") {
+      if (keyPressed === "Escape") {
         clearSelectedCells()
+        setFocusCell(rowIndex, cellIndex)
         return
       }
 
-      focusNextCell({
-        direction,
-        currentRowIndex: rowIndex,
-        currentCellIndex: cellIndex,
-        isShiftHeld: e.shiftKey,
-        isCtrlHeld: e.ctrlKey || e.metaKey,
-      })
+      if (keyPressed === "Enter") {
+        setInputFocus(rowIndex, cellIndex)
+        return
+      }
+
+      if (keyPressed === "Delete" || keyPressed === "Backspace") {
+        setValue("")
+        return
+      }
+
+      const direction = keyMap[keyPressed]
+
+      if (direction) {
+        e.preventDefault()
+
+        focusNextCell({
+          direction,
+          currentRowIndex: rowIndex,
+          currentCellIndex: cellIndex,
+          isShiftHeld: e.shiftKey,
+          isCtrlHeld: e.ctrlKey || e.metaKey,
+        })
+      }
+
+      if (isAlphaNumeric) {
+        setInputFocus(rowIndex, cellIndex)
+      }
     }
 
-    const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    const handleCellClick = (e: React.MouseEvent<HTMLInputElement>) => {
       if (e.ctrlKey || e.metaKey) {
         toggleSelectedCell(rowIndex, cellIndex)
         return
       }
     }
 
-    const handleMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
+    const handleCellMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
+      // Effectively a double click, but much more forgiving on timing
+      if (!isActiveCell(rowIndex, cellIndex)) {
+        e.preventDefault()
+        setFocusCell(rowIndex, cellIndex)
+      }
+
+      // Prevent the cell from being selected when ctrl or cmd is held
+      // to allow for multi-cell selection
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault()
         return
       }
     }
 
-    const handleFocus = () => {
+    const handleCellFocus = () => {
       setActiveCell(rowIndex, cellIndex)
     }
 
-    const handleBlur = () => {
+    const handleCellBlur = () => {
       clearSelectedCells()
-    }
-
-    const handleNewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value)
     }
 
     const isSelected = isSelectedCell(rowIndex, cellIndex)
@@ -251,9 +295,15 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     return (
       <div
         tabIndex={0}
-        className="w-20 min-w-4 cursor-pointer bg-background px-3 py-2 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
+        className="w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
         data-is-active={isActive}
-        onFocus={handleFocus}
+        onKeyDown={handleCellKeyDown}
+        onMouseDown={handleCellMouseDown}
+        onClick={handleCellClick}
+        onFocus={handleCellFocus}
+        onBlur={handleCellBlur}
+        data-is-selected={isSelected}
+        ref={ref}
       >
         <label htmlFor={name} className="sr-only">
           {label}
@@ -261,17 +311,12 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         <input
           type={type}
           name={name}
-          className="w-full bg-transparent text-center outline-none [appearance:textfield] [&:not(:focus)]:cursor-pointer"
+          className="w-full bg-transparent px-3 py-2 text-center outline-none [appearance:textfield] focus:inner-border-2 focus:inner-border-primary/25 [&:not(:focus)]:cursor-pointer"
           {...props}
-          ref={ref}
           value={value}
-          onKeyDown={handleKeyDown}
-          onChange={handleNewChange}
-          onMouseDown={handleMouseDown}
-          onClick={handleClick}
-          onBlur={handleBlur}
-          data-is-selected={isSelected}
           tabIndex={-1}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
         />
       </div>
     )
