@@ -185,6 +185,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       setFocusCell,
       handleMouseSelectStart,
       handleMouseSelectMove,
+      handleShiftClickCell,
     } = useCellsContext()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -261,25 +262,25 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
     }
 
-    const handleCellClick = (e: React.MouseEvent<HTMLInputElement>) => {
-      if (e.ctrlKey || e.metaKey) {
-        toggleSelectedCell(rowIndex, cellIndex)
-        return
-      }
-    }
-
     const handleCellMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
-      // Effectively a double click, but much more forgiving on timing
-      if (!isActiveCell(rowIndex, cellIndex)) {
-        e.preventDefault()
-        setFocusCell(rowIndex, cellIndex)
-      }
-
       // Prevent the cell from being selected when ctrl or cmd is held
       // to allow for multi-cell selection
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault()
+        toggleSelectedCell(rowIndex, cellIndex)
         return
+      }
+
+      if (e.shiftKey) {
+        e.preventDefault()
+        handleShiftClickCell(rowIndex, cellIndex)
+        return
+      }
+
+      // Effectively a double click, but much more forgiving on timing
+      if (!isActiveCell(rowIndex, cellIndex)) {
+        e.preventDefault()
+        setFocusCell(rowIndex, cellIndex)
       }
 
       handleMouseSelectStart(rowIndex, cellIndex)
@@ -308,7 +309,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         onKeyDown={handleCellKeyDown}
         onMouseDown={handleCellMouseDown}
         onMouseEnter={handleCellMouseEnter}
-        onClick={handleCellClick}
         onFocus={handleCellFocus}
         onBlur={handleCellBlur}
         data-is-selected={isSelected}

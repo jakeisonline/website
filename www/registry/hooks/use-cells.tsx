@@ -34,6 +34,7 @@ interface CellsContextType {
   setFocusCell: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectMove: (rowIndex: number, cellIndex: number) => void
+  handleShiftClickCell: (rowIndex: number, cellIndex: number) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -51,6 +52,7 @@ const CellsContext = createContext<CellsContextType>({
   setFocusCell: () => {},
   handleMouseSelectStart: () => {},
   handleMouseSelectMove: () => {},
+  handleShiftClickCell: () => {},
 })
 
 export const useCellsContext = () => {
@@ -85,7 +87,6 @@ export const CellsContextProvider = ({
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
-
   const mapRowIndex = (index: number, value: any) => {
     cellsMap.current.set(`row-${index.toString()}`, new Map(value))
   }
@@ -266,6 +267,18 @@ export const CellsContextProvider = ({
       input.setSelectionRange(inputCharLength, inputCharLength)
       input.focus()
     }
+  }
+
+  const handleShiftClickCell = (rowIndex: number, cellIndex: number) => {
+    const startCell = activeCell.current
+    if (!startCell) return
+
+    setSelectedCellRange({
+      startRowIndex: startCell.rowIndex,
+      startCellIndex: startCell.cellIndex,
+      endRowIndex: rowIndex,
+      endCellIndex: cellIndex,
+    })
   }
 
   const handleMouseSelectStart = (rowIndex: number, cellIndex: number) => {
@@ -467,6 +480,7 @@ export const CellsContextProvider = ({
         setFocusCell,
         handleMouseSelectStart,
         handleMouseSelectMove,
+        handleShiftClickCell,
       }}
     >
       {children}
