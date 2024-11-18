@@ -32,6 +32,8 @@ interface CellsContextType {
   setActiveCell: (rowIndex: number, cellIndex: number) => void
   setInputFocus: (rowIndex: number, cellIndex: number) => void
   setFocusCell: (rowIndex: number, cellIndex: number) => void
+  handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
+  handleMouseSelectMove: (rowIndex: number, cellIndex: number) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
@@ -47,6 +49,8 @@ const CellsContext = createContext<CellsContextType>({
   setActiveCell: () => {},
   setInputFocus: () => {},
   setFocusCell: () => {},
+  handleMouseSelectStart: () => {},
+  handleMouseSelectMove: () => {},
 })
 
 export const useCellsContext = () => {
@@ -78,6 +82,10 @@ export const CellsContextProvider = ({
     Map<string, string[]>
   >(new Map())
   const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
+  const isMouseSelecting = useRef(false)
+  const mouseSelectStartCell = useRef<
+    { rowIndex: number; cellIndex: number } | undefined
+  >(undefined)
 
   const mapRowIndex = (index: number, value: any) => {
     cellsMap.current.set(`row-${index.toString()}`, new Map(value))
@@ -261,6 +269,29 @@ export const CellsContextProvider = ({
     }
   }
 
+  const handleMouseSelectStart = (rowIndex: number, cellIndex: number) => {
+    mouseSelectStartCell.current = { rowIndex, cellIndex }
+
+    window.addEventListener("mouseup", handleMouseSelectEnd)
+  }
+
+  const handleMouseSelectMove = (rowIndex: number, cellIndex: number) => {
+    const startCell = mouseSelectStartCell.current
+    if (!startCell) return
+
+    setSelectedCellRange({
+      startRowIndex: startCell.rowIndex,
+      startCellIndex: startCell.cellIndex,
+      endRowIndex: rowIndex,
+      endCellIndex: cellIndex,
+    })
+  }
+
+  const handleMouseSelectEnd = () => {
+    mouseSelectStartCell.current = undefined
+    window.removeEventListener("mouseup", handleMouseSelectEnd)
+  }
+
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
     const selectedCells = selectedCellsMap.get(`row-${rowIndex}`)
 
@@ -435,6 +466,8 @@ export const CellsContextProvider = ({
         setActiveCell,
         setInputFocus,
         setFocusCell,
+        handleMouseSelectStart,
+        handleMouseSelectMove,
       }}
     >
       {children}

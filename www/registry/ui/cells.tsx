@@ -183,6 +183,8 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       setActiveCell,
       setInputFocus,
       setFocusCell,
+      handleMouseSelectStart,
+      handleMouseSelectMove,
     } = useCellsContext()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -279,6 +281,12 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         e.preventDefault()
         return
       }
+
+      handleMouseSelectStart(rowIndex, cellIndex)
+    }
+
+    const handleCellMouseEnter = () => {
+      handleMouseSelectMove(rowIndex, cellIndex)
     }
 
     const handleCellFocus = () => {
@@ -299,6 +307,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         data-is-active={isActive}
         onKeyDown={handleCellKeyDown}
         onMouseDown={handleCellMouseDown}
+        onMouseEnter={handleCellMouseEnter}
         onClick={handleCellClick}
         onFocus={handleCellFocus}
         onBlur={handleCellBlur}
