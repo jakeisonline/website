@@ -147,6 +147,7 @@ CellRow.displayName = "CellRow"
 interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   name: string
   label: string
+  autoselect?: boolean
   type?: HTMLInputTypeAttribute
   cellIndex?: number
   rowIndex?: number
@@ -160,6 +161,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       type = "text",
       name,
       label,
+      autoselect,
       initialValue,
       cellIndex,
       rowIndex,
@@ -313,6 +315,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         onBlur={handleCellBlur}
         data-is-selected={isSelected}
         ref={ref}
+        autoFocus={autoselect}
       >
         <label htmlFor={name} className="sr-only">
           {label}
