@@ -102,7 +102,7 @@ export const CellsContextProvider = ({
   }
 
   const getRowMap = (rowIndex: number) => {
-    return cellsMap.current.get(`row-${rowIndex}`)
+    return getCellsMap().get(`row-${rowIndex}`)
   }
 
   const getRowBoundaryCellIndex = (
@@ -123,7 +123,7 @@ export const CellsContextProvider = ({
   const getBoundaryRowIndex = (
     boundary: "first" | "last",
   ): number | undefined => {
-    return boundary === "first" ? 0 : cellsMap.current.size - 1
+    return boundary === "first" ? 0 : getCellsMap().size - 1
   }
 
   const getCellRef = (rowIndex: number, cellIndex: number) => {
