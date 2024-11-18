@@ -82,7 +82,6 @@ export const CellsContextProvider = ({
     Map<string, string[]>
   >(new Map())
   const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
-  const isMouseSelecting = useRef(false)
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
