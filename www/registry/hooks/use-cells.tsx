@@ -7,7 +7,6 @@ interface CellsContextType {
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
   clearSelectedCells: () => void
-  cellsMap: React.MutableRefObject<Map<string, Map<string, string>>>
   focusNextCell: ({
     direction,
     currentRowIndex,
@@ -43,7 +42,6 @@ const CellsContext = createContext<CellsContextType>({
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
-  cellsMap: { current: new Map() },
   focusNextCell: () => undefined,
   startShiftTraverse: () => {},
   isActiveCell: () => false,
@@ -471,7 +469,6 @@ export const CellsContextProvider = ({
         isSelectedCell,
         toggleSelectedCell,
         clearSelectedCells,
-        cellsMap,
         focusNextCell,
         startShiftTraverse,
         isActiveCell,
