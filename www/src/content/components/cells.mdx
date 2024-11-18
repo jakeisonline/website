@@ -10,7 +10,7 @@ import ExampleComponent from "@/components/example-component"
 
 # Cells
 
-The Cells component is a user interface element that allows user to select and edit values across spreadsheet-like cells.
+The Cells component is a user interface element that allows a user to select and edit values across spreadsheet-like cells.
 
 <ExampleComponent name={frontmatter.component} client:load />
 
@@ -20,19 +20,22 @@ Not 100% sure yet
 
 ### Keyboard interactions
 
-| Key                   | Action                                                                                |
-| --------------------- | ------------------------------------------------------------------------------------- |
-| <kbd>ArrowRight</kbd> | Moves focus to the next cell if caret is at the end of the current cell's input       |
-| <kbd>ArrowLeft</kbd>  | Moves focus to the previous cell if caret is at the start of the current cell's input |
-| <kbd>ArrowUp</kbd>    | Moves focus to the cell directly above the current cell, if it exists                 |
-| <kbd>ArrowDown</kbd>  | Moves focus to the cell directly below the current cell, if it exists                 |
+| Key                                      | Action                                                         |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| <kbd>ArrowRight</kbd>                    | Moves selection to the next cell in the current row            |
+| <kbd>ArrowLeft</kbd>                     | Moves selection to the previous cell in the current row        |
+| <kbd>ArrowUp</kbd>                       | Moves selection to the cell directly above the current cell    |
+| <kbd>ArrowDown</kbd>                     | Moves selection to the cell directly below the current cell    |
+| <kbd>Backspace</kbd> / <kbd>Delete</kbd> | Deletes the value of the currently selected cell's input field |
+| <kbd>Enter</kbd>                         | Focuses the currently focused cell's input field               |
+| <kbd>Escape</kbd>                        | Escapes from currently focused cell's input field              |
 
 #### Modifiers
 
-The following modifiers - keys you hold while pressing other keys - can be used to modify the behavior of the keyboard interactions documented above.
+The following modifiers - keys you hold while pressing other keys - can be used to modify the behavior of the documented keyboard interactions.
 
-| Key                                | Action                                                                                                                                                                                                                                                                                  |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>Ctrl</kbd>                    | When <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) is held, and any <kbd>Arrow</kbd> key is then pressed, the focus will change to the furthest cell in the direction of the arrow key.                                                                                                    |
-| <kbd>Shift</kbd>                   | When <kbd>Shift</kbd> is held, and any <kbd>Arrow</kbd> key is then pressed, a selection box will be drawn starting from the currently focused cell, which can be further increased or decreased using the <kbd>Arrow</kbd> keys. The focus will not change.                            |
-| <kbd>Shift</kbd> + <kbd>Ctrl</kbd> | When <kbd>Shift</kbd> and <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) are held, and any <kbd>Arrow</kbd> key is then pressed, a selection box will be drawn starting from the currently focused field, and then the furthest field in the direction of the <kbd>Arrow</kbd> key pressed. |
+| Key                                | Action                                                                                                                                                                                                                                                                                                                                          |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>Ctrl</kbd>                    | When <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) is held, and any <kbd>Arrow</kbd> key is then pressed or <kbd>MouseDown</kbd> event occurs, the focus will change to the furthest cell in the direction of the arrow key.                                                                                                                       |
+| <kbd>Shift</kbd>                   | When <kbd>Shift</kbd> is held, and any <kbd>Arrow</kbd> key is then pressed or <kbd>MouseDown</kbd> event occurs, a selection box will be drawn starting from the currently focused cell, which can be further increased or decreased using the <kbd>Arrow</kbd> keys, or further <kbd>MouseDown</kbd> events occur. The focus will not change. |
+| <kbd>Shift</kbd> + <kbd>Ctrl</kbd> | When <kbd>Shift</kbd> and <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) are held, and any <kbd>Arrow</kbd> key is then pressed, a selection box will be drawn starting from the currently focused field, and then the furthest field in the direction of the <kbd>Arrow</kbd> key pressed. The focus will not change.                              |
