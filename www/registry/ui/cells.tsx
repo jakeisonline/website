@@ -184,7 +184,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       isActiveCell,
       setActiveCell,
       setInputFocus,
-      setFocusCell,
       handleMouseSelectStart,
       handleMouseSelectMove,
       handleShiftClickCell,
