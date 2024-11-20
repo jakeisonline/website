@@ -30,7 +30,6 @@ interface CellsContextType {
   isActiveCell: (rowIndex: number, cellIndex: number) => boolean
   setActiveCell: (rowIndex: number, cellIndex: number) => void
   setInputFocus: (rowIndex: number, cellIndex: number) => void
-  setFocusCell: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectMove: (rowIndex: number, cellIndex: number) => void
   handleShiftClickCell: (rowIndex: number, cellIndex: number) => void
@@ -47,7 +46,6 @@ const CellsContext = createContext<CellsContextType>({
   isActiveCell: () => false,
   setActiveCell: () => {},
   setInputFocus: () => {},
-  setFocusCell: () => {},
   handleMouseSelectStart: () => {},
   handleMouseSelectMove: () => {},
   handleShiftClickCell: () => {},
@@ -134,16 +132,6 @@ export const CellsContextProvider = ({
     return shiftTraverseMarker.current
   }
 
-  const setFocusCell = (rowIndex: number, cellIndex: number): void => {
-    const cellRef = getCellRef(rowIndex, cellIndex)
-
-    if (!cellRef) return
-
-    clearSelectedCells()
-    clearShiftTraverseMarker()
-    cellRef?.focus()
-  }
-
   const focusNextCell = ({
     direction,
     currentRowIndex,
@@ -201,7 +189,7 @@ export const CellsContextProvider = ({
           })
       } else {
         getCellRef(currentTraverseMarker.rowIndex, nextCellIndex) &&
-          setFocusCell(currentTraverseMarker.rowIndex, nextCellIndex)
+          setActiveCell(currentTraverseMarker.rowIndex, nextCellIndex)
       }
     }
 
@@ -230,7 +218,7 @@ export const CellsContextProvider = ({
             currentShiftTraverseMarker?.cellIndex ?? currentCellIndex,
         })
       } else if (getCellRef(nextRowIndex, nextCellIndex)) {
-        setFocusCell(nextRowIndex, nextCellIndex)
+        setActiveCell(nextRowIndex, nextCellIndex)
       }
     }
 
@@ -247,7 +235,14 @@ export const CellsContextProvider = ({
   }
 
   const setActiveCell = (rowIndex: number, cellIndex: number) => {
+    const cellRef = getCellRef(rowIndex, cellIndex)
+
+    if (!cellRef) return
+
     activeCell.current = { rowIndex, cellIndex }
+    clearSelectedCells()
+    clearShiftTraverseMarker()
+    cellRef?.focus()
   }
 
   const clearActiveCell = () => {
@@ -474,7 +469,6 @@ export const CellsContextProvider = ({
         isActiveCell,
         setActiveCell,
         setInputFocus,
-        setFocusCell,
         handleMouseSelectStart,
         handleMouseSelectMove,
         handleShiftClickCell,

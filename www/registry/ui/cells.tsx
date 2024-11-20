@@ -196,12 +196,12 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
 
     const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Escape") {
-        setFocusCell(rowIndex, cellIndex)
+        setActiveCell(rowIndex, cellIndex)
         return
       }
 
       if (e.key === "Enter") {
-        setFocusCell(rowIndex, cellIndex)
+        setActiveCell(rowIndex, cellIndex)
         return
       }
     }
@@ -231,7 +231,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
 
       if (keyPressed === "Escape") {
         clearSelectedCells()
-        setFocusCell(rowIndex, cellIndex)
+        setActiveCell(rowIndex, cellIndex)
         return
       }
 
@@ -282,7 +282,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       // Effectively a double click, but much more forgiving on timing
       if (!isActiveCell(rowIndex, cellIndex)) {
         e.preventDefault()
-        setFocusCell(rowIndex, cellIndex)
+        setActiveCell(rowIndex, cellIndex)
       }
 
       handleMouseSelectStart(rowIndex, cellIndex)
@@ -290,10 +290,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
 
     const handleCellMouseEnter = () => {
       handleMouseSelectMove(rowIndex, cellIndex)
-    }
-
-    const handleCellFocus = () => {
-      setActiveCell(rowIndex, cellIndex)
     }
 
     const handleCellBlur = () => {
@@ -311,7 +307,6 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         onKeyDown={handleCellKeyDown}
         onMouseDown={handleCellMouseDown}
         onMouseEnter={handleCellMouseEnter}
-        onFocus={handleCellFocus}
         onBlur={handleCellBlur}
         data-is-selected={isSelected}
         ref={ref}
