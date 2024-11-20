@@ -157,7 +157,7 @@ export const CellsContextProvider = ({
     isCtrlHeld?: boolean
   }) => {
     const currentShiftTraverseMarker = getShiftTraverseMarker()
-    const focusPosition = {
+    const currentTraverseMarker = {
       cellIndex:
         isShiftHeld && currentShiftTraverseMarker
           ? currentShiftTraverseMarker.cellIndex
@@ -175,8 +175,8 @@ export const CellsContextProvider = ({
             direction === "left" ? "first" : "last",
           )
         : ["left", "up"].includes(direction)
-          ? focusPosition.cellIndex - 1
-          : focusPosition.cellIndex + 1
+          ? currentTraverseMarker.cellIndex - 1
+          : currentTraverseMarker.cellIndex + 1
 
       if (nextCellIndex === undefined) {
         !isShiftHeld && clearSelectedCells()
@@ -191,16 +191,16 @@ export const CellsContextProvider = ({
         if (boundaryCellIndex === undefined) return
 
         const endCellIndex = isCtrlHeld ? boundaryCellIndex : nextCellIndex
-        getCellRef(focusPosition.rowIndex, endCellIndex) &&
+        getCellRef(currentTraverseMarker.rowIndex, endCellIndex) &&
           setSelectedCellRange({
             startRowIndex: currentRowIndex,
             startCellIndex: currentCellIndex,
-            endRowIndex: focusPosition.rowIndex,
+            endRowIndex: currentTraverseMarker.rowIndex,
             endCellIndex,
           })
       } else {
-        getCellRef(focusPosition.rowIndex, nextCellIndex) &&
-          setFocusCell(focusPosition.rowIndex, nextCellIndex)
+        getCellRef(currentTraverseMarker.rowIndex, nextCellIndex) &&
+          setFocusCell(currentTraverseMarker.rowIndex, nextCellIndex)
       }
     }
 
@@ -208,8 +208,8 @@ export const CellsContextProvider = ({
       const nextRowIndex = isCtrlHeld
         ? getBoundaryRowIndex(direction === "up" ? "first" : "last")
         : ["up"].includes(direction)
-          ? focusPosition.rowIndex - 1
-          : focusPosition.rowIndex + 1
+          ? currentTraverseMarker.rowIndex - 1
+          : currentTraverseMarker.rowIndex + 1
 
       if (nextRowIndex === undefined) return
 
