@@ -1,6 +1,6 @@
 import { createContext, useContext, useRef, useState } from "react"
 
-type CellTraverseDirection = "left" | "right" | "up" | "down"
+export type CellTraverseDirection = "left" | "right" | "up" | "down"
 
 interface CellsContextType {
   addRowIndex: (index: number, value: any) => void

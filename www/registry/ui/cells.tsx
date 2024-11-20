@@ -8,6 +8,7 @@ import React, {
 import {
   CellsContextProvider,
   useCellsContext,
+  type CellTraverseDirection,
 } from "@/registry/hooks/use-cells"
 
 interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
@@ -211,7 +212,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
 
       const keyPressed = e.key
 
-      const keyMap: Record<string, string> = {
+      const keyMap: Record<string, CellTraverseDirection> = {
         ArrowLeft: "left",
         ArrowRight: "right",
         ArrowUp: "up",
