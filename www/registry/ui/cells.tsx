@@ -33,7 +33,7 @@ Cells.displayName = "Cells"
 const _renderCellsChildren = (children: React.ReactNode) => {
   if (!children) throw new Error("No children provided to Cells")
 
-  const { mapRowIndex } = useCellsContext()
+  const { addRowIndex } = useCellsContext()
 
   let rowIndex = 0
 
@@ -48,7 +48,7 @@ const _renderCellsChildren = (children: React.ReactNode) => {
 
     const tmpKey = child.key ? child.key : rowIndex
 
-    mapRowIndex(rowIndex, null)
+    addRowIndex(rowIndex, null)
     rowIndex++
 
     return (
@@ -65,7 +65,7 @@ const _renderCellRowChildren = (
 ) => {
   if (!children) throw new Error("No children provided to CellRow")
 
-  const { mapCellIndex } = useCellsContext()
+  const { addCellIndex } = useCellsContext()
 
   let cellIndex = 0
 
@@ -80,7 +80,7 @@ const _renderCellRowChildren = (
 
     const childRef = useRef<HTMLInputElement>(null)
 
-    mapCellIndex(rowIndex, cellIndex, childRef)
+    addCellIndex(rowIndex, cellIndex, childRef)
     cellIndex++
 
     return (

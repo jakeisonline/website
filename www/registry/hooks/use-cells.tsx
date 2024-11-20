@@ -1,8 +1,8 @@
 import { createContext, useContext, useRef, useState } from "react"
 
 interface CellsContextType {
-  mapRowIndex: (index: number, value: any) => void
-  mapCellIndex: (rowIndex: number, index: number, value: any) => void
+  addRowIndex: (index: number, value: any) => void
+  addCellIndex: (rowIndex: number, index: number, value: any) => void
   handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
@@ -37,8 +37,8 @@ interface CellsContextType {
 }
 
 const CellsContext = createContext<CellsContextType>({
-  mapRowIndex: () => {},
-  mapCellIndex: () => {},
+  addRowIndex: () => {},
+  addCellIndex: () => {},
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
@@ -85,11 +85,11 @@ export const CellsContextProvider = ({
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
-  const mapRowIndex = (index: number, value: any) => {
+  const addRowIndex = (index: number, value: any) => {
     cellsMap.current.set(`row-${index.toString()}`, new Map(value))
   }
 
-  const mapCellIndex = (rowIndex: number, index: number, inputRef: any) => {
+  const addCellIndex = (rowIndex: number, index: number, inputRef: any) => {
     cellsMap.current
       .get(`row-${rowIndex}`)
       ?.set(`cell-${index.toString()}`, inputRef)
@@ -464,8 +464,8 @@ export const CellsContextProvider = ({
   return (
     <CellsContext.Provider
       value={{
-        mapRowIndex,
-        mapCellIndex,
+        addRowIndex,
+        addCellIndex,
         isSelectedCell,
         toggleSelectedCell,
         clearSelectedCells,
