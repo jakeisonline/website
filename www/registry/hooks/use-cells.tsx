@@ -3,7 +3,6 @@ import { createContext, useContext, useRef, useState } from "react"
 interface CellsContextType {
   addRowIndex: (index: number, value: any) => void
   addCellIndex: (rowIndex: number, index: number, value: any) => void
-  handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
   clearSelectedCells: () => void
