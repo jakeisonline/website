@@ -1,5 +1,7 @@
 import { createContext, useContext, useRef, useState } from "react"
 
+type CellTraverseDirection = "left" | "right" | "up" | "down"
+
 interface CellsContextType {
   addRowIndex: (index: number, value: any) => void
   addCellIndex: (rowIndex: number, index: number, value: any) => void
@@ -14,7 +16,7 @@ interface CellsContextType {
     isShiftHeld,
     isCtrlHeld,
   }: {
-    direction: string
+    direction: CellTraverseDirection
     currentRowIndex: number
     currentCellIndex: number
     isShiftHeld?: boolean
@@ -139,7 +141,7 @@ export const CellsContextProvider = ({
     isShiftHeld,
     isCtrlHeld,
   }: {
-    direction: string
+    direction: CellTraverseDirection
     currentRowIndex: number
     currentCellIndex: number
     isShiftHeld?: boolean
