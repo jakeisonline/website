@@ -180,10 +180,10 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       isSelectedCell,
       toggleSelectedCell,
       clearSelectedCells,
-      focusNextCell,
       startShiftTraverse,
       isActiveCell,
       setActiveCell,
+      setNextActiveCell,
       setInputFocus,
       handleMouseSelectStart,
       handleMouseSelectMove,
@@ -250,7 +250,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       if (direction) {
         e.preventDefault()
 
-        focusNextCell({
+        setNextActiveCell({
           direction,
           currentRowIndex: rowIndex,
           currentCellIndex: cellIndex,

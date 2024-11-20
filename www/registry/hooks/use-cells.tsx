@@ -9,7 +9,16 @@ interface CellsContextType {
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
   clearSelectedCells: () => void
-  focusNextCell: ({
+  startShiftTraverse: ({
+    rowIndex,
+    cellIndex,
+  }: {
+    rowIndex: number
+    cellIndex: number
+  }) => void
+  isActiveCell: (rowIndex: number, cellIndex: number) => boolean
+  setActiveCell: (rowIndex: number, cellIndex: number) => void
+  setNextActiveCell: ({
     direction,
     currentRowIndex,
     currentCellIndex,
@@ -22,15 +31,6 @@ interface CellsContextType {
     isShiftHeld?: boolean
     isCtrlHeld?: boolean
   }) => void
-  startShiftTraverse: ({
-    rowIndex,
-    cellIndex,
-  }: {
-    rowIndex: number
-    cellIndex: number
-  }) => void
-  isActiveCell: (rowIndex: number, cellIndex: number) => boolean
-  setActiveCell: (rowIndex: number, cellIndex: number) => void
   setInputFocus: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectMove: (rowIndex: number, cellIndex: number) => void
@@ -43,10 +43,10 @@ const CellsContext = createContext<CellsContextType>({
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
-  focusNextCell: () => undefined,
   startShiftTraverse: () => {},
   isActiveCell: () => false,
   setActiveCell: () => {},
+  setNextActiveCell: () => undefined,
   setInputFocus: () => {},
   handleMouseSelectStart: () => {},
   handleMouseSelectMove: () => {},
@@ -134,7 +134,7 @@ export const CellsContextProvider = ({
     return shiftTraverseMarker.current
   }
 
-  const focusNextCell = ({
+  const setNextActiveCell = ({
     direction,
     currentRowIndex,
     currentCellIndex,
@@ -466,10 +466,10 @@ export const CellsContextProvider = ({
         isSelectedCell,
         toggleSelectedCell,
         clearSelectedCells,
-        focusNextCell,
         startShiftTraverse,
         isActiveCell,
         setActiveCell,
+        setNextActiveCell,
         setInputFocus,
         handleMouseSelectStart,
         handleMouseSelectMove,
