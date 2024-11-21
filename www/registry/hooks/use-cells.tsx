@@ -413,49 +413,24 @@ export const CellsContextProvider = ({
     endRowIndex: number
     endCellIndex: number
   }) => {
-    const traverseDirection = (startIndex: number, endIndex: number) =>
-      startIndex > endIndex ? "backward" : "forward"
+    clearSelectedCells()
 
-    const processCell = (rowIndex: number, cellIndex: number) => {
-      addSelectedCell(rowIndex, cellIndex)
-      setShiftTraverseMarker({
-        rowIndex: endRowIndex,
-        cellIndex: endCellIndex,
-      })
-    }
+    const [minRow, maxRow] = [
+      Math.min(startRowIndex, endRowIndex),
+      Math.max(startRowIndex, endRowIndex),
+    ]
+    const [minCell, maxCell] = [
+      Math.min(startCellIndex, endCellIndex),
+      Math.max(startCellIndex, endCellIndex),
+    ]
 
-    const processCellsInRow = (rowIndex: number) => {
-      const direction = traverseDirection(startCellIndex, endCellIndex)
-      const [start, end, step] =
-        direction === "forward"
-          ? [startCellIndex, endCellIndex, 1]
-          : [startCellIndex, endCellIndex, -1]
-
-      for (
-        let cellIndex = start;
-        direction === "forward" ? cellIndex <= end : cellIndex >= end;
-        cellIndex += step
-      ) {
-        processCell(rowIndex, cellIndex)
+    for (let row = minRow; row <= maxRow; row++) {
+      for (let cell = minCell; cell <= maxCell; cell++) {
+        addSelectedCell(row, cell)
       }
     }
 
-    clearSelectedCells()
-    addSelectedCell(startRowIndex, startCellIndex)
-
-    const direction = traverseDirection(startRowIndex, endRowIndex)
-    const [start, end, step] =
-      direction === "forward"
-        ? [startRowIndex, endRowIndex, 1]
-        : [startRowIndex, endRowIndex, -1]
-
-    for (
-      let rowIndex = start;
-      direction === "forward" ? rowIndex <= end : rowIndex >= end;
-      rowIndex += step
-    ) {
-      processCellsInRow(rowIndex)
-    }
+    setShiftTraverseMarker({ rowIndex: endRowIndex, cellIndex: endCellIndex })
   }
 
   // Mouse and Shift Selection
