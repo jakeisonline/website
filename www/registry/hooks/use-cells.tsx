@@ -97,9 +97,6 @@ export const CellsContextProvider = ({
   const shiftTraverseMarker = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
-  const activeCell = useRef<
-    { rowIndex: number; cellIndex: number } | undefined
-  >(undefined)
   const cellsMap = useRef<CellsMap>(new Map())
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
@@ -145,15 +142,25 @@ export const CellsContextProvider = ({
     }
   }
 
+  const getActiveCell = () => {
+    for (const [rowIndex, row] of cellsMap.current.entries()) {
+      for (const [cellIndex, cell] of row.entries()) {
+        if (cell.isActive) {
+          return { rowIndex, cellIndex }
+        }
+      }
+    }
+    return undefined
+  }
+
   const setActiveCell = (rowIndex: number, cellIndex: number) => {
-    // Clear previous active cell
+    // Clear previous active cell and set new one in a single pass
     cellsMap.current.forEach((row) => {
       row.forEach((cell) => {
         cell.isActive = false
       })
     })
 
-    // Set new active cell
     const cell = getCellState(rowIndex, cellIndex)
     if (cell) {
       clearShiftTraverseMarker()
@@ -289,14 +296,7 @@ export const CellsContextProvider = ({
   }
 
   const isActiveCell = (rowIndex: number, cellIndex: number) => {
-    return (
-      activeCell.current?.rowIndex === rowIndex &&
-      activeCell.current?.cellIndex === cellIndex
-    )
-  }
-
-  const clearActiveCell = () => {
-    activeCell.current = undefined
+    return getCellState(rowIndex, cellIndex)?.isActive ?? false
   }
 
   const setInputFocus = (rowIndex: number, cellIndex: number) => {
@@ -313,7 +313,7 @@ export const CellsContextProvider = ({
   }
 
   const handleShiftClickCell = (rowIndex: number, cellIndex: number) => {
-    const startCell = activeCell.current
+    const startCell = getActiveCell()
     if (!startCell) return
 
     setSelectedCellRange({
