@@ -17,68 +17,54 @@ interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
 }
 
 export const Cells = forwardRef<HTMLFormElement, CellsProps>(
-  ({ className, children, ...props }, ref) => {
-    if (!children) throw new Error("No children provided to Cells")
-
-    return (
-      <CellsContextProvider>
-        <CellsForm className={cn("", className)} {...props} ref={ref}>
-          {children}
-        </CellsForm>
-      </CellsContextProvider>
-    )
-  },
+  ({ className, children, ...props }, ref) => (
+    <CellsContextProvider>
+      <CellsForm className={cn("", className)} {...props} ref={ref}>
+        {children}
+      </CellsForm>
+    </CellsContextProvider>
+  ),
 )
 Cells.displayName = "Cells"
 
-const _renderCellsChildren = (children: React.ReactNode) => {
-  if (!children) throw new Error("No children provided to Cells")
-
-  let rowIndex = 0
-
-  return React.Children.map(children, (child) => {
-    if (!React.isValidElement(child)) return null
-
-    if (
-      typeof child.type === "function" &&
-      (child.type as any).displayName !== "CellRow"
-    )
-      throw new Error("Invalid child type, only CellRow is allowed")
-
-    const tmpKey = child.key ? child.key : rowIndex
-    rowIndex++
-
-    return (
-      <CellRow key={tmpKey}>
-        {_renderCellRowChildren(rowIndex - 1, child.props.children)}
-      </CellRow>
-    )
-  })
-}
-
-const _renderCellRowChildren = (
-  rowIndex: number,
-  children: React.ReactNode,
-) => {
-  if (!children) throw new Error("No children provided to CellRow")
+const _renderCells = (children: React.ReactNode, parentRowIndex?: number) => {
+  if (!children) throw new Error("No children provided")
 
   const { addCellIndex } = useCellsContext()
-
+  let rowIndex = parentRowIndex ?? 0
   let cellIndex = 0
 
   return React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) return null
 
+    if (parentRowIndex === undefined) {
+      if (
+        typeof child.type === "function" &&
+        (child.type as any).displayName !== "CellRow"
+      ) {
+        throw new Error("Invalid child type, only CellRow is allowed")
+      }
+
+      const tmpKey = child.key ? child.key : rowIndex
+      rowIndex++
+
+      return (
+        <CellRow key={tmpKey}>
+          {_renderCells(child.props.children, rowIndex - 1)}
+        </CellRow>
+      )
+    }
+
     if (
       typeof child.type === "function" &&
       (child.type as any).displayName !== "Cell"
-    )
+    ) {
       throw new Error("Invalid child type, only Cell is allowed")
+    }
 
     const childRef = useRef<HTMLInputElement>(null)
     const initialValue = child.props.initialValue || ""
 
-    // Pass initialValue when adding the cell
     addCellIndex(rowIndex, cellIndex, childRef, initialValue)
     cellIndex++
 
@@ -104,16 +90,14 @@ const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
     const { handleMouseDown } = useCellsContext()
 
-    const formRef = useRef<HTMLFormElement>(null)
-
     return (
       <form
         onMouseDown={handleMouseDown}
         className={cn("", className)}
         {...props}
-        ref={formRef}
+        ref={ref}
       >
-        {_renderCellsChildren(children)}
+        {_renderCells(children)}
       </form>
     )
   },
