@@ -100,10 +100,6 @@ export const CellsContextProvider = ({
   const activeCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
-  const [selectedCellsMap, setSelectedCellsMap] = useState<
-    Map<string, string[]>
-  >(new Map())
-  //const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
   const cellsMap = useRef<CellsMap>(new Map())
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
@@ -352,58 +348,23 @@ export const CellsContextProvider = ({
   }
 
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const selectedCells = selectedCellsMap.get(`row-${rowIndex}`)
-
-    if (selectedCells) {
-      return selectedCells.includes(`cell-${cellIndex}`)
-    }
-
-    return false
+    return getCellState(rowIndex, cellIndex)?.isSelected ?? false
   }
 
   const addSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const newSelectedCellsMap = selectedCellsMap
-    const selectedRowIndex = newSelectedCellsMap.get(`row-${rowIndex}`)
-
-    if (!selectedRowIndex) {
-      newSelectedCellsMap.set(`row-${rowIndex}`, [`cell-${cellIndex}`])
-    } else {
-      const rowSelectedCells = selectedRowIndex
-      if (!rowSelectedCells.includes(`cell-${cellIndex}`)) {
-        newSelectedCellsMap.set(`row-${rowIndex}`, [
-          ...rowSelectedCells,
-          `cell-${cellIndex}`,
-        ])
-      }
+    const cell = getCellState(rowIndex, cellIndex)
+    if (cell) {
+      cell.isSelected = true
+      cell.ref?.current?.setAttribute("data-is-selected", "true")
     }
-
-    setSelectedCellsMap(newSelectedCellsMap)
-
-    const selectedCellRef = getCellRef(rowIndex, cellIndex)
-    selectedCellRef?.current?.setAttribute("data-is-selected", "true")
   }
 
   const removeSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const newSelectedCellsMap = selectedCellsMap
-    const selectedRowIndex = newSelectedCellsMap.get(`row-${rowIndex}`)
-
-    if (selectedRowIndex) {
-      const rowSelectedCells = selectedRowIndex
-      const newRowSelectedCells = rowSelectedCells.filter(
-        (cell) => cell !== `cell-${cellIndex}`,
-      )
-
-      if (newRowSelectedCells.length === 0) {
-        newSelectedCellsMap.delete(`row-${rowIndex}`)
-      } else {
-        newSelectedCellsMap.set(`row-${rowIndex}`, newRowSelectedCells)
-      }
+    const cell = getCellState(rowIndex, cellIndex)
+    if (cell) {
+      cell.isSelected = false
+      cell.ref?.current?.setAttribute("data-is-selected", "false")
     }
-
-    setSelectedCellsMap(newSelectedCellsMap)
-
-    const selectedCellRef = getCellRef(rowIndex, cellIndex)
-    selectedCellRef?.current?.setAttribute("data-is-selected", "false")
   }
 
   const toggleSelectedCell = (rowIndex: number, cellIndex: number) => {
@@ -415,16 +376,12 @@ export const CellsContextProvider = ({
   }
 
   const clearSelectedCells = () => {
-    selectedCellsMap.forEach((rowContent, rowKey) => {
-      const rowIndex = rowKey.split("-")[1]
-      rowContent.forEach((cell) => {
-        const cellIndex = cell.split("-")[1]
-        const cellRef = getCellRef(Number(rowIndex), Number(cellIndex))
-        cellRef?.current?.setAttribute("data-is-selected", "false")
+    cellsMap.current.forEach((row) => {
+      row.forEach((cell) => {
+        cell.isSelected = false
+        cell.ref?.current?.setAttribute("data-is-selected", "false")
       })
     })
-
-    setSelectedCellsMap(new Map())
   }
 
   const setSelectedCellRange = ({
