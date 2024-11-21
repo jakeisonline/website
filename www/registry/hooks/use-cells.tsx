@@ -245,25 +245,21 @@ export const CellsContextProvider = ({
 
   // Navigation
 
-  const getRowBoundaryCellIndex = (
+  const getBoundary = (
+    type: "row" | "cell",
     rowIndex: number,
     boundary: "first" | "last",
   ) => {
+    if (type === "row") {
+      return boundary === "first" ? 0 : getCellsMap().size - 1
+    }
+
     const row = getRowMap(rowIndex)
     if (!row) return undefined
 
-    if (boundary === "first") {
-      return Number(row.entries().next().value?.[0])
-    } else {
-      const entries = Array.from(row.entries())
-      return Number(entries[entries.length - 1][0])
-    }
-  }
-
-  const getBoundaryRowIndex = (
-    boundary: "first" | "last",
-  ): number | undefined => {
-    return boundary === "first" ? 0 : getCellsMap().size - 1
+    return boundary === "first"
+      ? Number(row.entries().next().value?.[0])
+      : Number(Array.from(row.entries()).pop()?.[0])
   }
 
   const setNextActiveCell = ({
@@ -293,8 +289,9 @@ export const CellsContextProvider = ({
 
     const handleHorizontalMovement = () => {
       const nextCellIndex = isCtrlHeld
-        ? getRowBoundaryCellIndex(
-            currentRowIndex,
+        ? getBoundary(
+            "cell",
+            currentTraverseMarker.rowIndex,
             direction === "left" ? "first" : "last",
           )
         : ["left", "up"].includes(direction)
@@ -307,8 +304,9 @@ export const CellsContextProvider = ({
       }
 
       if (isShiftHeld) {
-        const boundaryCellIndex = getRowBoundaryCellIndex(
-          currentRowIndex,
+        const boundaryCellIndex = getBoundary(
+          "cell",
+          currentTraverseMarker.rowIndex,
           direction === "left" ? "first" : "last",
         )
         if (boundaryCellIndex === undefined) return
@@ -329,7 +327,11 @@ export const CellsContextProvider = ({
 
     const handleVerticalMovement = () => {
       const nextRowIndex = isCtrlHeld
-        ? getBoundaryRowIndex(direction === "up" ? "first" : "last")
+        ? getBoundary(
+            "row",
+            currentTraverseMarker.rowIndex,
+            direction === "up" ? "first" : "last",
+          )
         : ["up"].includes(direction)
           ? currentTraverseMarker.rowIndex - 1
           : currentTraverseMarker.rowIndex + 1
