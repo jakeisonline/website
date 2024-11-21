@@ -166,13 +166,10 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     } = useCellsContext()
 
     const cellState = getCellState(rowIndex, cellIndex)
-    const [value, setValue] = useState<string>(
-      cellState?.value ?? initialValue ?? "",
-    )
+    const value = cellState?.value ?? ""
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value
-      setValue(newValue)
       setCellValue(rowIndex, cellIndex, newValue)
     }
 
@@ -223,7 +220,7 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       }
 
       if (keyPressed === "Delete" || keyPressed === "Backspace") {
-        setValue("")
+        setCellValue(rowIndex, cellIndex, "")
         return
       }
 

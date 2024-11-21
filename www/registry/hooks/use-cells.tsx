@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState } from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
 
 export type CellTraverseDirection = "left" | "right" | "up" | "down"
 
@@ -113,7 +113,17 @@ interface CellsContextProviderProps {
 export const CellsContextProvider = ({
   children,
 }: CellsContextProviderProps) => {
+  const [cellValues, setCellValues] = useState<
+    Map<number, Map<number, string>>
+  >(new Map())
   const cellsMap = useRef<CellsMap>(new Map())
+  const pendingInitializations = useRef<
+    Array<{
+      rowIndex: number
+      cellIndex: number
+      value: string
+    }>
+  >([])
   const shiftTraverseMarker = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
@@ -127,7 +137,12 @@ export const CellsContextProvider = ({
     rowIndex: number,
     cellIndex: number,
   ): CellState | undefined => {
-    return cellsMap.current.get(rowIndex)?.get(cellIndex)
+    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
+    if (cell) {
+      const value = cellValues.get(rowIndex)?.get(cellIndex) ?? cell.value
+      return { ...cell, value }
+    }
+    return undefined
   }
 
   const getRowMap = (rowIndex: number) => {
@@ -142,6 +157,14 @@ export const CellsContextProvider = ({
     const cell = getCellState(rowIndex, cellIndex)
     if (cell) {
       cell.value = value
+      setCellValues((prev) => {
+        const newValues = new Map(prev)
+        if (!newValues.has(rowIndex)) {
+          newValues.set(rowIndex, new Map())
+        }
+        newValues.get(rowIndex)?.set(cellIndex, value)
+        return newValues
+      })
     }
   }
 
@@ -156,10 +179,17 @@ export const CellsContextProvider = ({
     }
 
     cellsMap.current.get(rowIndex)?.set(cellIndex, {
-      value: initialValue, // Use the passed initialValue
+      value: initialValue,
       isSelected: false,
       isActive: false,
       ref: inputRef,
+    })
+
+    // Queue the initialization instead of updating state directly
+    pendingInitializations.current.push({
+      rowIndex,
+      cellIndex,
+      value: initialValue,
     })
   }
 
@@ -497,6 +527,26 @@ export const CellsContextProvider = ({
   const clearShiftTraverseMarker = () => {
     shiftTraverseMarker.current = undefined
   }
+
+  // Initialization
+
+  useEffect(() => {
+    if (pendingInitializations.current.length > 0) {
+      setCellValues((prev) => {
+        const newValues = new Map(prev)
+        pendingInitializations.current.forEach(
+          ({ rowIndex, cellIndex, value }) => {
+            if (!newValues.has(rowIndex)) {
+              newValues.set(rowIndex, new Map())
+            }
+            newValues.get(rowIndex)?.set(cellIndex, value)
+          },
+        )
+        return newValues
+      })
+      pendingInitializations.current = []
+    }
+  }, [])
 
   return (
     <CellsContext.Provider
