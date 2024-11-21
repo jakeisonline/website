@@ -124,12 +124,14 @@ export const CellsContextProvider = ({
       value: string
     }>
   >([])
-  const shiftTraverseMarker = useRef<
-    { rowIndex: number; cellIndex: number } | undefined
-  >(undefined)
-  const mouseSelectStartCell = useRef<
-    { rowIndex: number; cellIndex: number } | undefined
-  >(undefined)
+  const selectionState = useRef({
+    shiftTraverseMarker: undefined as
+      | { rowIndex: number; cellIndex: number }
+      | undefined,
+    mouseSelectStartCell: undefined as
+      | { rowIndex: number; cellIndex: number }
+      | undefined,
+  })
 
   // Cell Management
 
@@ -448,13 +450,13 @@ export const CellsContextProvider = ({
   }
 
   const handleMouseSelectStart = (rowIndex: number, cellIndex: number) => {
-    mouseSelectStartCell.current = { rowIndex, cellIndex }
+    selectionState.current.mouseSelectStartCell = { rowIndex, cellIndex }
 
     window.addEventListener("mouseup", handleMouseSelectEnd)
   }
 
   const handleMouseSelectMove = (rowIndex: number, cellIndex: number) => {
-    const startCell = mouseSelectStartCell.current
+    const startCell = selectionState.current.mouseSelectStartCell
     if (!startCell) return
 
     setSelectedCellRange({
@@ -466,7 +468,7 @@ export const CellsContextProvider = ({
   }
 
   const handleMouseSelectEnd = () => {
-    mouseSelectStartCell.current = undefined
+    selectionState.current.mouseSelectStartCell = undefined
     window.removeEventListener("mouseup", handleMouseSelectEnd)
   }
 
@@ -475,7 +477,7 @@ export const CellsContextProvider = ({
   const getShiftTraverseMarker = ():
     | { rowIndex: number; cellIndex: number }
     | undefined => {
-    return shiftTraverseMarker.current
+    return selectionState.current.shiftTraverseMarker
   }
 
   const startShiftTraverse = ({
@@ -486,7 +488,7 @@ export const CellsContextProvider = ({
     cellIndex: number
   }) => {
     // Don't clobber an existing shift selection
-    if (!shiftTraverseMarker.current) {
+    if (!selectionState.current.shiftTraverseMarker) {
       setShiftTraverseMarker({ rowIndex, cellIndex })
     }
   }
@@ -498,11 +500,11 @@ export const CellsContextProvider = ({
     rowIndex: number
     cellIndex: number
   }) => {
-    shiftTraverseMarker.current = { rowIndex, cellIndex }
+    selectionState.current.shiftTraverseMarker = { rowIndex, cellIndex }
   }
 
   const clearShiftTraverseMarker = () => {
-    shiftTraverseMarker.current = undefined
+    selectionState.current.shiftTraverseMarker = undefined
   }
 
   // Initialization
