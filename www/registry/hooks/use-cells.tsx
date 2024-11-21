@@ -2,9 +2,24 @@ import { createContext, useContext, useRef, useState } from "react"
 
 export type CellTraverseDirection = "left" | "right" | "up" | "down"
 
+// Define a cell state interface
+interface CellState {
+  value: string
+  isSelected: boolean
+  isActive: boolean
+  ref: React.RefObject<HTMLInputElement>
+}
+
+// Define the new map types
+type CellsMap = Map<number, Map<number, CellState>>
+
 interface CellsContextType {
-  addRowIndex: (index: number, value: any) => void
-  addCellIndex: (rowIndex: number, index: number, value: any) => void
+  addCellIndex: (
+    rowIndex: number,
+    cellIndex: number,
+    inputRef: React.RefObject<HTMLInputElement>,
+    initialValue: string,
+  ) => void
   handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
@@ -35,10 +50,13 @@ interface CellsContextType {
   handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectMove: (rowIndex: number, cellIndex: number) => void
   handleShiftClickCell: (rowIndex: number, cellIndex: number) => void
+  setCellValue: (rowIndex: number, cellIndex: number, value: string) => void
+  getCellState: (rowIndex: number, cellIndex: number) => CellState | undefined
+  getRowMap: (rowIndex: number) => Map<number, CellState> | undefined
+  getCellsMap: () => CellsMap
 }
 
 const CellsContext = createContext<CellsContextType>({
-  addRowIndex: () => {},
   addCellIndex: () => {},
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
@@ -51,6 +69,10 @@ const CellsContext = createContext<CellsContextType>({
   handleMouseSelectStart: () => {},
   handleMouseSelectMove: () => {},
   handleShiftClickCell: () => {},
+  setCellValue: () => {},
+  getCellState: () => undefined,
+  getRowMap: () => undefined,
+  getCellsMap: () => new Map(),
 })
 
 export const useCellsContext = () => {
@@ -81,26 +103,67 @@ export const CellsContextProvider = ({
   const [selectedCellsMap, setSelectedCellsMap] = useState<
     Map<string, string[]>
   >(new Map())
-  const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
+  //const cellsMap = useRef<Map<string, Map<string, any>>>(new Map())
+  const cellsMap = useRef<CellsMap>(new Map())
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
-  const addRowIndex = (index: number, value: any) => {
-    cellsMap.current.set(`row-${index.toString()}`, new Map(value))
+
+  const addCellIndex = (
+    rowIndex: number,
+    cellIndex: number,
+    inputRef: React.RefObject<HTMLInputElement>,
+    initialValue: string,
+  ) => {
+    if (!cellsMap.current.has(rowIndex)) {
+      cellsMap.current.set(rowIndex, new Map())
+    }
+
+    cellsMap.current.get(rowIndex)?.set(cellIndex, {
+      value: initialValue, // Use the passed initialValue
+      isSelected: false,
+      isActive: false,
+      ref: inputRef,
+    })
   }
 
-  const addCellIndex = (rowIndex: number, index: number, inputRef: any) => {
-    cellsMap.current
-      .get(`row-${rowIndex}`)
-      ?.set(`cell-${index.toString()}`, inputRef)
+  const getCellState = (
+    rowIndex: number,
+    cellIndex: number,
+  ): CellState | undefined => {
+    return cellsMap.current.get(rowIndex)?.get(cellIndex)
+  }
+
+  const getRowMap = (rowIndex: number) => {
+    return cellsMap.current.get(rowIndex)
   }
 
   const getCellsMap = () => {
     return cellsMap.current
   }
 
-  const getRowMap = (rowIndex: number) => {
-    return getCellsMap().get(`row-${rowIndex}`)
+  const setCellValue = (rowIndex: number, cellIndex: number, value: string) => {
+    const cell = getCellState(rowIndex, cellIndex)
+    if (cell) {
+      cell.value = value
+    }
+  }
+
+  const setActiveCell = (rowIndex: number, cellIndex: number) => {
+    // Clear previous active cell
+    cellsMap.current.forEach((row) => {
+      row.forEach((cell) => {
+        cell.isActive = false
+      })
+    })
+
+    // Set new active cell
+    const cell = getCellState(rowIndex, cellIndex)
+    if (cell) {
+      clearShiftTraverseMarker()
+      cell.isActive = true
+      cell.ref?.current?.focus()
+    }
   }
 
   const getRowBoundaryCellIndex = (
@@ -111,10 +174,10 @@ export const CellsContextProvider = ({
     if (!row) return undefined
 
     if (boundary === "first") {
-      return Number(row.entries().next().value?.[0].split("-")[1])
+      return Number(row.entries().next().value?.[0])
     } else {
       const entries = Array.from(row.entries())
-      return Number(entries[entries.length - 1][0].split("-")[1])
+      return Number(entries[entries.length - 1][0])
     }
   }
 
@@ -125,7 +188,7 @@ export const CellsContextProvider = ({
   }
 
   const getCellRef = (rowIndex: number, cellIndex: number) => {
-    return getRowMap(rowIndex)?.get(`cell-${cellIndex}`)?.current
+    return getRowMap(rowIndex)?.get(cellIndex)?.ref
   }
 
   const getShiftTraverseMarker = ():
@@ -236,17 +299,6 @@ export const CellsContextProvider = ({
     )
   }
 
-  const setActiveCell = (rowIndex: number, cellIndex: number) => {
-    const cellRef = getCellRef(rowIndex, cellIndex)
-
-    if (!cellRef) return
-
-    activeCell.current = { rowIndex, cellIndex }
-    clearSelectedCells()
-    clearShiftTraverseMarker()
-    cellRef?.focus()
-  }
-
   const clearActiveCell = () => {
     activeCell.current = undefined
   }
@@ -255,7 +307,7 @@ export const CellsContextProvider = ({
     const cellRef = getCellRef(rowIndex, cellIndex)
     if (!cellRef) return
 
-    const input = cellRef.querySelector("input")
+    const input = cellRef.current?.querySelector("input")
 
     if (input) {
       const inputCharLength = input.value.length
@@ -328,7 +380,7 @@ export const CellsContextProvider = ({
     setSelectedCellsMap(newSelectedCellsMap)
 
     const selectedCellRef = getCellRef(rowIndex, cellIndex)
-    selectedCellRef?.setAttribute("data-is-selected", "true")
+    selectedCellRef?.current?.setAttribute("data-is-selected", "true")
   }
 
   const removeSelectedCell = (rowIndex: number, cellIndex: number) => {
@@ -351,7 +403,7 @@ export const CellsContextProvider = ({
     setSelectedCellsMap(newSelectedCellsMap)
 
     const selectedCellRef = getCellRef(rowIndex, cellIndex)
-    selectedCellRef?.current.setAttribute("data-is-selected", "false")
+    selectedCellRef?.current?.setAttribute("data-is-selected", "false")
   }
 
   const toggleSelectedCell = (rowIndex: number, cellIndex: number) => {
@@ -368,7 +420,7 @@ export const CellsContextProvider = ({
       rowContent.forEach((cell) => {
         const cellIndex = cell.split("-")[1]
         const cellRef = getCellRef(Number(rowIndex), Number(cellIndex))
-        cellRef?.setAttribute("data-is-selected", "false")
+        cellRef?.current?.setAttribute("data-is-selected", "false")
       })
     })
 
@@ -461,7 +513,6 @@ export const CellsContextProvider = ({
   return (
     <CellsContext.Provider
       value={{
-        addRowIndex,
         addCellIndex,
         isSelectedCell,
         toggleSelectedCell,
@@ -474,6 +525,10 @@ export const CellsContextProvider = ({
         handleMouseSelectStart,
         handleMouseSelectMove,
         handleShiftClickCell,
+        setCellValue,
+        getCellState,
+        getRowMap,
+        getCellsMap,
       }}
     >
       {children}

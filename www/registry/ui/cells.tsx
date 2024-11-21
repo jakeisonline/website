@@ -34,8 +34,6 @@ Cells.displayName = "Cells"
 const _renderCellsChildren = (children: React.ReactNode) => {
   if (!children) throw new Error("No children provided to Cells")
 
-  const { addRowIndex } = useCellsContext()
-
   let rowIndex = 0
 
   return React.Children.map(children, (child) => {
@@ -48,8 +46,6 @@ const _renderCellsChildren = (children: React.ReactNode) => {
       throw new Error("Invalid child type, only CellRow is allowed")
 
     const tmpKey = child.key ? child.key : rowIndex
-
-    addRowIndex(rowIndex, null)
     rowIndex++
 
     return (
@@ -80,8 +76,10 @@ const _renderCellRowChildren = (
       throw new Error("Invalid child type, only Cell is allowed")
 
     const childRef = useRef<HTMLInputElement>(null)
+    const initialValue = child.props.initialValue || ""
 
-    addCellIndex(rowIndex, cellIndex, childRef)
+    // Pass initialValue when adding the cell
+    addCellIndex(rowIndex, cellIndex, childRef, initialValue)
     cellIndex++
 
     return (
@@ -174,9 +172,9 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
     if (cellIndex === undefined || rowIndex === undefined)
       throw new Error("cellIndex and rowIndex are required props for Cell")
 
-    const [value, setValue] = useState<string | undefined>(initialValue)
-
     const {
+      getCellState,
+      setCellValue,
       isSelectedCell,
       toggleSelectedCell,
       clearSelectedCells,
@@ -190,8 +188,15 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
       handleShiftClickCell,
     } = useCellsContext()
 
+    const cellState = getCellState(rowIndex, cellIndex)
+    const [value, setValue] = useState<string>(
+      cellState?.value ?? initialValue ?? "",
+    )
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value)
+      const newValue = e.target.value
+      setValue(newValue)
+      setCellValue(rowIndex, cellIndex, newValue)
     }
 
     const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -304,11 +309,11 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
         tabIndex={0}
         className="w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
         data-is-active={isActive}
+        data-is-selected={isSelected}
         onKeyDown={handleCellKeyDown}
         onMouseDown={handleCellMouseDown}
         onMouseEnter={handleCellMouseEnter}
         onBlur={handleCellBlur}
-        data-is-selected={isSelected}
         ref={ref}
         autoFocus={autoselect}
       >
@@ -319,11 +324,11 @@ export const Cell = forwardRef<HTMLInputElement, CellProps>(
           type={type}
           name={name}
           className="w-full bg-transparent px-3 py-2 text-center outline-none [appearance:textfield] focus:inner-border-2 focus:inner-border-primary/25 [&:not(:focus)]:cursor-pointer"
-          {...props}
           value={value}
           tabIndex={-1}
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
+          {...props}
         />
       </div>
     )
