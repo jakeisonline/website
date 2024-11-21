@@ -2,7 +2,6 @@ import { createContext, useContext, useRef, useState } from "react"
 
 export type CellTraverseDirection = "left" | "right" | "up" | "down"
 
-// Define a cell state interface
 interface CellState {
   value: string
   isSelected: boolean
@@ -10,29 +9,27 @@ interface CellState {
   ref: React.RefObject<HTMLInputElement>
 }
 
-// Define the new map types
 type CellsMap = Map<number, Map<number, CellState>>
 
 interface CellsContextType {
+  // Cell Management
+  getCellState: (rowIndex: number, cellIndex: number) => CellState | undefined
+  getRowMap: (rowIndex: number) => Map<number, CellState> | undefined
+  getCellsMap: () => CellsMap
+  setCellValue: (rowIndex: number, cellIndex: number, value: string) => void
   addCellIndex: (
     rowIndex: number,
     cellIndex: number,
     inputRef: React.RefObject<HTMLInputElement>,
     initialValue: string,
   ) => void
-  handleMouseDown?: (e: React.MouseEvent<HTMLFormElement>) => void
-  isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
-  toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
-  clearSelectedCells: () => void
-  startShiftTraverse: ({
-    rowIndex,
-    cellIndex,
-  }: {
-    rowIndex: number
-    cellIndex: number
-  }) => void
+
+  // Active Cell Management
   isActiveCell: (rowIndex: number, cellIndex: number) => boolean
   setActiveCell: (rowIndex: number, cellIndex: number) => void
+  setInputFocus: (rowIndex: number, cellIndex: number) => void
+
+  // Navigation
   setNextActiveCell: ({
     direction,
     currentRowIndex,
@@ -46,33 +43,55 @@ interface CellsContextType {
     isShiftHeld?: boolean
     isCtrlHeld?: boolean
   }) => void
-  setInputFocus: (rowIndex: number, cellIndex: number) => void
+
+  // Selection
+  isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
+  toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
+  clearSelectedCells: () => void
+
+  // Mouse and Shift Selection
   handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
   handleMouseSelectMove: (rowIndex: number, cellIndex: number) => void
   handleShiftClickCell: (rowIndex: number, cellIndex: number) => void
-  setCellValue: (rowIndex: number, cellIndex: number, value: string) => void
-  getCellState: (rowIndex: number, cellIndex: number) => CellState | undefined
-  getRowMap: (rowIndex: number) => Map<number, CellState> | undefined
-  getCellsMap: () => CellsMap
+
+  // Traverse Markers
+  startShiftTraverse: ({
+    rowIndex,
+    cellIndex,
+  }: {
+    rowIndex: number
+    cellIndex: number
+  }) => void
 }
 
 const CellsContext = createContext<CellsContextType>({
-  addCellIndex: () => {},
-  isSelectedCell: () => false,
-  toggleSelectedCell: () => {},
-  clearSelectedCells: () => {},
-  startShiftTraverse: () => {},
-  isActiveCell: () => false,
-  setActiveCell: () => {},
-  setNextActiveCell: () => undefined,
-  setInputFocus: () => {},
-  handleMouseSelectStart: () => {},
-  handleMouseSelectMove: () => {},
-  handleShiftClickCell: () => {},
-  setCellValue: () => {},
+  // Cell Management
   getCellState: () => undefined,
   getRowMap: () => undefined,
   getCellsMap: () => new Map(),
+  setCellValue: () => {},
+  addCellIndex: () => {},
+
+  // Active Cell Management
+  isActiveCell: () => false,
+  setActiveCell: () => {},
+  setInputFocus: () => {},
+
+  // Navigation
+  setNextActiveCell: () => undefined,
+
+  // Selection
+  isSelectedCell: () => false,
+  toggleSelectedCell: () => {},
+  clearSelectedCells: () => {},
+
+  // Mouse and Shift Selection
+  handleMouseSelectStart: () => {},
+  handleMouseSelectMove: () => {},
+  handleShiftClickCell: () => {},
+
+  // Traverse Markers
+  startShiftTraverse: () => {},
 })
 
 export const useCellsContext = () => {
@@ -94,31 +113,15 @@ interface CellsContextProviderProps {
 export const CellsContextProvider = ({
   children,
 }: CellsContextProviderProps) => {
+  const cellsMap = useRef<CellsMap>(new Map())
   const shiftTraverseMarker = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
-  const cellsMap = useRef<CellsMap>(new Map())
   const mouseSelectStartCell = useRef<
     { rowIndex: number; cellIndex: number } | undefined
   >(undefined)
 
-  const addCellIndex = (
-    rowIndex: number,
-    cellIndex: number,
-    inputRef: React.RefObject<HTMLInputElement>,
-    initialValue: string,
-  ) => {
-    if (!cellsMap.current.has(rowIndex)) {
-      cellsMap.current.set(rowIndex, new Map())
-    }
-
-    cellsMap.current.get(rowIndex)?.set(cellIndex, {
-      value: initialValue, // Use the passed initialValue
-      isSelected: false,
-      isActive: false,
-      ref: inputRef,
-    })
-  }
+  // Cell Management
 
   const getCellState = (
     rowIndex: number,
@@ -141,6 +144,30 @@ export const CellsContextProvider = ({
       cell.value = value
     }
   }
+
+  const addCellIndex = (
+    rowIndex: number,
+    cellIndex: number,
+    inputRef: React.RefObject<HTMLInputElement>,
+    initialValue: string,
+  ) => {
+    if (!cellsMap.current.has(rowIndex)) {
+      cellsMap.current.set(rowIndex, new Map())
+    }
+
+    cellsMap.current.get(rowIndex)?.set(cellIndex, {
+      value: initialValue, // Use the passed initialValue
+      isSelected: false,
+      isActive: false,
+      ref: inputRef,
+    })
+  }
+
+  const getCellRef = (rowIndex: number, cellIndex: number) => {
+    return getRowMap(rowIndex)?.get(cellIndex)?.ref
+  }
+
+  // Active Cell Management
 
   const getActiveCell = () => {
     for (const [rowIndex, row] of cellsMap.current.entries()) {
@@ -169,6 +196,25 @@ export const CellsContextProvider = ({
     }
   }
 
+  const isActiveCell = (rowIndex: number, cellIndex: number) => {
+    return getCellState(rowIndex, cellIndex)?.isActive ?? false
+  }
+
+  const setInputFocus = (rowIndex: number, cellIndex: number) => {
+    const cellRef = getCellRef(rowIndex, cellIndex)
+    if (!cellRef) return
+
+    const input = cellRef.current?.querySelector("input")
+
+    if (input) {
+      const inputCharLength = input.value.length
+      input.setSelectionRange(inputCharLength, inputCharLength)
+      input.focus()
+    }
+  }
+
+  // Navigation
+
   const getRowBoundaryCellIndex = (
     rowIndex: number,
     boundary: "first" | "last",
@@ -188,16 +234,6 @@ export const CellsContextProvider = ({
     boundary: "first" | "last",
   ): number | undefined => {
     return boundary === "first" ? 0 : getCellsMap().size - 1
-  }
-
-  const getCellRef = (rowIndex: number, cellIndex: number) => {
-    return getRowMap(rowIndex)?.get(cellIndex)?.ref
-  }
-
-  const getShiftTraverseMarker = ():
-    | { rowIndex: number; cellIndex: number }
-    | undefined => {
-    return shiftTraverseMarker.current
   }
 
   const setNextActiveCell = ({
@@ -295,57 +331,7 @@ export const CellsContextProvider = ({
       : handleVerticalMovement()
   }
 
-  const isActiveCell = (rowIndex: number, cellIndex: number) => {
-    return getCellState(rowIndex, cellIndex)?.isActive ?? false
-  }
-
-  const setInputFocus = (rowIndex: number, cellIndex: number) => {
-    const cellRef = getCellRef(rowIndex, cellIndex)
-    if (!cellRef) return
-
-    const input = cellRef.current?.querySelector("input")
-
-    if (input) {
-      const inputCharLength = input.value.length
-      input.setSelectionRange(inputCharLength, inputCharLength)
-      input.focus()
-    }
-  }
-
-  const handleShiftClickCell = (rowIndex: number, cellIndex: number) => {
-    const startCell = getActiveCell()
-    if (!startCell) return
-
-    setSelectedCellRange({
-      startRowIndex: startCell.rowIndex,
-      startCellIndex: startCell.cellIndex,
-      endRowIndex: rowIndex,
-      endCellIndex: cellIndex,
-    })
-  }
-
-  const handleMouseSelectStart = (rowIndex: number, cellIndex: number) => {
-    mouseSelectStartCell.current = { rowIndex, cellIndex }
-
-    window.addEventListener("mouseup", handleMouseSelectEnd)
-  }
-
-  const handleMouseSelectMove = (rowIndex: number, cellIndex: number) => {
-    const startCell = mouseSelectStartCell.current
-    if (!startCell) return
-
-    setSelectedCellRange({
-      startRowIndex: startCell.rowIndex,
-      startCellIndex: startCell.cellIndex,
-      endRowIndex: rowIndex,
-      endCellIndex: cellIndex,
-    })
-  }
-
-  const handleMouseSelectEnd = () => {
-    mouseSelectStartCell.current = undefined
-    window.removeEventListener("mouseup", handleMouseSelectEnd)
-  }
+  // Selection
 
   const isSelectedCell = (rowIndex: number, cellIndex: number) => {
     return getCellState(rowIndex, cellIndex)?.isSelected ?? false
@@ -440,6 +426,51 @@ export const CellsContextProvider = ({
     }
   }
 
+  // Mouse and Shift Selection
+
+  const handleShiftClickCell = (rowIndex: number, cellIndex: number) => {
+    const startCell = getActiveCell()
+    if (!startCell) return
+
+    setSelectedCellRange({
+      startRowIndex: startCell.rowIndex,
+      startCellIndex: startCell.cellIndex,
+      endRowIndex: rowIndex,
+      endCellIndex: cellIndex,
+    })
+  }
+
+  const handleMouseSelectStart = (rowIndex: number, cellIndex: number) => {
+    mouseSelectStartCell.current = { rowIndex, cellIndex }
+
+    window.addEventListener("mouseup", handleMouseSelectEnd)
+  }
+
+  const handleMouseSelectMove = (rowIndex: number, cellIndex: number) => {
+    const startCell = mouseSelectStartCell.current
+    if (!startCell) return
+
+    setSelectedCellRange({
+      startRowIndex: startCell.rowIndex,
+      startCellIndex: startCell.cellIndex,
+      endRowIndex: rowIndex,
+      endCellIndex: cellIndex,
+    })
+  }
+
+  const handleMouseSelectEnd = () => {
+    mouseSelectStartCell.current = undefined
+    window.removeEventListener("mouseup", handleMouseSelectEnd)
+  }
+
+  // Traverse Markers
+
+  const getShiftTraverseMarker = ():
+    | { rowIndex: number; cellIndex: number }
+    | undefined => {
+    return shiftTraverseMarker.current
+  }
+
   const startShiftTraverse = ({
     rowIndex,
     cellIndex,
@@ -470,22 +501,33 @@ export const CellsContextProvider = ({
   return (
     <CellsContext.Provider
       value={{
-        addCellIndex,
-        isSelectedCell,
-        toggleSelectedCell,
-        clearSelectedCells,
-        startShiftTraverse,
-        isActiveCell,
-        setActiveCell,
-        setNextActiveCell,
-        setInputFocus,
-        handleMouseSelectStart,
-        handleMouseSelectMove,
-        handleShiftClickCell,
-        setCellValue,
+        // Cell Management
         getCellState,
         getRowMap,
         getCellsMap,
+        setCellValue,
+        addCellIndex,
+
+        // Active Cell Management
+        isActiveCell,
+        setActiveCell,
+        setInputFocus,
+
+        // Navigation
+        setNextActiveCell,
+
+        // Selection
+        isSelectedCell,
+        toggleSelectedCell,
+        clearSelectedCells,
+
+        // Mouse and Shift Selection
+        handleMouseSelectStart,
+        handleMouseSelectMove,
+        handleShiftClickCell,
+
+        // Traverse Markers
+        startShiftTraverse,
       }}
     >
       {children}
