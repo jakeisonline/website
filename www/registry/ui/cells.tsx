@@ -88,15 +88,8 @@ interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
 
 const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
-    const { handleMouseDown } = useCellsContext()
-
     return (
-      <form
-        onMouseDown={handleMouseDown}
-        className={cn("", className)}
-        {...props}
-        ref={ref}
-      >
+      <form className={cn("", className)} {...props} ref={ref}>
         {_renderCells(children)}
       </form>
     )
