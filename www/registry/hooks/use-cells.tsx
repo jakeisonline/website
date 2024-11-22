@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "react"
 
 export type CellTraverseDirection = "left" | "right" | "up" | "down"
 
@@ -527,38 +534,41 @@ export const CellsContextProvider = ({
     }
   }, [])
 
+  const contextValue = useMemo(
+    () => ({
+      // Cell Management
+      getCellState,
+      getRowMap,
+      getCellsMap,
+      setCellValue,
+      addCellIndex,
+
+      // Active Cell Management
+      isActiveCell,
+      setActiveCell,
+      setInputFocus,
+
+      // Navigation
+      setNextActiveCell,
+
+      // Selection
+      isSelectedCell,
+      toggleSelectedCell,
+      clearSelectedCells,
+
+      // Mouse and Shift Selection
+      handleMouseSelectStart,
+      handleMouseSelectMove,
+      handleShiftClickCell,
+
+      // Traverse Markers
+      startShiftTraverse,
+    }),
+    [cellValues],
+  )
+
   return (
-    <CellsContext.Provider
-      value={{
-        // Cell Management
-        getCellState,
-        getRowMap,
-        getCellsMap,
-        setCellValue,
-        addCellIndex,
-
-        // Active Cell Management
-        isActiveCell,
-        setActiveCell,
-        setInputFocus,
-
-        // Navigation
-        setNextActiveCell,
-
-        // Selection
-        isSelectedCell,
-        toggleSelectedCell,
-        clearSelectedCells,
-
-        // Mouse and Shift Selection
-        handleMouseSelectStart,
-        handleMouseSelectMove,
-        handleShiftClickCell,
-
-        // Traverse Markers
-        startShiftTraverse,
-      }}
-    >
+    <CellsContext.Provider value={contextValue}>
       {children}
     </CellsContext.Provider>
   )
