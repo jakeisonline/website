@@ -42,7 +42,7 @@ const _renderCells = (children: React.ReactNode, parentRowIndex?: number) => {
     if (parentRowIndex === undefined) {
       if (
         typeof child.type === "function" &&
-        (child.type as any).displayName !== "CellRow"
+        (child.type as React.ComponentType).displayName !== "CellRow"
       ) {
         throw new Error("Invalid child type, only CellRow is allowed")
       }
@@ -59,7 +59,7 @@ const _renderCells = (children: React.ReactNode, parentRowIndex?: number) => {
 
     if (
       typeof child.type === "function" &&
-      (child.type as any).displayName !== "Cell"
+      (child.type as React.ComponentType).displayName !== "Cell"
     ) {
       throw new Error("Invalid child type, only Cell is allowed")
     }
