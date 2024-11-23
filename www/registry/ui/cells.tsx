@@ -171,7 +171,10 @@ export const Cell = memo(
       return (
         <div
           tabIndex={0}
-          className="w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
+          className={cn(
+            className,
+            "w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r",
+          )}
           role="gridcell"
           aria-colindex={cellIndex + 1} // ARIA indices are 1 based, not 0
           aria-selected={isSelected}
