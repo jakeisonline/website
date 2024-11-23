@@ -133,7 +133,6 @@ interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   type?: HTMLInputTypeAttribute
   cellIndex?: number
   rowIndex?: number
-  initialValue?: string
   className?: string
 }
 
@@ -145,7 +144,6 @@ export const Cell = memo(
         name,
         label,
         autoselect,
-        initialValue,
         cellIndex,
         rowIndex,
         className,
