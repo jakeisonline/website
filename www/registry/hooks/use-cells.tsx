@@ -462,7 +462,7 @@ export const CellsContextProvider = ({
   const handleMouseSelectStart = (rowIndex: number, cellIndex: number) => {
     selectionState.current.mouseSelectStartCell = { rowIndex, cellIndex }
 
-    window.addEventListener("mouseup", handleMouseSelectEnd)
+    window.addEventListener("pointerup", handleMouseSelectEnd)
   }
 
   const handleMouseSelectMove = (rowIndex: number, cellIndex: number) => {
@@ -479,7 +479,7 @@ export const CellsContextProvider = ({
 
   const handleMouseSelectEnd = () => {
     selectionState.current.mouseSelectStartCell = undefined
-    window.removeEventListener("mouseup", handleMouseSelectEnd)
+    window.removeEventListener("pointerup", handleMouseSelectEnd)
   }
 
   // Traverse Markers

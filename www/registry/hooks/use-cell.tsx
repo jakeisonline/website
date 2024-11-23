@@ -10,8 +10,8 @@ interface CellContextType {
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLDivElement | HTMLInputElement>,
   ) => void
-  handleMouseDown: (e: React.MouseEvent<HTMLInputElement>) => void
-  handleMouseEnter: () => void
+  handlePointerDown: (e: React.PointerEvent<HTMLInputElement>) => void
+  handlePointerEnter: () => void
   handleDoubleClick: () => void
 }
 
@@ -22,8 +22,8 @@ const CellContext = createContext<CellContextType>({
   handleBlur: () => {},
   handleChange: () => {},
   handleKeyDown: () => {},
-  handleMouseDown: () => {},
-  handleMouseEnter: () => {},
+  handlePointerDown: () => {},
+  handlePointerEnter: () => {},
   handleDoubleClick: () => {},
 })
 
@@ -158,7 +158,7 @@ export const CellContextProvider = ({
     }
   }
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handlePointerDown = (e: React.PointerEvent<HTMLInputElement>) => {
     // Prevent the cell from being selected when ctrl or cmd is held
     // to allow for multi-cell selection
     if (e.ctrlKey || e.metaKey) {
@@ -180,7 +180,7 @@ export const CellContextProvider = ({
     setInputFocus(rowIndex, cellIndex)
   }
 
-  const handleMouseEnter = () => {
+  const handlePointerEnter = () => {
     handleMouseSelectMove(rowIndex, cellIndex)
   }
 
@@ -192,8 +192,8 @@ export const CellContextProvider = ({
       handleBlur,
       handleChange,
       handleKeyDown,
-      handleMouseDown,
-      handleMouseEnter,
+      handlePointerDown,
+      handlePointerEnter,
       handleDoubleClick,
     }
   }, [
@@ -203,8 +203,8 @@ export const CellContextProvider = ({
     handleBlur,
     handleChange,
     handleKeyDown,
-    handleMouseDown,
-    handleMouseEnter,
+    handlePointerDown,
+    handlePointerEnter,
     handleDoubleClick,
   ])
 

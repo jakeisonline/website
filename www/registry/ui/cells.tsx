@@ -159,8 +159,8 @@ export const Cell = memo(
         handleBlur,
         handleChange,
         handleKeyDown,
-        handleMouseDown,
-        handleMouseEnter,
+        handlePointerDown,
+        handlePointerEnter,
         handleDoubleClick,
       } = useCellContext({
         rowIndex,
@@ -174,8 +174,8 @@ export const Cell = memo(
           data-is-active={isActive}
           data-is-selected={isSelected}
           onKeyDown={handleKeyDown}
-          onMouseDown={handleMouseDown}
-          onMouseEnter={handleMouseEnter}
+          onPointerDown={handlePointerDown}
+          onPointerEnter={handlePointerEnter}
           onDoubleClick={handleDoubleClick}
           onBlur={handleBlur}
           ref={ref}
