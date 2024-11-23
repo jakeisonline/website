@@ -123,7 +123,7 @@ StepperInput.displayName = "StepperInput"
 interface StepperButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   direction: string
   className?: string
-  children: any
+  children: React.ReactNode
 }
 
 export const StepperButton = forwardRef<HTMLButtonElement, StepperButtonProps>(
