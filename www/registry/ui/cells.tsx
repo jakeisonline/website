@@ -8,8 +8,8 @@ import React, {
 import {
   CellsContextProvider,
   useCellsContext,
-  type CellTraverseDirection,
 } from "@/registry/hooks/use-cells"
+import { CellContextProvider, useCellContext } from "@/registry/hooks/use-cell"
 
 interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
   className?: string
@@ -69,14 +69,16 @@ const _renderCells = (children: React.ReactNode, parentRowIndex?: number) => {
     cellIndex++
 
     return (
-      <Cell
-        cellIndex={cellIndex - 1}
-        rowIndex={rowIndex}
-        ref={childRef}
-        {...child.props}
-      >
-        {child.props.children}
-      </Cell>
+      <CellContextProvider rowIndex={rowIndex} cellIndex={cellIndex - 1}>
+        <Cell
+          cellIndex={cellIndex - 1}
+          rowIndex={rowIndex}
+          ref={childRef}
+          {...child.props}
+        >
+          {child.props.children}
+        </Cell>
+      </CellContextProvider>
     )
   })
 }
@@ -151,133 +153,20 @@ export const Cell = memo(
         throw new Error("cellIndex and rowIndex are required props for Cell")
 
       const {
-        getCellState,
-        setCellValue,
-        isSelectedCell,
-        toggleSelectedCell,
-        clearSelectedCells,
-        startShiftTraverse,
-        isActiveCell,
-        setActiveCell,
-        setNextActiveCell,
-        setInputFocus,
-        handleMouseSelectStart,
-        handleMouseSelectMove,
-        handleShiftClickCell,
-      } = useCellsContext()
-
-      const cellState = getCellState(rowIndex, cellIndex)
-      const value = cellState?.value ?? ""
-
-      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value
-        setCellValue(rowIndex, cellIndex, newValue)
-      }
-
-      const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Escape") {
-          setActiveCell(rowIndex, cellIndex)
-          return
-        }
-
-        if (e.key === "Enter") {
-          setActiveCell(rowIndex, cellIndex)
-          return
-        }
-      }
-
-      const handleCellKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.target !== e.currentTarget) return
-        if (rowIndex === undefined || cellIndex === undefined) return
-
-        const keyPressed = e.key
-
-        const keyMap: Record<string, CellTraverseDirection> = {
-          ArrowLeft: "left",
-          ArrowRight: "right",
-          ArrowUp: "up",
-          ArrowDown: "down",
-        }
-
-        const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
-
-        if (keyPressed === "Shift") {
-          startShiftTraverse({
-            rowIndex,
-            cellIndex,
-          })
-          return
-        }
-
-        if (keyPressed === "Escape") {
-          clearSelectedCells()
-          setActiveCell(rowIndex, cellIndex)
-          return
-        }
-
-        if (keyPressed === "Enter") {
-          setInputFocus(rowIndex, cellIndex)
-          return
-        }
-
-        if (keyPressed === "Delete" || keyPressed === "Backspace") {
-          setCellValue(rowIndex, cellIndex, "")
-          return
-        }
-
-        const direction = keyMap[keyPressed]
-
-        if (direction) {
-          e.preventDefault()
-
-          setNextActiveCell({
-            direction,
-            currentRowIndex: rowIndex,
-            currentCellIndex: cellIndex,
-            isShiftHeld: e.shiftKey,
-            isCtrlHeld: e.ctrlKey || e.metaKey,
-          })
-        }
-
-        if (isAlphaNumeric) {
-          setInputFocus(rowIndex, cellIndex)
-        }
-      }
-
-      const handleCellMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
-        // Prevent the cell from being selected when ctrl or cmd is held
-        // to allow for multi-cell selection
-        if (e.ctrlKey || e.metaKey) {
-          e.preventDefault()
-          toggleSelectedCell(rowIndex, cellIndex)
-          return
-        }
-
-        if (e.shiftKey) {
-          e.preventDefault()
-          handleShiftClickCell(rowIndex, cellIndex)
-          return
-        }
-
-        // Effectively a double click, but much more forgiving on timing
-        if (!isActiveCell(rowIndex, cellIndex)) {
-          e.preventDefault()
-          setActiveCell(rowIndex, cellIndex)
-        }
-
-        handleMouseSelectStart(rowIndex, cellIndex)
-      }
-
-      const handleCellMouseEnter = () => {
-        handleMouseSelectMove(rowIndex, cellIndex)
-      }
-
-      const handleCellBlur = () => {
-        clearSelectedCells()
-      }
-
-      const isSelected = isSelectedCell(rowIndex, cellIndex)
-      const isActive = isActiveCell(rowIndex, cellIndex)
+        cellValue,
+        isSelected,
+        isActive,
+        handleBlur,
+        handleFocus,
+        handleChange,
+        handleKeyDown,
+        handleMouseDown,
+        handleMouseEnter,
+        handleDoubleClick,
+      } = useCellContext({
+        rowIndex,
+        cellIndex,
+      })
 
       return (
         <div
@@ -285,10 +174,12 @@ export const Cell = memo(
           className="w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
           data-is-active={isActive}
           data-is-selected={isSelected}
-          onKeyDown={handleCellKeyDown}
-          onMouseDown={handleCellMouseDown}
-          onMouseEnter={handleCellMouseEnter}
-          onBlur={handleCellBlur}
+          onKeyDown={handleKeyDown}
+          onMouseDown={handleMouseDown}
+          onMouseEnter={handleMouseEnter}
+          onDoubleClick={handleDoubleClick}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           ref={ref}
           autoFocus={autoselect}
         >
@@ -299,10 +190,10 @@ export const Cell = memo(
             type={type}
             name={name}
             className="w-full bg-transparent px-3 py-2 text-center outline-none [appearance:textfield] focus:inner-border-2 focus:inner-border-primary/25 [&:not(:focus)]:cursor-pointer"
-            value={value}
+            value={cellValue}
             tabIndex={-1}
-            onChange={handleInputChange}
-            onKeyDown={handleInputKeyDown}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
             {...props}
           />
         </div>

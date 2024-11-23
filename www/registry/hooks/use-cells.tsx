@@ -13,7 +13,7 @@ interface CellState {
   value: string
   isSelected: boolean
   isActive: boolean
-  ref: React.RefObject<HTMLInputElement>
+  ref: React.RefObject<HTMLDivElement>
 }
 
 type CellsMap = Map<number, Map<number, CellState>>
@@ -27,7 +27,7 @@ interface CellsContextType {
   addCellIndex: (
     rowIndex: number,
     cellIndex: number,
-    inputRef: React.RefObject<HTMLInputElement>,
+    ref: React.RefObject<HTMLDivElement>,
     initialValue: string,
   ) => void
 
@@ -180,7 +180,7 @@ export const CellsContextProvider = ({
   const addCellIndex = (
     rowIndex: number,
     cellIndex: number,
-    inputRef: React.RefObject<HTMLInputElement>,
+    ref: React.RefObject<HTMLDivElement>,
     initialValue: string,
   ) => {
     if (!cellsMap.current.has(rowIndex)) {
@@ -191,7 +191,7 @@ export const CellsContextProvider = ({
       value: initialValue,
       isSelected: false,
       isActive: false,
-      ref: inputRef,
+      ref,
     })
 
     // Queue the initialization instead of updating state directly
@@ -224,14 +224,18 @@ export const CellsContextProvider = ({
     cellsMap.current.forEach((row) => {
       row.forEach((cell) => {
         cell.isActive = false
+        cell.ref?.current?.setAttribute("data-is-active", "false")
       })
     })
 
     const cell = getCellState(rowIndex, cellIndex)
+
     if (cell) {
+      const cellRef = cell.ref.current
       clearShiftTraverseMarker()
       cell.isActive = true
-      cell.ref?.current?.focus()
+      cellRef?.setAttribute("data-is-active", "true")
+      cellRef?.focus()
     }
   }
 
@@ -240,15 +244,14 @@ export const CellsContextProvider = ({
   }
 
   const setInputFocus = (rowIndex: number, cellIndex: number) => {
-    const cellRef = getCellRef(rowIndex, cellIndex)
-    if (!cellRef) return
+    const cell = getCellState(rowIndex, cellIndex)
 
-    const input = cellRef.current?.querySelector("input")
+    const inputRef = cell?.ref.current?.querySelector("input")
 
-    if (input) {
-      const inputCharLength = input.value.length
-      input.setSelectionRange(inputCharLength, inputCharLength)
-      input.focus()
+    if (inputRef) {
+      inputRef.focus()
+      const inputCharLength = inputRef.value.length
+      inputRef.setSelectionRange(inputCharLength, inputCharLength)
     }
   }
 
