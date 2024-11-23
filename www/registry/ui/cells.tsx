@@ -170,8 +170,10 @@ export const Cell = memo(
       },
       ref,
     ) => {
-      if (cellIndex === undefined || rowIndex === undefined)
-        throw new Error("cellIndex and rowIndex are required props for Cell")
+      if (cellIndex === undefined || rowIndex === undefined || !initialValue)
+        throw new Error(
+          "cellIndex, rowIndex and initialValue are required props for Cell",
+        )
 
       const {
         cellValue,
