@@ -260,7 +260,9 @@ const StepperContextProvider = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") return setValue("")
     const newValue = +e.target.value
-    !isNaN(newValue) && setValueWithinRange(newValue)
+    if (!isNaN(newValue)) {
+      setValueWithinRange(newValue)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
