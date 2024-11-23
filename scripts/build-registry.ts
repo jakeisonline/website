@@ -13,6 +13,12 @@ const COMPONENT_FOLDER_PATH = "components"
 type File = z.infer<typeof registryItemFileSchema>
 const FolderToComponentTypeMap = {
   ui: "registry:ui",
+  hooks: "registry:hook",
+}
+
+const TargetFolderMap = {
+  ui: "components/ui",
+  hooks: "hooks",
 }
 
 const writeFileRecursive = async (filePath: string, data: string) => {
@@ -24,7 +30,7 @@ const writeFileRecursive = async (filePath: string, data: string) => {
 
     // Write the file
     await fs.writeFile(filePath, data, "utf-8")
-    console.log(`File written to ${filePath}`)
+    //console.log(`File written to ${filePath}`)
   } catch (error) {
     console.error(`Error writing file`)
     console.error(error)
@@ -36,13 +42,14 @@ const getUIFiles = async (files: File[]) => {
     if (typeof file === "string") {
       const filePath = `${REGISTRY_BASE_PATH}/${file}`
       const fileContent = await fs.readFile(filePath, "utf-8")
+      console.log(file.split("/")[0])
       return {
         type: FolderToComponentTypeMap[
           file.split("/")[0] as keyof typeof FolderToComponentTypeMap
         ],
         content: fileContent,
         path: file,
-        target: `${COMPONENT_FOLDER_PATH}/${file}`,
+        target: `${TargetFolderMap[file.split("/")[0] as keyof typeof TargetFolderMap]}/${file.split("/").pop()}`,
       }
     }
   })
@@ -70,7 +77,7 @@ const main = async () => {
     )
     const jsonPath = `${PUBLIC_FOLDER_BASE_PATH}/${component.name}.json`
     await writeFileRecursive(jsonPath, json)
-    console.log(json)
+    //console.log(json)
   }
 }
 
