@@ -23,7 +23,7 @@ const TargetFolderMap = {
 
 const Stats = {
   filesWrittenCount: 0,
-  filesWritten: [],
+  filesWritten: [] as string[],
 }
 
 const writeFileRecursive = async (filePath: string, data: string) => {
