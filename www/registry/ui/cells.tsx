@@ -99,6 +99,7 @@ const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
     )
   },
 )
+CellsForm.displayName = "CellsForm"
 
 interface CellRowProps extends React.ComponentPropsWithoutRef<"div"> {
   parentRow?: any
