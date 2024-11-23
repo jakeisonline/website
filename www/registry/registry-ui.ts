@@ -19,4 +19,16 @@ export const ui: Registry = [
     description: "A range component",
     files: ["ui/range.tsx"],
   },
+  {
+    name: "cells",
+    type: "registry:ui",
+    description: "A cells component",
+    files: ["ui/cells.tsx", "hooks/use-cells.tsx", "hooks/use-cell.tsx"],
+    dependencies: ["tailwindcss-inner-border"],
+    tailwind: {
+      config: {
+        plugins: [`require("tailwindcss-inner-border")`],
+      },
+    },
+  },
 ]
