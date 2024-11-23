@@ -6,7 +6,6 @@ interface CellContextType {
   isSelected: boolean
   isActive: boolean
   handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void
-  handleFocus: (e: React.FocusEvent<HTMLInputElement>) => void
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLDivElement | HTMLInputElement>,
@@ -21,7 +20,6 @@ const CellContext = createContext<CellContextType>({
   isSelected: false,
   isActive: false,
   handleBlur: () => {},
-  handleFocus: () => {},
   handleChange: () => {},
   handleKeyDown: () => {},
   handleMouseDown: () => {},
@@ -82,10 +80,6 @@ export const CellContextProvider = ({
     if (e.target !== document.activeElement) {
       clearSelectedCells()
     }
-  }
-
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    setActiveCell(rowIndex, cellIndex)
   }
 
   const handleKeyDown = (
@@ -171,24 +165,15 @@ export const CellContextProvider = ({
       e.preventDefault()
       toggleSelectedCell(rowIndex, cellIndex)
       return
-    }
-
-    if (e.shiftKey) {
+    } else if (e.shiftKey) {
       e.preventDefault()
       handleShiftClickCell(rowIndex, cellIndex)
       return
-    }
-
-    // Effectively a double click, but much more forgiving on timing
-
-    if (!e.currentTarget.getAttribute("data-is-active")) {
+    } else {
       e.preventDefault()
       setActiveCell(rowIndex, cellIndex)
-    } else {
-      setInputFocus(rowIndex, cellIndex)
+      handleMouseSelectStart(rowIndex, cellIndex)
     }
-
-    handleMouseSelectStart(rowIndex, cellIndex)
   }
 
   const handleDoubleClick = () => {
@@ -205,7 +190,6 @@ export const CellContextProvider = ({
       isSelected,
       isActive,
       handleBlur,
-      handleFocus,
       handleChange,
       handleKeyDown,
       handleMouseDown,
@@ -217,7 +201,6 @@ export const CellContextProvider = ({
     isSelected,
     isActive,
     handleBlur,
-    handleFocus,
     handleChange,
     handleKeyDown,
     handleMouseDown,

@@ -157,7 +157,6 @@ export const Cell = memo(
         isSelected,
         isActive,
         handleBlur,
-        handleFocus,
         handleChange,
         handleKeyDown,
         handleMouseDown,
@@ -179,7 +178,6 @@ export const Cell = memo(
           onMouseEnter={handleMouseEnter}
           onDoubleClick={handleDoubleClick}
           onBlur={handleBlur}
-          onFocus={handleFocus}
           ref={ref}
           autoFocus={autoselect}
         >
