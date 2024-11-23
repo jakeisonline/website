@@ -20,7 +20,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     // Handles focus when users click the field's chrome but not necessarily the input
     const handleFocus = (e: React.PointerEvent<HTMLInputElement>) => {
       if (e.screenX !== 0 && e.screenY !== 0) {
-        inputRef.current && inputRef.current.focus()
+        inputRef.current?.focus()
         // Don't prevent default if the user is clicking on the input, as that may mess with
         // things like highlighting text within the input
         if (!(e.target as HTMLInputElement).matches("input")) e.preventDefault()
