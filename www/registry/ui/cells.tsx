@@ -18,7 +18,7 @@ interface CellsProps extends React.ComponentPropsWithoutRef<"form"> {
 
 export const Cells = forwardRef<HTMLFormElement, CellsProps>(
   ({ className, children, ...props }, ref) => (
-    <CellsContextProvider>
+    <CellsContextProvider aria-multiselectable="true">
       <CellsForm className={cn("", className)} {...props} ref={ref}>
         {children}
       </CellsForm>
@@ -91,7 +91,7 @@ interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
 const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
     return (
-      <form className={cn("", className)} {...props} ref={ref}>
+      <form className={cn("", className)} role="grid" {...props} ref={ref}>
         {_renderCells(children)}
       </form>
     )
@@ -112,6 +112,7 @@ export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
           "flex flex-row border-b border-l border-r first:border-t",
           className,
         )}
+        role="row"
         {...props}
         ref={ref}
       >
@@ -155,8 +156,10 @@ export const Cell = memo(
       const {
         cellValue,
         isSelected,
+        isEditing,
         isActive,
         handleBlur,
+        handleFocus,
         handleChange,
         handleKeyDown,
         handlePointerDown,
@@ -171,6 +174,12 @@ export const Cell = memo(
         <div
           tabIndex={0}
           className="w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r"
+          role="gridcell"
+          aria-colindex={cellIndex + 1} // ARIA indices are 1 based, not 0
+          aria-selected={isSelected}
+          aria-label={`${label}: ${cellValue}`}
+          aria-expanded={isEditing}
+          data-is-editing={isEditing}
           data-is-active={isActive}
           data-is-selected={isSelected}
           onKeyDown={handleKeyDown}
@@ -188,10 +197,13 @@ export const Cell = memo(
             type={type}
             name={name}
             className="w-full bg-transparent px-3 py-2 text-center outline-none [appearance:textfield] focus:inner-border-2 focus:inner-border-primary/25 [&:not(:focus)]:cursor-pointer"
+            aria-hidden={!isEditing}
             value={cellValue}
             tabIndex={-1}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             {...props}
           />
         </div>
