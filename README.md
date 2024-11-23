@@ -1,4 +1,4 @@
-# jakeisonline/playground
+# [jakeisonline.com/playground](https://jakeisonline.com/playground)
 
 Free components and other fun stuff for your projects. A collection of components, templates, experiments, and other bits and bobs. [See the full introduction](https://jakeisonline.com/playground/introduction).
 
