@@ -102,13 +102,12 @@ const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
 CellsForm.displayName = "CellsForm"
 
 interface CellRowProps extends React.ComponentPropsWithoutRef<"div"> {
-  parentRow?: any
   className?: string
   children: React.ReactNode
 }
 
 export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
-  ({ parentRow, className, children, ...props }, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <div
         className={cn(
