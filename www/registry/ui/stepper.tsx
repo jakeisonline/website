@@ -187,6 +187,7 @@ export const StepperBadge = forwardRef<HTMLDivElement, StepperBadgeProps>(
           "absolute -right-2.5 -top-2 rounded-full bg-primary px-1.5 py-0 text-2xs font-medium text-background group-has-[:focus]:hidden",
           className,
         )}
+        ref={ref}
         {...props}
       >
         {value}
