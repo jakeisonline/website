@@ -165,10 +165,7 @@ export const Cell = memo(
         handlePointerDown,
         handlePointerEnter,
         handleDoubleClick,
-      } = useCellContext({
-        rowIndex,
-        cellIndex,
-      })
+      } = useCellContext()
 
       return (
         <div

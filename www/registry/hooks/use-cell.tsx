@@ -31,13 +31,7 @@ const CellContext = createContext<CellContextType>({
   handleDoubleClick: () => {},
 })
 
-export const useCellContext = ({
-  rowIndex,
-  cellIndex,
-}: {
-  rowIndex: number
-  cellIndex: number
-}) => {
+export const useCellContext = () => {
   const context = useContext(CellContext)
 
   if (!context) {
