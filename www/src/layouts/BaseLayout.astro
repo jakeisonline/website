@@ -4,7 +4,6 @@ import { SEO } from "astro-seo"
 import { ViewTransitions } from "astro:transitions"
 import GlobalHeader from "@/components/GlobalHeader.astro"
 import GlobalFooter from "@/components/GlobalFooter.astro"
-import { TicketsPlaneIcon } from "lucide-react"
 import { SITE_CONFIG } from "@/config/site"
 
 interface Props {
@@ -15,8 +14,8 @@ interface Props {
 
 const {
   frontmatter,
-  title = frontmatter?.title,
-  description = frontmatter?.description,
+  title = frontmatter?.title || "",
+  description = frontmatter?.description || "",
 } = Astro.props
 ---
 
