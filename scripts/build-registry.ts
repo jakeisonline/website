@@ -5,10 +5,10 @@ import { promises as fs } from "fs"
 import { z } from "zod"
 import { registryItemFileSchema } from "@/www/registry/schema"
 import path from "path"
+import ora from "ora"
 
 const REGISTRY_BASE_PATH = "www/registry"
 const PUBLIC_FOLDER_BASE_PATH = "www/public/registry"
-const COMPONENT_FOLDER_PATH = "components"
 
 type File = z.infer<typeof registryItemFileSchema>
 const FolderToComponentTypeMap = {
@@ -19,6 +19,11 @@ const FolderToComponentTypeMap = {
 const TargetFolderMap = {
   ui: "components/ui",
   hooks: "hooks",
+}
+
+const Stats = {
+  filesWrittenCount: 0,
+  filesWritten: [],
 }
 
 const writeFileRecursive = async (filePath: string, data: string) => {
@@ -37,17 +42,27 @@ const writeFileRecursive = async (filePath: string, data: string) => {
   }
 }
 
+function fixImports(code: string, type: string): string {
+  // Strip all instances of @/registry
+    return code.replace(/@\/registry/g, "@");
+}
+
 const getUIFiles = async (files: File[]) => {
   const filesArrayPromises = (files ?? []).map(async (file) => {
     if (typeof file === "string") {
+      const fileType = file.split("/")[0]
       const filePath = `${REGISTRY_BASE_PATH}/${file}`
       const fileContent = await fs.readFile(filePath, "utf-8")
-      console.log(file.split("/")[0])
+      const fixedImports = fixImports(fileContent, fileType)
+
+      Stats.filesWrittenCount++
+      Stats.filesWritten.push(filePath)
+
       return {
         type: FolderToComponentTypeMap[
           file.split("/")[0] as keyof typeof FolderToComponentTypeMap
         ],
-        content: fileContent,
+        content: fixedImports,
         path: file,
         target: `${TargetFolderMap[file.split("/")[0] as keyof typeof TargetFolderMap]}/${file.split("/").pop()}`,
       }
@@ -77,14 +92,21 @@ const main = async () => {
     )
     const jsonPath = `${PUBLIC_FOLDER_BASE_PATH}/${component.name}.json`
     await writeFileRecursive(jsonPath, json)
-    //console.log(json)
   }
 }
 
+console.log("")
+const spinner = ora(`Creating registry files...`).start()
+
 main()
   .then(() => {
-    console.log("done")
+    spinner?.succeed()
+    spinner?.info(`Wrote ${Stats.filesWrittenCount} files:`)
+    Stats.filesWritten.forEach((file) => {
+      console.log(`  - ${file}`)
+    })
   })
   .catch((err) => {
+    spinner?.fail()
     console.error(err)
   })
