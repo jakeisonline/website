@@ -4,6 +4,8 @@ import { SEO } from "astro-seo"
 import { ViewTransitions } from "astro:transitions"
 import GlobalHeader from "@/components/GlobalHeader.astro"
 import GlobalFooter from "@/components/GlobalFooter.astro"
+import { TicketsPlaneIcon } from "lucide-react"
+import { SITE_CONFIG } from "@/config/site"
 
 interface Props {
   frontmatter?: Record<string, string>
@@ -67,6 +69,25 @@ const {
             href: "/playground/favicon.svg",
           },
         ],
+      }}
+      openGraph={{
+        basic: {
+          type: "website",
+          title: title,
+          url: `${SITE_CONFIG.siteUrl}`,
+          image: `/og.png`,
+        },
+        optional: {
+          description: description,
+          locale: "en_GB",
+          siteName: "jakeisonline",
+        },
+      }}
+      twitter={{
+        card: "summary",
+        title: title,
+        description: description,
+        image: `${SITE_CONFIG.siteUrl}/og.png`,
       }}
     />
     <ViewTransitions transition:animate="none" />
