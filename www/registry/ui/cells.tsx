@@ -29,10 +29,22 @@ export const Cells = forwardRef<HTMLFormElement, CellsProps>(
 )
 Cells.displayName = "Cells"
 
-const _renderCells = (children: React.ReactNode, parentRowIndex?: number) => {
+const _renderCells = ({
+  children,
+  parentRowIndex,
+  addCellIndex,
+}: {
+  children: React.ReactNode
+  parentRowIndex?: number
+  addCellIndex: (
+    rowIndex: number,
+    cellIndex: number,
+    ref: React.RefObject<HTMLInputElement>,
+    initialValue: string,
+  ) => void
+}) => {
   if (!children) throw new Error("No children provided")
 
-  const { addCellIndex } = useCellsContext()
   let rowIndex = parentRowIndex ?? 0
   let cellIndex = 0
 
@@ -52,7 +64,11 @@ const _renderCells = (children: React.ReactNode, parentRowIndex?: number) => {
 
       return (
         <CellRow key={tmpKey}>
-          {_renderCells(child.props.children, rowIndex - 1)}
+          {_renderCells({
+            children: child.props.children,
+            parentRowIndex: rowIndex - 1,
+            addCellIndex,
+          })}
         </CellRow>
       )
     }
@@ -92,9 +108,11 @@ interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
 
 const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
+    const { addCellIndex } = useCellsContext()
+
     return (
       <form className={cn("", className)} role="grid" {...props} ref={ref}>
-        {_renderCells(children)}
+        {_renderCells({ children, addCellIndex })}
       </form>
     )
   },
@@ -128,6 +146,7 @@ CellRow.displayName = "CellRow"
 interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   name: string
   label: string
+  initialValue: string
   autoselect?: boolean
   type?: HTMLInputTypeAttribute
   cellIndex?: number
@@ -142,6 +161,7 @@ export const Cell = memo(
         type = "text",
         name,
         label,
+        initialValue,
         autoselect,
         cellIndex,
         rowIndex,
