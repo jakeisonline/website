@@ -8,7 +8,11 @@ type SubNavItemConditionals =
 | {
   type: "item"
   href: string
-};
+  badge?: {
+    label: string
+    variant: "default" | "secondary" | "outline"
+  }
+}
 
 export type SubNavItem = { text: string } & SubNavItemConditionals
 export type SubNavItems = SubNavItem[]

@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils"
 import type { SubNavItem, SubNavItemWithSubItems } from "./SubNav.astro"
 import Link from "./ui/Link.astro"
+import Badge from "./ui/Badge.astro"
 
 interface Props {
   item: SubNavItemWithSubItems
@@ -9,8 +10,11 @@ interface Props {
 
 const { item } = Astro.props
 const currentPath = Astro.url.pathname
+const itemIsCurrent = item.type === "item" && currentPath.includes(item.href)
 
 if (!item) return null
+
+console.log(item)
 ---
 {
   item.type === "heading" && (
@@ -19,11 +23,14 @@ if (!item) return null
 }
 {
   item.type === "item" && (
-    <Link href={item.href} class={cn("hover:text-link-hover underline-offset-4 underline decoration-transparent decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover inline-flex pl-1.5 py-1 rounded-sm",
-      currentPath.includes(item.href)
+    <>
+    <Link href={item.href} class={cn("hover:text-link-hover underline-offset-4 underline decoration-transparent decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover inline-flex px-1.5 py-1 rounded-sm group",
+      itemIsCurrent
               ? "text-foreground bg-accent"
               : "text-foreground/60",
-    )}>{item.text}</Link>
+    )}>{item.text} {item.badge && <Badge variant={item.badge.variant} class="ml-1.5 text-2xs px-2 py-0 inline-flex">{item.badge.label}</Badge>}</Link>
+
+    </>
   )
 }
 {
