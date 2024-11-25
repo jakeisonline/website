@@ -140,28 +140,27 @@ export const CellContextProvider = ({
 
         const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
 
-        if (keyPressed === "Shift") {
-          startShiftTraverse({
-            rowIndex,
-            cellIndex,
-          })
-          return
-        }
+        switch (keyPressed) {
+          case "Shift":
+            startShiftTraverse({
+              rowIndex,
+              cellIndex,
+            })
+            return
 
-        if (keyPressed === "Escape") {
-          clearSelectedCells()
-          setActiveCell(rowIndex, cellIndex)
-          return
-        }
+          case "Escape":
+            clearSelectedCells()
+            setActiveCell(rowIndex, cellIndex)
+            return
 
-        if (keyPressed === "Enter") {
-          setInputFocus(rowIndex, cellIndex)
-          return
-        }
+          case "Enter":
+            setInputFocus(rowIndex, cellIndex)
+            return
 
-        if (keyPressed === "Delete" || keyPressed === "Backspace") {
-          setCellValue(rowIndex, cellIndex, "")
-          return
+          case "Delete":
+          case "Backspace":
+            setCellValue(rowIndex, cellIndex, "")
+            return
         }
 
         const direction = keyMap[keyPressed]
