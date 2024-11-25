@@ -13,8 +13,6 @@ const currentPath = Astro.url.pathname
 const itemIsCurrent = item.type === "item" && currentPath.includes(item.href)
 
 if (!item) return null
-
-console.log(item)
 ---
 {
   item.type === "heading" && (
