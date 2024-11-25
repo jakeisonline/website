@@ -311,7 +311,9 @@ export const CellsContextProvider = ({
           : currentTraverseMarker.cellIndex + 1
 
       if (nextCellIndex === undefined) {
-        !isShiftHeld && clearSelectedCells()
+        if (!isShiftHeld) {
+          clearSelectedCells()
+        }
         return
       }
 
