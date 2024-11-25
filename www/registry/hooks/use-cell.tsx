@@ -64,6 +64,9 @@ export const CellContextProvider = ({
     setInputFocus,
     setNextActiveCell,
     toggleSelectedCell,
+    selectAllCells,
+    selectAllCellsInRow,
+    selectAllCellsInColumn,
     handleShiftClickCell,
     handleMouseSelectStart,
     getCellState,
@@ -140,7 +143,20 @@ export const CellContextProvider = ({
 
         const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
 
+        console.log(keyPressed)
+
         switch (keyPressed) {
+          case "Space":
+          case " ":
+            if (e.shiftKey) {
+              e.preventDefault()
+              selectAllCellsInRow(rowIndex)
+            } else if (e.ctrlKey || e.metaKey) {
+              e.preventDefault()
+              selectAllCellsInColumn(cellIndex)
+            }
+            return
+
           case "Shift":
             startShiftTraverse({
               rowIndex,
@@ -160,6 +176,53 @@ export const CellContextProvider = ({
           case "Delete":
           case "Backspace":
             setCellValue(rowIndex, cellIndex, "")
+            return
+
+          case "Home":
+            e.preventDefault()
+            setNextActiveCell({
+              direction: "left",
+              currentRowIndex: rowIndex,
+              currentCellIndex: cellIndex,
+              isCtrlHeld: true,
+            })
+            return
+
+          case "End":
+            e.preventDefault()
+            setNextActiveCell({
+              direction: "right",
+              currentRowIndex: rowIndex,
+              currentCellIndex: cellIndex,
+              isCtrlHeld: true,
+            })
+            return
+
+          case "PageUp":
+            e.preventDefault()
+            setNextActiveCell({
+              direction: "up",
+              currentRowIndex: rowIndex,
+              currentCellIndex: cellIndex,
+              isCtrlHeld: true,
+            })
+            return
+
+          case "PageDown":
+            e.preventDefault()
+            setNextActiveCell({
+              direction: "down",
+              currentRowIndex: rowIndex,
+              currentCellIndex: cellIndex,
+              isCtrlHeld: true,
+            })
+            return
+
+          case "a":
+            if (e.ctrlKey || e.metaKey) {
+              e.preventDefault()
+              selectAllCells()
+            }
             return
         }
 

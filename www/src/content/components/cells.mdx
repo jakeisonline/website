@@ -10,7 +10,7 @@ import ExampleComponent from "@/components/example-component"
 
 # Cells
 
-The Cells component is a complex user interface element that allows a user to select and edit values across spreadsheet-like cells.
+The Cells component is a complex user interface element that allows a user to select and edit values across spreadsheet-like grid of cells.
 
 <ExampleComponent name={frontmatter.component} client:load />
 
@@ -54,17 +54,39 @@ Adheres to the [Grid WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/pa
 
 ### Keyboard interactions
 
+This component supports a large number of keyboard interactions, with nuances that are specific to spreadsheet-like interactions. It follows the [Grid WAI-ARIA design pattern for keyboard interactions](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) (all non-optional interactions) specifically.
+
+#### Movement & Selection
+
+The following keys can be used to move the selection (the active cell) within the grid of cells.
+
+| Key                                                 | Action                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------ |
+| <kbd>ArrowRight</kbd>                               | Moves selection to the next cell in the current row                |
+| <kbd>ArrowLeft</kbd>                                | Moves selection to the previous cell in the current row            |
+| <kbd>ArrowUp</kbd>                                  | Moves selection to the cell directly above the current cell        |
+| <kbd>ArrowDown</kbd>                                | Moves selection to the cell directly below the current cell        |
+| <kbd>Home</kbd>                                     | Moves selection to the first cell in the current row               |
+| <kbd>End</kbd>                                      | Moves selection to the last cell in the current row                |
+| <kbd>PageUp</kbd>                                   | Moves selection to the first cell in the current column            |
+| <kbd>PageDown</kbd>                                 | Moves selection to the last cell in the current column             |
+| <kbd>Tab</kbd>                                      | Moves selection to the next cell, wrapping to the next row         |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd>                   | Moves selection to the previous cell, wrapping to the previous row |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Space</kbd> | Selects all cells in the current column                            |
+| <kbd>Shift</kbd> + <kbd>Space</kbd>                 | Selects all cells in the current row                               |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>a</kbd>     | Selects all cells                                                  |
+
+#### Editing
+
+The following keys can be used to edit the value of the currently selected (active) cell.
+
 | Key                                      | Action                                                         |
 | ---------------------------------------- | -------------------------------------------------------------- |
-| <kbd>ArrowRight</kbd>                    | Moves selection to the next cell in the current row            |
-| <kbd>ArrowLeft</kbd>                     | Moves selection to the previous cell in the current row        |
-| <kbd>ArrowUp</kbd>                       | Moves selection to the cell directly above the current cell    |
-| <kbd>ArrowDown</kbd>                     | Moves selection to the cell directly below the current cell    |
 | <kbd>Backspace</kbd> / <kbd>Delete</kbd> | Deletes the value of the currently selected cell's input field |
 | <kbd>Enter</kbd>                         | Focuses the currently focused cell's input field               |
 | <kbd>Escape</kbd>                        | Escapes from currently focused cell's input field              |
 
-#### Modifiers
+#### General Modifiers
 
 The following modifiers - keys you hold while pressing other keys - can be used to modify the behavior of the documented keyboard interactions.
 

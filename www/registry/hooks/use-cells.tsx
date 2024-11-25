@@ -55,6 +55,9 @@ interface CellsContextType {
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
   clearSelectedCells: () => void
+  selectAllCells: () => void
+  selectAllCellsInRow: (rowIndex: number) => void
+  selectAllCellsInColumn: (cellIndex: number) => void
 
   // Mouse and Shift Selection
   handleMouseSelectStart: (rowIndex: number, cellIndex: number) => void
@@ -91,6 +94,9 @@ const CellsContext = createContext<CellsContextType>({
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
+  selectAllCells: () => {},
+  selectAllCellsInRow: () => {},
+  selectAllCellsInColumn: () => {},
 
   // Mouse and Shift Selection
   handleMouseSelectStart: () => {},
@@ -425,6 +431,26 @@ export const CellsContextProvider = ({
     })
   }
 
+  const selectAllCells = () => {
+    cellsMap.current.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        addSelectedCell(rowIndex, cellIndex)
+      })
+    })
+  }
+
+  const selectAllCellsInRow = (rowIndex: number) => {
+    cellsMap.current.get(rowIndex)?.forEach((cell, cellIndex) => {
+      addSelectedCell(rowIndex, cellIndex)
+    })
+  }
+
+  const selectAllCellsInColumn = (cellIndex: number) => {
+    cellsMap.current.forEach((row, rowIndex) => {
+      addSelectedCell(rowIndex, cellIndex)
+    })
+  }
+
   const setSelectedCellRange = ({
     startRowIndex,
     startCellIndex,
@@ -569,6 +595,9 @@ export const CellsContextProvider = ({
       isSelectedCell,
       toggleSelectedCell,
       clearSelectedCells,
+      selectAllCells,
+      selectAllCellsInRow,
+      selectAllCellsInColumn,
 
       // Mouse and Shift Selection
       handleMouseSelectStart,
