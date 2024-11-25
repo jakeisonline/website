@@ -198,6 +198,7 @@ export const Cell = memo(
           )}
           role="gridcell"
           aria-colindex={cellIndex + 1} // ARIA indices are 1 based, not 0
+          aria-rowindex={rowIndex + 1} // ARIA indices are 1 based, not 0
           aria-selected={isSelected}
           aria-label={`${label}: ${cellValue}`}
           aria-expanded={isEditing}
