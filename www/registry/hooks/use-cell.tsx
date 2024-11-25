@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useCallback,
+} from "react"
 import { useCellsContext, type CellTraverseDirection } from "./use-cells"
 
 interface CellContextType {
@@ -71,140 +77,160 @@ export const CellContextProvider = ({
   const isSelected = cellState?.isSelected ?? false
   const isActive = cellState?.isActive ?? false
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value
-    setCellValue(rowIndex, cellIndex, newValue)
-  }
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value
+      setCellValue(rowIndex, cellIndex, newValue)
+    },
+    [rowIndex, cellIndex, setCellValue],
+  )
 
-  const handleBlur = (
-    e: React.FocusEvent<HTMLDivElement | HTMLInputElement>,
-  ) => {
-    // Don't respond to window/tab blur
-    if (e.target !== document.activeElement) {
+  const handleBlur = useCallback(
+    (e: React.FocusEvent<HTMLDivElement | HTMLInputElement>) => {
+      if (e.target !== document.activeElement) {
+        const elmType = (e.target as HTMLElement).tagName.toLowerCase()
+        if (elmType === "div") {
+          clearSelectedCells()
+        } else if (elmType === "input") {
+          setIsEditing(false)
+        }
+      }
+    },
+    [clearSelectedCells],
+  )
+
+  const handleFocus = useCallback(
+    (e: React.FocusEvent<HTMLDivElement | HTMLInputElement>) => {
+      const elmType = (e.target as HTMLElement).tagName.toLowerCase()
+      if (elmType === "input") {
+        setIsEditing(true)
+      }
+    },
+    [],
+  )
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement | HTMLInputElement>) => {
       const elmType = (e.target as HTMLElement).tagName.toLowerCase()
 
+      if (elmType === "input") {
+        if (e.key === "Escape") {
+          setActiveCell(rowIndex, cellIndex)
+          return
+        }
+
+        if (e.key === "Enter") {
+          setActiveCell(rowIndex, cellIndex)
+          return
+        }
+      }
+
       if (elmType === "div") {
-        clearSelectedCells()
-      } else if (elmType === "input") {
-        setIsEditing(false)
+        if (e.target !== e.currentTarget) return
+        if (rowIndex === undefined || cellIndex === undefined) return
+
+        const keyPressed = e.key
+
+        const keyMap: Record<string, CellTraverseDirection> = {
+          ArrowLeft: "left",
+          ArrowRight: "right",
+          ArrowUp: "up",
+          ArrowDown: "down",
+        }
+
+        const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
+
+        if (keyPressed === "Shift") {
+          startShiftTraverse({
+            rowIndex,
+            cellIndex,
+          })
+          return
+        }
+
+        if (keyPressed === "Escape") {
+          clearSelectedCells()
+          setActiveCell(rowIndex, cellIndex)
+          return
+        }
+
+        if (keyPressed === "Enter") {
+          setInputFocus(rowIndex, cellIndex)
+          return
+        }
+
+        if (keyPressed === "Delete" || keyPressed === "Backspace") {
+          setCellValue(rowIndex, cellIndex, "")
+          return
+        }
+
+        const direction = keyMap[keyPressed]
+
+        if (direction) {
+          e.preventDefault()
+
+          setNextActiveCell({
+            direction,
+            currentRowIndex: rowIndex,
+            currentCellIndex: cellIndex,
+            isShiftHeld: e.shiftKey,
+            isCtrlHeld: e.ctrlKey || e.metaKey,
+          })
+        }
+
+        if (isAlphaNumeric) {
+          setInputFocus(rowIndex, cellIndex)
+        }
       }
-    }
-  }
+    },
+    [
+      rowIndex,
+      cellIndex,
+      startShiftTraverse,
+      clearSelectedCells,
+      setActiveCell,
+      setInputFocus,
+      setCellValue,
+      setNextActiveCell,
+    ],
+  )
 
-  const handleFocus = (
-    e: React.FocusEvent<HTMLDivElement | HTMLInputElement>,
-  ) => {
-    const elmType = (e.target as HTMLElement).tagName.toLowerCase()
-
-    if (elmType === "input") {
-      setIsEditing(true)
-    }
-  }
-
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLDivElement | HTMLInputElement>,
-  ) => {
-    const elmType = (e.target as HTMLElement).tagName.toLowerCase()
-
-    if (elmType === "input") {
-      if (e.key === "Escape") {
-        setActiveCell(rowIndex, cellIndex)
-        return
-      }
-
-      if (e.key === "Enter") {
-        setActiveCell(rowIndex, cellIndex)
-        return
-      }
-    }
-
-    if (elmType === "div") {
-      if (e.target !== e.currentTarget) return
-      if (rowIndex === undefined || cellIndex === undefined) return
-
-      const keyPressed = e.key
-
-      const keyMap: Record<string, CellTraverseDirection> = {
-        ArrowLeft: "left",
-        ArrowRight: "right",
-        ArrowUp: "up",
-        ArrowDown: "down",
-      }
-
-      const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
-
-      if (keyPressed === "Shift") {
-        startShiftTraverse({
-          rowIndex,
-          cellIndex,
-        })
-        return
-      }
-
-      if (keyPressed === "Escape") {
-        clearSelectedCells()
-        setActiveCell(rowIndex, cellIndex)
-        return
-      }
-
-      if (keyPressed === "Enter") {
-        setInputFocus(rowIndex, cellIndex)
-        return
-      }
-
-      if (keyPressed === "Delete" || keyPressed === "Backspace") {
-        setCellValue(rowIndex, cellIndex, "")
-        return
-      }
-
-      const direction = keyMap[keyPressed]
-
-      if (direction) {
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent<HTMLInputElement>) => {
+      if (e.ctrlKey || e.metaKey) {
         e.preventDefault()
-
-        setNextActiveCell({
-          direction,
-          currentRowIndex: rowIndex,
-          currentCellIndex: cellIndex,
-          isShiftHeld: e.shiftKey,
-          isCtrlHeld: e.ctrlKey || e.metaKey,
-        })
+        toggleSelectedCell(rowIndex, cellIndex)
+        return
+      } else if (e.shiftKey) {
+        e.preventDefault()
+        handleShiftClickCell(rowIndex, cellIndex)
+        return
+      } else {
+        e.preventDefault()
+        setActiveCell(rowIndex, cellIndex)
+        handleMouseSelectStart(rowIndex, cellIndex)
       }
+    },
+    [
+      rowIndex,
+      cellIndex,
+      toggleSelectedCell,
+      handleShiftClickCell,
+      setActiveCell,
+      handleMouseSelectStart,
+    ],
+  )
 
-      if (isAlphaNumeric) {
-        setInputFocus(rowIndex, cellIndex)
-      }
-    }
-  }
-
-  const handlePointerDown = (e: React.PointerEvent<HTMLInputElement>) => {
-    // Prevent the cell from being selected when ctrl or cmd is held
-    // to allow for multi-cell selection
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault()
-      toggleSelectedCell(rowIndex, cellIndex)
-      return
-    } else if (e.shiftKey) {
-      e.preventDefault()
-      handleShiftClickCell(rowIndex, cellIndex)
-      return
-    } else {
-      e.preventDefault()
-      setActiveCell(rowIndex, cellIndex)
-      handleMouseSelectStart(rowIndex, cellIndex)
-    }
-  }
-
-  const handleDoubleClick = () => {
+  const handleDoubleClick = useCallback(() => {
     setInputFocus(rowIndex, cellIndex)
-  }
+  }, [rowIndex, cellIndex, setInputFocus])
 
-  const handlePointerEnter = () => {
+  const handlePointerEnter = useCallback(() => {
     handleMouseSelectMove(rowIndex, cellIndex)
-  }
+  }, [rowIndex, cellIndex, handleMouseSelectMove])
 
-  const contextValue = useMemo(() => {
-    return {
+  const contextValue = useMemo(
+    () => ({
       cellValue,
       isSelected,
       isEditing,
@@ -216,20 +242,21 @@ export const CellContextProvider = ({
       handlePointerDown,
       handlePointerEnter,
       handleDoubleClick,
-    }
-  }, [
-    cellValue,
-    isSelected,
-    isEditing,
-    isActive,
-    handleBlur,
-    handleFocus,
-    handleChange,
-    handleKeyDown,
-    handlePointerDown,
-    handlePointerEnter,
-    handleDoubleClick,
-  ])
+    }),
+    [
+      cellValue,
+      isSelected,
+      isEditing,
+      isActive,
+      handleBlur,
+      handleFocus,
+      handleChange,
+      handleKeyDown,
+      handlePointerDown,
+      handlePointerEnter,
+      handleDoubleClick,
+    ],
+  )
 
   return (
     <CellContext.Provider value={contextValue}>{children}</CellContext.Provider>
