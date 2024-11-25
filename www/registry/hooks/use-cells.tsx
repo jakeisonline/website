@@ -379,9 +379,11 @@ export const CellsContextProvider = ({
       }
     }
 
-    ;["left", "right"].includes(direction)
-      ? handleHorizontalMovement()
-      : handleVerticalMovement()
+    if (["left", "right"].includes(direction)) {
+      handleHorizontalMovement()
+    } else {
+      handleVerticalMovement()
+    }
   }
 
   // Selection
