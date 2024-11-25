@@ -55,6 +55,7 @@ interface CellsContextType {
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
   clearSelectedCells: () => void
+  clearSelectedCellsValue: () => void
   selectAllCells: () => void
   selectAllCellsInRow: (rowIndex: number) => void
   selectAllCellsInColumn: (cellIndex: number) => void
@@ -94,6 +95,7 @@ const CellsContext = createContext<CellsContextType>({
   isSelectedCell: () => false,
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
+  clearSelectedCellsValue: () => {},
   selectAllCells: () => {},
   selectAllCellsInRow: () => {},
   selectAllCellsInColumn: () => {},
@@ -181,6 +183,14 @@ export const CellsContextProvider = ({
         return newValues
       })
     }
+  }
+
+  const clearCellsValue = (
+    cells: Array<{ rowIndex: number; cellIndex: number }>,
+  ) => {
+    cells.forEach(({ rowIndex, cellIndex }) => {
+      setCellValue(rowIndex, cellIndex, "")
+    })
   }
 
   const addCellIndex = (
@@ -398,8 +408,20 @@ export const CellsContextProvider = ({
     return getCellState(rowIndex, cellIndex)?.isSelected ?? false
   }
 
+  const getSelectedCells = () => {
+    const selectedCells: Array<{ rowIndex: number; cellIndex: number }> = []
+    cellsMap.current.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        if (cell.isSelected) {
+          selectedCells.push({ rowIndex, cellIndex })
+        }
+      })
+    })
+    return selectedCells
+  }
+
   const addSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const cell = getCellState(rowIndex, cellIndex)
+    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
     if (cell) {
       cell.isSelected = true
       cell.ref?.current?.setAttribute("data-is-selected", "true")
@@ -407,7 +429,7 @@ export const CellsContextProvider = ({
   }
 
   const removeSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const cell = getCellState(rowIndex, cellIndex)
+    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
     if (cell) {
       cell.isSelected = false
       cell.ref?.current?.setAttribute("data-is-selected", "false")
@@ -429,6 +451,11 @@ export const CellsContextProvider = ({
         cell.ref?.current?.setAttribute("data-is-selected", "false")
       })
     })
+  }
+
+  const clearSelectedCellsValue = () => {
+    const selectedCells = getSelectedCells()
+    clearCellsValue(selectedCells)
   }
 
   const selectAllCells = () => {
@@ -595,6 +622,7 @@ export const CellsContextProvider = ({
       isSelectedCell,
       toggleSelectedCell,
       clearSelectedCells,
+      clearSelectedCellsValue,
       selectAllCells,
       selectAllCellsInRow,
       selectAllCellsInColumn,

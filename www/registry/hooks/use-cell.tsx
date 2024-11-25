@@ -61,6 +61,7 @@ export const CellContextProvider = ({
     setActiveCell,
     startShiftTraverse,
     clearSelectedCells,
+    clearSelectedCellsValue,
     setInputFocus,
     setNextActiveCell,
     toggleSelectedCell,
@@ -143,8 +144,6 @@ export const CellContextProvider = ({
 
         const isAlphaNumeric = /^[a-zA-Z0-9]$/.test(keyPressed)
 
-        console.log(keyPressed)
-
         switch (keyPressed) {
           case "Space":
           case " ":
@@ -176,6 +175,7 @@ export const CellContextProvider = ({
           case "Delete":
           case "Backspace":
             setCellValue(rowIndex, cellIndex, "")
+            clearSelectedCellsValue()
             return
 
           case "Home":
