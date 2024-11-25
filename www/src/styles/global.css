@@ -113,7 +113,22 @@
     @apply bg-background text-foreground;
   }
   code {
-    @apply bg-code text-code-foreground break-all rounded p-0.5 font-mono text-xs before:hidden after:hidden md:break-normal;
+    @apply break-all rounded bg-code p-0.5 font-mono text-xs text-code-foreground before:hidden after:hidden md:break-normal;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 5px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
   }
 }
 
