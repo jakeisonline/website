@@ -326,16 +326,23 @@ export const CellsContextProvider = ({
         if (boundaryCellIndex === undefined) return
 
         const endCellIndex = isCtrlHeld ? boundaryCellIndex : nextCellIndex
-        getCellRef(currentTraverseMarker.rowIndex, endCellIndex) &&
+        const cellRef = getCellRef(currentTraverseMarker.rowIndex, endCellIndex)
+        if (cellRef) {
           setSelectedCellRange({
             startRowIndex: currentRowIndex,
             startCellIndex: currentCellIndex,
             endRowIndex: currentTraverseMarker.rowIndex,
             endCellIndex,
           })
+        }
       } else {
-        getCellRef(currentTraverseMarker.rowIndex, nextCellIndex) &&
+        const cellRef = getCellRef(
+          currentTraverseMarker.rowIndex,
+          nextCellIndex,
+        )
+        if (cellRef) {
           setActiveCell(currentTraverseMarker.rowIndex, nextCellIndex)
+        }
       }
     }
 
