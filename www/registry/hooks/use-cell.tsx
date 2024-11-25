@@ -118,14 +118,14 @@ export const CellContextProvider = ({
       const elmType = (e.target as HTMLElement).tagName.toLowerCase()
 
       if (elmType === "input") {
-        if (e.key === "Escape") {
-          setActiveCell(rowIndex, cellIndex)
-          return
-        }
-
-        if (e.key === "Enter") {
-          setActiveCell(rowIndex, cellIndex)
-          return
+        switch (e.key) {
+          case "Escape":
+            setActiveCell(rowIndex, cellIndex)
+            return
+          case "Enter":
+          case "F2":
+            setActiveCell(rowIndex, cellIndex)
+            return
         }
       }
 
@@ -169,6 +169,7 @@ export const CellContextProvider = ({
             return
 
           case "Enter":
+          case "F2":
             setInputFocus(rowIndex, cellIndex)
             return
 
