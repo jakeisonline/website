@@ -43,15 +43,13 @@ const newProps = { ...props, ...processedProps }
 <a
   href={href}
   class={cn(
-    !noStyle && "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover inline-flex",
+    !noStyle && "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover",
     className,
   )}
   {...newProps}
 >
-  <slot />
-  {
+  <slot />{
     isExternal && !noIcon && (
-      <ExternalLinkIcon className={cn( !noStyle && "ml-0.5 hover:decoration-none size-2.5 md:size-3")} />
+      <ExternalLinkIcon className={cn( !noStyle && "ml-0.5 -mt-3 hover:decoration-none size-2.5 md:size-3 inline-block")} />
     )
-  }
-</a>
+  }</a> { /* TODO: Moving this to a new line will cause whitespace! */ }
