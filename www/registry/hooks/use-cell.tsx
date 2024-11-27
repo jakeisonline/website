@@ -63,6 +63,7 @@ export const CellContextProvider = ({
     clearSelectedCells,
     clearSelectedCellsValue,
     copySelectedCells,
+    pasteCells,
     setInputFocus,
     setNextActiveCell,
     toggleSelectedCell,
@@ -240,6 +241,13 @@ export const CellContextProvider = ({
               e.preventDefault()
               copySelectedCells()
               clearSelectedCellsValue()
+            }
+            return
+
+          case "v":
+            if (e.ctrlKey || e.metaKey) {
+              e.preventDefault()
+              pasteCells(rowIndex, cellIndex)
             }
             return
         }

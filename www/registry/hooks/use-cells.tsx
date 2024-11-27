@@ -222,7 +222,35 @@ export const CellsContextProvider = ({
     })
   }
 
-  const pasteCells = (rowIndex: number, cellIndex: number) => {}
+  const pasteCells = async (rowIndex: number, cellIndex: number) => {
+    // Let see if we can actually get the clipboard content
+    try {
+      const clipboardContent = await navigator.clipboard.read()
+
+      for (const item of clipboardContent) {
+        // We're going to assume tab-delimited text, with line breaks as newlines
+        if (item.types.includes("text/plain")) {
+          const textBlob = await item.getType("text/plain")
+          const text = await textBlob.text()
+          const rows = text.split("\n")
+
+          rows.forEach((row, rowOffset) => {
+            const cells = row.split("\t")
+            cells.forEach((cellValue, cellOffset) => {
+              setCellValue(
+                rowIndex + rowOffset,
+                cellIndex + cellOffset,
+                cellValue,
+              )
+            })
+          })
+          return
+        }
+      }
+    } catch (err) {
+      console.error("Failed to paste cells from clipboard", err)
+    }
+  }
 
   const getCellRef = (rowIndex: number, cellIndex: number) => {
     return getRowMap(rowIndex)?.get(cellIndex)?.ref
