@@ -112,7 +112,7 @@ const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
     const { addCellIndex, handlePaste } = useCellsContext()
 
     useEffect(() => {
-      document.addEventListener("paste", (e) => {
+      document.addEventListener("paste", () => {
         handlePaste()
       })
 
