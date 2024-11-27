@@ -6,7 +6,7 @@ export default function CellsDemo() {
   return (
     <Cells>
       <CellRow>
-        <Cell name="cell_1" label="Cell 1" initialValue="1" autoselect />
+        <Cell name="cell_1" label="Cell 1" initialValue="1" />
         <Cell name="cell_2" label="Cell 2" initialValue="2" />
         <Cell name="cell_3" label="Cell 3" initialValue="3" />
       </CellRow>

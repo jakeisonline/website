@@ -158,7 +158,6 @@ interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   name: string
   label: string
   initialValue: string
-  autoselect?: boolean
   type?: HTMLInputTypeAttribute
   cellIndex?: number
   rowIndex?: number
@@ -173,7 +172,6 @@ export const Cell = memo(
         name,
         label,
         initialValue,
-        autoselect,
         cellIndex,
         rowIndex,
         className,
@@ -222,7 +220,6 @@ export const Cell = memo(
           onDoubleClick={handleDoubleClick}
           onBlur={handleBlur}
           ref={ref}
-          autoFocus={autoselect}
         >
           <label htmlFor={name} className="sr-only">
             {label}
