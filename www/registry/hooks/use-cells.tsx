@@ -223,16 +223,18 @@ export const CellsContextProvider = ({
   }
 
   const pasteCells = async (rowIndex: number, cellIndex: number) => {
-    // Let see if we can actually get the clipboard content
+    // Let's see if we can actually get the clipboard content
     try {
       const clipboardContent = await navigator.clipboard.read()
 
       for (const item of clipboardContent) {
-        // We're going to assume tab-delimited text, with line breaks as newlines
+        // Assumes tab-delimited text, with line breaks as newlines
         if (item.types.includes("text/plain")) {
           const textBlob = await item.getType("text/plain")
           const text = await textBlob.text()
           const rows = text.split("\n")
+          const totalRows = rows.length
+          const totalCellsInRow = rows[0].split("\t").length
 
           rows.forEach((row, rowOffset) => {
             const cells = row.split("\t")
@@ -243,6 +245,13 @@ export const CellsContextProvider = ({
                 cellValue,
               )
             })
+          })
+
+          setSelectedCellRange({
+            startRowIndex: rowIndex,
+            startCellIndex: cellIndex,
+            endRowIndex: rowIndex + totalRows - 1,
+            endCellIndex: cellIndex + totalCellsInRow - 1,
           })
           return
         }
