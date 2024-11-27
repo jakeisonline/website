@@ -98,3 +98,24 @@ The following modifiers - keys you hold while pressing other keys - can be used 
 | <kbd>Ctrl</kbd>                    | When <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) is held, and any <kbd>Arrow</kbd> key is then pressed or <kbd>MouseDown</kbd> event occurs, the focus will change to the furthest cell in the direction of the arrow key.                                                                                                                       |
 | <kbd>Shift</kbd>                   | When <kbd>Shift</kbd> is held, and any <kbd>Arrow</kbd> key is then pressed or <kbd>MouseDown</kbd> event occurs, a selection box will be drawn starting from the currently focused cell, which can be further increased or decreased using the <kbd>Arrow</kbd> keys, or further <kbd>MouseDown</kbd> events occur. The focus will not change. |
 | <kbd>Shift</kbd> + <kbd>Ctrl</kbd> | When <kbd>Shift</kbd> and <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) are held, and any <kbd>Arrow</kbd> key is then pressed, a selection box will be drawn starting from the currently focused field, and then the furthest field in the direction of the <kbd>Arrow</kbd> key pressed. The focus will not change.                              |
+
+## Component Reference
+
+### Cells
+
+Used to wrap a grid of cells.
+
+### CellRow
+
+Used to wrap a row of cells.
+
+### Cell
+
+An individual cell within the `Cells` grid. Contains an `input` field wrapped in a `div` container.
+
+| Prop           | Type    | Description                                                                                                 |
+| -------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
+| `name`         | string  | The name of the cell. Required.                                                                             |
+| `label`        | string  | The label of the cell. Required.                                                                            |
+| `initialValue` | string  | The initial value of the cell. Required.                                                                    |
+| `autoActive`   | boolean | If `true`, the cell will automatically be activated when the `Cells` component is mounted. Default `false`. |
