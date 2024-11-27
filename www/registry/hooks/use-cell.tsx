@@ -62,6 +62,7 @@ export const CellContextProvider = ({
     startShiftTraverse,
     clearSelectedCells,
     clearSelectedCellsValue,
+    copySelectedCells,
     setInputFocus,
     setNextActiveCell,
     toggleSelectedCell,
@@ -223,6 +224,22 @@ export const CellContextProvider = ({
             if (e.ctrlKey || e.metaKey) {
               e.preventDefault()
               selectAllCells()
+            }
+            return
+
+          case "c":
+            if (e.ctrlKey || e.metaKey) {
+              console.log("copying cells")
+              e.preventDefault()
+              copySelectedCells()
+            }
+            return
+
+          case "x":
+            if (e.ctrlKey || e.metaKey) {
+              e.preventDefault()
+              copySelectedCells()
+              clearSelectedCellsValue()
             }
             return
         }

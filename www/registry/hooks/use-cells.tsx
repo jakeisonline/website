@@ -30,6 +30,7 @@ interface CellsContextType {
     ref: React.RefObject<HTMLDivElement>,
     initialValue: string,
   ) => void
+  pasteCells: (rowIndex: number, cellIndex: number) => void
 
   // Active Cell Management
   isActiveCell: (rowIndex: number, cellIndex: number) => boolean
@@ -54,6 +55,7 @@ interface CellsContextType {
   // Selection
   isSelectedCell: (rowIndex: number, cellIndex: number) => boolean
   toggleSelectedCell: (rowIndex: number, cellIndex: number) => void
+  copySelectedCells: () => void
   clearSelectedCells: () => void
   clearSelectedCellsValue: () => void
   selectAllCells: () => void
@@ -82,6 +84,7 @@ const CellsContext = createContext<CellsContextType>({
   getCellsMap: () => new Map(),
   setCellValue: () => {},
   addCellIndex: () => {},
+  pasteCells: () => {},
 
   // Active Cell Management
   isActiveCell: () => false,
@@ -96,6 +99,7 @@ const CellsContext = createContext<CellsContextType>({
   toggleSelectedCell: () => {},
   clearSelectedCells: () => {},
   clearSelectedCellsValue: () => {},
+  copySelectedCells: () => {},
   selectAllCells: () => {},
   selectAllCellsInRow: () => {},
   selectAllCellsInColumn: () => {},
@@ -217,6 +221,8 @@ export const CellsContextProvider = ({
       value: initialValue,
     })
   }
+
+  const pasteCells = (rowIndex: number, cellIndex: number) => {}
 
   const getCellRef = (rowIndex: number, cellIndex: number) => {
     return getRowMap(rowIndex)?.get(cellIndex)?.ref
@@ -458,6 +464,58 @@ export const CellsContextProvider = ({
     clearCellsValue(selectedCells)
   }
 
+  const copySelectedCells = async () => {
+    const selectedCells = getSelectedCells()
+    if (selectedCells.length === 0) return
+
+    const minRow = Math.min(...selectedCells.map((cell) => cell.rowIndex))
+    const minCell = Math.min(...selectedCells.map((cell) => cell.cellIndex))
+
+    // Create a matrix of the selected cells
+    const cellMatrix: string[][] = []
+    selectedCells.forEach(({ rowIndex, cellIndex }) => {
+      const relativeRow = rowIndex - minRow
+      const relativeCell = cellIndex - minCell
+
+      if (!cellMatrix[relativeRow]) {
+        cellMatrix[relativeRow] = []
+      }
+
+      const value = getCellState(rowIndex, cellIndex)?.value ?? ""
+      cellMatrix[relativeRow][relativeCell] = value
+    })
+
+    // Create a "plain text" version of the cell matrix
+    const plainTextCopy = cellMatrix.map((row) => row.join("\t")).join("\n")
+
+    // Create a "HTML" version of the cell matrix (e.g. for pasting into Excel)
+    const htmlCopy = `
+      <table>
+        ${cellMatrix
+          .map(
+            (row) => `
+          <tr>
+            ${row.map((cell) => `<td>${cell}</td>`).join("")}
+          </tr>
+        `,
+          )
+          .join("")}
+      </table>
+    `
+
+    // Copy to clipboard, assuming we're allowed
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/plain": new Blob([plainTextCopy], { type: "text/plain" }),
+          "text/html": new Blob([htmlCopy], { type: "text/html" }),
+        }),
+      ])
+    } catch (err) {
+      console.error("Failed to copy cells to clipboard", err)
+    }
+  }
+
   const selectAllCells = () => {
     cellsMap.current.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
@@ -609,6 +667,7 @@ export const CellsContextProvider = ({
       getCellsMap,
       setCellValue,
       addCellIndex,
+      pasteCells,
 
       // Active Cell Management
       isActiveCell,
@@ -623,6 +682,7 @@ export const CellsContextProvider = ({
       toggleSelectedCell,
       clearSelectedCells,
       clearSelectedCellsValue,
+      copySelectedCells,
       selectAllCells,
       selectAllCellsInRow,
       selectAllCellsInColumn,
