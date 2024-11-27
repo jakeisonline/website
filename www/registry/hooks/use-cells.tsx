@@ -166,6 +166,14 @@ export const CellsContextProvider = ({
     return undefined
   }
 
+  const setCellState = (
+    rowIndex: number,
+    cellIndex: number,
+    state: CellState,
+  ) => {
+    cellsMap.current.get(rowIndex)?.set(cellIndex, state)
+  }
+
   const getRowMap = (rowIndex: number) => {
     return cellsMap.current.get(rowIndex)
   }
@@ -224,7 +232,6 @@ export const CellsContextProvider = ({
 
   const handlePaste = async () => {
     const activeCell = getActiveCell()
-    console.log("activeCell", activeCell)
     if (!activeCell) return
 
     const activeCellRef = getCellRef(
@@ -282,7 +289,9 @@ export const CellsContextProvider = ({
   // Active Cell Management
 
   const getActiveCell = () => {
-    for (const [rowIndex, row] of cellsMap.current.entries()) {
+    const cellsMap = getCellsMap()
+
+    for (const [rowIndex, row] of cellsMap.entries()) {
       for (const [cellIndex, cell] of row.entries()) {
         if (cell.isActive) {
           return { rowIndex, cellIndex }
@@ -294,19 +303,24 @@ export const CellsContextProvider = ({
 
   const setActiveCell = (rowIndex: number, cellIndex: number) => {
     // Clear previous active cell and set new one in a single pass
-    cellsMap.current.forEach((row) => {
+    const cellsMap = getCellsMap()
+
+    cellsMap.forEach((row) => {
       row.forEach((cell) => {
         cell.isActive = false
         cell.ref?.current?.setAttribute("data-is-active", "false")
       })
     })
 
-    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
+    const cell = getCellState(rowIndex, cellIndex)
 
     if (cell) {
       const cellRef = cell.ref.current
       clearShiftTraverseMarker()
-      cell.isActive = true
+      setCellState(rowIndex, cellIndex, {
+        ...cell,
+        isActive: true,
+      })
       cellRef?.setAttribute("data-is-active", "true")
       cellRef?.focus()
     }
@@ -478,17 +492,23 @@ export const CellsContextProvider = ({
   }
 
   const addSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
+    const cell = getCellState(rowIndex, cellIndex)
     if (cell) {
-      cell.isSelected = true
+      setCellState(rowIndex, cellIndex, {
+        ...cell,
+        isSelected: true,
+      })
       cell.ref?.current?.setAttribute("data-is-selected", "true")
     }
   }
 
   const removeSelectedCell = (rowIndex: number, cellIndex: number) => {
-    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
+    const cell = getCellState(rowIndex, cellIndex)
     if (cell) {
-      cell.isSelected = false
+      setCellState(rowIndex, cellIndex, {
+        ...cell,
+        isSelected: false,
+      })
       cell.ref?.current?.setAttribute("data-is-selected", "false")
     }
   }
