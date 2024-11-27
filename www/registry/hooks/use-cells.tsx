@@ -30,7 +30,7 @@ interface CellsContextType {
     ref: React.RefObject<HTMLDivElement>,
     initialValue: string,
   ) => void
-  pasteCells: (rowIndex: number, cellIndex: number) => void
+  handlePaste: () => void
 
   // Active Cell Management
   isActiveCell: (rowIndex: number, cellIndex: number) => boolean
@@ -84,7 +84,7 @@ const CellsContext = createContext<CellsContextType>({
   getCellsMap: () => new Map(),
   setCellValue: () => {},
   addCellIndex: () => {},
-  pasteCells: () => {},
+  handlePaste: () => {},
 
   // Active Cell Management
   isActiveCell: () => false,
@@ -222,7 +222,21 @@ export const CellsContextProvider = ({
     })
   }
 
-  const pasteCells = async (rowIndex: number, cellIndex: number) => {
+  const handlePaste = async () => {
+    const activeCell = getActiveCell()
+    console.log("activeCell", activeCell)
+    if (!activeCell) return
+
+    const activeCellRef = getCellRef(
+      activeCell?.rowIndex,
+      activeCell?.cellIndex,
+    )
+
+    if (!activeCellRef || activeCellRef.current?.dataset?.isEditing === "true")
+      return
+
+    const { rowIndex, cellIndex } = activeCell
+
     // Let's see if we can actually get the clipboard content
     try {
       const clipboardContent = await navigator.clipboard.read()
@@ -287,7 +301,7 @@ export const CellsContextProvider = ({
       })
     })
 
-    const cell = getCellState(rowIndex, cellIndex)
+    const cell = cellsMap.current.get(rowIndex)?.get(cellIndex)
 
     if (cell) {
       const cellRef = cell.ref.current
@@ -704,7 +718,7 @@ export const CellsContextProvider = ({
       getCellsMap,
       setCellValue,
       addCellIndex,
-      pasteCells,
+      handlePaste,
 
       // Active Cell Management
       isActiveCell,

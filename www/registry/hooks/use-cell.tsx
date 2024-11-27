@@ -63,7 +63,6 @@ export const CellContextProvider = ({
     clearSelectedCells,
     clearSelectedCellsValue,
     copySelectedCells,
-    pasteCells,
     setInputFocus,
     setNextActiveCell,
     toggleSelectedCell,
@@ -245,10 +244,9 @@ export const CellContextProvider = ({
 
           case "v":
             if (e.ctrlKey || e.metaKey) {
-              e.preventDefault()
-              pasteCells(rowIndex, cellIndex)
+              // Effectively prevents cell focus
+              return
             }
-            return
         }
 
         const direction = keyMap[keyPressed]

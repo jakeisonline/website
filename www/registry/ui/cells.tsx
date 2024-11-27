@@ -6,6 +6,7 @@ import React, {
   useRef,
   type HTMLInputTypeAttribute,
   memo,
+  useEffect,
 } from "react"
 import {
   CellsContextProvider,
@@ -108,7 +109,17 @@ interface CellsForm extends React.ComponentPropsWithoutRef<"form"> {
 
 const CellsForm = forwardRef<HTMLFormElement, CellsForm>(
   ({ className, children, ...props }, ref) => {
-    const { addCellIndex } = useCellsContext()
+    const { addCellIndex, handlePaste } = useCellsContext()
+
+    useEffect(() => {
+      document.addEventListener("paste", (e) => {
+        handlePaste()
+      })
+
+      return () => {
+        document.removeEventListener("paste", handlePaste)
+      }
+    }, [])
 
     return (
       <form className={cn("", className)} role="grid" {...props} ref={ref}>
