@@ -230,7 +230,6 @@ export const CellContextProvider = ({
 
           case "c":
             if (e.ctrlKey || e.metaKey) {
-              console.log("copying cells")
               e.preventDefault()
               copySelectedCells()
             }
