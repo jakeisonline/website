@@ -290,13 +290,14 @@ export const CellContextProvider = ({
         e.preventDefault()
         handleShiftClickCell(rowIndex, cellIndex)
         return
-      } else {
+      } else if (!isEditing) {
         e.preventDefault()
         setActiveCell(rowIndex, cellIndex)
         handleMouseSelectStart(rowIndex, cellIndex)
       }
     },
     [
+      isEditing,
       rowIndex,
       cellIndex,
       toggleSelectedCell,
