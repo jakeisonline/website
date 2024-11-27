@@ -159,6 +159,7 @@ interface CellProps extends React.ComponentPropsWithoutRef<"input"> {
   label: string
   initialValue: string
   type?: HTMLInputTypeAttribute
+  autoActive?: boolean
   cellIndex?: number
   rowIndex?: number
   className?: string
@@ -172,6 +173,7 @@ export const Cell = memo(
         name,
         label,
         initialValue,
+        autoActive = false,
         cellIndex,
         rowIndex,
         className,
@@ -197,6 +199,16 @@ export const Cell = memo(
         handlePointerEnter,
         handleDoubleClick,
       } = useCellContext()
+
+      const { setActiveCell } = useCellsContext()
+
+      useEffect(() => {
+        if (autoActive) {
+          setTimeout(() => {
+            setActiveCell(rowIndex, cellIndex)
+          }, 0)
+        }
+      }, [])
 
       return (
         <div
