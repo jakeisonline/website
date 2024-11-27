@@ -302,9 +302,9 @@ export const CellsContextProvider = ({
   }
 
   const setActiveCell = (rowIndex: number, cellIndex: number) => {
-    // Clear previous active cell and set new one in a single pass
     const cellsMap = getCellsMap()
 
+    // Clear previous active cell
     cellsMap.forEach((row) => {
       row.forEach((cell) => {
         cell.isActive = false
@@ -316,13 +316,25 @@ export const CellsContextProvider = ({
 
     if (cell) {
       const cellRef = cell.ref.current
-      clearShiftTraverseMarker()
+
+      // Set the cell as active in the cells map
       setCellState(rowIndex, cellIndex, {
         ...cell,
         isActive: true,
       })
+
+      // Set the cell as active in the DOM
       cellRef?.setAttribute("data-is-active", "true")
       cellRef?.focus()
+
+      // Clear the shift traverse marker
+      clearShiftTraverseMarker()
+
+      // Clear the selected cells
+      clearSelectedCells()
+
+      // Add the cell to the selected cells
+      addSelectedCell(rowIndex, cellIndex)
     }
   }
 
