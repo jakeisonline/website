@@ -1,5 +1,6 @@
 ---
 import ExampleComponent from "@/components/example-component"
+import Card from "@/components/ui/Card.astro"
 import DocsLayout from "@/layouts/DocsLayout.astro"
 import { getCollection } from "astro:content"
 
@@ -14,16 +15,19 @@ const componentPages = await getCollection("components")
     class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
   >
     <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
+
       {
         componentPages.map((page) => (
+
           <a href={`/playground/components/${page.slug}`}>
+            <Card>
             <ExampleComponent
               name={page.data.component}
-              inclSource={false}
-              isInteractive={false}
               client:load
             />
+            </Card>
           </a>
+
         ))
       }
     </div>

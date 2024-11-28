@@ -6,9 +6,9 @@ component: "stepper"
 layout: "@/layouts/DocsLayout.astro"
 ---
 
-import ExampleComponent from "@/components/example-component"
+import ExampleComponentWithCode from "@/components/example-component-with-code"
 
-<ExampleComponent name={frontmatter.component} client:load />
+<ExampleComponentWithCode name={frontmatter.component} client:load />
 
 ## Installation
 
@@ -109,10 +109,10 @@ An optional floating badge that displays the current value of the field.
 
 Shift stepping allowing users to increment or decrement a value by a larger amount. When `shift` is set, users can shift step by holding <kbd>Shift</kbd> while clicking a `<StepperButton>`, or by using the keyboard interactions.
 
-<ExampleComponent name="stepper-shift" client:visible />
+<ExampleComponentWithCode name="stepper-shift" client:visible />
 
 ### Collapsing stepper fields
 
 You might want to display multiple quantities in a single row. For example, when ordering multiple product variants in bulk, or providing measurements for a product.
 
-<ExampleComponent name="stepper-collapse" client:visible />
+<ExampleComponentWithCode name="stepper-collapse" client:visible />
