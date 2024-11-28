@@ -1,5 +1,5 @@
 ---
-title: "Playground - Range"
+title: "Range"
 description: "A fully interactive, accessible, user interface element that allows users to easily set a minimum and maximum value (a range), using interactive sliders."
 slug: "range"
 component: "range"
@@ -25,21 +25,11 @@ npx shadcn@latest add https://jakeisonline.com/playground/registry/range.json
 ## Usage
 
 ```jsx
-import {
-  Range,
-  RangeBar,
-  RangeFill,
-  RangeGrabber,
-} from "@/components/ui/range"
+import { Range, RangeBar, RangeFill, RangeGrabber } from "@/components/ui/range"
 ```
 
 ```jsx
-<Range
-  minRange={0}
-  maxRange={100}
-  initialLowValue={20}
-  initialHighValue={80}
->
+<Range minRange={0} maxRange={100} initialLowValue={20} initialHighValue={80}>
   <RangeBar>
     <RangeGrabber type={"low"} aria-label="Low Value" />
     <RangeFill className="h-1 grow bg-blue-600" />

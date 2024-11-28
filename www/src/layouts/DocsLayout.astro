@@ -3,17 +3,40 @@ import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
 import ToC, { type ToCHeadingsType } from "@/components/ToC.astro"
 import Breadcrumb from "@/components/ui/Breadcrumb.astro"
 import BaseLayout from "./BaseLayout.astro"
+import { getCollection } from "astro:content"
+
+const getGeneralNavItems = async () => {
+  const generalPages = await getCollection("general")
+  return generalPages.map((page) => ({
+    type: "item", href: `/playground/${page.slug}`, text: page.data.title,
+  }))
+}
+
+const getComponentNavItems = async () => {
+  const componentPages = await getCollection("components")
+  return componentPages.map((page) => ({
+    type: "item", href: `/playground/components/${page.slug}`, text: page.data.title,
+  }))
+}
+
+const getToolNavItems = async () => {
+  const toolPages = await getCollection("tools")
+  return toolPages.map((page) => ({
+    type: "item", href: `/playground/tools/${page.slug}`, text: page.data.title,
+  }))
+}
+
+const generalNavItems = await getGeneralNavItems()
+const componentNavItems = await getComponentNavItems()
+const toolNavItems = await getToolNavItems()
 
 const navItems = [
   { type: "heading", text: "About" },
-  { type: "item", href: "/playground/introduction", text: "Introduction" },
-  { type: "item", href: "/playground/installing-components", text: "Installing components" },
+  ...generalNavItems,
   { type: "heading", text: "Components" },
-  { type: "item", href: "/playground/components/range", text: "Range" },
-  { type: "item", href: "/playground/components/stepper", text: "Stepper" },
-  { type: "item", href: "/playground/components/cells", text: "Cells", badge: { label: "New", variant: "secondary" } },
+  ...componentNavItems,
   { type: "heading", text: "Tools" },
-  { type: "item", href: "/playground/tools/next-auth-template", text: "next-auth-template" },
+  ...toolNavItems,
 ]
 
 interface Props {

@@ -8,6 +8,7 @@ const defaultSchema = z.object({
 
 const componentsSchema = z.object({
   ...defaultSchema.shape,
+  component: z.string(),
   isNew: z.boolean().optional().default(false),
   isPrivate: z.boolean().optional().default(false),
 })
