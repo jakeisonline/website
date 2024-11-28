@@ -14,9 +14,13 @@ const getGeneralNavItems = async () => {
 
 const getComponentNavItems = async () => {
   const componentPages = await getCollection("components")
-  return componentPages.map((page) => ({
-    type: "item", href: `/playground/components/${page.slug}`, text: page.data.title,
-  }))
+  return componentPages.map((page) => {
+    const badge = page.data.isNew ? { label: "New", variant: "secondary" } : null
+
+    return {
+      type: "item", href: `/playground/components/${page.slug}`, text: page.data.title, badge,
+    }
+  })
 }
 
 const getToolNavItems = async () => {
