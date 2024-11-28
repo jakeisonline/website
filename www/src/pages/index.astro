@@ -4,6 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
 import { Button } from "@/components/ui/button"
 import Link from "@/components/ui/Link.astro"
 import { Icon } from "astro-icon/components"
+import Card from "@/components/ui/Card.astro"
 
 export const tools = [{
   name: "next-auth-template",
@@ -12,7 +13,7 @@ export const tools = [{
   slug: "next-auth-template"
 }]
 
-const componentExamples = ["stepper", "range", "cells"]
+const componentExamples = ["stepper", "range", "cells-3x3"]
 ---
 
 <BaseLayout
@@ -41,11 +42,12 @@ const componentExamples = ["stepper", "range", "cells"]
     <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
       {
         componentExamples.map((componentExample) => (
-          <ExampleComponent
-            name={componentExample}
-            inclSource={false}
-            client:load
-          />
+          <Card>
+            <ExampleComponent
+              name={componentExample}
+              client:load
+            />
+          </Card>
         ))
       }
     </div>
