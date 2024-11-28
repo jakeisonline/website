@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import Link from "@/components/ui/Link.astro"
 import { Icon } from "astro-icon/components"
 import Card from "@/components/ui/Card.astro"
+import { getCollection } from "astro:content"
+import Badge from "@/components/ui/Badge.astro"
 
 export const tools = [{
   name: "next-auth-template",
@@ -13,7 +15,7 @@ export const tools = [{
   slug: "next-auth-template"
 }]
 
-const componentExamples = ["stepper", "range", "cells-3x3"]
+const componentPages = await getCollection("components")
 ---
 
 <BaseLayout
@@ -28,33 +30,45 @@ const componentExamples = ["stepper", "range", "cells-3x3"]
       </h1>
     </div>
     <div class="mt-3 mb-8 gap-1.5 flex flex-col md:flex-row">
-      <Link href="/playground/installing-components" noStyle>
+      <Link href="/playground/introduction" noStyle>
         <Button className="w-full md:w-auto">
           Get started
         </Button>
       </Link>
-      <Link href="/playground/components" noStyle>
-        <Button className="w-full md:w-auto" variant="secondary">
-          See all
+      <Link href="https://github.com/jakeisonline/playground" noStyle noIcon>
+        <Button className="w-full md:w-auto" variant="link">
+          See it on GitHub
         </Button>
       </Link>
     </div>
-    <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
+        <div class="grid lg:grid-cols-3 gap-3 mt-3 not-prose">
       {
-        componentExamples.map((componentExample) => (
-          <Card>
-            <div class="flex min-h-44 w-auto items-center justify-center p-6 pt-6">
+        componentPages.map((page) => (
+
+          <a href={`/playground/components/${page.slug}`} class="relative group">
+            <Card class="pointer-events-none">
+              <div class="flex w-auto justify-center p-6 pt-8">
               <ExampleComponent
-                name={componentExample}
+                name={page.data.component}
                 client:load
               />
-            </div>
-          </Card>
+              <div class="absolute bottom-1 left-1 right-1 width-full px-3 py-2.5 bg-gradient-to-b from-transparent from-5% to-background/95 to-70% transition-colors duration-200">
+                <div class="flex items-center">
+                  <h2 class="text-lg font-bold group-hover:text-link-hover group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted flex">{page.data.title}
+                  </h2>
+                  {page.data.isNew && <Badge variant="secondary" class="ml-1.5 mt-0.5 text-2xs px-2 py-0">New</Badge>}
+                </div>
+                <p class="text-sm text-muted-foreground group-hover:text-foreground">{page.data.shortDescription}</p>
+              </div>
+              </div>
+            </Card>
+          </a>
+
         ))
       }
     </div>
 
-    <h2 class="text-2xl font-medium mt-8">Free Tools</h2>
+    <h2 class="text-2xl font-medium mt-12">Free Tools</h2>
     <p class="text-muted-foreground">A growing collection of tools for web development, that you might find handy.</p>
     <div class="grid lg:grid-cols-3 gap-3 mt-3 not-prose mb-20">
       {
