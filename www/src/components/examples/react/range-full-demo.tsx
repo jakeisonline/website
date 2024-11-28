@@ -8,7 +8,6 @@ export default function StepperDemo() {
       initialLowValue={20}
       initialHighValue={80}
     >
-      <div className="mt-4"></div>
       <RangeBar>
         <RangeGrabber type={"low"} aria-label="Low Value" />
         <RangeFill className="h-1 grow bg-blue-600" />
