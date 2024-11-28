@@ -15,6 +15,11 @@ export default function CellsDemo() {
         <Cell name="cell_5" label="Cell 5" initialValue="5" />
         <Cell name="cell_6" label="Cell 6" initialValue="6" />
       </CellRow>
+      <CellRow>
+        <Cell name="cell_7" label="Cell 7" initialValue="7" />
+        <Cell name="cell_8" label="Cell 8" initialValue="8" />
+        <Cell name="cell_9" label="Cell 9" initialValue="9" />
+      </CellRow>
     </Cells>
   )
 }
