@@ -3,64 +3,7 @@ import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
 import ToC, { type ToCHeadingsType } from "@/components/ToC.astro"
 import Breadcrumb from "@/components/ui/Breadcrumb.astro"
 import BaseLayout from "./BaseLayout.astro"
-import { getCollection, type CollectionEntry } from "astro:content"
-import { collections } from "@/content/config"
-
-type PageNavConfig = {
-  path: string
-  newBadge?: (page: any) => { label: string; variant: string } | null
-  order?: Record<string, number>
-}
-
-type CollectionKeys = keyof typeof collections
-
-const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
-  general: {
-    path: "/playground",
-    order: {
-      "introduction": 1,
-      "installing-components": 2
-    }
-  },
-  components: {
-    path: "/playground/components",
-    newBadge: (page: any) => page.data.isNew ? { label: "New", variant: "secondary" } : null
-  },
-  tools: { path: "/playground/tools" }
-} as const
-
-const getNavItems = async (collectionName: CollectionKeys) => {
-  const config = pageCollectionsConfig[collectionName]
-  const pages = await getCollection(collectionName)
-
-  const sortedPages = config.order
-    ? pages.sort((a, b) => {
-        const orderA = config.order?.[a.slug] ?? Infinity
-        const orderB = config.order?.[b.slug] ?? Infinity
-        return orderA - orderB
-      })
-    : pages.sort((a, b) => a.slug.localeCompare(b.slug))
-
-  return sortedPages.map((page) => {
-    if (page.data.isPrivate) return null
-
-    return {
-      type: "item" as const,
-      href: `${config.path}/${page.slug}`,
-      text: page.data.title,
-      ...(config.newBadge ? { badge: config.newBadge(page) } : {})
-    }
-  })
-}
-
-const navItems = [
-  { type: "heading", text: "About" },
-  ...(await getNavItems("general")),
-  { type: "heading", text: "Components" },
-  ...(await getNavItems("components")),
-  { type: "heading", text: "Tools" },
-  ...(await getNavItems("tools"))
-]
+import { buildNavigation } from "@/content/utils/navigation"
 
 interface Props {
   frontmatter?: Record<string, string>
@@ -75,6 +18,8 @@ const {
   description = frontmatter?.description,
   headings,
 } = Astro.props
+
+const navItems = await buildNavigation()
 ---
 
 <BaseLayout title={title} description={description}>
