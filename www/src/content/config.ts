@@ -11,6 +11,7 @@ const defaultSchema = z.object({
 const componentsSchema = z.object({
   ...defaultSchema.shape,
   component: z.string(),
+  shortDescription: z.string(),
 })
 
 export const componentDocsCollection = defineCollection({

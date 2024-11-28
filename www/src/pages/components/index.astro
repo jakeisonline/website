@@ -19,12 +19,16 @@ const componentPages = await getCollection("components")
       {
         componentPages.map((page) => (
 
-          <a href={`/playground/components/${page.slug}`}>
-            <Card>
-            <ExampleComponent
-              name={page.data.component}
-              client:load
-            />
+          <a href={`/playground/components/${page.slug}`} class="relative group">
+            <Card class="pointer-events-none">
+              <ExampleComponent
+                name={page.data.component}
+                client:load
+              />
+              <div class="absolute bottom-1 left-1 right-1 width-full px-3 py-2.5 bg-gradient-to-b from-transparent from-5% to-background/95 to-70%">
+                <h2 class="text-lg font-bold group-hover:text-link group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted  transition-colors duration-200">{page.data.title}</h2>
+                <p class="text-sm">{page.data.shortDescription}</p>
+              </div>
             </Card>
           </a>
 
