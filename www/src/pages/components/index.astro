@@ -1,5 +1,6 @@
 ---
 import ExampleComponent from "@/components/example-component"
+import Badge from "@/components/ui/Badge.astro"
 import Card from "@/components/ui/Card.astro"
 import DocsLayout from "@/layouts/DocsLayout.astro"
 import { getCollection } from "astro:content"
@@ -27,7 +28,11 @@ const componentPages = await getCollection("components")
                 client:load
               />
               <div class="absolute bottom-1 left-1 right-1 width-full px-3 py-2.5 bg-gradient-to-b from-transparent from-5% to-background/95 to-70% transition-colors duration-200">
-                <h2 class="text-lg font-bold group-hover:text-link-hover group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted">{page.data.title}</h2>
+                <div class="flex items-center">
+                  <h2 class="text-lg font-bold group-hover:text-link-hover group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted flex">{page.data.title}
+                  </h2>
+                  {page.data.isNew && <Badge variant="secondary" class="ml-1.5 mt-0.5 text-2xs px-2 py-0">New</Badge>}
+                </div>
                 <p class="text-sm text-muted-foreground group-hover:text-foreground">{page.data.shortDescription}</p>
               </div>
               </div>
