@@ -4,13 +4,13 @@ const defaultSchema = z.object({
   title: z.string(),
   description: z.string(),
   layout: z.string(),
+  isPrivate: z.boolean().optional().default(false),
+  isNew: z.boolean().optional().default(false),
 })
 
 const componentsSchema = z.object({
   ...defaultSchema.shape,
   component: z.string(),
-  isNew: z.boolean().optional().default(false),
-  isPrivate: z.boolean().optional().default(false),
 })
 
 export const componentDocsCollection = defineCollection({
