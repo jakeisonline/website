@@ -9,12 +9,19 @@ import { collections } from "@/content/config"
 type PageNavConfig = {
   path: string
   newBadge?: (page: any) => { label: string; variant: string } | null
+  order?: Record<string, number>
 }
 
 type CollectionKeys = keyof typeof collections
 
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
-  general: { path: "/playground" },
+  general: {
+    path: "/playground",
+    order: {
+      "introduction": 1,
+      "installing-components": 2
+    }
+  },
   components: {
     path: "/playground/components",
     newBadge: (page: any) => page.data.isNew ? { label: "New", variant: "secondary" } : null
@@ -26,7 +33,15 @@ const getNavItems = async (collectionName: CollectionKeys) => {
   const config = pageCollectionsConfig[collectionName]
   const pages = await getCollection(collectionName)
 
-  return pages.map((page) => {
+  const sortedPages = config.order
+    ? pages.sort((a, b) => {
+        const orderA = config.order?.[a.slug] ?? Infinity
+        const orderB = config.order?.[b.slug] ?? Infinity
+        return orderA - orderB
+      })
+    : pages.sort((a, b) => a.slug.localeCompare(b.slug))
+
+  return sortedPages.map((page) => {
     if (page.data.isPrivate) return null
 
     return {
