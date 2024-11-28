@@ -3,7 +3,7 @@ import { z, defineCollection } from "astro:content"
 const defaultSchema = z.object({
   title: z.string(),
   description: z.string(),
-  layout: z.string(),
+  layout: z.string().optional().default("@/layouts/DocsLayout.astro"),
   isPrivate: z.boolean().optional().default(false),
   isNew: z.boolean().optional().default(false),
 })
