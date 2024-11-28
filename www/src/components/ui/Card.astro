@@ -9,7 +9,5 @@ const { class: className } = Astro.props as Props
 ---
 
 <div class={cn("bg-card text-card-foreground rounded-lg border shadow-sm min-h-44", className)}>
-  <div class="flex w-auto justify-center p-6 pt-8">
-    <slot />
-  </div>
+  <slot />
 </div>

@@ -43,10 +43,12 @@ const componentExamples = ["stepper", "range", "cells-3x3"]
       {
         componentExamples.map((componentExample) => (
           <Card>
-            <ExampleComponent
-              name={componentExample}
-              client:load
-            />
+            <div class="flex min-h-44 w-auto items-center justify-center p-6 pt-6">
+              <ExampleComponent
+                name={componentExample}
+                client:load
+              />
+            </div>
           </Card>
         ))
       }
