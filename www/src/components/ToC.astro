@@ -32,7 +32,7 @@ function buildToC(headings: ToCHeadingsType) {
     if (heading.depth === 1) {
       toc.push(heading)
     } else {
-      parentHeadings.get(heading.depth - 1).subHeadings.push(heading)
+      parentHeadings.get(heading.depth).subHeadings.push(heading)
     }
   })
   return toc
