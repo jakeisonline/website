@@ -4,14 +4,13 @@ import { type ToCHeadingTypeWithSubItems } from "@/components/ToC.astro"
 
 interface Props {
   heading: ToCHeadingTypeWithSubItems
-  excludeTitle?: boolean
 }
 
-const { heading, excludeTitle } = Astro.props
+const { heading } = Astro.props
 ---
 
 <li class="mb-0.5">
-  {!excludeTitle && <Link href={`#${heading.slug}`}>{heading.text}</Link>}
+  <Link href={`#${heading.slug}`}>{heading.text}</Link>
 
   {
     heading.subHeadings.length > 0 && (
