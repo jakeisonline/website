@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
-import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 import vercel from "@astrojs/vercel/static"
 import react from "@astrojs/react"
@@ -13,7 +12,6 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
     robotsTxt(),
     react(),
     playformCompress(),
