@@ -18,28 +18,30 @@ const componentPages = await getCollection("components")
     <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
 
       {
-        componentPages.map((page) => (
+        componentPages.map((page) => {
+          if (page.data.isPrivate) return
 
-          <a href={`/playground/components/${page.slug}`} class="relative group">
-            <Card class="pointer-events-none">
-              <div class="flex w-auto justify-center p-6 pt-8">
-              <ExampleComponent
-                name={page.data.component}
-                client:load
-              />
-              <div class="absolute bottom-1 left-1 right-1 width-full px-3 py-2.5 bg-gradient-to-b from-transparent from-5% to-background/95 to-70% transition-colors duration-200">
-                <div class="flex items-center">
-                  <h2 class="text-lg font-bold group-hover:text-link-hover group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted flex">{page.data.title}
-                  </h2>
-                  {page.data.isNew && <Badge variant="secondary" class="ml-1.5 mt-0.5 text-2xs px-2 py-0">New</Badge>}
+          return(
+            <a href={`/playground/components/${page.slug}`} class="relative group">
+              <Card class="pointer-events-none">
+                <div class="flex w-auto justify-center p-6 pt-8">
+                <ExampleComponent
+                  name={page.data.component}
+                  client:load
+                />
+                <div class="absolute bottom-1 left-1 right-1 width-full px-3 py-2.5 bg-gradient-to-b from-transparent from-5% to-background/95 to-70% transition-colors duration-200">
+                  <div class="flex items-center">
+                    <h2 class="text-lg font-bold group-hover:text-link-hover group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted flex">{page.data.title}
+                    </h2>
+                    {page.data.isNew && <Badge variant="secondary" class="ml-1.5 mt-0.5 text-2xs px-2 py-0">New</Badge>}
+                  </div>
+                  <p class="text-sm text-muted-foreground group-hover:text-foreground">{page.data.shortDescription}</p>
                 </div>
-                <p class="text-sm text-muted-foreground group-hover:text-foreground">{page.data.shortDescription}</p>
-              </div>
-              </div>
-            </Card>
-          </a>
-
-        ))
+                </div>
+              </Card>
+            </a>
+          )
+        })
       }
     </div>
   </div>
