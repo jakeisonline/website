@@ -5,6 +5,8 @@ import react from "@astrojs/react"
 import mdx from "@astrojs/mdx"
 import icon from "astro-icon"
 
+import sitemap from "@astrojs/sitemap"
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -19,7 +21,11 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     icon(),
+    sitemap({
+      customPages: ["https://jakeisonline.com"],
+    }),
   ],
+  site: "https://jakeisonline.com",
   base: "/playground",
   output: "static",
   adapter: vercel({
