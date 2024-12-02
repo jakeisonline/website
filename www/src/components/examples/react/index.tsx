@@ -55,4 +55,11 @@ export const Index: Record<string, any> = {
     source: (await import(`@/components/examples/react/cells-3x3.tsx?raw`))
       .default,
   },
+  "scale-demo": {
+    component: React.lazy(
+      () => import("@/components/examples/react/scale-demo"),
+    ),
+    source: (await import(`@/components/examples/react/scale-demo?raw`))
+      .default,
+  },
 }
