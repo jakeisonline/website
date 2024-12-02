@@ -18,19 +18,14 @@ export default function ScaleDemo() {
         <div className="flex min-h-8 w-full justify-center py-4">
           <div className="relative flex h-1 w-11/12 flex-none touch-none flex-row items-center rounded-full bg-blue-100">
             <fieldset className="absolute flex w-full justify-between">
+              <ScaleStep id="unhappy" name="satisfaction" label="Unhappy" />
               <ScaleStep
-                id="very_unhappy"
+                id="meh"
                 name="satisfaction"
-                label="Very Unhappy"
+                label="Meh"
                 defaultChecked
               />
-              <ScaleStep id="unhappy" name="satisfaction" label="Unhappy" />
               <ScaleStep id="happy" name="satisfaction" label="Happy" />
-              <ScaleStep
-                id="very_happy"
-                name="satisfaction"
-                label="Very Happy"
-              />
             </fieldset>
           </div>
         </div>
