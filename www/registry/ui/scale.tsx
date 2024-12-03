@@ -8,13 +8,14 @@ import {
 import { cn } from "@/lib/utils"
 
 interface ScaleProps extends React.ComponentPropsWithoutRef<"div"> {
-  children: React.ReactElement
+  children: React.ReactNode
+  className?: string
 }
 
 export const Scale = forwardRef<HTMLDivElement, ScaleProps>(
-  ({ children, ...props }, ref) => (
+  ({ children, className, ...props }, ref) => (
     <ScaleContextProvider>
-      <div ref={ref} className="w-full" {...props}>
+      <div ref={ref} className={cn("w-full", className)} {...props}>
         <div className="flex min-h-8 w-full justify-center py-4">
           <div className="relative flex h-1 w-11/12 flex-none touch-none flex-row items-center rounded-full bg-blue-100">
             <ScaleFill />
@@ -29,38 +30,49 @@ export const Scale = forwardRef<HTMLDivElement, ScaleProps>(
 )
 Scale.displayName = "Scale"
 
-interface ScaleFielsetProps extends React.ComponentPropsWithoutRef<"fieldset"> {
-  children: React.ReactElement
+interface ScaleFieldsetProps
+  extends React.ComponentPropsWithoutRef<"fieldset"> {
+  children: React.ReactNode
 }
 
-export const ScaleFieldset = forwardRef<HTMLFieldSetElement, ScaleFielsetProps>(
-  ({ children, ...props }, ref) => {
-    const { setTotalSteps, updateSelectedIndex } = useScaleContext()
-    const childCount = React.Children.count(children)
+export const ScaleFieldset = forwardRef<
+  HTMLFieldSetElement,
+  ScaleFieldsetProps
+>(({ children, ...props }, ref) => {
+  const { setTotalSteps, updateSelectedIndex } = useScaleContext()
+  const childCount = React.Children.count(children)
 
-    const childrenWithIndex = React.Children.map(children, (child, index) => {
-      return React.cloneElement(child, {
-        index,
-      })
+  const childrenWithIndex = React.Children.map(children, (child, index) => {
+    if (!React.isValidElement(child)) return null
+
+    if (
+      typeof child.type === "function" &&
+      (child.type as React.ComponentType).displayName !== "ScaleStep"
+    ) {
+      throw new Error("Invalid child type, only ScaleStep is allowed")
+    }
+
+    return React.cloneElement(child as React.ReactElement, {
+      index,
     })
+  })
 
-    useEffect(() => {
-      React.Children.forEach(children, (child, index) => {
-        if (child.props.defaultChecked) {
-          updateSelectedIndex(index)
-        }
-      })
-    }, [])
+  useEffect(() => {
+    React.Children.forEach(children, (child, index) => {
+      if (React.isValidElement(child) && child.props.defaultChecked) {
+        updateSelectedIndex(index)
+      }
+    })
+  }, [])
 
-    setTotalSteps(childCount)
+  setTotalSteps(childCount)
 
-    return (
-      <fieldset ref={ref} {...props}>
-        {childrenWithIndex}
-      </fieldset>
-    )
-  },
-)
+  return (
+    <fieldset ref={ref} {...props}>
+      {childrenWithIndex}
+    </fieldset>
+  )
+})
 ScaleFieldset.displayName = "ScaleFieldset"
 
 export const ScaleFill = () => {
