@@ -31,4 +31,10 @@ export const ui: Registry = [
       },
     },
   },
+  {
+    name: "scale",
+    type: "registry:ui",
+    description: "A scale component",
+    files: ["ui/scale.tsx", "hooks/use-scale.tsx"],
+  },
 ]
