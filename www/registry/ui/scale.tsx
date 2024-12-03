@@ -77,11 +77,10 @@ interface ScaleStepProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string
   name: string
   index?: number
-  isSelected?: Boolean
 }
 
 export const ScaleStep = forwardRef<HTMLDivElement, ScaleStepProps>(
-  ({ index, id, label, name, isSelected = false, ...props }, ref) => {
+  ({ index, id, label, name, ...props }, ref) => {
     if (index === undefined) throw new Error("Index is required")
 
     const { updateSelectedIndex, selectedIndex } = useScaleContext()
