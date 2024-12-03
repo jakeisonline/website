@@ -50,7 +50,7 @@ export const ScaleFieldset = forwardRef<HTMLFieldSetElement, ScaleFielsetProps>(
           updateSelectedIndex(index)
         }
       })
-    }, [children, updateSelectedIndex])
+    }, [])
 
     setTotalSteps(childCount)
 
