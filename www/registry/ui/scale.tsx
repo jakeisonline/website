@@ -14,7 +14,7 @@ interface ScaleProps extends React.ComponentPropsWithoutRef<"div"> {
 export const Scale = forwardRef<HTMLDivElement, ScaleProps>(
   ({ children, ...props }, ref) => (
     <ScaleContextProvider>
-      <div className="w-full">
+      <div ref={ref} className="w-full" {...props}>
         <div className="flex min-h-8 w-full justify-center py-4">
           <div className="relative flex h-1 w-11/12 flex-none touch-none flex-row items-center rounded-full bg-blue-100">
             <ScaleFill />
@@ -92,7 +92,7 @@ export const ScaleStep = forwardRef<HTMLDivElement, ScaleStepProps>(
     }
 
     return (
-      <div className="relative flex flex-col items-center">
+      <div ref={ref} className="relative flex flex-col items-center">
         <input
           onChange={handleChange}
           data-index={index}
