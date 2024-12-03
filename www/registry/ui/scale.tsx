@@ -39,15 +39,18 @@ export const ScaleFieldset = forwardRef<HTMLFieldSetElement, ScaleFielsetProps>(
     const childCount = React.Children.count(children)
 
     const childrenWithIndex = React.Children.map(children, (child, index) => {
-      useEffect(() => {
-        if (child.props.defaultChecked) {
-          updateSelectedIndex(index)
-        }
-      }, [])
       return React.cloneElement(child, {
         index,
       })
     })
+
+    useEffect(() => {
+      React.Children.forEach(children, (child, index) => {
+        if (child.props.defaultChecked) {
+          updateSelectedIndex(index)
+        }
+      })
+    }, [children, updateSelectedIndex])
 
     setTotalSteps(childCount)
 
