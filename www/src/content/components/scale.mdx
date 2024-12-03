@@ -11,3 +11,29 @@ isPrivate: true
 import ExampleComponentWithCode from "@/components/example-component-with-code"
 
 <ExampleComponentWithCode name="scale-demo" client:load />
+
+## Installation
+
+You can install this component via the shadcn CLI.
+
+```bash
+npx shadcn@latest add https://jakeisonline.com/playground/registry/scale.json
+```
+
+## Usage
+
+```jsx
+import { Scale, ScaleStep } from "@/components/ui/scale"
+```
+
+```jsx
+<Scale>
+  <ScaleStep id="unhappy" name="satisfaction" label="Unhappy" />
+  <ScaleStep id="meh" name="satisfaction" label="Meh" defaultChecked />
+  <ScaleStep id="happy" name="satisfaction" label="Happy" />
+</Scale>
+```
+
+## Accessibility
+
+Adheres to the [Radio Group WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/). At its core, this component is simply a [native radio input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio) wrapped in a [fieldset](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset).
