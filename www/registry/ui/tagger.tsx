@@ -41,11 +41,10 @@ export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
 Tagger.displayName = "Tagger"
 
 interface TaggerInputProps {
-  placeholder: string // String displayed as the input's placeholder
   className?: string
 }
 
-export const TaggerInput = ({ placeholder, className }: TaggerInputProps) => {
+export const TaggerInput = ({ className, ...props }: TaggerInputProps) => {
   const [tag, tagQuery] = useState("")
   const { inputRef, addTag, removeLastTag } = useTaggerFieldContext()
 
@@ -83,11 +82,11 @@ export const TaggerInput = ({ placeholder, className }: TaggerInputProps) => {
       value={tag}
       onKeyDown={handleKeydown}
       onChange={handleInput}
-      placeholder={placeholder}
       className={cn(
-        "ml-1.5 bg-inherit placeholder:pl-0.5 focus:border-0 focus:outline-none focus:hover:cursor-text",
+        "bg-inherit pl-0.5 placeholder:text-sm focus:border-0 focus:outline-none focus:hover:cursor-text",
         className,
       )}
+      {...props}
     />
   )
 }
