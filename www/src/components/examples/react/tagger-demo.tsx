@@ -4,7 +4,7 @@ import { Tagger, TaggerInput, TaggerTags } from "@/registry/ui/tagger"
 
 export default function TaggerDemo() {
   return (
-    <Tagger>
+    <Tagger initialTags={["Hotel", "India"]}>
       <TaggerTags />
       <TaggerInput placeholder="+ Add Tag" />
     </Tagger>

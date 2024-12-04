@@ -37,13 +37,15 @@ export const TaggerFieldContext = createContext<TaggerFieldContextType>({
 type TaggerFieldContextProviderProps = {
   inputRef: RefObject<HTMLInputElement>
   children: ReactElement
+  initialTags?: string[]
 }
 
 export const TaggerFieldContextProvider = ({
   inputRef,
   children,
+  initialTags,
 }: TaggerFieldContextProviderProps) => {
-  const [tags, setTags] = useState<string[]>([])
+  const [tags, setTags] = useState<string[]>(initialTags || [])
 
   const addTag = (newTag: string) => {
     // Check a tag has been passed, and it isn't already in the set

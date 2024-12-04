@@ -11,9 +11,10 @@ import { cn } from "@/lib/utils"
 interface TaggerProps {
   children?: React.ReactNode
   className?: string
+  initialTags?: string[]
 }
 
-export const Tagger = ({ children, className }: TaggerProps) => {
+export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -24,7 +25,7 @@ export const Tagger = ({ children, className }: TaggerProps) => {
   }
 
   return (
-    <TaggerFieldContextProvider inputRef={inputRef}>
+    <TaggerFieldContextProvider inputRef={inputRef} initialTags={initialTags}>
       <div
         onClick={handleClick}
         className={cn(
