@@ -46,8 +46,7 @@ interface TaggerInputProps {
 
 export const TaggerInput = ({ placeholder, className }: TaggerInputProps) => {
   const [tag, tagQuery] = useState("")
-  const { inputRef, handleAddTag, handleRemoveLastTag } =
-    useTaggerFieldContext()
+  const { inputRef, addTag, removeLastTag } = useTaggerFieldContext()
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Allow users to keep seeing what they're typing, as expected
@@ -64,13 +63,13 @@ export const TaggerInput = ({ placeholder, className }: TaggerInputProps) => {
     switch (e.key) {
       case "Enter":
         if (tagQueryValue !== "" && tagQueryValue.trim().length !== 0) {
-          handleAddTag(tagQueryValue)
+          addTag(tagQueryValue)
           tagQuery("")
         }
         return
       case "Backspace":
         if (tagQueryValue === "") {
-          handleRemoveLastTag()
+          removeLastTag()
         }
         return
     }
@@ -99,10 +98,10 @@ interface TaggerTagProps {
 }
 
 export const TaggerTag = ({ label, className }: TaggerTagProps) => {
-  const { handleRemoveTag } = useTaggerFieldContext()
+  const { removeTag } = useTaggerFieldContext()
 
   const handleClick = () => {
-    handleRemoveTag(label)
+    removeTag(label)
   }
 
   return (
