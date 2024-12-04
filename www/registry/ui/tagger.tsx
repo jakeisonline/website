@@ -8,7 +8,7 @@ import {
 } from "@/registry/hooks/use-tagger"
 import { cn } from "@/lib/utils"
 
-interface TaggerProps {
+interface TaggerProps extends React.ComponentPropsWithoutRef<"div"> {
   children?: React.ReactNode
   className?: string
   initialTags?: string[]
@@ -40,7 +40,7 @@ export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
 }
 Tagger.displayName = "Tagger"
 
-interface TaggerInputProps {
+interface TaggerInputProps extends React.ComponentPropsWithoutRef<"input"> {
   className?: string
 }
 
@@ -92,7 +92,7 @@ export const TaggerInput = ({ className, ...props }: TaggerInputProps) => {
 }
 TaggerInput.displayName = "TaggerInput"
 
-interface TaggerTagProps {
+interface TaggerTagProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string // String displayed as the tag's label
   className?: string
 }
@@ -123,7 +123,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
 }
 TaggerTag.displayName = "TaggerTag"
 
-interface TaggerTagsProps {
+interface TaggerTagsProps extends React.ComponentPropsWithoutRef<"div"> {
   className?: string
 }
 
