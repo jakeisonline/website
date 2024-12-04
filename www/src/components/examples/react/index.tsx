@@ -62,14 +62,6 @@ export const Index: Record<string, any> = {
     source: (await import(`@/components/examples/react/scale-demo?raw`))
       .default,
   },
-  "scale-full-demo": {
-    component: React.lazy(
-      () => import("@/components/examples/react/scale-full-demo"),
-    ),
-    source: (
-      await import(`@/components/examples/react/scale-full-demo.tsx?raw`)
-    ).default,
-  },
   "tagger": {
     component: React.lazy(
       () => import("@/components/examples/react/tagger-demo"),
