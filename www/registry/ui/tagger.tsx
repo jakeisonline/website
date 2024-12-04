@@ -6,12 +6,14 @@ import {
   useTaggerFieldContext,
   TaggerFieldContextProvider,
 } from "@/registry/hooks/use-tagger"
+import { cn } from "@/lib/utils"
 
 interface TaggerProps {
   children?: React.ReactNode
+  className?: string
 }
 
-export const Tagger = ({ children }: TaggerProps) => {
+export const Tagger = ({ children, className }: TaggerProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -25,7 +27,10 @@ export const Tagger = ({ children }: TaggerProps) => {
     <TaggerFieldContextProvider inputRef={inputRef}>
       <div
         onClick={handleClick}
-        className="peer flex max-w-2xl flex-wrap gap-2 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2"
+        className={cn(
+          "peer flex max-w-2xl flex-wrap gap-2 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2",
+          className,
+        )}
       >
         {children}
       </div>
@@ -36,9 +41,10 @@ Tagger.displayName = "Tagger"
 
 interface TaggerInputProps {
   placeholder: string // String displayed as the input's placeholder
+  className?: string
 }
 
-export const TaggerInput = ({ placeholder }: TaggerInputProps) => {
+export const TaggerInput = ({ placeholder, className }: TaggerInputProps) => {
   const [tag, tagQuery] = useState("")
   const { inputRef, handleAddTag, handleRemoveLastTag } =
     useTaggerFieldContext()
@@ -78,7 +84,10 @@ export const TaggerInput = ({ placeholder }: TaggerInputProps) => {
       onKeyDown={handleKeydown}
       onChange={handleInput}
       placeholder={placeholder}
-      className="ml-1.5 bg-inherit placeholder:pl-0.5 focus:border-0 focus:outline-none focus:hover:cursor-text"
+      className={cn(
+        "ml-1.5 bg-inherit placeholder:pl-0.5 focus:border-0 focus:outline-none focus:hover:cursor-text",
+        className,
+      )}
     />
   )
 }
@@ -86,9 +95,10 @@ TaggerInput.displayName = "TaggerInput"
 
 interface TaggerTagProps {
   label: string // String displayed as the tag's label
+  className?: string
 }
 
-export const TaggerTag = ({ label }: TaggerTagProps) => {
+export const TaggerTag = ({ label, className }: TaggerTagProps) => {
   const { handleRemoveTag } = useTaggerFieldContext()
 
   const handleClick = () => {
@@ -96,7 +106,12 @@ export const TaggerTag = ({ label }: TaggerTagProps) => {
   }
 
   return (
-    <div className="flex items-center rounded-sm bg-accent pl-2.5 pr-1.5">
+    <div
+      className={cn(
+        "flex items-center rounded-sm bg-accent pl-2.5 pr-1.5",
+        className,
+      )}
+    >
       <span className="mr-0.5">{label}</span>
       <div
         className="ml-0.5 flex rounded-full px-1 opacity-50 hover:opacity-100"
@@ -108,13 +123,17 @@ export const TaggerTag = ({ label }: TaggerTagProps) => {
   )
 }
 
-export const TaggerTags = () => {
+interface TaggerTagsProps {
+  className?: string
+}
+
+export const TaggerTags = ({ className }: TaggerTagsProps) => {
   const { tags } = useTaggerFieldContext()
 
   return (
     <>
       {tags.map((label: string, index: number) => (
-        <TaggerTag label={label} key={index} />
+        <TaggerTag label={label} key={index} className={className} />
       ))}
     </>
   )
