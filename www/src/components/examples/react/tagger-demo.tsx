@@ -1,7 +1,12 @@
 import * as React from "react"
 
-import { Tagger } from "@/registry/ui/tagger"
+import { Tagger, TaggerInput, TaggerTags } from "@/registry/ui/tagger"
 
 export default function TaggerDemo() {
-  return <Tagger />
+  return (
+    <Tagger>
+      <TaggerTags />
+      <TaggerInput placeholder="+ Add Tag" />
+    </Tagger>
+  )
 }

@@ -7,7 +7,11 @@ import {
   TaggerFieldContextProvider,
 } from "@/registry/hooks/use-tagger"
 
-export const Tagger = () => {
+interface TaggerProps {
+  children?: React.ReactNode
+}
+
+export const Tagger = ({ children }: TaggerProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -23,8 +27,7 @@ export const Tagger = () => {
         onClick={handleClick}
         className="peer flex max-w-2xl flex-wrap gap-2 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2"
       >
-        <TaggerTags />
-        <TaggerInput placeholder="+ Add Tag" />
+        {children}
       </div>
     </TaggerFieldContextProvider>
   )
