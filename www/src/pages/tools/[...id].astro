@@ -1,18 +1,19 @@
 ---
 import { getCollection } from "astro:content"
 import Link from "@/components/ui/Link.astro"
+import { render } from "astro:content"
 
 export async function getStaticPaths() {
-  const componentDocs = await getCollection("components")
+  const toolDocs = await getCollection("tools")
 
-  return componentDocs.map((doc) => ({
-    params: { slug: doc.slug },
+  return toolDocs.map((doc) => ({
+    params: { id: doc.id },
     props: { doc },
   }))
 }
 
 const { doc } = Astro.props
-const { Content, headings } = await doc.render()
+const { Content, headings } = await render(doc)
 ---
 
 <Content components={{ a: Link }} headings={headings} />

@@ -1,4 +1,5 @@
 import { z, defineCollection } from "astro:content"
+import { glob } from "astro/loaders"
 
 const defaultSchema = z.object({
   title: z.string(),
@@ -15,17 +16,26 @@ const componentsSchema = z.object({
 })
 
 export const componentDocsCollection = defineCollection({
-  type: "content",
+  loader: glob({
+    pattern: "**\/*.mdx",
+    base: "./src/content/components",
+  }),
   schema: componentsSchema,
 })
 
 export const toolDocsCollection = defineCollection({
-  type: "content",
+  loader: glob({
+    pattern: "**\/*.mdx",
+    base: "./src/content/tools",
+  }),
   schema: defaultSchema,
 })
 
 export const generalDocsCollection = defineCollection({
-  type: "content",
+  loader: glob({
+    pattern: "**\/*.mdx",
+    base: "./src/content/general",
+  }),
   schema: defaultSchema,
 })
 

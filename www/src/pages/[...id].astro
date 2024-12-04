@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from "astro:content"
+import Link from "@/components/ui/Link.astro"
+
+export async function getStaticPaths() {
+  const generalDocs = await getCollection("general")
+
+  return generalDocs.map((doc) => ({
+    params: { id: doc.id },
+    props: { doc },
+  }))
+}
+
+const { doc } = Astro.props
+const { Content, headings } = await render(doc)
+---
+
+<Content components={{ a: Link }} headings={headings} />

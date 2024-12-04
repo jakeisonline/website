@@ -12,7 +12,7 @@ export const tools = [{
   name: "next-auth-template",
   description: "A template for Next.js with NextAuth, Drizzle ORM, and Tailwind CSS.",
   icons: ["logos/nextjs", "logos/authjs"],
-  slug: "next-auth-template"
+  id: "next-auth-template"
 }]
 
 const componentPages = await getCollection("components")
@@ -45,7 +45,7 @@ const componentPages = await getCollection("components")
       {
         componentPages.map((page) => (
 
-          <a href={`/playground/components/${page.slug}`} class="relative group">
+          <a href={`/playground/components/${page.id}`} class="relative group">
             <Card class="pointer-events-none">
               <div class="flex w-auto justify-center p-6 pt-8">
                 <ExampleComponent
@@ -73,7 +73,7 @@ const componentPages = await getCollection("components")
     <div class="grid lg:grid-cols-3 gap-3 mt-3 not-prose mb-20">
       {
         tools.map((tool) => (
-          <a href={`/playground/tools/${tool.slug}`}>
+          <a href={`/playground/tools/${tool.id}`}>
             <div class="bg-card text-card-foreground rounded-lg border shadow-sm">
       <div class="flex flex-col min-h-22 w-auto p-6 pt-6">
         <div class="flex items-center gap-2 pb-3">
