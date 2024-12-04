@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { CrossIcon } from "lucide-react"
+import { X } from "lucide-react"
 import {
   useTaggerFieldContext,
   TaggerFieldContextProvider,
@@ -21,7 +21,7 @@ export const Tagger = () => {
     <TaggerFieldContextProvider inputRef={inputRef}>
       <div
         onClick={handleClick}
-        className="flex flex-wrap max-w-2xl gap-2 px-2 py-2 text-black bg-white border-2 border-white rounded-lg shadow-sm peer min-w-56 focus-within:border-indigo-300 hover:cursor-pointer hover:border-indigo-50 hover:shadow hover:shadow-indigo-300/40 hover:focus-within:border-indigo-300 hover:focus-within:shadow-none"
+        className="peer flex max-w-2xl flex-wrap gap-2 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2"
       >
         <TaggerTags />
         <TaggerInput placeholder="+ Add Tag" />
@@ -75,7 +75,7 @@ export const TaggerInput = ({ placeholder }: TaggerInputProps) => {
       onKeyDown={handleKeydown}
       onChange={handleInput}
       placeholder={placeholder}
-      className="m-w-1 bg-inherit py-1 placeholder:pl-0.5 placeholder:font-bold hover:cursor-pointer focus:border-0 focus:outline-none focus:hover:cursor-text"
+      className="ml-1.5 bg-inherit placeholder:pl-0.5 focus:border-0 focus:outline-none focus:hover:cursor-text"
     />
   )
 }
@@ -93,13 +93,13 @@ export const TaggerTag = ({ label }: TaggerTagProps) => {
   }
 
   return (
-    <div className="flex rounded-lg bg-gray-100 py-1 pl-2.5 pr-1.5">
+    <div className="flex items-center rounded-sm bg-accent pl-2.5 pr-1.5">
       <span className="mr-0.5">{label}</span>
       <div
-        className="ml-0.5 flex rounded-full px-1 py-0.5 opacity-55 hover:bg-indigo-200 hover:opacity-100"
+        className="ml-0.5 flex rounded-full px-1 opacity-50 hover:opacity-100"
         onClick={handleClick}
       >
-        <CrossIcon className="relative top-0.5 h-4 w-4" />
+        <X className="relative h-4 w-4" />
       </div>
     </div>
   )
