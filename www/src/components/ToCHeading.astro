@@ -10,7 +10,7 @@ const { heading } = Astro.props
 ---
 
 <li class="mb-0.5">
-  <Link href={`#${heading.slug}`}>{heading.text}</Link>
+  <Link href={`#${heading.id}`}>{heading.text}</Link>
 
   {
     heading.subHeadings.length > 0 && (

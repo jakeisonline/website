@@ -1,4 +1,4 @@
-import type { collections } from "@/content/config"
+import type { collections } from "@/content.config"
 
 export type CollectionKeys = keyof typeof collections
 
