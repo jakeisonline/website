@@ -1,4 +1,4 @@
-import { getCollection } from "astro:content"
+import { getCollection, type DataEntryMap } from "astro:content"
 import type { CollectionKeys, PageNavConfig } from "./navigation.types"
 
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
@@ -19,7 +19,7 @@ const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
 
 export async function getNavItems(collectionName: CollectionKeys) {
   const config = pageCollectionsConfig[collectionName]
-  const pages = await getCollection(collectionName)
+  const pages = await getCollection(collectionName as keyof DataEntryMap)
 
   const sortedPages = config.order
     ? pages.sort((a, b) => {
