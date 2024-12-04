@@ -122,6 +122,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
     </div>
   )
 }
+TaggerTag.displayName = "TaggerTag"
 
 interface TaggerTagsProps {
   className?: string
