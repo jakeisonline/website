@@ -112,12 +112,13 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
       )}
     >
       <span className="mr-0.5">{label}</span>
-      <div
+      <button
+        aria-label={`Remove ${label} from this list`}
         className="ml-0.5 flex rounded-full px-1 opacity-50 hover:opacity-100"
         onClick={handleClick}
       >
         <X className="relative h-4 w-4" />
-      </div>
+      </button>
     </li>
   )
 }
