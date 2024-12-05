@@ -20,7 +20,9 @@ export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
     // Only match a click on the parent element, but not e.g. tags
     if (e.target === e.currentTarget) {
-      inputRef.current && inputRef.current.focus()
+      if (inputRef.current) {
+        inputRef.current.focus()
+      }
     }
   }
 
