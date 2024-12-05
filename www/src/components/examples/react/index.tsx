@@ -69,4 +69,12 @@ export const Index: Record<string, any> = {
     source: (await import(`@/components/examples/react/tagger-demo.tsx?raw`))
       .default,
   },
+  "tagger-demo-full": {
+    component: React.lazy(
+      () => import("@/components/examples/react/tagger-demo-full"),
+    ),
+    source: (
+      await import(`@/components/examples/react/tagger-demo-full.tsx?raw`)
+    ).default,
+  },
 }

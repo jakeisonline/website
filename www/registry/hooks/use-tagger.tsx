@@ -58,6 +58,10 @@ export const TaggerFieldContextProvider = ({
     if (tagLabel && tags.includes(tagLabel)) {
       const cleansedTags = tags.filter((v) => v !== tagLabel)
       setTags(cleansedTags)
+
+      if (cleansedTags.length === 0) {
+        inputRef?.current?.focus()
+      }
     }
   }
 

@@ -98,24 +98,39 @@ interface TaggerTagProps extends React.ComponentPropsWithoutRef<"div"> {
 }
 
 export const TaggerTag = ({ label, className }: TaggerTagProps) => {
-  const { removeTag } = useTaggerFieldContext()
+  const { removeTag, inputRef } = useTaggerFieldContext()
 
   const handleClick = () => {
     removeTag(label)
+    inputRef?.current?.focus()
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
+    if (e.key === "Backspace" || e.key === "Delete") {
+      removeTag(label)
+    }
+
+    if (e.key === "Escape") {
+      inputRef?.current?.focus()
+    }
   }
 
   return (
     <li
       className={cn(
-        "flex items-center rounded-sm bg-accent pl-2.5 pr-1.5",
+        "focus:inner-border-1 flex items-center rounded-sm bg-accent pl-2.5 pr-1.5 focus:outline-0 focus:ring-0 focus:inner-border-2 focus:inner-border-primary",
         className,
       )}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      aria-role="button"
+      aria-label={`Remove ${label} from this list`}
     >
       <span className="mr-0.5">{label}</span>
       <button
-        aria-label={`Remove ${label} from this list`}
         className="ml-0.5 flex rounded-full px-1 opacity-50 hover:opacity-100"
         onClick={handleClick}
+        tabIndex={-1}
       >
         <X className="relative h-4 w-4" />
       </button>
