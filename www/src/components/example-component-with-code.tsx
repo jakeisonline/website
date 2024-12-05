@@ -28,7 +28,7 @@ export default function ExampleComponentWithCode({
         value="example"
         className="rounded-lg border bg-card text-card-foreground shadow-sm"
       >
-        <div className="flex min-h-44 w-auto items-center justify-center p-6 pt-6">
+        <div className="not-prose flex min-h-44 w-auto items-center justify-center p-6 pt-6">
           <React.Suspense
             fallback={
               <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
