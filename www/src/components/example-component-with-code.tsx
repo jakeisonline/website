@@ -2,6 +2,7 @@ import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Index } from "@/components/examples/react"
 import ExampleSource from "@/components/example-source"
+import ExampleComponent from "@/components/example-component"
 
 interface ExampleComponentWithCodeProps {
   name: string
@@ -10,14 +11,6 @@ interface ExampleComponentWithCodeProps {
 export default function ExampleComponentWithCode({
   name,
 }: ExampleComponentWithCodeProps) {
-  const Example = React.useMemo(() => {
-    const Component = Index[name]?.component
-
-    if (!Component) return <p>Component not found: {name}</p>
-
-    return <Component />
-  }, [name])
-
   return (
     <Tabs defaultValue="example">
       <TabsList>
@@ -29,15 +22,7 @@ export default function ExampleComponentWithCode({
         className="rounded-lg border bg-card text-card-foreground shadow-sm"
       >
         <div className="not-prose flex min-h-44 w-auto items-center justify-center p-6 pt-6">
-          <React.Suspense
-            fallback={
-              <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
-                Loading...
-              </div>
-            }
-          >
-            {Example}
-          </React.Suspense>
+          <ExampleComponent name={name} />
         </div>
       </TabsContent>
       <TabsContent value="code" className="mt-0">
