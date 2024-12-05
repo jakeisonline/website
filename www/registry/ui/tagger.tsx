@@ -132,7 +132,7 @@ export const TaggerTags = ({ className }: TaggerTagsProps) => {
   const { tags } = useTaggerFieldContext()
 
   return (
-    <ul className="flex gap-1">
+    <ul className="flex flex-wrap gap-1">
       {tags.map((label: string, index: number) => (
         <TaggerTag label={label} key={index} className={className} />
       ))}
