@@ -6,7 +6,7 @@ export default function TaggerDemo() {
   return (
     <Tagger initialTags={["Hotel", "India"]}>
       <TaggerTags />
-      <TaggerInput placeholder="+ Add Tag" />
+      <TaggerInput />
     </Tagger>
   )
 }

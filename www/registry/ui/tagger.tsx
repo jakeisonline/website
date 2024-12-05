@@ -29,7 +29,7 @@ export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
       <div
         onClick={handleClick}
         className={cn(
-          "peer flex max-w-2xl flex-wrap gap-2 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2",
+          "peer flex w-full flex-wrap gap-1 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2",
           className,
         )}
       >
@@ -105,7 +105,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
   }
 
   return (
-    <div
+    <li
       className={cn(
         "flex items-center rounded-sm bg-accent pl-2.5 pr-1.5",
         className,
@@ -118,7 +118,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
       >
         <X className="relative h-4 w-4" />
       </div>
-    </div>
+    </li>
   )
 }
 TaggerTag.displayName = "TaggerTag"
@@ -131,11 +131,11 @@ export const TaggerTags = ({ className }: TaggerTagsProps) => {
   const { tags } = useTaggerFieldContext()
 
   return (
-    <>
+    <ul className="flex gap-1">
       {tags.map((label: string, index: number) => (
         <TaggerTag label={label} key={index} className={className} />
       ))}
-    </>
+    </ul>
   )
 }
 TaggerTags.displayName = "TaggerTags"
