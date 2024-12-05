@@ -37,4 +37,16 @@ export const ui: Registry = [
     description: "A scale component",
     files: ["ui/scale.tsx", "hooks/use-scale.tsx"],
   },
+  {
+    name: "tagger",
+    type: "registry:ui",
+    description: "A tagger component",
+    files: ["ui/tagger.tsx", "hooks/use-tagger.tsx"],
+    dependencies: ["tailwindcss-inner-border", "lucide-react"],
+    tailwind: {
+      config: {
+        plugins: [`require("tailwindcss-inner-border")`],
+      },
+    },
+  },
 ]
