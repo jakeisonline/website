@@ -123,7 +123,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
       )}
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      aria-role="button"
+      role="button"
       aria-label={`Remove ${label} from this list`}
     >
       <span className="mr-0.5">{label}</span>
