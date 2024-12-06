@@ -86,7 +86,6 @@ export const SegmentedControlItem = ({
   className,
   disabled,
   role,
-  ariaChecked,
   ...props
 }: SegmentedControlItemProps) => {
   const { selectControlItem, selectedValue, selectNextControlItem } =
