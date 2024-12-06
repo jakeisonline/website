@@ -41,19 +41,22 @@ export const SegmentedControlItem = ({
 
   const isSelected = selectedValue === value
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return
     selectControlItem(value)
+    e.currentTarget.dataset.state = "active"
   }
 
   return (
     <button
+      aria-disabled={disabled}
+      aria-selected={isSelected}
       className={cn(
-        "rounded-sm bg-accent px-4 py-1 text-muted-foreground transition-colors duration-300 focus:outline-primary",
-        isSelected && "bg-background text-foreground shadow",
-        disabled && "cursor-not-allowed",
+        "rounded-sm bg-accent px-4 py-1 text-muted-foreground transition-colors duration-300 focus:outline-primary disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
         className,
       )}
+      data-state={isSelected ? "active" : "inactive"}
+      disabled={disabled}
       onClick={handleClick}
       value={value}
       {...props}
