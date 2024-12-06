@@ -9,15 +9,24 @@ import { cn } from "@/lib/utils"
 type SegmentedControlProps = {
   defaultValue: string
   children: React.ReactNode
+  className?: string
 }
 
 export const SegmentedControl = ({
   defaultValue,
   children,
+  className,
 }: SegmentedControlProps) => {
   return (
     <SegmentedControlContextProvider defaultValue={defaultValue}>
-      <div className="flex gap-1 rounded-md bg-accent p-1">{children}</div>
+      <div
+        className={cn(
+          "flex gap-1 rounded-md bg-accent p-1 shadow-inner",
+          className,
+        )}
+      >
+        {children}
+      </div>
     </SegmentedControlContextProvider>
   )
 }
