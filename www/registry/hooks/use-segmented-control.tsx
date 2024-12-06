@@ -16,6 +16,7 @@ type SegmentedControlContextType = {
   selectedValue: string | null
   selectControlItem: (value: string) => void
   setValues: (value: string[]) => void
+  selectNextControlItem: (direction: "next" | "previous") => void
 }
 
 export const SegmentedControlContext =
@@ -23,6 +24,7 @@ export const SegmentedControlContext =
     selectedValue: null,
     selectControlItem: () => {},
     setValues: () => {},
+    selectNextControlItem: () => {},
   })
 
 type SegmentedControlContextProviderProps = {
@@ -45,9 +47,23 @@ export const SegmentedControlContextProvider = ({
     setSelectedValue(value)
   }
 
+  const selectNextControlItem = (direction: "next" | "previous") => {
+    const currentIndex = values.current.indexOf(selectedValue)
+    const nextIndex =
+      direction === "next"
+        ? (currentIndex + 1) % values.current.length
+        : (currentIndex - 1 + values.current.length) % values.current.length
+    setSelectedValue(values.current[nextIndex])
+  }
+
   return (
     <SegmentedControlContext.Provider
-      value={{ selectedValue, selectControlItem, setValues }}
+      value={{
+        selectedValue,
+        selectControlItem,
+        setValues,
+        selectNextControlItem,
+      }}
     >
       {children}
     </SegmentedControlContext.Provider>

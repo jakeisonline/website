@@ -5,7 +5,7 @@ import {
   useSegmentedControl,
 } from "@/registry/hooks/use-segmented-control"
 import { cn } from "@/lib/utils"
-import React from "react"
+import React, { useEffect, useRef } from "react"
 
 type SegmentedControlProps = {
   defaultValue: string
@@ -77,6 +77,7 @@ interface SegmentedControlItemProps
   disabled?: boolean
   className?: string
   role?: string
+  ariaChecked?: boolean
 }
 
 export const SegmentedControlItem = ({
@@ -85,10 +86,12 @@ export const SegmentedControlItem = ({
   className,
   disabled,
   role,
+  ariaChecked,
   ...props
 }: SegmentedControlItemProps) => {
-  const { selectControlItem, selectedValue } = useSegmentedControl()
-
+  const { selectControlItem, selectedValue, selectNextControlItem } =
+    useSegmentedControl()
+  const selfRef = useRef<HTMLButtonElement>(null)
   const isSelected = selectedValue === value
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -97,10 +100,22 @@ export const SegmentedControlItem = ({
     e.currentTarget.dataset.state = "active"
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "ArrowRight") selectNextControlItem("next")
+    if (e.key === "ArrowLeft") selectNextControlItem("previous")
+  }
+
+  useEffect(() => {
+    if (isSelected) {
+      selfRef.current?.focus()
+    }
+  }, [isSelected])
+
   return (
     <button
       aria-disabled={disabled}
       aria-checked={isSelected}
+      aria-selected={isSelected}
       className={cn(
         "rounded-sm bg-accent px-4 py-1 text-muted-foreground transition-colors duration-300 focus:outline-primary disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
         className,
@@ -109,8 +124,10 @@ export const SegmentedControlItem = ({
       disabled={disabled}
       role={role || "radio"}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       tabIndex={isSelected ? 0 : -1}
       value={value}
+      ref={selfRef}
       {...props}
     >
       {children}
