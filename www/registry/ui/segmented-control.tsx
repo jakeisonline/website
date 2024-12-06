@@ -92,6 +92,7 @@ export const SegmentedControlItem = ({
     useSegmentedControl()
   const selfRef = useRef<HTMLButtonElement>(null)
   const isSelected = selectedValue === value
+  const hasMounted = useRef(false)
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return
@@ -105,9 +106,11 @@ export const SegmentedControlItem = ({
   }
 
   useEffect(() => {
-    if (isSelected) {
+    if (isSelected && hasMounted.current) {
       selfRef.current?.focus()
     }
+
+    hasMounted.current = true
   }, [isSelected])
 
   return (
