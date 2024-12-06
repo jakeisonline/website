@@ -26,13 +26,15 @@ interface SegmentedControlItemProps
   extends React.ComponentPropsWithoutRef<"button"> {
   value: string
   children: React.ReactNode
+  disabled?: boolean
   className?: string
 }
 
 export const SegmentedControlItem = ({
   value,
-  className,
   children,
+  className,
+  disabled,
   ...props
 }: SegmentedControlItemProps) => {
   const { selectControlItem, selectedValue } = useSegmentedControl()
@@ -40,6 +42,7 @@ export const SegmentedControlItem = ({
   const isSelected = selectedValue === value
 
   const handleClick = () => {
+    if (disabled) return
     selectControlItem(value)
   }
 
@@ -48,6 +51,7 @@ export const SegmentedControlItem = ({
       className={cn(
         "rounded-sm bg-accent px-4 py-1 text-muted-foreground transition-colors duration-300 focus:outline-primary",
         isSelected && "bg-background text-foreground shadow",
+        disabled && "cursor-not-allowed",
         className,
       )}
       onClick={handleClick}

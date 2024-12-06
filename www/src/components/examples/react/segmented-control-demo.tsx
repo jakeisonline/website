@@ -8,7 +8,9 @@ export default function SegmentedControlDemo() {
     <SegmentedControl defaultValue="one">
       <SegmentedControlItem value="one">One</SegmentedControlItem>
       <SegmentedControlItem value="two">Two</SegmentedControlItem>
-      <SegmentedControlItem value="three">Three</SegmentedControlItem>
+      <SegmentedControlItem value="three" disabled>
+        Three
+      </SegmentedControlItem>
     </SegmentedControl>
   )
 }
