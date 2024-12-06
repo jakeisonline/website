@@ -10,12 +10,15 @@ type SegmentedControlProps = {
   defaultValue: string
   children: React.ReactNode
   className?: string
+  role?: string
 }
 
 export const SegmentedControl = ({
   defaultValue,
   children,
   className,
+  role,
+  ...props
 }: SegmentedControlProps) => {
   return (
     <SegmentedControlContextProvider defaultValue={defaultValue}>
@@ -24,6 +27,8 @@ export const SegmentedControl = ({
           "flex gap-1 rounded-md bg-accent p-1 shadow-inner",
           className,
         )}
+        role={role || "radiogroup"}
+        {...props}
       >
         {children}
       </div>
@@ -37,6 +42,7 @@ interface SegmentedControlItemProps
   children: React.ReactNode
   disabled?: boolean
   className?: string
+  role?: string
 }
 
 export const SegmentedControlItem = ({
@@ -44,6 +50,7 @@ export const SegmentedControlItem = ({
   children,
   className,
   disabled,
+  role,
   ...props
 }: SegmentedControlItemProps) => {
   const { selectControlItem, selectedValue } = useSegmentedControl()
@@ -59,13 +66,14 @@ export const SegmentedControlItem = ({
   return (
     <button
       aria-disabled={disabled}
-      aria-selected={isSelected}
+      aria-checked={isSelected}
       className={cn(
         "rounded-sm bg-accent px-4 py-1 text-muted-foreground transition-colors duration-300 focus:outline-primary disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
         className,
       )}
       data-state={isSelected ? "active" : "inactive"}
       disabled={disabled}
+      role={role || "radio"}
       onClick={handleClick}
       value={value}
       {...props}
