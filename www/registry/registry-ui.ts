@@ -49,4 +49,10 @@ export const ui: Registry = [
       },
     },
   },
+  {
+    name: "segmented-control",
+    type: "registry:ui",
+    description: "A segmented control component",
+    files: ["ui/segmented-control.tsx", "hooks/use-segmented-control.tsx"],
+  },
 ]
