@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useRef, useState } from "react"
 
 export const useSegmentedControl = () => {
   const context = useContext(SegmentedControlContext)
@@ -15,12 +15,14 @@ export const useSegmentedControl = () => {
 type SegmentedControlContextType = {
   selectedValue: string | null
   selectControlItem: (value: string) => void
+  setValues: (value: string[]) => void
 }
 
 export const SegmentedControlContext =
   createContext<SegmentedControlContextType>({
     selectedValue: null,
     selectControlItem: () => {},
+    setValues: () => {},
   })
 
 type SegmentedControlContextProviderProps = {
@@ -33,6 +35,11 @@ export const SegmentedControlContextProvider = ({
   children,
 }: SegmentedControlContextProviderProps) => {
   const [selectedValue, setSelectedValue] = useState<string>(defaultValue)
+  const values = useRef<string[]>([])
+
+  const setValues = (value: string[]) => {
+    values.current = value
+  }
 
   const selectControlItem = (value: string) => {
     setSelectedValue(value)
@@ -40,7 +47,7 @@ export const SegmentedControlContextProvider = ({
 
   return (
     <SegmentedControlContext.Provider
-      value={{ selectedValue, selectControlItem }}
+      value={{ selectedValue, selectControlItem, setValues }}
     >
       {children}
     </SegmentedControlContext.Provider>

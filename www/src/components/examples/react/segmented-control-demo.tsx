@@ -5,12 +5,9 @@ import {
 
 export default function SegmentedControlDemo() {
   return (
-    <SegmentedControl defaultValue="one">
-      <SegmentedControlItem value="one">One</SegmentedControlItem>
-      <SegmentedControlItem value="two">Two</SegmentedControlItem>
-      <SegmentedControlItem value="three" disabled>
-        Three
-      </SegmentedControlItem>
+    <SegmentedControl defaultValue="24h">
+      <SegmentedControlItem value="12h">12-hour</SegmentedControlItem>
+      <SegmentedControlItem value="24h">24-hour</SegmentedControlItem>
     </SegmentedControl>
   )
 }

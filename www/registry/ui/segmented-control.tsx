@@ -5,6 +5,7 @@ import {
   useSegmentedControl,
 } from "@/registry/hooks/use-segmented-control"
 import { cn } from "@/lib/utils"
+import React from "react"
 
 type SegmentedControlProps = {
   defaultValue: string
@@ -20,19 +21,52 @@ export const SegmentedControl = ({
   role,
   ...props
 }: SegmentedControlProps) => {
+  const stuffedProps = { ...props, defaultValue, className, role }
+
   return (
     <SegmentedControlContextProvider defaultValue={defaultValue}>
-      <div
-        className={cn(
-          "flex gap-1 rounded-md bg-accent p-1 shadow-inner",
-          className,
-        )}
-        role={role || "radiogroup"}
-        {...props}
-      >
+      <SegmentedControlMapper {...stuffedProps}>
         {children}
-      </div>
+      </SegmentedControlMapper>
     </SegmentedControlContextProvider>
+  )
+}
+SegmentedControl.displayName = "SegmentedControl"
+
+interface SegmentedControlMapperProps {
+  children: React.ReactNode
+  className?: string
+  role?: string
+}
+
+const SegmentedControlMapper = ({
+  children,
+  className,
+  role,
+  ...props
+}: SegmentedControlMapperProps) => {
+  const { setValues } = useSegmentedControl()
+  const controlValues: string[] = []
+
+  React.Children.forEach(children, (child) => {
+    if (React.isValidElement(child) && child.props.value) {
+      controlValues.push(child.props.value)
+    }
+
+    setValues(controlValues)
+  })
+
+  return (
+    <div
+      className={cn(
+        "flex gap-1 rounded-md bg-accent p-1 shadow-inner",
+        className,
+      )}
+      role={role || "radiogroup"}
+      {...props}
+    >
+      {children}
+    </div>
   )
 }
 
@@ -75,6 +109,7 @@ export const SegmentedControlItem = ({
       disabled={disabled}
       role={role || "radio"}
       onClick={handleClick}
+      tabIndex={isSelected ? 0 : -1}
       value={value}
       {...props}
     >
@@ -82,3 +117,4 @@ export const SegmentedControlItem = ({
     </button>
   )
 }
+SegmentedControlItem.displayName = "SegmentedControlItem"
