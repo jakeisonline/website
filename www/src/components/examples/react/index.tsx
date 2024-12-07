@@ -84,4 +84,11 @@ export const Index: Record<string, any> = {
     source: (await import(`@/components/examples/react/switcher-demo.tsx?raw`))
       .default,
   },
+  "switcher-icons": {
+    component: React.lazy(
+      () => import("@/components/examples/react/switcher-icons"),
+    ),
+    source: (await import(`@/components/examples/react/switcher-icons.tsx?raw`))
+      .default,
+  },
 }
