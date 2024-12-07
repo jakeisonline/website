@@ -1,51 +1,49 @@
 "use client"
 
 import {
-  SegmentedControlContextProvider,
-  useSegmentedControl,
-} from "@/registry/hooks/use-segmented-control"
+  SwitcherContextProvider,
+  useSwitcher,
+} from "@/registry/hooks/use-switcher"
 import { cn } from "@/lib/utils"
 import React, { useEffect, useRef } from "react"
 
-type SegmentedControlProps = {
+type SwitcherProps = {
   defaultValue: string
   children: React.ReactNode
   className?: string
   role?: string
 }
 
-export const SegmentedControl = ({
+export const Switcher = ({
   defaultValue,
   children,
   className,
   role,
   ...props
-}: SegmentedControlProps) => {
+}: SwitcherProps) => {
   const stuffedProps = { ...props, defaultValue, className, role }
 
   return (
-    <SegmentedControlContextProvider defaultValue={defaultValue}>
-      <SegmentedControlMapper {...stuffedProps}>
-        {children}
-      </SegmentedControlMapper>
-    </SegmentedControlContextProvider>
+    <SwitcherContextProvider defaultValue={defaultValue}>
+      <SwitcherMapper {...stuffedProps}>{children}</SwitcherMapper>
+    </SwitcherContextProvider>
   )
 }
-SegmentedControl.displayName = "SegmentedControl"
+Switcher.displayName = "Switcher"
 
-interface SegmentedControlMapperProps {
+interface SwitcherMapperProps {
   children: React.ReactNode
   className?: string
   role?: string
 }
 
-const SegmentedControlMapper = ({
+const SwitcherMapper = ({
   children,
   className,
   role,
   ...props
-}: SegmentedControlMapperProps) => {
-  const { setValues } = useSegmentedControl()
+}: SwitcherMapperProps) => {
+  const { setValues } = useSwitcher()
   const controlValues: string[] = []
 
   React.Children.forEach(children, (child) => {
@@ -70,8 +68,7 @@ const SegmentedControlMapper = ({
   )
 }
 
-interface SegmentedControlItemProps
-  extends React.ComponentPropsWithoutRef<"button"> {
+interface SwitcherItemProps extends React.ComponentPropsWithoutRef<"button"> {
   value: string
   children: React.ReactNode
   disabled?: boolean
@@ -80,29 +77,28 @@ interface SegmentedControlItemProps
   ariaChecked?: boolean
 }
 
-export const SegmentedControlItem = ({
+export const SwitcherItem = ({
   value,
   children,
   className,
   disabled,
   role,
   ...props
-}: SegmentedControlItemProps) => {
-  const { selectControlItem, selectedValue, selectNextControlItem } =
-    useSegmentedControl()
+}: SwitcherItemProps) => {
+  const { selectItem, selectedValue, selectNextItem } = useSwitcher()
   const selfRef = useRef<HTMLButtonElement>(null)
   const isSelected = selectedValue === value
   const hasMounted = useRef(false)
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return
-    selectControlItem(value)
+    selectItem(value)
     e.currentTarget.dataset.state = "active"
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === "ArrowRight") selectNextControlItem("next")
-    if (e.key === "ArrowLeft") selectNextControlItem("previous")
+    if (e.key === "ArrowRight") selectNextItem("next")
+    if (e.key === "ArrowLeft") selectNextItem("previous")
   }
 
   useEffect(() => {
@@ -136,4 +132,4 @@ export const SegmentedControlItem = ({
     </button>
   )
 }
-SegmentedControlItem.displayName = "SegmentedControlItem"
+SwitcherItem.displayName = "SwitcherItem"

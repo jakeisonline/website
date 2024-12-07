@@ -1,0 +1,42 @@
+---
+title: "Switcher"
+description: "A fully interactive, accessible, user interface component allowing users to select a single value among a linear set of options."
+shortDescription: "Select a single value among a linear set of options."
+component: "switcher"
+layout: "@/layouts/DocsLayout.astro"
+isNew: true
+---
+
+import ExampleComponentWithCode from "@/components/example-component-with-code"
+
+<ExampleComponentWithCode name="switcher" client:load />
+
+## Installation
+
+```bash
+npx shadcn@latest add https://jakeisonline.com/playground/registry/swticher.json
+```
+
+## Usage
+
+```jsx
+import { Switcher, SwitcherItem } from "@/registry/ui/switcher"
+```
+
+```jsx
+<Switcher defaultValue="Option 1">
+  <SwitcherItem value="Option 1">Option 1</SwitcherItem>
+  <SwitcherItem value="Option 2">Option 2</SwitcherItem>
+</Switcher>
+```
+
+### Accessibility
+
+Adheres to the [Radio Group WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/). The `Switcher` component uses the `role="radio"` attribute to indicate that the component is a linear set of buttons represented as a single element. The `aria-checked` attribute is used to indicate whether the component is selected.
+
+### Keyboard Navigation
+
+| Key                   | Action                                                                                                                                                                                                                              |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>ArrowRight</kbd> | Move focus to the next `SwitcherItem` in the group, uncheck the previously focused `SwitcherItem`, and check the newly focused `SwitcherItem`. If focus is on the last `SwitcherItem`, focus moves to the first `SwitcherItem`.     |
+| <kbd>ArrowLeft</kbd>  | Move focus to the previous `SwitcherItem` in the group, uncheck the previously focused `SwitcherItem`, and check the newly focused `SwitcherItem`. If focus is on the first `SwitcherItem`, focus moves to the last `SwitcherItem`. |

@@ -77,12 +77,11 @@ export const Index: Record<string, any> = {
       await import(`@/components/examples/react/tagger-demo-full.tsx?raw`)
     ).default,
   },
-  "segmented-control": {
+  "switcher": {
     component: React.lazy(
-      () => import("@/components/examples/react/segmented-control-demo"),
+      () => import("@/components/examples/react/switcher-demo"),
     ),
-    source: (
-      await import(`@/components/examples/react/segmented-control-demo.tsx?raw`)
-    ).default,
+    source: (await import(`@/components/examples/react/switcher-demo.tsx?raw`))
+      .default,
   },
 }

@@ -50,9 +50,9 @@ export const ui: Registry = [
     },
   },
   {
-    name: "segmented-control",
+    name: "switcher",
     type: "registry:ui",
-    description: "A segmented control component",
-    files: ["ui/segmented-control.tsx", "hooks/use-segmented-control.tsx"],
+    description: "A segmented switch controller component",
+    files: ["ui/switcher.tsx", "hooks/use-switcher.tsx"],
   },
 ]
