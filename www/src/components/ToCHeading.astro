@@ -7,10 +7,12 @@ interface Props {
 }
 
 const { heading } = Astro.props
+
+console.log("heading", heading)
 ---
 
 <li class="mb-0.5">
-  <Link href={`#${heading.id}`}>{heading.text}</Link>
+  <Link href={`#${heading.slug}`}>{heading.text}</Link>
 
   {
     heading.subHeadings.length > 0 && (
