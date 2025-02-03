@@ -20,13 +20,9 @@ import Link from "@/components/ui/Link.astro"
       View on GitHub
     </Button>
   </Link>
-  <Link
-    href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjakeisonline%2Fnext-auth-template&env=DATABASE_URL,NEXTAUTH_URL,AUTH_SECRET,AUTH_GOOGLE_ID,AUTH_GOOGLE_SECRET,AUTH_RESEND_KEY,AUTH_MAGIC_LINK_EMAIL_FROM&envDescription=API%20keys%20needed%20for%20signing%20in%20with%20Google%20and%20emailing%20magic%20links&envLink=https%3A%2F%2Fgithub.com%2Fjakeisonline%2Fnext-auth-template%3Ftab%3Dreadme-ov-file%23envrionment-variables&redirect-url=https%3A%2F%2Fgithub.com%2Fjakeisonline%2Fnext-auth-template%3Ftab%3Dreadme-ov-file%23next-auth-template&demo-title=See%20next-auth-template%20in%20action&demo-description=An%20(almost)%20vanilla%20deploy%20of%20this%20template.%20Resets%20any%20users%20and%20sessions%20every%20few%20hours.&demo-url=https%3A%2F%2Fnext-auth-template-demo.vercel.app%2F&demo-image=https%3A%2F%2Fcamo.githubusercontent.com%2Fc69f49b98c29ba792daf811661b5448ec743f721047119358ac2603ca0531b73%2F68747470733a2f2f6a616b6569736f6e6c696e652e636f6d2f6f70656e67726170682d696d6167652e706e67"
-    noStyle
-    noIcon
-  >
+  <Link href="https://www.npmjs.com/package/next-auth-template" noStyle noIcon>
     <Button variant="secondary" className="w-full md:w-auto">
-      Deploy to Vercel
+      View on NPM
     </Button>
   </Link>
 </div>
@@ -53,11 +49,54 @@ There is some initial setup required to get this template up and running. It won
 
 ### Installation
 
-1. [Clone the repo](https://github.com/jakeisonline/next-auth-template), or [use it as a GitHub template](https://github.com/jakeisonline/next-auth-template/generate) (using Vercel? [Deploy](<https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjakeisonline%2Fnext-auth-template&env=DATABASE_URL,NEXTAUTH_URL,AUTH_SECRET,AUTH_GOOGLE_ID,AUTH_GOOGLE_SECRET,AUTH_RESEND_KEY,AUTH_MAGIC_LINK_EMAIL_FROM&envDescription=API%20keys%20needed%20for%20signing%20in%20with%20Google%20and%20emailing%20magic%20links&envLink=https%3A%2F%2Fgithub.com%2Fjakeisonline%2Fnext-auth-template%3Ftab%3Dreadme-ov-file%23envrionment-variables&redirect-url=https%3A%2F%2Fgithub.com%2Fjakeisonline%2Fnext-auth-template%3Ftab%3Dreadme-ov-file%23next-auth-template&demo-title=See%20next-auth-template%20in%20action&demo-description=An%20(almost)%20vanilla%20deploy%20of%20this%20template.%20Resets%20any%20users%20and%20sessions%20every%20few%20hours.&demo-url=https%3A%2F%2Fnext-auth-template-demo.vercel.app%2F&demo-image=https%3A%2F%2Fcamo.githubusercontent.com%2Fc69f49b98c29ba792daf811661b5448ec743f721047119358ac2603ca0531b73%2F68747470733a2f2f6a616b6569736f6e6c696e652e636f6d2f6f70656e67726170682d696d6167652e706e67>))
-2. Copy `.env.example` to `.env` and fill in the values (see [Environment Variables](#environment-variables) below)
-3. Run `pnpm install && pnpm run db:push` to install dependencies and push the database schema
-4. Run `pnpm run dev` to start the development server
-5. Navigate to `http://localhost:3000`, and click the "Sign up" or "Sign in" buttons
+Use the handy CLI tool to quickly start building a new Next.js application, with auth already set up.
+
+```bash
+pnpm dlx next-auth-template
+# or
+npx next-auth-template
+# or
+bunx --bun next-auth-template
+```
+
+You will be asked to select a template:
+
+```bash
+? Select a template › - Use arrow-keys. Return to submit.
+❯   One-to-one
+    One-to-many
+```
+
+You will also be asked to provide a project name. This is also used as the directory name. You can leave it as default (.) to have the project initialized into the current directory. Must be a single word, no special characters.
+
+```bash
+? Enter the name of your project › .
+```
+
+If everything goes well, you will see a message of confirmation.
+
+```bash
+✔ Template copied successfully to /path/to/project
+```
+
+#### Non-interactive
+
+You can also use the CLI non-interactively; provide arguments and options to the CLI to skip the prompts.
+
+```bash
+Usage: next-auth-template [options] [template]
+
+Create a new Next.js application with auth already set up
+
+Arguments:
+  template                   name of the template to initialize -- optional (choices: "one-to-one", "one-to-many")
+
+Options:
+  -v, --version              show version of cli
+  -p, --project-name <name>  name of the project to initialize, also used as the directory name
+  -o, --overwrite            overwrite existing files in the directory (project name) without prompting
+  -h, --help                 display help for command
+```
 
 #### Enabling Magic Links
 
@@ -99,11 +138,12 @@ See [Auth.js's documentation](https://authjs.dev/getting-started/authentication/
 
 This template relies on environment variables to work. You can use the [`.env.example`](.env.example) file as a starting guide; rename `.env.example` to `.env` and fill in the values.
 
-| Variable Name                | Description                                                                                                                                                                                        |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DATABASE_URL`               | The database connection string. Required. [See Drizzle docs for more info](https://orm.drizzle.team/docs/connect-overview).                                                                        |
-| `AUTH_SECRET`                | A secret used to sign cookies and to sign and verify JSON Web Tokens. [See Auth.js docs on how to generate](https://authjs.dev/getting-started/deployment#auth_secret). Required in production.    |
-| `AUTH_GOOGLE_ID`             | The Client ID for your Google OAuth app. Required for social sign in. [See Auth.js docs for set up](https://authjs.dev/getting-started/providers/google#setup).                                    |
-| `AUTH_GOOGLE_SECRET`         | The Client Secret for your Google OAuth app. Required for social sign in. [See Auth.js docs for set up](https://authjs.dev/getting-started/providers/google#setup).                                |
-| `AUTH_RESEND_KEY`            | The API key for [Resend](https://resend.com/). Required for magic links. If not set, disables magic link auth. [See Auth.js docs for Resend set up](https://authjs.dev/guides/configuring-resend). |
-| `AUTH_MAGIC_LINK_EMAIL_FROM` | The email address to send magic links from. Required for magic links.                                                                                                                              |
+| Variable Name        | Description                                                                                                                                                                                        |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BASE_URL`           | The base URL of the app. Required.                                                                                                                                                                 |
+| `EMAIL_FROM`         | The email address to send magic links from. Required for magic links.                                                                                                                              |
+| `DATABASE_URL`       | The database connection string. Required. [See Drizzle docs for more info](https://orm.drizzle.team/docs/connect-overview).                                                                        |
+| `RESEND_KEY`         | The API key for [Resend](https://resend.com/). Required for magic links. If not set, disables magic link auth. [See Auth.js docs for Resend set up](https://authjs.dev/guides/configuring-resend). |
+| `AUTH_SECRET`        | A secret used to sign cookies and to sign and verify JSON Web Tokens. [See Auth.js docs on how to generate](https://authjs.dev/getting-started/deployment#auth_secret). Required in production.    |
+| `AUTH_GOOGLE_ID`     | The Client ID for your Google OAuth app. Required for social sign in. [See Auth.js docs for set up](https://authjs.dev/getting-started/providers/google#setup).                                    |
+| `AUTH_GOOGLE_SECRET` | The Client Secret for your Google OAuth app. Required for social sign in. [See Auth.js docs for set up](https://authjs.dev/getting-started/providers/google#setup).                                |
