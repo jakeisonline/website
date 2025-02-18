@@ -7,15 +7,10 @@ import { Icon } from "astro-icon/components"
 import Card from "@/components/ui/Card.astro"
 import { getCollection } from "astro:content"
 import Badge from "@/components/ui/Badge.astro"
-
-export const tools = [{
-  name: "next-auth-template",
-  description: "A template for Next.js with NextAuth, Drizzle ORM, and Tailwind CSS.",
-  icons: ["logos/nextjs", "logos/authjs"],
-  id: "next-auth-template"
-}]
+import { ExternalLinkIcon } from "lucide-react"
 
 const componentPages = await getCollection("components")
+const toolsPages = await getCollection("tools")
 ---
 
 <BaseLayout
@@ -73,19 +68,21 @@ const componentPages = await getCollection("components")
     <p class="text-muted-foreground">A growing collection of tools for web development, that you might find handy.</p>
     <div class="grid lg:grid-cols-3 gap-3 mt-3 not-prose mb-20">
       {
-        tools.map((tool) => (
-          <a href={`/playground/tools/${tool.id}`}>
+        toolsPages.map((tool) => (
+          <a href={tool.data.href} target="_blank" rel="referrer">
             <div class="bg-card text-card-foreground rounded-lg border shadow-sm">
       <div class="flex flex-col min-h-22 w-auto p-6 pt-6">
         <div class="flex items-center gap-2 pb-3">
           {
-            tool.icons.map((icon) => (
+            tool.data.icons.map((icon: string) => (
               <Icon name={icon} class="w-8 h-8" />
             ))
           }
         </div>
-        <h3 class="text-lg font-medium">{tool.name}</h3>
-        <p class="text-sm text-muted-foreground">{tool.description}</p>
+        <h3 class="text-lg font-medium flex">{tool.data.title}
+          <ExternalLinkIcon className="ml-1 size-3 hover:decoration-none inline-block" />
+        </h3>
+        <p class="text-sm text-muted-foreground">{tool.data.description}</p>
       </div>
     </div>
           </a>

@@ -17,6 +17,7 @@ const componentsSchema = z.object({
 
 const toolsSchema = z.object({
   ...defaultSchema.shape,
+  icons: z.array(z.string()),
   href: z.string(),
 })
 
