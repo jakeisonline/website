@@ -21,14 +21,12 @@ if (!item) return null
 }
 {
   item.type === "item" && (
-    <>
-    <Link href={item.href} class={cn("hover:text-link-hover underline-offset-4 underline decoration-transparent decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover inline-flex px-1.5 py-1 rounded-sm group",
+    <Link href={item.href} class={cn("hover:text-link-hover underline-offset-4 underline decoration-transparent decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover px-1.5 py-1 rounded-sm group flex items-center",
       itemIsCurrent
               ? "text-foreground bg-accent"
               : "text-foreground/60",
-    )}>{item.text} {item.badge && <Badge variant={item.badge.variant} class="ml-1.5 text-2xs px-2 py-0 inline-flex">{item.badge.label}</Badge>}</Link>
-
-    </>
+    )}>{item.text} {item.badge && <Badge variant={item.badge.variant} class="ml-1.5 text-2xs px-2 py-0">{item.badge.label}</Badge>}
+    </Link>
   )
 }
 {

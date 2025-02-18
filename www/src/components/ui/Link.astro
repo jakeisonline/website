@@ -50,6 +50,6 @@ const newProps = { ...props, ...processedProps }
 >
   <slot />{
     isExternal && !noIcon && (
-      <ExternalLinkIcon className={cn( !noStyle && "ml-0.5 -mt-3 hover:decoration-none size-2.5 md:size-3 inline-block")} />
+      <ExternalLinkIcon className={cn( !noStyle && "ml-1 size-3 -mt-2 hover:decoration-none inline-block")} />
     )
   }</a> { /* TODO: Moving this to a new line will cause whitespace! */ }

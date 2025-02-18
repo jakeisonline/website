@@ -32,9 +32,14 @@ export async function getNavItems(collectionName: CollectionKeys) {
   return sortedPages.map((page) => {
     if (page.data.isPrivate) return null
 
+    const href =
+      collectionName === "tools" && "href" in page.data
+        ? page.data.href
+        : `${config.path}/${page.id}`
+
     return {
       type: "item" as const,
-      href: `${config.path}/${page.id}`,
+      href,
       text: page.data.title,
       ...(config.newBadge ? { badge: config.newBadge(page) } : {}),
     }

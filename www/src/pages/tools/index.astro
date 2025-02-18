@@ -1,13 +1,8 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro"
-import { Icon } from 'astro-icon/components'
+import { getCollection } from "astro:content"
 
-export const tools = [{
-  name: "next-auth-template",
-  description: "A template for Next.js with NextAuth, Drizzle ORM, and Tailwind CSS.",
-  icons: ["logos/nextjs", "logos/authjs"],
-  id: "next-auth-template"
-}]
+const toolsPages = await getCollection("tools")
 ---
 
 <DocsLayout
@@ -19,19 +14,12 @@ export const tools = [{
   >
     <div class="grid lg:grid-cols-2 gap-3 mt-3 not-prose">
       {
-        tools.map((tool) => (
-          <a href={`/playground/tools/${tool.id}`}>
+        toolsPages.map((tool) => (
+          <a href={tool.data.href} target="_blank">
             <div class="bg-card text-card-foreground rounded-lg border shadow-sm">
       <div class="flex flex-col min-h-44 w-auto p-6 pt-6">
-        <div class="flex items-center gap-2 pb-3">
-          {
-            tool.icons.map((icon) => (
-              <Icon name={icon} class="w-12 h-12" />
-            ))
-          }
-        </div>
-        <h3 class="text-lg font-medium">{tool.name}</h3>
-        <p class="text-sm text-muted-foreground">{tool.description}</p>
+        <h3 class="text-lg font-medium">{tool.data.title}</h3>
+        <p class="text-sm text-muted-foreground">{tool.data.description}</p>
       </div>
     </div>
           </a>
