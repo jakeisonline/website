@@ -26,8 +26,8 @@ for (let i = 0; i < flattenedNavItems.length; i++) {
 
 <nav aria-label="Pagination" class="flex items-center gap-2 justify-between w-full text-sm mt-16">
   {previous && (
-    <Link href={previous.href} class="flex gap-2 items-start">
-      <ChevronLeftIcon className="size-4 stroke-muted-foreground" />
+    <Link href={previous.href} rel="prev" class="flex gap-2 items-start">
+      <ChevronLeftIcon aria-hidden="true" className="size-4 stroke-muted-foreground" />
       <div class="flex flex-col gap-1">
         <span class="text-xs text-muted-foreground">Previous<span class="sr-only"> page:</span></span>
         <span class="block">{previous.text}</span>
@@ -35,12 +35,12 @@ for (let i = 0; i < flattenedNavItems.length; i++) {
     </Link>
   )}
   {next && (
-    <Link href={next.href} class="flex gap-2 ml-auto items-start">
+    <Link href={next.href} rel="next" class="flex gap-2 ml-auto items-start">
       <div class="flex flex-col gap-1">
         <span class="text-xs text-muted-foreground">Next<span class="sr-only"> page:</span></span>
         <span class="block">{next.text}</span>
       </div>
-      <ChevronRightIcon className="size-4 stroke-muted-foreground" />
+      <ChevronRightIcon aria-hidden="true" className="size-4 stroke-muted-foreground" />
     </Link>
   )}
 </nav>
