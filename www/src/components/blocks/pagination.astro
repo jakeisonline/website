@@ -17,7 +17,7 @@ let next = null
 for (let i = 0; i < flattenedNavItems.length; i++) {
   const item = flattenedNavItems[i]
 
-  if (item.href === currentPath) {
+  if (currentPath.includes(item.href)) {
     previous = flattenedNavItems[i - 1]
     next = flattenedNavItems[i + 1]
   }
