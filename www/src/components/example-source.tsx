@@ -57,7 +57,7 @@ function Loading() {
 async function highlightCode(code: string) {
   const html = codeToHtml(code, {
     lang: "jsx",
-    theme: "poimandres",
+    theme: "plastic",
   })
 
   return html

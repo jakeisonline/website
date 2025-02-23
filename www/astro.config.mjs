@@ -13,7 +13,7 @@ export default defineConfig({
     mdx({
       syntaxHighlight: "shiki",
       shikiConfig: {
-        theme: "poimandres",
+        theme: "plastic",
       },
     }),
     react(),
