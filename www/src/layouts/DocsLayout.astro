@@ -36,8 +36,8 @@ const navItems = await buildNavigation()
           <h1>{title}</h1>
           <p>{description}</p>
           <slot />
+          <Pagination navItems={navItems as SubNavItems} />
         </article>
-        <Pagination navItems={navItems as SubNavItems} />
       </div>
       <ToC headings={headings} class="hidden xl:block" />
     </div>
