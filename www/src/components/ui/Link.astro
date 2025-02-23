@@ -4,13 +4,12 @@ import { cn } from "@/lib/utils"
 import type { HTMLAttributes } from "astro/types"
 import { ExternalLinkIcon } from "lucide-react"
 
-type Props = {
+interface Props extends HTMLAttributes<"a"> {
   href: string
   referrer?: boolean
   noIcon?: boolean
   noStyle?: boolean
   class?: string
-  props?: HTMLAttributes<"a">
 }
 
 const {
