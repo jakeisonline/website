@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content"
 import Link from "@/components/ui/Link.astro"
+import { H2, H3, H4, H5, H6 } from "@/components/mdx/heading"
 
 export async function getStaticPaths() {
   const generalDocs = await getCollection("general")
@@ -15,4 +16,4 @@ const { doc } = Astro.props
 const { Content, headings } = await render(doc)
 ---
 
-<Content components={{ a: Link }} headings={headings} />
+<Content components={{ a: Link, h2: H2, h3: H3, h4: H4, h5: H5, h6: H6 }} headings={headings} />
