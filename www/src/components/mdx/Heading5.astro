@@ -1,0 +1,16 @@
+---
+import { cn } from "@/lib/utils"
+import { HeadingAnchor } from "@/components/mdx/heading-anchor"
+
+type Props = {
+  id: string
+  class: string
+}
+
+const { id, class: className, ...props } = Astro.props
+---
+
+<h5 id={id} class={cn("group", className)} {...props}>
+  <slot />
+  {id && <HeadingAnchor client:load id={id} />}
+</h5>

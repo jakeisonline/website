@@ -1,12 +1,6 @@
 ---
 import { cn } from "@/lib/utils"
-import ToCHeading from "./ToCHeading.astro"
-
-export type ToCHeadingType = {
-  depth: number
-  slug: string
-  text: string
-}
+import { TOC, type ToCHeadingType } from "@/components/blocks/toc"
 
 export type ToCHeadingsType = ToCHeadingType[]
 export type ToCHeadingTypeWithSubItems = ToCHeadingType & { subHeadings: ToCHeadingType[] }
@@ -45,11 +39,5 @@ const toc = buildToC(headings)
   class={cn("text-sm sticky top-20 h-[calc(100vh-3.5rem)] pl-3", className)}
 >
   <div>On this page</div>
-  <ul>
-    {
-      toc.map((heading) => {
-        return <ToCHeading heading={heading as ToCHeadingTypeWithSubItems} />
-      })
-    }
-  </ul>
+  <TOC client:load headings={headings} />
 </nav>
