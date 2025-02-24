@@ -1,6 +1,6 @@
 ---
 import SubNavItem from "@/components/SubNavItem.astro"
-
+import { cn } from "@/lib/utils"
 type SubNavItemConditionals =
 | {
   type: "heading"
@@ -20,9 +20,10 @@ export type SubNavItemWithSubItems = SubNavItem & { subItems: SubNavItem[] }
 
 interface Props {
   navItems: SubNavItems
+  class?: string
 }
 
-const { navItems } = Astro.props
+const { navItems, class: className }: Props = Astro.props
 
 if (!navItems) return null
 
@@ -47,7 +48,7 @@ function buildNav(items: SubNavItems) {
 const nav: SubNavItems = buildNav(navItems)
 ---
 
-<aside class="hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block">
+  <aside class={cn("hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block", className)}>
   <ul>
     {
       nav.map((item) => {
