@@ -7,6 +7,7 @@ import GlobalNav from "@/components/GlobalNav.astro"
 import { MobileNav } from "@/components/blocks/mobile-nav"
 import { buildNavigation } from "@/content/utils/navigation"
 import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
+import { Search } from "@/components/blocks/search"
 
 const navItems = await buildNavigation()
 ---
@@ -24,7 +25,9 @@ data-pagefind-ignore>
       >
       <GlobalNav class="ml-8" />
     </div>
-    <div class="justify-end flex flex-1 gap-1">
+
+    <div class="justify-end items-center flex flex-1 gap-1">
+      <Search client:load />
       <Link
         href={SITE_CONFIG.links.github}
         noIcon
