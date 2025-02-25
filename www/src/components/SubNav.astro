@@ -48,7 +48,7 @@ function buildNav(items: SubNavItems) {
 const nav: SubNavItems = buildNav(navItems)
 ---
 
-  <aside class={cn("hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block", className)}>
+  <aside class={cn("hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block", className)} data-pagefind-ignore>
   <ul>
     {
       nav.map((item) => {
