@@ -4,7 +4,6 @@ import vercel from "@astrojs/vercel"
 import react from "@astrojs/react"
 import mdx from "@astrojs/mdx"
 import icon from "astro-icon"
-import pagefind from "astro-pagefind"
 import sitemap from "@astrojs/sitemap"
 
 // https://astro.build/config
@@ -24,7 +23,6 @@ export default defineConfig({
     sitemap({
       customPages: ["https://jakeisonline.com"],
     }),
-    pagefind(),
   ],
   build: {
     format: "file",

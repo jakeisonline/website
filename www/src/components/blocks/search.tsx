@@ -9,7 +9,9 @@ import {
 } from "../ui/command"
 import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
-import Link from "../ui/Link.astro"
+
+// See BaseLayout.astro for the pagefind initialization
+declare const pagefind: any
 
 interface Props {
   className?: string
@@ -17,6 +19,8 @@ interface Props {
 
 export function Search({ className, ...props }: Props) {
   const [open, setOpen] = React.useState(false)
+  const [query, setQuery] = React.useState("")
+  const [results, setResults] = React.useState<any[]>([])
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -28,6 +32,28 @@ export function Search({ className, ...props }: Props) {
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
   }, [])
+
+  async function handleSearch() {
+    if (pagefind) {
+      const search = await pagefind.search(query)
+      const results = await Promise.all(
+        // TODO: Type this when https://github.com/CloudCannon/pagefind/issues/767 is fixed
+        search.results.map(async (result: any) => {
+          console.log(result)
+          const data = await result.data()
+          return {
+            title: data.meta.title,
+            url: data.url,
+          }
+        }),
+      )
+      setResults(results)
+    }
+  }
+
+  React.useEffect(() => {
+    console.log(results)
+  }, [results])
 
   return (
     <>
@@ -52,16 +78,25 @@ export function Search({ className, ...props }: Props) {
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search components, tools, and more..." />
+        <CommandInput
+          placeholder="Search components, tools, and more..."
+          value={query}
+          onValueChange={setQuery}
+          onInput={handleSearch}
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Site Navigation">
-            <CommandItem>Components</CommandItem>
-            <CommandItem>Tools</CommandItem>
-            <CommandItem>About</CommandItem>
+            {results.map((result) => (
+              <Result key={result.url} result={result} />
+            ))}
           </CommandGroup>
         </CommandList>
       </CommandDialog>
     </>
   )
+}
+
+function Result({ result }: { result: any }) {
+  return <CommandItem>{result.title}</CommandItem>
 }
