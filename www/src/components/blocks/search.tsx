@@ -50,10 +50,6 @@ export function Search({ className, ...props }: Props) {
     }
   }
 
-  React.useEffect(() => {
-    console.log(results)
-  }, [results])
-
   return (
     <>
       <Button
@@ -87,15 +83,11 @@ export function Search({ className, ...props }: Props) {
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Site Navigation">
             {results.map((result) => (
-              <Result key={result.url} result={result} />
+              <CommandItem key={result.url}>{result.title}</CommandItem>
             ))}
           </CommandGroup>
         </CommandList>
       </CommandDialog>
     </>
   )
-}
-
-function Result({ result }: { result: any }) {
-  return <CommandItem>{result.title}</CommandItem>
 }
