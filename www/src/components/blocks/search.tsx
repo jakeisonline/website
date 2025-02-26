@@ -39,7 +39,6 @@ export function Search({ className, ...props }: Props) {
       const results = await Promise.all(
         // TODO: Type this when https://github.com/CloudCannon/pagefind/issues/767 is fixed
         search.results.map(async (result: any) => {
-          console.log(result)
           const data = await result.data()
           return {
             title: data.meta.title,
