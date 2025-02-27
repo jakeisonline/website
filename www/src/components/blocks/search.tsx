@@ -9,15 +9,18 @@ import {
 } from "../ui/command"
 import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
+import { type SubNavItems } from "@/components/SubNav.astro"
+import { navigate } from "astro:transitions/client"
 
 // See BaseLayout.astro for the pagefind initialization
 declare const pagefind: any
 
 interface Props {
+  navItems: SubNavItems
   className?: string
 }
 
-export function Search({ className, ...props }: Props) {
+export function Search({ navItems, className, ...props }: Props) {
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState("")
   const [results, setResults] = React.useState<any[]>([])
@@ -48,6 +51,10 @@ export function Search({ className, ...props }: Props) {
       )
       setResults(results)
     }
+  }
+
+  function handleSelect(url: string) {
+    navigate(url)
   }
 
   return (
@@ -82,9 +89,27 @@ export function Search({ className, ...props }: Props) {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Site Navigation">
-            {results.map((result) => (
-              <CommandItem key={result.url}>{result.title}</CommandItem>
-            ))}
+            {results.length === 0 &&
+              navItems.map((item) => {
+                if (item.type === "heading") return null
+                return (
+                  <CommandItem
+                    key={item.text}
+                    onSelect={() => handleSelect(item.href)}
+                  >
+                    {item.text}
+                  </CommandItem>
+                )
+              })}
+            {results &&
+              results.map((result) => (
+                <CommandItem
+                  key={result.url}
+                  onSelect={() => handleSelect(result.url)}
+                >
+                  {result.title}
+                </CommandItem>
+              ))}
           </CommandGroup>
         </CommandList>
       </CommandDialog>

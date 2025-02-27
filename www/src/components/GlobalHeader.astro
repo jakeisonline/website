@@ -27,7 +27,7 @@ data-pagefind-ignore>
     </div>
 
     <div class="justify-end items-center flex flex-1 gap-1">
-      <Search client:load />
+      <Search navItems={navItems as SubNavItems} client:load />
       <Link
         href={SITE_CONFIG.links.github}
         noIcon
