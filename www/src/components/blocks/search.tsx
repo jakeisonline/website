@@ -6,11 +6,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../ui/command"
-import { Button } from "../ui/button"
+} from "@/components/ui/command"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { type SubNavItems } from "@/components/SubNav.astro"
 import { navigate } from "astro:transitions/client"
+import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
 
 // See BaseLayout.astro for the pagefind initialization
 declare const pagefind: any
@@ -80,6 +81,10 @@ export function Search({ navItems, className, ...props }: Props) {
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
+        <DialogTitle className="sr-only">Search & Site Navigation</DialogTitle>
+        <DialogDescription className="sr-only">
+          Search for pages across this site and navigate directly to theem
+        </DialogDescription>
         <CommandInput
           placeholder="Search components, tools, and more..."
           value={query}
