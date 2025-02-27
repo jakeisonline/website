@@ -24,6 +24,7 @@ export default defineConfig({
       customPages: ["https://jakeisonline.com"],
     }),
   ],
+  prefetch: true,
   build: {
     format: "file",
   },

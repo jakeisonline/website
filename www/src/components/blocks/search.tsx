@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { type SubNavItems } from "@/components/SubNav.astro"
 import { navigate } from "astro:transitions/client"
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
+import { prefetch } from "astro:prefetch"
 
 // See BaseLayout.astro for the pagefind initialization
 declare const pagefind: any
@@ -58,6 +59,12 @@ export function Search({ navItems, className, ...props }: Props) {
     navigate(url)
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>, url: string) {
+    if (e.key === "Enter") {
+      prefetch(url)
+    }
+  }
+
   return (
     <>
       <Button
@@ -100,6 +107,7 @@ export function Search({ navItems, className, ...props }: Props) {
                 return (
                   <CommandItem
                     key={item.text}
+                    onKeyDown={(e) => handleKeyDown(e, item.href)}
                     onSelect={() => handleSelect(item.href)}
                   >
                     {item.text}
@@ -111,6 +119,7 @@ export function Search({ navItems, className, ...props }: Props) {
                 <CommandItem
                   key={result.url}
                   onSelect={() => handleSelect(result.url)}
+                  onKeyDown={(e) => handleKeyDown(e, result.url)}
                 >
                   {result.title}
                 </CommandItem>
