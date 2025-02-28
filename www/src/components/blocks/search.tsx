@@ -62,7 +62,6 @@ export function Search({ navItems, className, ...props }: Props) {
         // TODO: Type this when https://github.com/CloudCannon/pagefind/issues/767 is fixed
         search.results.map(async (result: any) => {
           const data = await result.data()
-
           return {
             title: data.meta.title,
             url: data.url,
@@ -121,7 +120,8 @@ export function Search({ navItems, className, ...props }: Props) {
           />
           <CommandList ref={listRef}>
             <CommandEmpty>No results found.</CommandEmpty>
-            {results.length === 0 &&
+            {query.length === 0 &&
+              results.length === 0 &&
               navItems.map((item) => {
                 if (item.type === "heading") return null
                 return (
