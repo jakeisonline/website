@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useRef } from "react"
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -27,6 +28,10 @@ export function Search({ navItems, className, ...props }: Props) {
   const [query, setQuery] = React.useState("")
   const [results, setResults] = React.useState<any[]>([])
 
+  // We're going to override the scroll behavior of cmdk
+  // cf. https://github.com/pacocoursey/cmdk/issues/234#issuecomment-2105098199
+  const listRef = useRef<HTMLDivElement>(null)
+
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -38,16 +43,30 @@ export function Search({ navItems, className, ...props }: Props) {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  async function handleSearch() {
+  async function handleChange(value: string) {
+    setQuery(value)
+
+    // Scroll to the top of the list when the query changes
+    requestAnimationFrame(() => {
+      listRef.current?.scrollTo({ top: 0 })
+    })
+
+    if (value === "") {
+      setResults([])
+      return
+    }
+
     if (pagefind) {
       const search = await pagefind.search(query)
       const results = await Promise.all(
         // TODO: Type this when https://github.com/CloudCannon/pagefind/issues/767 is fixed
         search.results.map(async (result: any) => {
           const data = await result.data()
+
           return {
             title: data.meta.title,
             url: data.url,
+            excerpt: data.excerpt,
           }
         }),
       )
@@ -88,19 +107,20 @@ export function Search({ navItems, className, ...props }: Props) {
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <DialogTitle className="sr-only">Search & Site Navigation</DialogTitle>
-        <DialogDescription className="sr-only">
-          Search for pages across this site and navigate directly to theem
-        </DialogDescription>
-        <CommandInput
-          placeholder="Search components, tools, and more..."
-          value={query}
-          onValueChange={setQuery}
-          onInput={handleSearch}
-        />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Site Navigation">
+        <Command shouldFilter={false}>
+          <DialogTitle className="sr-only">
+            Search & Site Navigation
+          </DialogTitle>
+          <DialogDescription className="sr-only">
+            Search for pages across this site and navigate directly to theem
+          </DialogDescription>
+          <CommandInput
+            placeholder="Search components, tools, and more..."
+            value={query}
+            onValueChange={handleChange}
+          />
+          <CommandList ref={listRef}>
+            <CommandEmpty>No results found.</CommandEmpty>
             {results.length === 0 &&
               navItems.map((item) => {
                 if (item.type === "heading") return null
@@ -124,8 +144,8 @@ export function Search({ navItems, className, ...props }: Props) {
                   {result.title}
                 </CommandItem>
               ))}
-          </CommandGroup>
-        </CommandList>
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   )
