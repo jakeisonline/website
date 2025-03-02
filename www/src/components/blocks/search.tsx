@@ -135,15 +135,20 @@ export function Search({ navItems, className, ...props }: Props) {
                 )
               })}
             {results &&
-              results.map((result) => (
-                <CommandItem
-                  key={result.url}
-                  onSelect={() => handleSelect(result.url)}
-                  onKeyDown={(e) => handleKeyDown(e, result.url)}
-                >
-                  {result.title}
-                </CommandItem>
-              ))}
+              results.map((result) => {
+                // Strip trailing slash from the URL
+                const trailStrippedUrl = result.url.replace(/\/$/, "")
+
+                return (
+                  <CommandItem
+                    key={trailStrippedUrl}
+                    onSelect={() => handleSelect(trailStrippedUrl)}
+                    onKeyDown={(e) => handleKeyDown(e, trailStrippedUrl)}
+                  >
+                    {result.title}
+                  </CommandItem>
+                )
+              })}
           </CommandList>
         </Command>
       </CommandDialog>
