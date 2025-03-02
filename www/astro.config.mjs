@@ -31,6 +31,7 @@ export default defineConfig({
   site: "https://jakeisonline.com",
   base: "/playground/",
   output: "static",
+  trailingSlash: "never",
   adapter: vercel({
     includeFiles: ["./public/playground/fonts/urbanist-latin-400-normal.woff"],
     excludeFiles: ["./components.json"],
