@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.0.8",
     "@astrojs/vercel": "^8.1.0",
     "@tailwindcss/vite": "^4.0.9",
     "@vercel/analytics": "^1.5.0",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.11"
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "zod": "^3.24.2"
   }
 }
