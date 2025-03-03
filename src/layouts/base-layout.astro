@@ -97,23 +97,6 @@ const {
       }}
     />
 
-    <script is:inline>
-      let pagefind
-
-      async function initPageFind() {
-        if (!pagefind) {
-          pagefind = await import("/playground/pagefind/pagefind.js")
-          pagefind.init()
-        }
-      }
-
-      document.addEventListener("astro:page-load", initPageFind)
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initPageFind)
-      } else {
-        initPageFind()
-      }
-    </script>
     <ViewTransitions transition:animate="none" />
   </head>
   <body
