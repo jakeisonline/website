@@ -1,5 +1,21 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config"
+import tailwindcss from "@tailwindcss/vite"
+import vercel from "@astrojs/vercel"
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: "https://jakeisonline.com",
+  base: "/blog/",
+  output: "static",
+  trailingSlash: "never",
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  adapter: vercel({
+    includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
+})

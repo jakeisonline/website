@@ -1,0 +1,18 @@
+---
+import Link from "@/components/ui/link.astro"
+---
+
+<header
+  class="container-page md:sticky lg:top-0 z-50 w-full bg-background/85 lg:backdrop-blur supports[backdrop-filter]:bg-background/60"
+  data-pagefind-ignore
+>
+  <div class="flex h-14 items-center lg:text-sm text-lg font-bold">
+    <div class="flex items-center">
+      <Link href="/playground" class="text-foreground"
+        >📣 <span class="hidden lg:inline">jakeisonline/blog</span>
+      </Link>
+
+      <div class="justify-end items-center flex flex-1 gap-1"></div>
+    </div>
+  </div>
+</header>

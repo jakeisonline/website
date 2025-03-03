@@ -1,0 +1,61 @@
+---
+import { SITE_CONFIG } from "@/lib/config"
+import { cn } from "@/lib/utils"
+import type { HTMLAttributes } from "astro/types"
+import { ExternalLinkIcon } from "lucide-react"
+
+interface Props extends HTMLAttributes<"a"> {
+  href: string
+  referrer?: boolean
+  noIcon?: boolean
+  noStyle?: boolean
+  class?: string
+}
+
+const {
+  href,
+  referrer = false,
+  noIcon = false,
+  noStyle = false,
+  class: className,
+  ...props
+}: Props = Astro.props
+
+const baseUrl = SITE_CONFIG.baseUrl
+const isExternal = !href.startsWith(baseUrl) && /^(https?:)?\/\//i.test(href)
+
+const processProps = () => {
+  const props = {} as HTMLAttributes<"a">
+
+  if (isExternal) {
+    props["target"] = "_blank"
+    props["rel"] = !referrer ? "noreferrer" : undefined
+  }
+
+  return props
+}
+
+const processedProps = processProps()
+const newProps = { ...props, ...processedProps }
+---
+
+<a
+  href={href}
+  class={cn(
+    !noStyle &&
+      "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover",
+    className,
+  )}
+  {...newProps}
+>
+  <slot />{
+    isExternal && !noIcon && (
+      <ExternalLinkIcon
+        className={cn(
+          !noStyle && "ml-1 size-3 -mt-2 hover:decoration-none inline-block",
+        )}
+      />
+    )
+  }</a
+>
+{/* TODO: Moving this to a new line will cause whitespace! */}

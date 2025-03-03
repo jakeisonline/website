@@ -1,0 +1,128 @@
+---
+import "@/styles/global.css"
+import { SEO } from "astro-seo"
+import { ViewTransitions } from "astro:transitions"
+import GlobalHeader from "@/components/blocks/global-header.astro"
+import GlobalFooter from "@/components/blocks/global-footer.astro"
+import { SITE_CONFIG } from "@/lib/config"
+
+interface Props {
+  frontmatter?: Record<string, string>
+  title?: string
+  description?: string
+}
+
+const {
+  frontmatter,
+  title = frontmatter?.title || "",
+  description = frontmatter?.description || "",
+} = Astro.props
+---
+
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme")
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+  }
+
+  const isDark = getThemePreference() === "dark"
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark")
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark")
+      localStorage.setItem("theme", isDark ? "dark" : "light")
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+  }
+
+  document.addEventListener("astro:before-swap", function (event) {
+    const prefersDarkMode = getThemePreference() === "dark"
+
+    event.newDocument.documentElement.classList[
+      prefersDarkMode ? "add" : "remove"
+    ]("dark")
+  })
+</script>
+
+<html lang="en" class="font-sans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO
+      title={title}
+      description={description}
+      charset="UTF-8"
+      extend={{
+        link: [
+          {
+            rel: "icon",
+            type: "image/svg+xml",
+            href: "/playground/favicon.svg",
+          },
+        ],
+        meta: [
+          {
+            name: "author",
+            content: "Jake Holman (@jakeisonline)",
+          },
+        ],
+      }}
+      openGraph={{
+        basic: {
+          type: "website",
+          title: title,
+          url: `${SITE_CONFIG.siteUrl}`,
+          image: `${SITE_CONFIG.siteUrl}/og.png`,
+        },
+        optional: {
+          description: description,
+          locale: "en_GB",
+          siteName: "jakeisonline",
+        },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        image: `${SITE_CONFIG.siteUrl}/og.png`,
+      }}
+    />
+
+    <script is:inline>
+      let pagefind
+
+      async function initPageFind() {
+        if (!pagefind) {
+          pagefind = await import("/playground/pagefind/pagefind.js")
+          pagefind.init()
+        }
+      }
+
+      document.addEventListener("astro:page-load", initPageFind)
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initPageFind)
+      } else {
+        initPageFind()
+      }
+    </script>
+    <ViewTransitions transition:animate="none" />
+  </head>
+  <body
+    class="min-h-dvh bg-background overflow-y-scroll flex flex-col items-center"
+  >
+    <GlobalHeader />
+    <main class="container-page w-full flex flex-row items-center">
+      <slot />
+    </main>
+    <GlobalFooter />
+  </body>
+</html>
