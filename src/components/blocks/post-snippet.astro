@@ -1,0 +1,11 @@
+---
+const { title, description, slug } = Astro.props
+---
+
+<article class="flex flex-col gap-2">
+  <h2 class="text-lg font-bold"><a href={`/blog/${slug}`}>{title}</a></h2>
+  <p class="text-sm text-muted-foreground">{description}</p>
+  <p class="mt-1 text-xs font-semibold text-muted-foreground">
+    <a href={`/blog/${slug}`}>Read more</a>
+  </p>
+</article>
