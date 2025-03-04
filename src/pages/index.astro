@@ -11,15 +11,7 @@ const allBlogPosts = await getCollection("general")
     <section>
       <h2 class="mb-4 text-sm text-muted-foreground">Stuff to read</h2>
 
-      {
-        allBlogPosts.map((post) => (
-          <PostSnippet
-            title={post.data.title}
-            description={post.data.description}
-            slug={post.id}
-          />
-        ))
-      }
+      {allBlogPosts.map((post) => <PostSnippet post={post} />)}
     </section>
     <div>
       <section>
