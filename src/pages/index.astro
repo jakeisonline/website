@@ -7,9 +7,9 @@ const allBlogPosts = await getCollection("general")
 ---
 
 <BaseLayout title="Blog" description="A place of relative calm.">
-  <div class="mt-8 w-full grid grid-cols-[1fr_1fr] gap-4">
+  <div class="w-full grid grid-cols-[1fr_1fr] gap-4">
     <section>
-      <h2 class="mb-4 text-muted-foreground">Stuff to read</h2>
+      <h2 class="mb-4 text-sm text-muted-foreground">Stuff to read</h2>
 
       {
         allBlogPosts.map((post) => (
@@ -23,7 +23,7 @@ const allBlogPosts = await getCollection("general")
     </section>
     <div>
       <section>
-        <h2 class="text-muted-foreground">Browse by category</h2>
+        <h2 class="text-muted-foreground text-sm">Browse by category</h2>
       </section>
     </div>
   </div>
