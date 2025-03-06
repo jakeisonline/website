@@ -6,7 +6,7 @@ const defaultSchema = z.object({
   subtitle: z.string().optional(),
   description: z.string(),
   layout: z.string().optional().default("@/layouts/post-layout.astro"),
-  publishedAt: z.date().optional(),
+  publishedAt: z.string().optional(),
   isPrivate: z.boolean().optional().default(false),
 })
 

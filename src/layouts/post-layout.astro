@@ -1,22 +1,54 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro"
-
+import Category from "@/components/category.astro"
 interface Props {
   frontmatter: Record<string, string>
   title?: string
-  description?: string
+  subtitle?: string
+  publishedAt?: string
+  url?: string
 }
 
 const {
   frontmatter,
   title = frontmatter?.title,
-  description = frontmatter?.description,
+  subtitle = frontmatter?.subtitle,
+  publishedAt = frontmatter?.publishedAt,
+  url = Astro.url.pathname,
 } = Astro.props
 ---
 
 <BaseLayout>
-  <article class="prose prose-lg">
+  <div
+    class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
+  >
     <h1>{title}</h1>
-    <slot />
-  </article>
+    {subtitle && <p class="mt-1 text-md text-muted-foreground">{subtitle}</p>}
+    {
+      publishedAt && (
+        <p class="mt-1 text-sm text-muted-foreground">
+          Published{" "}
+          <span class="text-foreground">
+            {new Date(publishedAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </span>
+          in
+          <Category url={url} />
+        </p>
+      )
+    }
+    {
+      !publishedAt && (
+        <p class="mt-1 text-sm text-muted-foreground">
+          Unpublished in <Category url={url} />
+        </p>
+      )
+    }
+    <article class="mt-16">
+      <slot />
+    </article>
+  </div>
 </BaseLayout>

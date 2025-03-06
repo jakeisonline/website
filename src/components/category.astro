@@ -1,0 +1,13 @@
+---
+import { CATEGORIES } from "@/lib/categories"
+
+const url = Astro.props.url
+
+// Extract the category from the url
+const categoryId = url.split("/").slice(2, -1).join("/")
+
+const category = CATEGORIES.find((c) => c.id === categoryId)
+---
+
+{category && <a href={category?.url}>{category?.name}</a>}
+{!category && <span class="text-muted-foreground">Unknown</span>}

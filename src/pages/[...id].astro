@@ -14,4 +14,4 @@ const { post } = Astro.props
 const { Content, headings } = await render(post)
 ---
 
-<Content headings={headings} />
+<Content headings={headings} foo="bar" />
