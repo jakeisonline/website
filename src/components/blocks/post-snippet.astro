@@ -3,9 +3,14 @@ const { post } = Astro.props
 const postData = post.data
 ---
 
-<article class="flex flex-col gap-2">
+<article
+  class="relative isolate flex flex-col gap-2 hover:bg-muted/50 rounded-lg px-5 py-4 -ml-5 group"
+>
   <h2 class="text-lg font-bold">
-    <a href={`/blog/${post.id}`}>{postData.title}</a>
+    <a href={`/blog/${post.id}`} class="group-hover:text-link">
+      <span class="absolute inset-0 z-10"></span>
+      {postData.title}</a
+    >
   </h2>
   {
     postData.subtitle && (
@@ -14,8 +19,10 @@ const postData = post.data
       </p>
     )
   }
-  <p class="text-sm text-muted-foreground">{postData.description}</p>
-  <p class="mt-1 text-xs font-semibold text-muted-foreground">
+  <p class="text-sm">{postData.description}</p>
+  <p
+    class="mt-1 text-xs font-semibold text-muted-foreground group-hover:text-foreground"
+  >
     <a href={`/blog/${post.id}`}>Read more</a>
   </p>
 </article>
