@@ -1,5 +1,6 @@
 ---
 import { CATEGORIES } from "@/lib/categories"
+import Badge from "@/components/ui/badge.astro"
 
 const url = Astro.props.url
 
@@ -9,5 +10,11 @@ const categoryId = url.split("/").slice(2, -1).join("/")
 const category = CATEGORIES.find((c) => c.id === categoryId)
 ---
 
-{category && <a href={category?.url}>{category?.name}</a>}
+{
+  category && (
+    <a href={category?.url}>
+      <Badge class="text-xs px-2.5 ml-0.5">{category?.name}</Badge>
+    </a>
+  )
+}
 {!category && <span class="text-muted-foreground">Unknown</span>}
