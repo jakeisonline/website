@@ -1,16 +1,20 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro"
 import Category from "@/components/category.astro"
+import { type ToCHeadingsType } from "@/lib/types"
+import ToC from "@/components/blocks/toc.astro"
 interface Props {
   frontmatter: Record<string, string>
   title?: string
   subtitle?: string
   publishedAt?: string
   url?: string
+  headings?: ToCHeadingsType
 }
 
 const {
   frontmatter,
+  headings,
   title = frontmatter?.title,
   subtitle = frontmatter?.subtitle,
   publishedAt = frontmatter?.publishedAt,
@@ -19,36 +23,45 @@ const {
 ---
 
 <BaseLayout>
-  <div
-    class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
-  >
-    <h1>{title}</h1>
-    {subtitle && <p class="mt-1 text-md text-muted-foreground">{subtitle}</p>}
-    {
-      publishedAt && (
-        <p class="mt-1 text-sm text-muted-foreground">
-          Published{" "}
-          <span class="text-foreground">
-            {new Date(publishedAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-          in
-          <Category url={url} />
-        </p>
-      )
-    }
-    {
-      !publishedAt && (
-        <p class="mt-1 text-sm text-muted-foreground">
-          Unpublished in <Category url={url} />
-        </p>
-      )
-    }
-    <article class="mt-16">
-      <slot />
-    </article>
+  <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
+    <div
+      class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
+    >
+      <h1>{title}</h1>
+      {subtitle && <p class="mt-1 text-md text-muted-foreground">{subtitle}</p>}
+      {
+        publishedAt && (
+          <p class="mt-1 text-sm text-muted-foreground">
+            Published{" "}
+            <span class="text-foreground">
+              {new Date(publishedAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </span>
+            in
+            <Category url={url} />
+          </p>
+        )
+      }
+      {
+        !publishedAt && (
+          <p class="mt-1 text-sm text-muted-foreground">
+            Unpublished in <Category url={url} />
+          </p>
+        )
+      }
+      <article class="mt-16">
+        <slot />
+      </article>
+    </div>
+    <nav
+      aria-labelledby="doc-outline-aria-label"
+      class="text-sm sticky top-22 h-[calc(100vh-3.5rem)] pl-3 hidden xl:block"
+    >
+      <div>On this page</div>
+      <ToC headings={headings} />
+    </nav>
   </div>
 </BaseLayout>
