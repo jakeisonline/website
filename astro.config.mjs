@@ -11,7 +11,15 @@ export default defineConfig({
   base: "/blog/",
   output: "static",
   trailingSlash: "never",
-  integrations: [mdx(), react()],
+  integrations: [
+    mdx({
+      syntaxHighlight: "shiki",
+      shikiConfig: {
+        theme: "plastic",
+      },
+    }),
+    react(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
