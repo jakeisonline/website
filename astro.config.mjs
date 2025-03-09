@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite"
 import vercel from "@astrojs/vercel"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
+import { remarkAlert } from "remark-github-blockquote-alert"
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +14,7 @@ export default defineConfig({
   trailingSlash: "never",
   integrations: [
     mdx({
+      remarkPlugins: [remarkAlert],
       syntaxHighlight: "shiki",
       shikiConfig: {
         theme: "plastic",
