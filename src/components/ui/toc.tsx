@@ -59,14 +59,16 @@ export const TOC: FC<TOCProps> = ({ headings }) => {
                   5: "ms-9",
                   6: "ms-12",
                 }[depth],
-                "block subpixel-antialiased transition-colors",
+                "flex items-center subpixel-antialiased transition-colors",
                 slug === activeSlug
                   ? "text-link hover:text-link-hover font-semibold"
                   : "text-muted-foreground/70 hover:text-link-hover",
               )}
             >
               <span className="mr-0.5 inline-flex w-3 items-center">
-                {slug === activeSlug && <ChevronRight className="h-3 w-3" />}
+                {slug === activeSlug && (
+                  <ChevronRight className="animate-slide-in-left h-3 w-3" />
+                )}
               </span>
               {text}
             </a>
