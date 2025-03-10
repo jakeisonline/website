@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro"
-import { getCollection } from "astro:content"
+import { getAllPosts } from "@/lib/get-all-posts"
 import PostSnippet from "@/components/blocks/post-snippet.astro"
 import CategoryNav from "@/components/blocks/category-nav.astro"
 
-const allBlogPosts = await getCollection("general")
+const allBlogPosts = await getAllPosts()
 ---
 
 <BaseLayout title="Blog" description="A place of relative calm.">
