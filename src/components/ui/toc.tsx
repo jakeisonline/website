@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react"
 import type { FC } from "react"
 import { useEffect, useRef } from "react"
 import { useActiveAnchor } from "@/stores/active-anchor"
+import { ScrollToTop } from "./scroll-to-top"
 
 export type ToCHeadingType = {
   id: string
@@ -75,7 +76,11 @@ export const TOC: FC<TOCProps> = ({ headings }) => {
           </li>
         ))}
       </ul>
-      <div className="border-border mt-6 border-t pt-1.5"></div>
+      <div className="border-border mt-6 border-t pt-1.5">
+        <ScrollToTop className={linkClassName} hidden={activeIndex < 2}>
+          Scroll to top
+        </ScrollToTop>
+      </div>
     </>
   )
 }
