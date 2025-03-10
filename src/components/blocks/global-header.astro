@@ -1,6 +1,7 @@
 ---
 import Link from "@/components/ui/link.astro"
 import ThemeToggle from "@/components/blocks/theme-toggle"
+import GlobalNav from "@/components/blocks/global-nav.astro"
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 ---
 
@@ -13,6 +14,7 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
       <Link href="/blog" class="text-foreground"
         >📣 <span class="hidden lg:inline">jakeisonline/blog</span>
       </Link>
+      <GlobalNav class="ml-8" />
       <div class="justify-end items-center flex flex-1 gap-1">
         <Link
           href="https://www.linkedin.com/in/jakeholman/"
