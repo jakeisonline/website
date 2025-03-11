@@ -5,17 +5,20 @@ import { ViewTransitions } from "astro:transitions"
 import GlobalHeader from "@/components/blocks/global-header.astro"
 import GlobalFooter from "@/components/blocks/global-footer.astro"
 import { SITE_CONFIG } from "@/lib/config"
+import type { SEOProps } from "astro-seo"
 
 interface Props {
   frontmatter?: Record<string, string>
   title?: string
   description?: string
+  seo?: SEOProps
 }
 
 const {
   frontmatter,
   title = frontmatter?.title || "",
   description = frontmatter?.description || "",
+  seo,
 } = Astro.props
 ---
 
@@ -95,6 +98,7 @@ const {
         description: description,
         image: `${SITE_CONFIG.siteUrl}/og.png`,
       }}
+      {...seo}
     />
 
     <ViewTransitions transition:animate="none" />

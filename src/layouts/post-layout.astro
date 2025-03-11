@@ -3,6 +3,9 @@ import BaseLayout from "@/layouts/base-layout.astro"
 import Category from "@/components/category.astro"
 import { type ToCHeadingsType } from "@/lib/types"
 import ToC from "@/components/blocks/toc.astro"
+import { SITE_CONFIG } from "@/lib/config"
+import type { SEOProps } from "astro-seo"
+
 interface Props {
   frontmatter: Record<string, string>
   title?: string
@@ -20,9 +23,30 @@ const {
   publishedAt = frontmatter?.publishedAt,
   url = Astro.url.pathname,
 } = Astro.props
+
+const seo: SEOProps = {
+  title: `${title}`,
+  description: frontmatter?.description,
+  openGraph: {
+    basic: {
+      type: "article",
+      title: `${title}`,
+      image: `${SITE_CONFIG.siteUrl}/og.png`,
+    },
+    optional: {
+      description: frontmatter?.description,
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title}`,
+    description: frontmatter?.description,
+    image: `${SITE_CONFIG.siteUrl}/og.png`,
+  },
+}
 ---
 
-<BaseLayout>
+<BaseLayout seo={seo}>
   <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
     <div
       class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
