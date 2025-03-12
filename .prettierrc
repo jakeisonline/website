@@ -8,7 +8,12 @@
   "quoteProps": "consistent",
   "arrowParens": "always",
   "printWidth": 80,
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-astro"],
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-astro",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-astro-organize-imports"
+  ],
   "tailwindFunctions": ["clsx", "cva", "cn", "twMerge", "tw"],
   "overrides": [
     {

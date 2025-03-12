@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "@/layouts/base-layout.astro"
-import Category from "@/components/category.astro"
-import { type ToCHeadingsType } from "@/lib/types"
 import ToC from "@/components/blocks/toc.astro"
+import Category from "@/components/category.astro"
+import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
+import { type ToCHeadingsType } from "@/lib/types"
 import type { SEOProps } from "astro-seo"
 
 interface Props {
@@ -47,7 +47,7 @@ const seo: SEOProps = {
 ---
 
 <BaseLayout seo={seo}>
-  <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
+  <div class="grid-cols-full relative lg:grid xl:grid-cols-[1fr_300px]">
     <div
       class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
     >
@@ -82,7 +82,7 @@ const seo: SEOProps = {
     </div>
     <nav
       aria-labelledby="doc-outline-aria-label"
-      class="text-sm sticky top-22 h-[calc(100vh-3.5rem)] pl-3 hidden xl:block ml-4"
+      class="sticky top-22 ml-4 hidden h-[calc(100vh-3.5rem)] pl-3 text-sm xl:block"
     >
       <div>On this page</div>
       <ToC headings={headings} />

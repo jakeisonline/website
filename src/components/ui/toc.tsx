@@ -1,10 +1,10 @@
 "use client"
 
+import { useActiveAnchor } from "@/stores/active-anchor"
 import cn from "clsx"
 import { ChevronRight } from "lucide-react"
 import type { FC } from "react"
 import { useEffect, useRef } from "react"
-import { useActiveAnchor } from "@/stores/active-anchor"
 import { ScrollToTop } from "./scroll-to-top"
 
 export type ToCHeadingType = {

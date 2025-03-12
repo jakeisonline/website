@@ -1,6 +1,6 @@
+import { Button } from "@/components/ui/button"
 import cn from "clsx"
 import { CircleChevronUpIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import type { ComponentProps, FC, ReactNode } from "react"
 
 const SCROLL_TO_OPTIONS = { top: 0, behavior: "smooth" } as const

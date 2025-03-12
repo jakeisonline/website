@@ -1,11 +1,11 @@
 ---
+import GlobalFooter from "@/components/blocks/global-footer.astro"
+import GlobalHeader from "@/components/blocks/global-header.astro"
+import { SITE_CONFIG } from "@/lib/config"
 import "@/styles/global.css"
+import type { SEOProps } from "astro-seo"
 import { SEO } from "astro-seo"
 import { ViewTransitions } from "astro:transitions"
-import GlobalHeader from "@/components/blocks/global-header.astro"
-import GlobalFooter from "@/components/blocks/global-footer.astro"
-import { SITE_CONFIG } from "@/lib/config"
-import type { SEOProps } from "astro-seo"
 
 interface Props {
   frontmatter?: Record<string, string>
@@ -104,10 +104,10 @@ const {
     <ViewTransitions transition:animate="none" />
   </head>
   <body
-    class="min-h-dvh bg-background overflow-y-scroll flex flex-col items-center"
+    class="bg-background flex min-h-dvh flex-col items-center overflow-y-scroll"
   >
     <GlobalHeader />
-    <main class="container-page w-full flex flex-row items-center pt-8">
+    <main class="container-page flex w-full flex-row items-center pt-8">
       <slot />
     </main>
     <GlobalFooter />

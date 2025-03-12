@@ -1,11 +1,11 @@
 ---
-import { getCollection, render } from "astro:content"
-import Link from "@/components/ui/link.astro"
 import Heading2 from "@/components/mdx/heading-2.astro"
 import Heading3 from "@/components/mdx/heading-3.astro"
 import Heading4 from "@/components/mdx/heading-4.astro"
 import Heading5 from "@/components/mdx/heading-5.astro"
 import Heading6 from "@/components/mdx/heading-6.astro"
+import Link from "@/components/ui/link.astro"
+import { getCollection, render } from "astro:content"
 
 export async function getStaticPaths() {
   const posts = await getCollection("general")
