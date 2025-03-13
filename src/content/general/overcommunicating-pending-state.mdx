@@ -1,0 +1,69 @@
+---
+title: There is no harm in overcommunicating pending state in your UI
+description: As a begrudging member of the slow internet community, I'm appreciating the communication of pending state in interfaces now more than ever.
+publishedAt: "2025-03-12"
+layout: "@/layouts/post-layout.astro"
+---
+
+import Example from "@/components/example"
+
+I'm a member of the slow internet community. Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and **not always being sure if or what I'm waiting for when clicking buttons**.
+
+<Example
+  name="pending-state-no-feedback"
+  caption="Lack of interface feedback can leave users wondering, eventually leading to worry or frustration."
+  client:load
+/>
+
+Whenever a direct user action results in some sort of side effect - such as an API call - you should strongly consider communicating that something is happening.
+
+## Show me something is happening
+
+By not communicating that something is happening, you're suddenly placing the user into an ominous waiting period where they're left wondering _is something supposed to be happening here?_
+
+Keeping users waiting is already bad enough, but adding doubt into the mix is going to slow perceived performance. Ironically, not communicating any kind of pending state is going to make your interface feel _slower_ than it actually is.
+
+<Example
+  name="pending-state-with-feedback"
+  caption="Adding a loading spinner and disabling the button is better than nothing, but it's still not enough."
+  client:load
+/>
+
+## Tell me what's happening
+
+So, slap on a loading spinner and maybe disable the button, and call it a day, right? While the loading spinner is a ubiquitous indicator that something is happening, it doesn't communicate _what_ is happening.
+
+<Example
+  name="pending-state-with-context"
+  caption="Adding a loading spinner and disabling the button is better than nothing, but it's still not enough."
+  client:load
+/>
+
+Simply switching the button text to "Saving..." immediately communicates _what_ is happening, not just that something is happening.
+
+As an added bonus, confirming the action has finished successfully gives the user even more reassurance that everything is working as expected.
+
+## Don't rely on vision alone
+
+Visually showing pending state is great, but you're not thinking about anyone with a disability that might make visual comprehension difficult.
+
+```html
+<button>
+  <span aria-live="assertive" aria-atomic="true">Save</span>
+</button>
+```
+
+We use [`aria-live`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-live) to tell screen readers the content of this element should be watched for changes, with `assertive` telling screen readers to interrupt what they're reading to tell the user the change.
+
+[`aria-atomic`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-atomic) further tells screen readers to read the content of the element as a whole each time it changes, rather than only reading the specific words that changed.
+
+```html
+<button>
+  <span aria-live="assertive" aria-atomic="true">Saving...</span>
+</button>
+```
+
+When the button is clicked, the screen reader will read the content of the button as a whole, telling the user that click has been registered _and_ something is happening but not yet finished.
+
+> [!TIP]
+> You might consider wrapping the ellipsis in an element with `aria-hidden` to keep it from being read aloud as "ellipsis" by screen readers.
