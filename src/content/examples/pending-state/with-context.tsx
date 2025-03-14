@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { CircleCheck, LoaderCircle } from "lucide-react"
 import { useState } from "react"
 
@@ -12,14 +13,17 @@ export default function WithContext() {
   const handleClick = () => {
     setIsPending(true)
     window.setTimeout(() => {
-      setIsPending(false)
-      setHasFinished(true)
+      handleFinished()
     }, randomTime)
   }
 
-  const handleReset = (e: React.PointerEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    setHasFinished(false)
+  const handleFinished = () => {
+    setIsPending(false)
+    setHasFinished(true)
+
+    window.setTimeout(() => {
+      setHasFinished(false)
+    }, 2500)
   }
 
   return (
@@ -31,12 +35,18 @@ export default function WithContext() {
       >
         {isPending ? "Saving..." : "Save"}
         {isPending && (
-          <LoaderCircle className="w-4 h-4 ml-2 animate-spin text-muted-background" />
+          <LoaderCircle className="w-4 h-4 ml-0.5 animate-spin text-muted-background" />
         )}
       </Button>
-      {hasFinished && !isPending && (
-        <CircleCheck className="w-4 h-4 ml-2 text-muted-background stroke-green-700 animate-slide-in-left duration-400 absolute -right-6" />
-      )}
+      <span
+        className={cn(
+          "text-green-700 absolute -right-15 flex-row gap-1 text-xs duration-400 flex opacity-0",
+          hasFinished && !isPending && "opacity-100",
+        )}
+      >
+        <CircleCheck className="w-4 h-4 ml-2 text-muted-background stroke-green-700" />{" "}
+        Saved
+      </span>
     </div>
   )
 }

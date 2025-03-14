@@ -20,11 +20,11 @@ export default function WithContext() {
       <Button
         onClick={handleClick}
         disabled={isPending}
-        className="transition-all duration-300 ease-out"
+        className="transition-all duration-300"
       >
         Save
         {isPending && (
-          <LoaderCircle className="w-4 h-4 ml-2 animate-spin text-muted-background" />
+          <LoaderCircle className="w-4 h-4 ml-0.5 animate-spin text-muted-background" />
         )}
       </Button>
     </div>
