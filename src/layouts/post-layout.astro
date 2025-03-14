@@ -5,6 +5,7 @@ import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
 import { type ToCHeadingsType } from "@/lib/types"
 import type { SEOProps } from "astro-seo"
+import { Dot } from "lucide-react"
 
 interface Props {
   frontmatter: Record<string, string>
@@ -53,29 +54,39 @@ const seo: SEOProps = {
     >
       <h1>{title}</h1>
       {subtitle && <p class="mt-1 text-md text-muted-foreground">{subtitle}</p>}
-      {
-        publishedAt && (
-          <p class="mt-1 text-sm text-muted-foreground">
-            Published{" "}
-            <span class="text-foreground">
-              {new Date(publishedAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </span>
-            in
-            <Category url={url} />
-          </p>
-        )
-      }
-      {
-        !publishedAt && (
-          <p class="mt-1 text-sm text-muted-foreground">
-            Unpublished in <Category url={url} />
-          </p>
-        )
-      }
+      <div class="flex flex-row items-center gap-1">
+        {
+          publishedAt && (
+            <p class="mt-1 text-sm text-muted-foreground">
+              Published{" "}
+              <span class="text-foreground">
+                {new Date(publishedAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </p>
+          )
+        }
+        {
+          !publishedAt && (
+            <p class="mt-1 text-sm text-muted-foreground">Unpublished</p>
+          )
+        }
+        {
+          frontmatter?.readingMinutes && (
+            <p class="mt-1 text-muted-foreground text-sm flex items-center gap-1">
+              <Dot className="size-4" />
+              {frontmatter?.readingMinutes} min read
+            </p>
+          )
+        }
+        <p class="text-muted-foreground mt-1 flex items-center gap-1 text-sm">
+          <Dot className="size-4" />
+          <Category url={url} />
+        </p>
+      </div>
       <article class="mt-16">
         <slot />
       </article>

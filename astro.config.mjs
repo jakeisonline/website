@@ -5,6 +5,7 @@ import vercel from "@astrojs/vercel"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from "astro/config"
 import { remarkAlert } from "remark-github-blockquote-alert"
+import { remarkReadingTime } from "./src/lib/remark-reading-time"
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +15,7 @@ export default defineConfig({
   trailingSlash: "never",
   integrations: [
     mdx({
-      remarkPlugins: [remarkAlert],
+      remarkPlugins: [remarkAlert, remarkReadingTime],
       syntaxHighlight: "shiki",
       shikiConfig: {
         theme: "plastic",
