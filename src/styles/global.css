@@ -4,8 +4,6 @@
 
 @plugin "@tailwindcss/typography";
 
-@import "remark-github-blockquote-alert/alert.css";
-
 @theme {
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
