@@ -28,4 +28,13 @@ export const Index: Record<string, any> = {
       await import(`@/content/examples/pending-state/with-context.tsx?raw`)
     ).default,
   },
+  "pending-state-apply-filters": {
+    name: "pending-state-apply-filters",
+    component: React.lazy(
+      () => import("@/content/examples/pending-state/apply-filters"),
+    ),
+    source: (
+      await import(`@/content/examples/pending-state/apply-filters.tsx?raw`)
+    ).default,
+  },
 }

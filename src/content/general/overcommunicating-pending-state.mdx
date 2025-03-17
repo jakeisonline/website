@@ -83,16 +83,19 @@ When the button is clicked, the screen reader will read the content of the butto
 
 So far we've concentrated on showing users that something is happening, but we can go a step further by showing users _where_ something is going to happen.
 
+Let's use the example of a page on an e-commerce management app that allows a user to apply filters to a list of orders.
+
+When a new filter is applied, we might be tempted to stick a big, whole page spinner in the middle of the page to communicate that something is happening.
+
+But I find this approach to often be disproportionate to the action, and it doesn't communicate where the action is happening. Also it's usually horribly jarring.
+
 <Example
   name="pending-state-apply-filters"
   caption="Showing where the user can expect their action to be reflected reduces the potential for jarring UI updates."
   client:visible
 />
 
-The benefit of this level of pending state communication is twofold:
-
-1. It moves the users attention to where the interface is going to update
-2. It reduces the potential for jarring UI updates once the async action is finished
+Instead, we isolate the pending state to where the user can expect the action to be reflected, reducing the potential for jarring UI updates once the async action is finished.
 
 <Callout type="tip" title="Validate before you communicate">
   Particularly when dealing with user input, you should validate that input as
@@ -101,7 +104,7 @@ The benefit of this level of pending state communication is twofold:
   fails, you'll cause the user UI whiplash instead of a smooth experience.
 </Callout>
 
-### Don't forget navigation
+### Consider navigation
 
 ## It's OK to overcommunicate
 
