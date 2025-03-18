@@ -17,11 +17,7 @@ export default function WithContext() {
 
   return (
     <div className="flex flex-row gap-1 items-center relative">
-      <Button
-        onClick={handleClick}
-        disabled={isPending}
-        className="transition-all duration-300"
-      >
+      <Button onClick={handleClick} disabled={isPending}>
         Save
         {isPending && (
           <LoaderCircle className="w-4 h-4 ml-0.5 animate-spin text-muted-background" />

@@ -37,4 +37,10 @@ export const Index: Record<string, any> = {
       await import(`@/content/examples/pending-state/apply-filters.tsx?raw`)
     ).default,
   },
+  "pending-state-navigation": {
+    name: "pending-state-navigation",
+    component: React.lazy(
+      () => import("@/content/examples/pending-state/navigation"),
+    ),
+  },
 }

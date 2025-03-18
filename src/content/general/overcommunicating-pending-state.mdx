@@ -21,8 +21,8 @@ Whenever a direct user action results in some sort of side effect - such as an A
 <Callout type="note" title="A slight caveat">
   This article is focused on communicating pending state for asynchronous
   actions, where the user needs to know something is happening and they may need
-  to wait. For example, a button that triggers an API call is an example of an
-  asynchronous action.
+  to wait. For example, a button that triggers an API call, the response of
+  which triggers a navigation event, or some sort of UI change.
 </Callout>
 
 ## Show me something is happening
@@ -106,8 +106,22 @@ Instead, we isolate the pending state to where the user can expect the action to
 
 ### Consider navigation
 
+I'm a bit of an old hack, and navigation feels different these days. It used to be that anything that looked like a link was a link, and clicking it would take you to a new page. It would be obvious that something is happening because the browser would give you a bunch of visual feedback.
+
+Now, it's not so simple.
+
+With all sorts of different ways to deliver content to a browser, that strong visual feedback is a bit unreliable.
+
+<Example
+  name="pending-state-navigation"
+  caption="Consider combining the above with prefetching and caching to further increase perceived performance."
+  client:visible
+/>
+
+It might feel a bit overkill, but there's no harm in overcommunicating that the user's action has been registered, and something is happening. It sure beats just sitting there wondering.
+
 ## It's OK to overcommunicate
 
 While it does take a little more design and implementation consideration, communicating pending state is one of the easiest ways to improve the user experience and perceived performance of your interface.
 
-If you have a button that triggers a user action which requires that user to wait, you should communicate that no matter how quick you think that action is.
+If you have a button that triggers a user action which requires that user to wait, even for a couple hundred milliseconds, you should communicate that no matter how quick you think that action is.

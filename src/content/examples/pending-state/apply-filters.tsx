@@ -72,7 +72,7 @@ export default function ApplyFilters() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-[430px]">
       <p className="font-bold text-lg mb-2">Orders</p>
       <div className="flex items-center gap-2 border-t border-b py-2 justify-end">
         <Select defaultValue="all" disabled={pending}>
@@ -137,7 +137,7 @@ export default function ApplyFilters() {
                     <Skeleton className="w-[100px] h-[26px]" />
                   </TableCell>
                   <TableCell className="flex justify-end">
-                    <Skeleton className="w-[100px] h-[26px]" />
+                    <Skeleton className="w-[50px] h-[26px]" />
                   </TableCell>
                 </TableRow>
               ))}
