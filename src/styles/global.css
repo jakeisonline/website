@@ -229,7 +229,9 @@
   code {
     @apply bg-code text-code-foreground! rounded p-0.5 font-mono text-xs font-normal! break-all before:hidden after:hidden md:break-normal;
   }
-
+  .prose {
+    @apply max-w-full! lg:max-w-[65ch]!;
+  }
   ::-webkit-scrollbar {
     width: 6px;
   }

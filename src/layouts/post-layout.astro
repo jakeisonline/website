@@ -48,17 +48,17 @@ const seo: SEOProps = {
 ---
 
 <BaseLayout seo={seo}>
-  <div class="grid-cols-full relative lg:grid xl:grid-cols-[1fr_300px]">
+  <div class="grid-cols-full relative w-full lg:grid xl:grid-cols-[1fr_300px]">
     <div
-      class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
+      class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight md:prose-h1:text-3xl prose-h1:text-xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"
     >
       <h1>{title}</h1>
       {subtitle && <p class="mt-1 text-md text-muted-foreground">{subtitle}</p>}
-      <div class="flex flex-row items-center gap-1">
+      <div class="flex flex-row items-center gap-1 text-xs md:text-sm">
         {
           publishedAt && (
-            <p class="mt-1 text-sm text-muted-foreground">
-              Published{" "}
+            <p class="mt-1 text-muted-foreground">
+              <span class="sr-only md:not-sr-only">Published </span>
               <span class="text-foreground">
                 {new Date(publishedAt).toLocaleDateString("en-US", {
                   year: "numeric",
@@ -69,16 +69,13 @@ const seo: SEOProps = {
             </p>
           )
         }
-        {
-          !publishedAt && (
-            <p class="mt-1 text-sm text-muted-foreground">Unpublished</p>
-          )
-        }
+        {!publishedAt && <p class="mt-1 text-muted-foreground">Unpublished</p>}
         {
           frontmatter?.readingMinutes && (
-            <p class="mt-1 text-muted-foreground text-sm flex items-center gap-1">
+            <p class="mt-1 text-muted-foreground flex items-center gap-1">
               <Dot className="size-4" />
-              {frontmatter?.readingMinutes} min read
+              {frontmatter?.readingMinutes} min{" "}
+              <span class="sr-only md:not-sr-only">read</span>
             </p>
           )
         }
@@ -87,7 +84,7 @@ const seo: SEOProps = {
           <Category url={url} />
         </p>
       </div>
-      <article class="mt-16">
+      <article class="mt-10 md:mt-16">
         <slot />
       </article>
     </div>
