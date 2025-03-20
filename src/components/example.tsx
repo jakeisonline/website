@@ -35,8 +35,8 @@ export default function ExampleComponent({
       }
     >
       <div className="my-6">
-        <div className="ring-offset-background focus-visible:ring-ring md:mx-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-lg border bg-card text-card-foreground shadow-sm px-4 py-2 overflow-x-scroll">
-          <div className="not-prose flex min-h-32 w-auto items-center justify-center p-6 pt-6 @container">
+        <div className="ring-offset-background focus-visible:ring-ring md:mx-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-lg border bg-card text-card-foreground shadow-sm px-2 @sm:px-4 py-2 overflow-x-scroll">
+          <div className="not-prose flex min-h-32 w-auto px-0 py-2 md:px-4 md:py-6 @container">
             {Example}
           </div>
         </div>

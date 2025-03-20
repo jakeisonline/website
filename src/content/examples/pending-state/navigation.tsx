@@ -27,9 +27,9 @@ export default function Navigation() {
   }
 
   return (
-    <div className="flex gap-4 min-h-[430px]">
-      <nav className="@md:w-[200px] border-r border-border pr-2">
-        <ul className="flex flex-col gap-1">
+    <div className="grid auto-cols-max grid-flow-col gap-4 min-h-[430px] mr-auto">
+      <nav className="border-r border-border pr-2 sticky left-0 top-0 bg-background z-10">
+        <ul className="flex flex-col gap-2s @sm:gap-1">
           <NavItem
             type="home"
             selected={selected === "home"}
@@ -50,7 +50,7 @@ export default function Navigation() {
           />
         </ul>
       </nav>
-      <div className="w-[500px]">
+      <div className="overflow-x-scroll">
         {pending && <SkeletonPage />}
         {!pending && <ApplyFilters />}
       </div>
@@ -88,14 +88,14 @@ function NavItem({
   return (
     <li
       className={cn(
-        "px-2 py-1 rounded-md hover:bg-muted/40 cursor-pointer flex items-center gap-2",
+        "px-3 py-3 @sm:px-3 @sm:py-1 rounded-md hover:bg-muted/40 cursor-pointer flex items-center gap-2",
         selected && "bg-muted hover:bg-muted",
         pending && "bg-muted/40 hover:bg-muted/40",
       )}
       {...props}
     >
-      {pending && <Loader2 className="size-3 animate-spin" />}
-      <Icon className={cn("size-3", pending && "hidden")} />
+      {pending && <Loader2 className="size-4 @sm:size-3 animate-spin" />}
+      <Icon className={cn("size-4 @sm:size-3", pending && "hidden")} />
       <span className="hidden @sm:block">{types[type].label}</span>
     </li>
   )
@@ -105,24 +105,20 @@ function SkeletonPage() {
   return (
     <div className="w-full flex-col items-center space-x-4 space-y-4">
       <Skeleton className="w-[250px] h-[40px]" />
-      <div className="flex flex-row gap-2">
-        <Skeleton className="h-4 w-[40px]" />
-        <Skeleton className="h-4 w-[130px]" />
-        <Skeleton className="h-4 w-[100px]" />
-        <Skeleton className="h-4 w-[80px]" />
-      </div>
-      <div className="flex flex-row gap-2">
-        <Skeleton className="h-4 w-[40px]" />
-        <Skeleton className="h-4 w-[130px]" />
-        <Skeleton className="h-4 w-[100px]" />
-        <Skeleton className="h-4 w-[80px]" />
-      </div>
-      <div className="flex flex-row gap-2">
-        <Skeleton className="h-4 w-[40px]" />
-        <Skeleton className="h-4 w-[130px]" />
-        <Skeleton className="h-4 w-[100px]" />
-        <Skeleton className="h-4 w-[80px]" />
-      </div>
+      <SkeletonRow />
+      <SkeletonRow />
+      <SkeletonRow />
+    </div>
+  )
+}
+
+function SkeletonRow() {
+  return (
+    <div className="flex flex-row gap-2">
+      <Skeleton className="h-4 w-6" />
+      <Skeleton className="h-4 w-6" />
+      <Skeleton className="h-4 w-10" />
+      <Skeleton className="h-4 w-8 hidden @md:block" />
     </div>
   )
 }

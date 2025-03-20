@@ -74,20 +74,7 @@ export default function ApplyFilters() {
   return (
     <div className="w-full min-h-[430px]">
       <p className="font-bold text-lg mb-2">Orders</p>
-      <div className="flex items-center gap-2 border-t border-b py-2 justify-end">
-        <Select defaultValue="all" disabled={pending}>
-          <SelectTrigger>
-            <SelectValue placeholder="Fulfillment Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all" defaultChecked>
-              All
-            </SelectItem>
-            <SelectItem value="unfulfilled">Unfulfilled</SelectItem>
-            <SelectItem value="fulfilled">Fulfilled</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="flex items-center gap-2 border-t border-b py-2 justify-start md:justify-end">
         <Select defaultValue="paid" disabled={pending}>
           <SelectTrigger>
             <SelectValue placeholder="Payment Status" />
@@ -102,7 +89,9 @@ export default function ApplyFilters() {
         <Button onClick={applyFilters} disabled={pending}>
           {pending ? (
             <>
-              Applying filters...
+              <span>
+                Applying<span className="sr-only"> filters</span>...
+              </span>
               <Loader2 className="w-4 h-4 animate-spin" />
             </>
           ) : (
@@ -116,10 +105,12 @@ export default function ApplyFilters() {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Order</TableHead>
-            <TableHead className="w-[140px]">Status</TableHead>
+            <TableHead>Order</TableHead>
+            <TableHead>Status</TableHead>
             <TableHead>Customer</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="text-right hidden sm:table-cell">
+              Amount
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -136,7 +127,7 @@ export default function ApplyFilters() {
                   <TableCell>
                     <Skeleton className="w-[100px] h-[26px]" />
                   </TableCell>
-                  <TableCell className="flex justify-end">
+                  <TableCell className="justify-end hidden @md:flex">
                     <Skeleton className="w-[50px] h-[26px]" />
                   </TableCell>
                 </TableRow>
@@ -150,7 +141,9 @@ export default function ApplyFilters() {
                 </TableCell>
                 <TableCell>{order.status}</TableCell>
                 <TableCell>{order.customer}</TableCell>
-                <TableCell className="text-right">{order.amount}</TableCell>
+                <TableCell className="text-right hidden @md:block">
+                  {order.amount}
+                </TableCell>
               </TableRow>
             ))
           )}
