@@ -67,9 +67,9 @@ const Icon = icons[type]
     typeStyles({ type }),
   )}
 >
-  <div class="-mb-2 flex items-center gap-1.5">
+  <div class="-mb-2 flex items-start gap-1.5">
     <Icon class={cn("size-4", iconStyles({ icon: type }))} />
-    {title && <strong class="text-sm font-bold">{title}</strong>}
+    {title && <strong class="text-sm font-bol leading-4">{title}</strong>}
   </div>
   <slot />
 </aside>
