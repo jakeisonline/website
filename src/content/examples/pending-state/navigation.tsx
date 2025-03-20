@@ -28,41 +28,26 @@ export default function Navigation() {
 
   return (
     <div className="flex gap-4 min-h-[430px]">
-      <nav className="w-[200px] border-r border-border pr-2">
+      <nav className="@md:w-[200px] border-r border-border pr-2">
         <ul className="flex flex-col gap-1">
           <NavItem
+            type="home"
             selected={selected === "home"}
             pending={pending === "home"}
             onClick={() => handleNavItemClick("home")}
-          >
-            <House className="size-3" />
-            <span>Home</span>
-            {pending === "home" && (
-              <Loader2 className="size-3 animate-spin ml-auto" />
-            )}
-          </NavItem>
+          />
           <NavItem
+            type="orders"
             selected={selected === "orders"}
             pending={pending === "orders"}
             onClick={() => handleNavItemClick("orders")}
-          >
-            <ShoppingBag className="size-3" />
-            <span>Orders</span>
-            {pending === "orders" && (
-              <Loader2 className="size-3 animate-spin ml-auto" />
-            )}
-          </NavItem>
+          />
           <NavItem
+            type="products"
             selected={selected === "products"}
             pending={pending === "products"}
             onClick={() => handleNavItemClick("products")}
-          >
-            <Package className="size-3" />
-            <span>Products</span>
-            {pending === "products" && (
-              <Loader2 className="size-3 animate-spin ml-auto" />
-            )}
-          </NavItem>
+          />
         </ul>
       </nav>
       <div className="w-[500px]">
@@ -74,15 +59,32 @@ export default function Navigation() {
 }
 
 function NavItem({
+  type,
   selected,
   pending,
-  children,
   ...props
 }: {
+  type: "home" | "orders" | "products"
   selected: boolean
   pending: boolean
-  children: React.ReactNode
 } & React.HTMLAttributes<HTMLLIElement>) {
+  const types = {
+    home: {
+      label: "Home",
+      icon: House,
+    },
+    orders: {
+      label: "Orders",
+      icon: ShoppingBag,
+    },
+    products: {
+      label: "Products",
+      icon: Package,
+    },
+  }
+
+  const Icon = types[type].icon
+
   return (
     <li
       className={cn(
@@ -92,7 +94,9 @@ function NavItem({
       )}
       {...props}
     >
-      {children}
+      {pending && <Loader2 className="size-3 animate-spin" />}
+      <Icon className={cn("size-3", pending && "hidden")} />
+      <span className="hidden @sm:block">{types[type].label}</span>
     </li>
   )
 }
