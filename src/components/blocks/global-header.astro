@@ -11,9 +11,12 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 >
   <div class="flex h-14 items-center text-lg font-bold lg:text-sm">
     <div class="flex w-full items-center">
-      <Link href="/blog" class="text-foreground"
-        >📣 <span class="hidden lg:inline">jakeisonline/blog</span>
-      </Link>
+      <div class="flex items-center">
+        <span
+          class="mt-0.5 mr-1 h-1.5 w-1.5 rounded-full bg-green-600 lg:mt-0 lg:mr-1.5 lg:h-2.5 lg:w-2.5"
+        ></span>
+        <Link href="/" class="text-foreground">jakeisonline</Link>
+      </div>
       <GlobalNav class="ml-8" />
       <div class="flex flex-1 items-center justify-end gap-1">
         <Link
