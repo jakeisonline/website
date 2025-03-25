@@ -11,8 +11,8 @@ const defaultSchema = z.object({
 
 const componentsSchema = z.object({
   ...defaultSchema.shape,
-  component: z.string(),
-  shortDescription: z.string(),
+  component: z.string().optional(),
+  shortDescription: z.string().optional(),
 })
 
 const toolsSchema = z.object({
@@ -37,16 +37,7 @@ export const toolDocsCollection = defineCollection({
   schema: toolsSchema,
 })
 
-export const generalDocsCollection = defineCollection({
-  loader: glob({
-    pattern: "**\/*.mdx",
-    base: "./src/content/general",
-  }),
-  schema: defaultSchema,
-})
-
 export const collections = {
-  general: generalDocsCollection,
   components: componentDocsCollection,
   tools: toolDocsCollection,
 }

@@ -2,17 +2,17 @@
 import SubNavItem from "@/components/SubNavItem.astro"
 import { cn } from "@/lib/utils"
 type SubNavItemConditionals =
-| {
-  type: "heading"
-}
-| {
-  type: "item"
-  href: string
-  badge?: {
-    label: string
-    variant: "default" | "secondary" | "outline"
-  }
-}
+  | {
+      type: "heading"
+    }
+  | {
+      type: "item"
+      href: string
+      badge?: {
+        label: string
+        variant: "default" | "secondary" | "outline"
+      }
+    }
 
 export type SubNavItem = { text: string } & SubNavItemConditionals
 export type SubNavItems = SubNavItem[]
@@ -48,7 +48,13 @@ function buildNav(items: SubNavItems) {
 const nav: SubNavItems = buildNav(navItems)
 ---
 
-  <aside class={cn("hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block", className)} data-pagefind-ignore>
+<aside
+  class={cn(
+    "hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block",
+    className,
+  )}
+  data-pagefind-ignore
+>
   <ul>
     {
       nav.map((item) => {

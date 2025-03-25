@@ -2,15 +2,12 @@ import { getCollection, type DataEntryMap } from "astro:content"
 import type { CollectionKeys, PageNavConfig } from "./navigation.types"
 
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
-  general: {
+  components: {
     path: "/components",
     order: {
       "introduction": 1,
       "installing-components": 2,
     },
-  },
-  components: {
-    path: "/components",
     newBadge: (page: any) =>
       page.data.isNew ? { label: "New", variant: "secondary" } : null,
   },
@@ -47,11 +44,23 @@ export async function getNavItems(collectionName: CollectionKeys) {
 }
 
 export async function buildNavigation() {
+  const componentItems = await getNavItems("components")
+
+  const filterItems = (items: typeof componentItems, include: boolean) => {
+    return items.filter((item) =>
+      include
+        ? item?.href === "/components/introduction" ||
+          item?.href === "/components/installing-components"
+        : item?.href !== "/components/introduction" &&
+          item?.href !== "/components/installing-components",
+    )
+  }
+
   return [
-    { type: "heading", text: "About" },
-    ...(await getNavItems("general")),
+    { type: "heading", text: "General" },
+    ...filterItems(componentItems, true),
     { type: "heading", text: "Components" },
-    ...(await getNavItems("components")),
+    ...filterItems(componentItems, false),
     { type: "heading", text: "Tools" },
     ...(await getNavItems("tools")),
   ]
