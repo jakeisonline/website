@@ -1,14 +1,14 @@
 // Heavily inspired by and with great thanks to @bwestwood11 (https://github.com/bwestwood11/ui-cart/blob/main/scripts/build-registry.ts)
 
-import { registry } from "@/www/registry"
+import { registry } from "@/registry/index"
 import { promises as fs } from "fs"
 import { z } from "zod"
-import { registryItemFileSchema } from "@/www/registry/schema"
+import { registryItemFileSchema } from "@/registry/schema"
 import path from "path"
 import ora from "ora"
 
-const REGISTRY_BASE_PATH = "www/registry"
-const PUBLIC_FOLDER_BASE_PATH = "www/public/registry"
+const REGISTRY_BASE_PATH = "./registry"
+const PUBLIC_FOLDER_BASE_PATH = "./public/registry"
 
 type File = z.infer<typeof registryItemFileSchema>
 const FolderToComponentTypeMap = {
@@ -43,7 +43,7 @@ const writeFileRecursive = async (filePath: string, data: string) => {
 
 function fixImports(code: string, type: string): string {
   // Strip all instances of @/registry
-    return code.replace(/@\/registry/g, "@");
+  return code.replace(/@\/registry/g, "@")
 }
 
 const getUIFiles = async (files: File[]) => {

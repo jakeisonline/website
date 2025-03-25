@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
-    "build:registry": "echo \"Did you mean to run this command in the project root?\" && exit 1",
+    "build:registry": "tsx ./scripts/build-registry.ts",
     "build:index": "pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
