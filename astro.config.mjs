@@ -29,7 +29,7 @@ export default defineConfig({
     format: "file",
   },
   site: "https://jakeisonline.com",
-  base: "/",
+  base: "/components",
   output: "static",
   trailingSlash: "never",
   adapter: vercel({
