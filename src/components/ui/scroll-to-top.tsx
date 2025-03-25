@@ -1,11 +1,15 @@
 import { Button } from "@/components/ui/button"
 import cn from "clsx"
 import { CircleChevronUpIcon } from "lucide-react"
-import type { ComponentProps, FC, ReactNode } from "react"
+import type { ComponentProps } from "react"
 
 const SCROLL_TO_OPTIONS = { top: 0, behavior: "smooth" } as const
 
-const scrollToTop: ComponentProps<"button">["onClick"] = (event) => {
+interface ScrollToTopProps extends ComponentProps<"button"> {
+  hidden: boolean
+}
+
+function scrollToTop(event: React.MouseEvent<HTMLButtonElement>) {
   const buttonElement = event.currentTarget
   const tocElement = buttonElement.parentElement!.parentElement!
 
@@ -15,11 +19,7 @@ const scrollToTop: ComponentProps<"button">["onClick"] = (event) => {
   buttonElement.disabled = true
 }
 
-export const ScrollToTop: FC<{
-  children: ReactNode
-  className?: string
-  hidden: boolean
-}> = ({ children, className, hidden }) => {
+export function ScrollToTop({ children, className, hidden }: ScrollToTopProps) {
   return (
     <Button
       // elements with `aria-hidden: true` must not be focusable or contain focusable elements
