@@ -15,12 +15,6 @@ const componentsSchema = z.object({
   shortDescription: z.string().optional(),
 })
 
-const toolsSchema = z.object({
-  ...defaultSchema.shape,
-  icons: z.array(z.string()),
-  href: z.string(),
-})
-
 export const componentDocsCollection = defineCollection({
   loader: glob({
     pattern: "**\/*.mdx",
@@ -28,16 +22,6 @@ export const componentDocsCollection = defineCollection({
   }),
   schema: componentsSchema,
 })
-
-export const toolDocsCollection = defineCollection({
-  loader: glob({
-    pattern: "**\/*.mdx",
-    base: "./src/content/tools",
-  }),
-  schema: toolsSchema,
-})
-
 export const collections = {
   components: componentDocsCollection,
-  tools: toolDocsCollection,
 }

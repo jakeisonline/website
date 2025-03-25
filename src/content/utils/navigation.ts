@@ -11,7 +11,6 @@ const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
     newBadge: (page: any) =>
       page.data.isNew ? { label: "New", variant: "secondary" } : null,
   },
-  tools: { path: "/tools" },
 } as const
 
 export async function getNavItems(collectionName: CollectionKeys) {
@@ -29,10 +28,7 @@ export async function getNavItems(collectionName: CollectionKeys) {
   return sortedPages.map((page) => {
     if (page.data.isPrivate) return null
 
-    const href =
-      collectionName === "tools" && "href" in page.data
-        ? page.data.href
-        : `${config.path}/${page.id}`
+    const href = `${config.path}/${page.id}`
 
     return {
       type: "item" as const,
@@ -61,7 +57,5 @@ export async function buildNavigation() {
     ...filterItems(componentItems, true),
     { type: "heading", text: "Components" },
     ...filterItems(componentItems, false),
-    { type: "heading", text: "Tools" },
-    ...(await getNavItems("tools")),
   ]
 }
