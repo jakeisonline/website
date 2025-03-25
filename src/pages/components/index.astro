@@ -5,7 +5,9 @@ import Card from "@/components/ui/Card.astro"
 import DocsLayout from "@/layouts/DocsLayout.astro"
 import { getCollection } from "astro:content"
 
-const componentPages = await getCollection("components")
+const componentPages = (await getCollection("components")).filter(
+  (page) => page.data.component !== undefined,
+)
 ---
 
 <DocsLayout
@@ -26,7 +28,7 @@ const componentPages = await getCollection("components")
               <Card class="pointer-events-none">
                 <div class="flex w-auto justify-center p-6 pt-8">
                   <ExampleComponent
-                    name={page.data.component}
+                    name={page.data.component || ""}
                     client:load
                     data-astro-rerun
                   />
