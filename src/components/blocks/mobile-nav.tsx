@@ -41,7 +41,7 @@ export function MobileNav({
         <SheetDescription className="sr-only">
           Menu used for navigation on mobile.
         </SheetDescription>
-        <a href="/playground" className="text-2xs font-bold text-foreground">
+        <a href="/" className="text-2xs font-bold text-foreground">
           🛝 jakeisonline/playground
         </a>
         {children}

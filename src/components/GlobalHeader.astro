@@ -14,18 +14,16 @@ const navItems = await buildNavigation()
 
 <header
   class="container-page md:sticky lg:top-0 z-50 w-full bg-background/85 lg:backdrop-blur supports[backdrop-filter]:bg-background/60"
-data-pagefind-ignore>
+  data-pagefind-ignore
+>
   <div class="flex h-14 items-center lg:text-sm text-lg font-bold">
     <div class="flex items-center">
-      <MobileNav className="mr-4" client:load>
-        <SubNav class="block" navItems={navItems as SubNavItems} />
-      </MobileNav>
-      <Link href="/playground" class="text-foreground"
-        >🛝 <span class="hidden lg:inline">jakeisonline/playground</Link
-      >
-      <GlobalNav class="ml-8" />
+      <span
+        class="mt-0.5 mr-1 h-1.5 w-1.5 rounded-full bg-green-600 lg:mt-0 lg:mr-1.5 lg:h-2.5 lg:w-2.5"
+      ></span>
+      <Link href="/" class="text-foreground">jakeisonline</Link>
     </div>
-
+    <GlobalNav class="ml-8" />
     <div class="justify-end items-center flex flex-1 gap-1">
       <Search navItems={navItems as SubNavItems} client:load />
       <Link

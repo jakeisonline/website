@@ -3,18 +3,18 @@ import type { CollectionKeys, PageNavConfig } from "./navigation.types"
 
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
   general: {
-    path: "/playground",
+    path: "/components",
     order: {
       "introduction": 1,
       "installing-components": 2,
     },
   },
   components: {
-    path: "/playground/components",
+    path: "/components",
     newBadge: (page: any) =>
       page.data.isNew ? { label: "New", variant: "secondary" } : null,
   },
-  tools: { path: "/playground/tools" },
+  tools: { path: "/tools" },
 } as const
 
 export async function getNavItems(collectionName: CollectionKeys) {

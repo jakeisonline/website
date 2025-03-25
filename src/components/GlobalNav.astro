@@ -11,22 +11,24 @@ const { class: className }: Props = Astro.props
 const globalNavItems = [
   {
     name: "Components",
-    href: "/playground/components",
+    href: "/components",
   },
-    {
+  {
     name: "Tools",
-    href: "/playground/tools",
+    href: "/tools",
   },
   {
     name: "About",
-    href: "/playground/introduction",
+    href: "/introduction",
   },
 ]
 
 const currentPath = Astro.url.pathname
 ---
 
-<nav class={cn("hidden lg:flex items-center gap-4 text-sm lg:gap-6", className)}>
+<nav
+  class={cn("hidden lg:flex items-center gap-4 text-sm lg:gap-6", className)}
+>
   {
     globalNavItems.map(({ name, href }) => (
       <Link

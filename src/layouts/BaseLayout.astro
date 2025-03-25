@@ -66,15 +66,15 @@ const {
           {
             rel: "icon",
             type: "image/svg+xml",
-            href: "/playground/favicon.svg",
+            href: "/favicon.svg",
           },
         ],
         meta: [
           {
             name: "author",
             content: "Jake Holman (@jakeisonline)",
-          }
-        ]
+          },
+        ],
       }}
       openGraph={{
         basic: {
@@ -102,16 +102,16 @@ const {
 
       async function initPageFind() {
         if (!pagefind) {
-            pagefind = await import("/playground/pagefind/pagefind.js");
-            pagefind.init();
+          pagefind = await import("/pagefind/pagefind.js")
+          pagefind.init()
         }
       }
 
-      document.addEventListener("astro:page-load", initPageFind);
+      document.addEventListener("astro:page-load", initPageFind)
       if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initPageFind);
+        document.addEventListener("DOMContentLoaded", initPageFind)
       } else {
-        initPageFind();
+        initPageFind()
       }
     </script>
     <ViewTransitions transition:animate="none" />
@@ -120,9 +120,7 @@ const {
     class="min-h-dvh bg-background overflow-y-scroll flex flex-col items-center"
   >
     <GlobalHeader />
-    <main
-      class="container-page w-full flex flex-row items-center"
-    >
+    <main class="container-page w-full flex flex-row items-center">
       <slot />
     </main>
     <GlobalFooter />

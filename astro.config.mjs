@@ -29,11 +29,11 @@ export default defineConfig({
     format: "file",
   },
   site: "https://jakeisonline.com",
-  base: "/playground/",
+  base: "/",
   output: "static",
   trailingSlash: "never",
   adapter: vercel({
-    includeFiles: ["./public/playground/fonts/urbanist-latin-400-normal.woff"],
+    includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
     excludeFiles: ["./components.json"],
     webAnalytics: {
       enabled: true,
