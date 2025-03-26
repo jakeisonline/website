@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { capitalize } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 import { useState } from "react"
 
@@ -23,49 +24,49 @@ export default function ApplyFilters() {
   const orders = [
     {
       orderNumber: 1023,
-      status: "Paid",
+      status: "paid",
       customer: "Liam Brown",
       amount: "$346",
     },
     {
       orderNumber: 1504,
-      status: "Unpaid",
+      status: "unpaid",
       customer: "Nia Roberts",
       amount: "$789",
     },
     {
       orderNumber: 1987,
-      status: "Refunded",
+      status: "refunded",
       customer: "Kai Nguyen",
       amount: "$1120",
     },
     {
       orderNumber: 1345,
-      status: "Cancelled",
+      status: "cancelled",
       customer: "Zara Singh",
       amount: "$250",
     },
     {
       orderNumber: 1765,
-      status: "Paid",
+      status: "paid",
       customer: "Omar Haddad",
       amount: "$1000",
     },
   ]
 
   const [filteredOrders, setFilteredOrders] = useState(orders)
+  const [selectedStatus, setSelectedStatus] = useState("paid")
   const [pending, setPending] = useState(false)
-
-  const shuffleOrders = () => {
-    return orders.sort(() => Math.random() - 0.5)
-  }
 
   const applyFilters = () => {
     setPending(true)
     setTimeout(() => {
-      const filteredOrders = orders.filter((order) => {
-        return order.status === "Paid"
-      })
+      const filteredOrders =
+        selectedStatus === "all"
+          ? orders
+          : orders.filter((order) => {
+              return order.status === selectedStatus
+            })
       setFilteredOrders(filteredOrders)
       setPending(false)
     }, 1000)
@@ -74,12 +75,17 @@ export default function ApplyFilters() {
   return (
     <div className="w-full min-h-[430px]">
       <p className="font-bold text-lg mb-2">Orders</p>
-      <div className="flex items-center gap-2 border-t border-b py-2 justify-start md:justify-end">
-        <Select defaultValue="paid" disabled={pending}>
+      <div className="flex items-center gap-2 border-t border-b py-2 justify-between md:justify-end">
+        <Select
+          value={selectedStatus}
+          onValueChange={setSelectedStatus}
+          disabled={pending}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Payment Status" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="all">All</SelectItem>
             <SelectItem value="paid">Paid</SelectItem>
             <SelectItem value="unpaid">Unpaid</SelectItem>
             <SelectItem value="refunded">Refunded</SelectItem>
@@ -139,7 +145,7 @@ export default function ApplyFilters() {
                 <TableCell className="font-medium">
                   {order.orderNumber}
                 </TableCell>
-                <TableCell>{order.status}</TableCell>
+                <TableCell>{capitalize(order.status)}</TableCell>
                 <TableCell>{order.customer}</TableCell>
                 <TableCell className="text-right hidden @md:block">
                   {order.amount}
