@@ -1,4 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 import { House, Loader2, Package, ShoppingBag } from "lucide-react"
 import { useRef, useState } from "react"
@@ -103,22 +111,58 @@ function NavItem({
 
 function SkeletonPage() {
   return (
-    <div className="w-full flex-col items-center space-x-4 space-y-4">
-      <Skeleton className="w-[250px] h-[40px]" />
-      <SkeletonRow />
-      <SkeletonRow />
-      <SkeletonRow />
+    <div className="w-full flex-col">
+      <Skeleton className="w-[100px] h-[39px]" />
+      <SkeletonRow className="justify-between md:justify-end border-t border-b border-border py-2 mt-2">
+        <Skeleton className="w-[100px] h-[49px]" />
+        <Skeleton className="w-[140px] h-[49px]" />
+      </SkeletonRow>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              <Skeleton className="w-[50px] h-[26px]" />
+            </TableHead>
+            <TableHead>
+              <Skeleton className="w-[70px] h-[26px]" />
+            </TableHead>
+            <TableHead>
+              <Skeleton className="w-[100px] h-[26px]" />
+            </TableHead>
+            <TableHead className="justify-end items-center hidden @md:flex">
+              <Skeleton className="w-[50px] h-[26px]" />
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: 5 }, (_, index) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium">
+                <Skeleton className="w-[50px] h-[26px]" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="w-[70px] h-[26px]" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="w-[100px] h-[26px]" />
+              </TableCell>
+              <TableCell className="justify-end hidden @md:flex">
+                <Skeleton className="w-[50px] h-[26px]" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   )
 }
 
-function SkeletonRow() {
-  return (
-    <div className="flex flex-row gap-2">
-      <Skeleton className="h-4 w-6" />
-      <Skeleton className="h-4 w-6" />
-      <Skeleton className="h-4 w-10" />
-      <Skeleton className="h-4 w-8 hidden @md:block" />
-    </div>
-  )
+function SkeletonRow({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
+  return <div className={cn("flex flex-row gap-2", className)}>{children}</div>
 }
