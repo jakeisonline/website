@@ -97,7 +97,6 @@ export default function ApplyFilters({
           : dataSetResult.filter((data) => {
               return data.status === selectedStatus
             })
-      console.log(filteredData)
       setFilteredData(filteredData)
       setPending(false)
     }, 1000)
