@@ -27,9 +27,9 @@ export default function Navigation() {
   }
 
   return (
-    <div className="grid auto-cols-max grid-flow-col gap-4 min-h-[430px] mr-auto">
+    <div className="grid grid-flow-col grid-cols-[67px_1fr] @sm:grid-cols-[188px_1fr] gap-4 min-h-[430px] w-full">
       <nav className="border-r border-border pr-2 sticky left-0 top-0 bg-background z-10">
-        <ul className="flex flex-col gap-2s @sm:gap-1">
+        <ul className="flex flex-col gap-2 @sm:gap-1">
           <NavItem
             type="home"
             selected={selected === "home"}
