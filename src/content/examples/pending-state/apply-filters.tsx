@@ -20,61 +20,92 @@ import { capitalize } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 import { useState } from "react"
 
-export default function ApplyFilters() {
+interface ApplyFiltersProps {
+  dataSet?: "orders" | "products"
+}
+
+export default function ApplyFilters({
+  dataSet = "orders",
+}: ApplyFiltersProps) {
   const orders = [
     {
-      orderNumber: 1023,
+      id: 1023,
       status: "paid",
-      customer: "Liam Brown",
+      name: "Liam Brown",
       amount: "$346",
     },
     {
-      orderNumber: 1504,
+      id: 1504,
       status: "unpaid",
-      customer: "Nia Roberts",
+      name: "Nia Roberts",
       amount: "$789",
     },
     {
-      orderNumber: 1987,
+      id: 1987,
       status: "refunded",
-      customer: "Kai Nguyen",
+      name: "Kai Nguyen",
       amount: "$1120",
     },
     {
-      orderNumber: 1345,
+      id: 1345,
       status: "cancelled",
-      customer: "Zara Singh",
+      name: "Zara Singh",
       amount: "$250",
     },
     {
-      orderNumber: 1765,
+      id: 1765,
       status: "paid",
-      customer: "Omar Haddad",
+      name: "Omar Haddad",
       amount: "$1000",
     },
   ]
 
-  const [filteredOrders, setFilteredOrders] = useState(orders)
-  const [selectedStatus, setSelectedStatus] = useState("paid")
+  const products = [
+    {
+      id: 1023,
+      name: "Banana",
+      amount: "$10",
+      status: "active",
+    },
+    {
+      id: 1504,
+      name: "Apple",
+      amount: "$1",
+      status: "inactive",
+    },
+    {
+      id: 1987,
+      name: "Orange",
+      amount: "$2",
+      status: "active",
+    },
+  ]
+
+  const dataSetResult = dataSet === "orders" ? orders : products
+  const dataSetStatuses = [...new Set(dataSetResult.map((item) => item.status))]
+
+  const [filteredData, setFilteredData] = useState(dataSetResult)
+  const [selectedStatus, setSelectedStatus] = useState(dataSetStatuses[0])
   const [pending, setPending] = useState(false)
 
   const applyFilters = () => {
     setPending(true)
     setTimeout(() => {
-      const filteredOrders =
+      const filteredData =
         selectedStatus === "all"
-          ? orders
-          : orders.filter((order) => {
-              return order.status === selectedStatus
+          ? dataSetResult
+          : dataSetResult.filter((data) => {
+              return data.status === selectedStatus
             })
-      setFilteredOrders(filteredOrders)
+      console.log(filteredData)
+      setFilteredData(filteredData)
       setPending(false)
     }, 1000)
   }
 
   return (
     <div className="w-full min-h-[430px]">
-      <p className="font-bold text-lg mb-2">Orders</p>
+      <p className="font-bold text-lg mb-2">{capitalize(dataSet)}</p>
       <div className="flex items-center gap-2 border-t border-b py-2 justify-between md:justify-end">
         <Select
           value={selectedStatus}
@@ -86,10 +117,11 @@ export default function ApplyFilters() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All</SelectItem>
-            <SelectItem value="paid">Paid</SelectItem>
-            <SelectItem value="unpaid">Unpaid</SelectItem>
-            <SelectItem value="refunded">Refunded</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
+            {dataSetStatuses.map((status) => (
+              <SelectItem key={status} value={status}>
+                {capitalize(status)}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <Button onClick={applyFilters} disabled={pending}>
@@ -107,13 +139,13 @@ export default function ApplyFilters() {
       </div>
       <Table>
         <TableCaption className="sr-only">
-          A list of your most recent orders.
+          A list of your {dataSet}.
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Order</TableHead>
+            <TableHead>#</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Customer</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead className="text-right hidden sm:table-cell">
               Amount
             </TableHead>
@@ -140,15 +172,13 @@ export default function ApplyFilters() {
               ))}
             </>
           ) : (
-            filteredOrders.map((order) => (
-              <TableRow key={order.orderNumber}>
-                <TableCell className="font-medium">
-                  {order.orderNumber}
-                </TableCell>
-                <TableCell>{capitalize(order.status)}</TableCell>
-                <TableCell>{order.customer}</TableCell>
+            filteredData.map((data) => (
+              <TableRow key={data.id}>
+                <TableCell className="font-medium">{data.id}</TableCell>
+                <TableCell>{capitalize(data.status)}</TableCell>
+                <TableCell>{data.name}</TableCell>
                 <TableCell className="text-right hidden @md:block">
-                  {order.amount}
+                  {data.amount}
                 </TableCell>
               </TableRow>
             ))

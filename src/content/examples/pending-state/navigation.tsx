@@ -52,7 +52,7 @@ export default function Navigation() {
       </nav>
       <div className="overflow-x-scroll">
         {pending && <SkeletonPage />}
-        {!pending && <ApplyFilters />}
+        {!pending && selected !== "home" && <ApplyFilters dataSet={selected} />}
       </div>
     </div>
   )
