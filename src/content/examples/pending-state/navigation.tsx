@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { House, Loader2, Package, ShoppingBag } from "lucide-react"
 import { useRef, useState } from "react"
 import ApplyFilters from "./apply-filters"
+import { HomePage } from "./home-page"
 
 export default function Navigation() {
   const [selected, setSelected] = useState<"home" | "orders" | "products">(
@@ -59,8 +60,10 @@ export default function Navigation() {
         </ul>
       </nav>
       <div className="overflow-x-scroll">
-        {pending && <SkeletonPage />}
+        {pending && pending === "home" && <HomeSkeleton />}
+        {pending && pending !== "home" && <FiltersSkeleton />}
         {!pending && selected !== "home" && <ApplyFilters dataSet={selected} />}
+        {!pending && selected === "home" && <HomePage />}
       </div>
     </div>
   )
@@ -109,7 +112,16 @@ function NavItem({
   )
 }
 
-function SkeletonPage() {
+function HomeSkeleton() {
+  return (
+    <div className="w-full flex flex-col @lg:flex-row gap-2">
+      <Skeleton className="w-full h-[400px]" />
+      <Skeleton className="w-full h-[400px]" />
+    </div>
+  )
+}
+
+function FiltersSkeleton() {
   return (
     <div className="w-full flex-col">
       <Skeleton className="w-[100px] h-[39px]" />
