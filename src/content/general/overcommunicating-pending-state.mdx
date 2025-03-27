@@ -53,7 +53,48 @@ Simply switching the button text to "Saving..." immediately communicates _what_ 
 
 As an added bonus, confirming the action has finished successfully gives the user even more reassurance that everything is working as expected.
 
-### Don't rely on vision alone
+## Show me where it will happen
+
+So far we've concentrated on showing users that something is happening, but we can go a step further by showing users _where_ something is going to happen.
+
+Let's use the example of a page on an e-commerce management app that allows a user to apply filters to a list of orders.
+
+When a new filter is applied, we might be tempted to stick a big, whole page spinner in the middle of the page to communicate that something is happening.
+
+But I find this approach to often be disproportionate to the action, and it doesn't communicate where the action is happening. Also it's usually horribly jarring.
+
+<Example
+  name="pending-state-apply-filters"
+  caption="Showing where the user can expect their action to be reflected reduces the potential for jarring UI updates."
+  client:visible
+/>
+
+Instead, we isolate the pending state to where the user can expect the action to be reflected, reducing the potential for jarring UI updates once the async action is finished.
+
+<Callout type="tip" title="Validate before you communicate">
+  Particularly when dealing with user input, you should validate that input as
+  much as possible _before_ showing them state indicators like
+  [skeletons](https://www.nngroup.com/articles/skeleton-screens/). If the action
+  fails, you'll cause the user UI whiplash instead of a smooth experience.
+</Callout>
+
+## Consider navigation
+
+I'm a bit of an old hack, and navigation feels different these days. It used to be that anything that looked like a link was a link, and clicking it would take you to a new page. It would be obvious that something is happening because the browser would give you a bunch of visual feedback.
+
+Now, it's not so simple.
+
+With all sorts of different ways to deliver content to a browser, that strong visual feedback is a bit unreliable.
+
+<Example
+  name="pending-state-navigation"
+  caption="Consider combining the above with prefetching and caching to further increase perceived performance."
+  client:visible
+/>
+
+It might feel a bit overkill, but there's no harm in overcommunicating that the user's action has been registered, and something is happening. It sure beats just sitting there wondering.
+
+## Don't rely on vision alone
 
 Visually showing pending state is great, but what about anyone with a disability that might make visual comprehension difficult.
 
@@ -80,47 +121,6 @@ When the button is clicked, the screen reader will read the content of the butto
   you might consider wrapping the ellipsis in an element with `aria-hidden` to
   keep it from being read aloud as "ellipsis" by screen readers.
 </Callout>
-
-## Show me where something is going to happen
-
-So far we've concentrated on showing users that something is happening, but we can go a step further by showing users _where_ something is going to happen.
-
-Let's use the example of a page on an e-commerce management app that allows a user to apply filters to a list of orders.
-
-When a new filter is applied, we might be tempted to stick a big, whole page spinner in the middle of the page to communicate that something is happening.
-
-But I find this approach to often be disproportionate to the action, and it doesn't communicate where the action is happening. Also it's usually horribly jarring.
-
-<Example
-  name="pending-state-apply-filters"
-  caption="Showing where the user can expect their action to be reflected reduces the potential for jarring UI updates."
-  client:visible
-/>
-
-Instead, we isolate the pending state to where the user can expect the action to be reflected, reducing the potential for jarring UI updates once the async action is finished.
-
-<Callout type="tip" title="Validate before you communicate">
-  Particularly when dealing with user input, you should validate that input as
-  much as possible _before_ showing them state indicators like
-  [skeletons](https://www.nngroup.com/articles/skeleton-screens/). If the action
-  fails, you'll cause the user UI whiplash instead of a smooth experience.
-</Callout>
-
-### Consider navigation
-
-I'm a bit of an old hack, and navigation feels different these days. It used to be that anything that looked like a link was a link, and clicking it would take you to a new page. It would be obvious that something is happening because the browser would give you a bunch of visual feedback.
-
-Now, it's not so simple.
-
-With all sorts of different ways to deliver content to a browser, that strong visual feedback is a bit unreliable.
-
-<Example
-  name="pending-state-navigation"
-  caption="Consider combining the above with prefetching and caching to further increase perceived performance."
-  client:visible
-/>
-
-It might feel a bit overkill, but there's no harm in overcommunicating that the user's action has been registered, and something is happening. It sure beats just sitting there wondering.
 
 ## It's OK to overcommunicate
 
