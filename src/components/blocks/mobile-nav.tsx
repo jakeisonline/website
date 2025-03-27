@@ -11,6 +11,7 @@ import {
 import { cn } from "@/lib/utils"
 import { setMobileMenu, useMobileMenu } from "@/stores/mobile-menu"
 import { MenuIcon } from "lucide-react"
+import { Logo } from "@/components/blocks/logo"
 
 export function MobileNav({
   className,
@@ -33,7 +34,7 @@ export function MobileNav({
         </Button>
       </SheetTrigger>
       <SheetContent
-        className="pt-2.5"
+        className="pt-4"
         side="left"
         onClick={() => setMobileMenu(false)}
       >
@@ -41,12 +42,7 @@ export function MobileNav({
         <SheetDescription className="sr-only">
           Menu used for navigation on mobile.
         </SheetDescription>
-        <div className="mt-2 flex items-center">
-          <span className="mr-1 mt-0.5 h-1.5 w-1.5 rounded-full bg-green-600"></span>
-          <a href="/" className="text-xs font-bold text-foreground">
-            jakeisonline
-          </a>
-        </div>
+        <Logo />
         {children}
       </SheetContent>
     </Sheet>

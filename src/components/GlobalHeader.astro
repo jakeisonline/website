@@ -8,6 +8,7 @@ import { MobileNav } from "@/components/blocks/mobile-nav"
 import { buildNavigation } from "@/content/utils/navigation"
 import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
 import { Search } from "@/components/blocks/search"
+import { Logo } from "@/components/blocks/logo"
 
 const navItems = await buildNavigation()
 ---
@@ -17,15 +18,10 @@ const navItems = await buildNavigation()
   data-pagefind-ignore
 >
   <div class="flex h-14 items-center lg:text-sm text-xs font-bold">
-    <div class="flex items-center">
-      <MobileNav className="mr-4" client:load>
-        <SubNav class="block" navItems={navItems as SubNavItems} />
-      </MobileNav>
-      <span
-        class="mt-0.5 mr-1 h-1.5 w-1.5 rounded-full bg-green-600 lg:mt-0 lg:mr-1.5 lg:h-2.5 lg:w-2.5"
-      ></span>
-      <Link href="/" class="text-foreground">jakeisonline</Link>
-    </div>
+    <MobileNav className="mr-4" client:load>
+      <SubNav class="block" navItems={navItems as SubNavItems} />
+    </MobileNav>
+    <Logo />
     <GlobalNav class="ml-8" />
     <div class="justify-end items-center flex flex-1 gap-1">
       <Search navItems={navItems as SubNavItems} client:load />
