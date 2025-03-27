@@ -41,9 +41,12 @@ export function MobileNav({
         <SheetDescription className="sr-only">
           Menu used for navigation on mobile.
         </SheetDescription>
-        <a href="/" className="text-2xs font-bold text-foreground">
-          🛝 jakeisonline/playground
-        </a>
+        <div className="mt-2 flex items-center">
+          <span className="mr-1 mt-0.5 h-1.5 w-1.5 rounded-full bg-green-600"></span>
+          <a href="/" className="text-xs font-bold text-foreground">
+            jakeisonline
+          </a>
+        </div>
         {children}
       </SheetContent>
     </Sheet>
