@@ -1,5 +1,7 @@
 ---
 import GlobalNav from "@/components/blocks/global-nav.astro"
+import { Logo } from "@/components/blocks/logo"
+import { MobileNav } from "@/components/blocks/mobile-nav"
 import ThemeToggle from "@/components/blocks/theme-toggle"
 import Link from "@/components/ui/link.astro"
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
@@ -11,12 +13,8 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 >
   <div class="flex h-14 items-center text-xs font-bold lg:text-sm">
     <div class="flex w-full items-center">
-      <div class="flex items-center">
-        <span
-          class="mt-0.5 mr-1 h-1.5 w-1.5 rounded-full bg-green-600 lg:mt-0 lg:mr-1.5 lg:h-2.5 lg:w-2.5"
-        ></span>
-        <Link href="/" class="text-foreground">jakeisonline</Link>
-      </div>
+      <MobileNav className="mr-4" client:load>Mobile menu goes here</MobileNav>
+      <Logo />
       <GlobalNav class="ml-8" />
       <div class="flex flex-1 items-center justify-end gap-1">
         <Link
