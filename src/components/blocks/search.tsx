@@ -14,6 +14,7 @@ import { type SubNavItems } from "@/components/SubNav.astro"
 import { navigate } from "astro:transitions/client"
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
 import { prefetch } from "astro:prefetch"
+import { SearchIcon } from "lucide-react"
 
 // See BaseLayout.astro for the pagefind initialization
 declare const pagefind: any
@@ -86,21 +87,20 @@ export function Search({ navItems, className, ...props }: Props) {
   return (
     <>
       <Button
-        variant="outline"
+        variant="ghost"
+        size="icon"
         className={cn(
-          "group relative h-8 bg-muted px-3 text-xs hover:border-foreground/80",
+          "group h-10 w-10 lg:relative lg:h-8 lg:w-auto lg:bg-muted lg:px-3 lg:text-xs lg:hover:border-foreground/80",
           className,
         )}
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="mr-1 hidden text-muted-foreground group-hover:text-foreground md:block">
+        <span className="mr-1 hidden text-muted-foreground group-hover:text-foreground lg:block">
           Search things...
         </span>
-        <span className="mr-1 block text-muted-foreground group-hover:text-foreground md:hidden">
-          Search...
-        </span>
-        <kbd className="hidden select-none items-center gap-0.5 rounded border bg-background px-1.5 font-mono text-2xs font-medium text-muted-foreground opacity-100 group-hover:text-foreground md:flex">
+        <SearchIcon className="h-4 w-4 lg:hidden" />
+        <kbd className="hidden select-none items-center gap-0.5 rounded border bg-background px-1.5 font-mono text-2xs font-medium text-muted-foreground opacity-100 group-hover:text-foreground lg:flex">
           <span>⌘</span>
           <span>K</span>
         </kbd>
