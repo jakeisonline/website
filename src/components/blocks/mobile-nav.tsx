@@ -13,6 +13,7 @@ import { setMobileMenu, useMobileMenu } from "@/stores/mobile-menu"
 import { MenuIcon } from "lucide-react"
 import { Logo } from "@/components/blocks/logo"
 import { useEffect } from "react"
+
 export function MobileNav({
   className,
   children,
