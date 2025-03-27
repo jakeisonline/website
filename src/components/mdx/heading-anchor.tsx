@@ -34,7 +34,7 @@ export const HeadingAnchor: FC<{ id: string }> = ({ id }) => {
   return (
     <a
       href={`#${id}`}
-      className="ml-1.5 text-muted-foreground no-underline opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      className="device-desktop:opacity-0 ml-1.5 text-muted-foreground no-underline transition-opacity duration-300 group-hover:opacity-100"
       aria-label="Permalink for this section"
       ref={anchorRef}
     >

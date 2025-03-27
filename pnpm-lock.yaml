@@ -120,6 +120,9 @@ importers:
       shiki:
         specifier: ^1.29.2
         version: 1.29.2
+      tailwindcss-device:
+        specifier: ^1.0.0
+        version: 1.0.0(postcss@8.5.1)(tailwindcss@3.4.17)
       tsx:
         specifier: ^4.19.2
         version: 4.19.3
@@ -3415,6 +3418,13 @@ packages:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
+
+  tailwindcss-device@1.0.0:
+    resolution: {integrity: sha512-cbDHgtIEO8ZxhurHI1YXXi0p2HtHfKtDVDylN92kXTkS+i4qFGiUoB/+jSFIWGD5lkkDSjFuASbsimgLATVgUg==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      postcss: 8.4.21
+      tailwindcss: 3.3.0
 
   tailwindcss-inner-border@0.2.0:
     resolution: {integrity: sha512-IrKWoSHMisGY1FGfwD3+5nzPu1N9gWqUopqma72rS/5wp+DGxUltXhMm84TLpUeaUJyW6NDSHUO/qWh/+puZvg==}
@@ -7728,6 +7738,11 @@ snapshots:
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.17):
     dependencies:
+      tailwindcss: 3.4.17
+
+  tailwindcss-device@1.0.0(postcss@8.5.1)(tailwindcss@3.4.17):
+    dependencies:
+      postcss: 8.5.1
       tailwindcss: 3.4.17
 
   tailwindcss-inner-border@0.2.0(tailwindcss@3.4.17):

@@ -106,6 +106,8 @@ export default {
     require("@tailwindcss/typography"),
     require("tailwindcss-animate"),
     require("tailwindcss-inner-border"),
+    require("tailwindcss-device"),
+
     plugin(function ({ addBase }) {
       addBase({
         html: { fontSize: "22px" },
