@@ -1,7 +1,7 @@
 ---
 title: You should overcommunicate pending state
 description: As a begrudging member of the slow internet community, I'm appreciating the communication of pending state in interfaces now more than ever.
-publishedAt: "2025-03-12"
+publishedAt: "2025-03-28"
 layout: "@/layouts/post-layout.astro"
 ---
 
@@ -45,7 +45,7 @@ So, slap on a loading spinner and maybe disable the button, and call it a day, r
 
 <Example
   name="pending-state-with-context"
-  caption="Adding a loading spinner and disabling the button is better than nothing, but it's still not enough."
+  caption="Updating labels to indicate what is happening is a simple way to communicate more context."
   client:visible
 />
 
@@ -92,7 +92,7 @@ With all sorts of different ways to deliver content to a browser, that strong vi
   client:visible
 />
 
-It might feel a bit overkill, but there's no harm in overcommunicating that the user's action has been registered, and something is happening. It sure beats just sitting there wondering.
+Much like in our filter example, it might be tempting to show a big, whole page spinner. But this method feels more graceful, communicates clearly that the user's action has been registered, and something is happening. It sure beats just sitting there wondering if you actually clicked that thing, or whether anything at all is happening.
 
 ## Don't rely on vision alone
 
@@ -126,4 +126,6 @@ When the button is clicked, the screen reader will read the content of the butto
 
 While it does take a little more design and implementation consideration, communicating pending state is one of the easiest ways to improve the user experience and perceived performance of your interface.
 
-If you have a button that triggers a user action which requires that user to wait, even for a couple hundred milliseconds, you should communicate that no matter how quick you think that action is.
+If you have a button that triggers a user action which requires that user to wait, even for a couple hundred milliseconds, you should communicate that no matter how quick you think that action is going to be. You have very little control over the user's connection speed no matter your optimisations.
+
+While I advocate for overcommunication, I'm not suggesting we shout about it. No need for big page lockups or obnoxious animations Keep that communication clear and contextual through the use of visual language, and concise copy writing where needed.
