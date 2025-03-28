@@ -5,10 +5,11 @@ import Link from "@/components/ui/Link.astro"
 
 interface Props {
   homeOverridePath?: string
+  hideHome?: boolean
   ignorePaths?: string[]
 }
 
-const { homeOverridePath, ignorePaths }: Props = Astro.props
+const { homeOverridePath, hideHome = false, ignorePaths }: Props = Astro.props
 
 const path = sanitizePathname(Astro.url.pathname)
 let crumbs: { name: string; href: string }[] = []
@@ -17,7 +18,7 @@ if (path) {
   const paths: string[] = path.split("/")
 
   // Add home to the crumbs, and override the path if the homeOverridePath prop is set
-  crumbs.push({ name: "Home", href: homeOverridePath || "/" })
+  if (!hideHome) crumbs.push({ name: "Home", href: homeOverridePath || "/" })
 
   for (let i = 1; i < paths.length; i++) {
     // Ignore paths that are defined in the ignorePaths prop

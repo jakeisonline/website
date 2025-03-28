@@ -29,7 +29,7 @@ const navItems = await buildNavigation()
     <SubNav navItems={navItems as SubNavItems} />
     <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
       <div class="mx-auto w-full min-w-0">
-        <Breadcrumb homeOverridePath="/" />
+        <Breadcrumb hideHome />
         <article
           class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
         >
