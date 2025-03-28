@@ -41,7 +41,7 @@ export function MobileNav({
           <MenuIcon className="h-4 w-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="pt-4" side="left">
+      <SheetContent className="pt-4 px-3" side="left">
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <SheetDescription className="sr-only">
           Menu used for navigation on mobile.

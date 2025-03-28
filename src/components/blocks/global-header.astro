@@ -4,7 +4,10 @@ import { Logo } from "@/components/blocks/logo"
 import { MobileNav } from "@/components/blocks/mobile-nav"
 import ThemeToggle from "@/components/blocks/theme-toggle"
 import Link from "@/components/ui/link.astro"
+import { cn } from "@/lib/utils"
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
+
+const currentPath = Astro.url.pathname
 ---
 
 <header
@@ -13,7 +16,39 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 >
   <div class="flex h-14 items-center text-xs font-bold lg:text-sm">
     <div class="flex w-full items-center">
-      <MobileNav className="mr-4" client:load>Mobile menu goes here</MobileNav>
+      <MobileNav className="mr-4" client:load>
+        <div class="mb-5 grid gap-1 pt-8 text-sm">
+          <Link
+            href="/"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath === "/" && "text-foreground bg-accent",
+            )}>Home</Link
+          >
+          <Link
+            href="/components"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath.includes("/components") &&
+                "text-foreground bg-accent",
+            )}>Components</Link
+          >
+          <Link
+            href="/blog"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath.includes("/blog") && "text-foreground bg-accent",
+            )}>Posts</Link
+          >
+          <Link
+            href="/about"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath.includes("/about") && "text-foreground bg-accent",
+            )}>About</Link
+          >
+        </div>
+      </MobileNav>
       <Logo />
       <GlobalNav class="ml-8" />
       <div class="flex flex-1 items-center justify-end gap-1">
