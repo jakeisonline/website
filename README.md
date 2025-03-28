@@ -1,12 +1,12 @@
-# [jakeisonline.com/playground](https://jakeisonline.com/playground)
+# [jakeisonline.com/components](https://jakeisonline.com/components)
 
-Free components and other fun stuff for your projects. A collection of components, templates, experiments, and other bits and bobs. [See the full introduction](https://jakeisonline.com/playground/introduction).
+Free components for your projects. A range of free, accessible, and open-source React components. Easily installed via CLI or manually with copy and paste. [See the full introduction](https://jakeisonline.com/playground/introduction).
 
-[![Image showing the preview card of the website as if displayed on social media, highlighting this project's features](www/public/og.png)](https://jakeisonline.com/playground)
+[![Image showing the preview card of the website as if displayed on social media, highlighting this project's features](public/og.png)](https://jakeisonline.com/playground)
 
 ## Website & Docs
 
-Visit [https://jakeisonline.com/playground](https://jakeisonline.com/playground) for the website and docs.
+Visit [https://jakeisonline.com/components](https://jakeisonline.com/components) for the website and docs.
 
 ## License
 
