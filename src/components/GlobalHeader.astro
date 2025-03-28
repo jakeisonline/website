@@ -9,8 +9,12 @@ import { buildNavigation } from "@/content/utils/navigation"
 import SubNav, { type SubNavItems } from "@/components/SubNav.astro"
 import { Search } from "@/components/blocks/search"
 import { Logo } from "@/components/blocks/logo"
+import { cn } from "@/lib/utils"
 
 const navItems = await buildNavigation()
+const currentPath = Astro.url.pathname
+
+console.log(currentPath)
 ---
 
 <header
@@ -19,7 +23,23 @@ const navItems = await buildNavigation()
 >
   <div class="flex h-14 items-center lg:text-sm text-xs font-bold">
     <MobileNav className="mr-4" client:load>
-      <SubNav class="block" navItems={navItems as SubNavItems} />
+      <div class="mb-5 grid gap-1 pt-8 text-sm">
+        <Link
+          href="/"
+          class={cn(
+            "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+            currentPath === "/" && "text-foreground bg-accent",
+          )}>Home</Link
+        >
+        <Link
+          href="/components"
+          class={cn(
+            "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+            currentPath === "/components/" && "text-foreground bg-accent",
+          )}>Components</Link
+        >
+        <SubNav class="block ml-4 mt-2" navItems={navItems as SubNavItems} />
+      </div>
     </MobileNav>
     <Logo />
     <GlobalNav class="ml-8" />
