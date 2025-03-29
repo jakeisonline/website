@@ -19,13 +19,6 @@ const currentPath = Astro.url.pathname
       <MobileNav className="mr-4" client:load>
         <div class="mb-5 grid gap-1 pt-8 text-sm">
           <Link
-            href="/"
-            class={cn(
-              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
-              currentPath === "/" && "text-foreground bg-accent",
-            )}>Home</Link
-          >
-          <Link
             href="/components"
             class={cn(
               "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
@@ -39,13 +32,6 @@ const currentPath = Astro.url.pathname
               "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
               currentPath.includes("/blog") && "text-foreground bg-accent",
             )}>Posts</Link
-          >
-          <Link
-            href="/about"
-            class={cn(
-              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
-              currentPath.includes("/about") && "text-foreground bg-accent",
-            )}>About</Link
           >
         </div>
       </MobileNav>
