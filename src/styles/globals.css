@@ -2,8 +2,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* @plugin tailwindcss-animate;
-@plugin tailwindcss-inner-border; */
+@plugin "tailwindcss-animate";
 
 @theme {
   --color-border: hsl(var(--border));
