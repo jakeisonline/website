@@ -16,11 +16,11 @@ const allBlogPosts = await getAllPosts()
 
       {allBlogPosts.map((post) => <PostSnippet post={post} />)}
     </section>
-    <div class="hidden md:block">
+    <!-- <div class="hidden md:block">
       <section>
         <h2 class="text-muted-foreground text-sm">Browse by category</h2>
         <CategoryNav />
       </section>
-    </div>
+    </div> -->
   </div>
 </BaseLayout>
