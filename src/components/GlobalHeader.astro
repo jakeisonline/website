@@ -36,7 +36,15 @@ const currentPath = Astro.url.pathname
             currentPath === "/components/" && "text-foreground bg-accent",
           )}>Components</Link
         >
+
         <SubNav class="block ml-4 mt-2" navItems={navItems as SubNavItems} />
+        <Link
+          href="/components"
+          class={cn(
+            "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+            currentPath === "/blog/" && "text-foreground bg-accent",
+          )}>Posts</Link
+        >
       </div>
     </MobileNav>
     <Logo />
