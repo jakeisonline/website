@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config"
 import robotsTxt from "astro-robots-txt"
-import vercel from "@astrojs/vercel/static"
+import vercel from "@astrojs/vercel"
 import react from "@astrojs/react"
 import playformCompress from "@playform/compress"
 
