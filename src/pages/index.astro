@@ -1,8 +1,8 @@
 ---
 import ExampleComponent from "@/components/example-component"
-import Badge from "@/components/ui/Badge.astro"
-import Card from "@/components/ui/Card.astro"
-import DocsLayout from "@/layouts/DocsLayout.astro"
+import Badge from "@/components/ui/badge.astro"
+import Card from "@/components/ui/card.astro"
+import DocsLayout from "@/layouts/docs-layout.astro"
 import { getCollection } from "astro:content"
 
 const componentPages = (await getCollection("components")).filter(
