@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Skeleton } from "./ui/skeleton"
+import { Skeleton } from "../ui/skeleton"
 import { Index } from "@/components/examples/react"
 import { codeToHtml } from "shiki"
 

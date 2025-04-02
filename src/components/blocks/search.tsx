@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/command"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { type SubNavItems } from "@/components/sub-nav.astro"
+import { type SubNavItems } from "@/components/blocks/sub-nav.astro"
 import { navigate } from "astro:transitions/client"
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog"
 import { prefetch } from "astro:prefetch"

@@ -1,8 +1,8 @@
 import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Index } from "@/components/examples/react"
-import ExampleSource from "@/components/example-source"
-import ExampleComponent from "@/components/example-component"
+import ExampleSource from "@/components/blocks/example-source"
+import ExampleComponent from "@/components/blocks/example-component"
 
 interface ExampleComponentWithCodeProps {
   name: string
