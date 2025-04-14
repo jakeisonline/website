@@ -55,6 +55,15 @@
 
   --font-sans: Urbanist, ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  @keyframes slide-in-left {
+    from {
+      transform: translateX(-80%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
 }
 
 /*

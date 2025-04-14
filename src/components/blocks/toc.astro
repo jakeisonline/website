@@ -3,7 +3,9 @@ import { cn } from "@/lib/utils"
 import { TOC, type ToCHeadingType } from "@/components/blocks/toc"
 
 export type ToCHeadingsType = ToCHeadingType[]
-export type ToCHeadingTypeWithSubItems = ToCHeadingType & { subHeadings: ToCHeadingType[] }
+export type ToCHeadingTypeWithSubItems = ToCHeadingType & {
+  subHeadings: ToCHeadingType[]
+}
 
 interface Props {
   headings?: ToCHeadingsType
@@ -12,7 +14,7 @@ interface Props {
 
 const { headings, class: className } = Astro.props
 
-if (!headings || headings.length === 0 || (headings.length === 1)) return null
+if (!headings || headings.length === 0 || headings.length === 1) return null
 
 function buildToC(headings: ToCHeadingsType) {
   const toc: ToCHeadingsType = []
@@ -34,11 +36,4 @@ function buildToC(headings: ToCHeadingsType) {
 const toc = buildToC(headings)
 ---
 
-<nav
-  aria-labelledby="doc-outline-aria-label"
-  class={cn("text-sm sticky top-20 h-[calc(100vh-3.5rem)] pl-3", className)}
-  data-pagefind-ignore
->
-  <div>On this page</div>
-  <TOC client:load headings={headings} />
-</nav>
+<TOC client:load headings={headings} />

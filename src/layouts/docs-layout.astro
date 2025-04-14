@@ -44,7 +44,13 @@ const baseUrl = import.meta.env.BASE_URL
           <Pagination navItems={navItems as SubNavItems} />
         </article>
       </div>
-      <ToC headings={headings} class="hidden xl:block" />
+      <nav
+        aria-labelledby="doc-outline-aria-label"
+        class="sticky top-22 ml-4 hidden h-0 pl-3 text-sm xl:block"
+      >
+        <div>On this page</div>
+        <ToC headings={headings} />
+      </nav>
     </div>
   </div>
 </BaseLayout>
