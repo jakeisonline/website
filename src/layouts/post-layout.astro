@@ -35,6 +35,10 @@ const seo: SEOProps = {
       title: `${title}`,
       image: `${SITE_CONFIG.siteUrl}/og.png`,
     },
+    article: {
+      publishedTime: publishedAt,
+      authors: ["Jake Holman (@jakeisonline)"],
+    },
     optional: {
       description: frontmatter?.description,
     },
@@ -44,6 +48,26 @@ const seo: SEOProps = {
     title: `${title}`,
     description: frontmatter?.description,
     image: `${SITE_CONFIG.siteUrl}/og.png`,
+  },
+  extend: {
+    meta: [
+      {
+        name: "twitter:label1",
+        content: "Written by",
+      },
+      {
+        name: "twitter:data1",
+        content: "Jake Holman (@jakeisonline)",
+      },
+      {
+        name: "twitter:label2",
+        content: "Reading time",
+      },
+      {
+        name: "twitter:data2",
+        content: `${frontmatter?.readingMinutes} min read`,
+      },
+    ],
   },
 }
 ---
