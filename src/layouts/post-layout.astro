@@ -1,4 +1,5 @@
 ---
+import JsonLd from "@/components/blocks/json-ld.astro"
 import ToC from "@/components/blocks/toc.astro"
 import Category from "@/components/category.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
@@ -48,6 +49,15 @@ const seo: SEOProps = {
 ---
 
 <BaseLayout seo={seo}>
+  <JsonLd
+    slot="head"
+    headline={title}
+    alternativeHeadline={subtitle}
+    description={frontmatter?.description}
+    datePublished={publishedAt}
+    wordCount={frontmatter?.readingWords}
+    timeRequired={frontmatter?.readingMinutes}
+  />
   <div class="grid-cols-full relative w-full lg:grid xl:grid-cols-[1fr_300px]">
     <div
       class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight md:prose-h1:text-3xl prose-headings:text-balance prose-h1:text-3xl prose-h1:tracking-tight prose-h1:leading-8 prose-headings:font-bold prose-h1:mb-0 dark:prose-invert"

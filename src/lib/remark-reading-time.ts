@@ -7,5 +7,6 @@ export function remarkReadingTime() {
     const readingTime = getReadingTime(textOnPage, { wordsPerMinute: 150 })
 
     data.astro.frontmatter.readingMinutes = Math.ceil(readingTime.minutes)
+    data.astro.frontmatter.readingWords = readingTime.words
   }
 }
