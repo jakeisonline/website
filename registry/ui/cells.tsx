@@ -140,7 +140,7 @@ export const CellRow = forwardRef<HTMLDivElement, CellRowProps>(
     return (
       <div
         className={cn(
-          "flex flex-row border-b border-l border-r first:border-t",
+          "flex flex-row border-r border-b border-l first:border-t",
           className,
         )}
         role="row"
@@ -215,7 +215,7 @@ export const Cell = memo(
           tabIndex={0}
           className={cn(
             className,
-            "w-20 min-w-4 cursor-pointer bg-background p-0.5 text-center [appearance:textfield] hover:inner-border-2 focus:bg-primary/5 focus:outline-none focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 [&:not(:last-child)]:border-r",
+            "bg-background hover:inner-border-2 focus:bg-primary/5 focus:inner-border-2 focus:inner-border-primary has-[:focus]:bg-primary/5 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary data-[is-selected=true]:bg-primary/5 data-[is-selected=true]:inner-border-2 [&:not(:focus)]:data-[is-selected=true]:inner-border-primary/25 w-20 min-w-4 cursor-pointer [appearance:textfield] p-0.5 text-center focus:outline-none [&:not(:last-child)]:border-r",
           )}
           role="gridcell"
           aria-colindex={cellIndex + 1} // ARIA indices are 1 based, not 0
@@ -239,7 +239,7 @@ export const Cell = memo(
           <input
             type={type}
             name={name}
-            className="w-full bg-transparent px-3 py-2 text-center outline-none [appearance:textfield] focus:inner-border-2 focus:inner-border-primary/25 [&:not(:focus)]:cursor-pointer"
+            className="focus:inner-border-2 focus:inner-border-primary/25 w-full [appearance:textfield] bg-transparent px-3 py-2 text-center outline-none [&:not(:focus)]:cursor-pointer"
             aria-hidden={!isEditing}
             value={cellValue}
             tabIndex={-1}

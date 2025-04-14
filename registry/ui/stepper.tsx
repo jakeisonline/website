@@ -39,7 +39,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
         <div
           onPointerDown={handleFocus}
           className={cn(
-            "group relative flex select-none flex-row items-center justify-center rounded-md px-1 py-1 text-xs inner-border hover:cursor-pointer hover:inner-border-2 has-[:focus]:inner-border-2 has-[:focus]:inner-border-primary",
+            "group focus-within:border-primary relative flex flex-row items-center justify-center rounded-md border px-1 py-1 text-xs select-none focus-within:border-2 hover:cursor-pointer hover:border-2",
             className,
           )}
           {...props}
@@ -106,7 +106,7 @@ export const StepperInput = forwardRef<HTMLInputElement, StepperInputProps>(
         onBlur={handleBlur}
         style={{ width: String(value).length + "ch", ...props.style }}
         className={cn(
-          "min-w-4 cursor-pointer bg-transparent text-center text-sm [appearance:textfield] focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
+          "min-w-4 cursor-pointer [appearance:textfield] bg-transparent text-center text-sm focus:border-0 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
           className,
         )}
         role="spinbutton"
@@ -148,7 +148,7 @@ export const StepperButton = forwardRef<HTMLButtonElement, StepperButtonProps>(
     const divClass = cn(
       "group mx-0.5 flex h-6 w-6 items-center justify-center rounded-md",
       isDisabled() && "opacity-40",
-      !isDisabled() && "hover:cursor-pointer hover:bg-accent",
+      !isDisabled() && "hover:bg-accent hover:cursor-pointer",
       className,
     )
 
@@ -184,7 +184,7 @@ export const StepperBadge = forwardRef<HTMLDivElement, StepperBadgeProps>(
     return (
       <div
         className={cn(
-          "absolute -right-2.5 -top-2 rounded-full bg-primary px-1.5 py-0 text-2xs font-medium text-background group-has-[:focus]:hidden",
+          "bg-primary text-2xs text-background absolute -top-2 -right-2.5 rounded-full px-1.5 py-0 font-medium group-has-[:focus]:hidden",
           className,
         )}
         ref={ref}

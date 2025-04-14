@@ -31,7 +31,7 @@ export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
       <div
         onClick={handleClick}
         className={cn(
-          "peer flex w-full flex-wrap gap-1 rounded-md bg-background p-1 text-foreground inner-border focus-within:inner-border-2 focus-within:inner-border-primary hover:cursor-pointer hover:inner-border-2",
+          "peer bg-background text-foreground focus-within:outline-primary focus-within:border-primary hover:outline-primary hover:border-primary flex w-full flex-wrap gap-1 rounded-md border p-1 outline outline-transparent hover:cursor-pointer",
           className,
         )}
       >
@@ -120,7 +120,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
   return (
     <li
       className={cn(
-        "focus:inner-border-1 flex items-center rounded-sm bg-accent pl-2.5 pr-1.5 focus:outline-0 focus:ring-0 focus:inner-border-2 focus:inner-border-primary",
+        "bg-accent focus:border-primary flex items-center rounded-sm border-2 border-transparent pr-1.5 pl-2.5 focus:ring-0 focus:outline-0",
         className,
       )}
       tabIndex={0}
@@ -130,7 +130,7 @@ export const TaggerTag = ({ label, className }: TaggerTagProps) => {
     >
       <span className="mr-0.5">{label}</span>
       <button
-        className="ml-0.5 flex rounded-full px-1 opacity-50 hover:opacity-100"
+        className="ml-0.5 flex cursor-pointer rounded-full px-1 opacity-50 hover:opacity-100"
         onClick={handleClick}
         tabIndex={-1}
       >

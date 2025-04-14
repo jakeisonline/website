@@ -57,7 +57,7 @@ const SwitcherMapper = ({
   return (
     <div
       className={cn(
-        "flex gap-1 rounded-md bg-accent p-1 shadow-inner",
+        "bg-accent flex gap-1 rounded-md p-1 shadow-inner",
         className,
       )}
       role={role || "radiogroup"}
@@ -115,7 +115,7 @@ export const SwitcherItem = ({
       aria-checked={isSelected}
       aria-selected={isSelected}
       className={cn(
-        "rounded-sm bg-accent px-4 py-1 text-muted-foreground transition-colors duration-300 focus:outline-primary disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
+        "bg-accent text-muted-foreground focus:outline-primary data-[state=active]:bg-background data-[state=active]:text-foreground cursor-pointer rounded-sm px-4 py-1 transition-colors duration-300 disabled:cursor-not-allowed data-[state=active]:shadow",
         className,
       )}
       data-state={isSelected ? "active" : "inactive"}
