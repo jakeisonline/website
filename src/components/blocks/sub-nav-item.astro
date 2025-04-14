@@ -36,7 +36,10 @@ if (!item) return null
     >
       {item.text}{" "}
       {item.badge && (
-        <Badge variant={item.badge.variant} class="ml-1.5 text-2xs px-2 py-0">
+        <Badge
+          variant={item.badge.variant}
+          class="ml-1.5 text-[0.7rem] px-2 py-0"
+        >
           {item.badge.label}
         </Badge>
       )}
