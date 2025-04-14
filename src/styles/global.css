@@ -147,7 +147,7 @@
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    --code: 208, 100%, 92%;
+    --code: var(--muted);
     --code-foreground: 209, 33%, 32%;
     --link: 221 83% 53%;
     --link-hover: 225.93 70.73% 40.2%;
@@ -214,7 +214,7 @@
     @apply bg-background text-foreground;
   }
   code {
-    @apply bg-code text-code-foreground rounded p-0.5 font-mono text-xs break-all before:hidden after:hidden md:break-normal;
+    @apply bg-code text-code-foreground! rounded p-0.5 font-mono text-xs font-normal! break-all before:hidden after:hidden md:break-normal;
   }
 
   ::-webkit-scrollbar {
