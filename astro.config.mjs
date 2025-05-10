@@ -3,6 +3,7 @@ import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import vercel from "@astrojs/vercel"
+import playformCompress from "@playform/compress"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from "astro/config"
 import { remarkReadingTime } from "./src/lib/remark-reading-time"
@@ -22,6 +23,14 @@ export default defineConfig({
     }),
     react(),
     sitemap(),
+    playformCompress({
+      CSS: false,
+      HTML: true,
+      Image: true,
+      JavaScript: true,
+      JSON: true,
+      SVG: true,
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],
