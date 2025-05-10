@@ -1,23 +1,24 @@
 ---
-import "../styles/globals.css"
-import { SEO } from "astro-seo"
-import GlobalHeader from "@/components/blocks/global-header.astro"
 import GlobalFooter from "@/components/blocks/global-footer.astro"
+import GlobalHeader from "@/components/blocks/global-header.astro"
+import { SITE_CONFIG } from "@/lib/config"
+import "@/styles/global.css"
+import type { SEOProps } from "astro-seo"
+import { SEO } from "astro-seo"
+import { ViewTransitions } from "astro:transitions"
 
 interface Props {
-  title: string
-  ogTitle?: string
-  description: string
-  ogDescription?: string
-  ogImage?: string
+  frontmatter?: Record<string, string>
+  title?: string
+  description?: string
+  seo?: SEOProps
 }
 
 const {
-  title,
-  ogTitle,
-  description,
-  ogDescription,
-  ogImage = "opengraph-image.png",
+  frontmatter,
+  title = frontmatter?.title || "",
+  description = frontmatter?.description || "",
+  seo,
 } = Astro.props
 ---
 
@@ -60,49 +61,54 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <SEO
-      title={title}
+      title={`${title} | jakeisonline`}
       description={description}
+      charset="UTF-8"
       extend={{
         link: [
           {
             rel: "icon",
             type: "image/svg+xml",
-            href: "/favicon.svg",
+            href: "/blog/favicon.svg",
           },
+        ],
+        meta: [
           {
-            rel: "sitemap",
-            href: "/sitemap-index.xml",
+            name: "author",
+            content: "Jake Holman (@jakeisonline)",
           },
         ],
       }}
       openGraph={{
         basic: {
           type: "website",
-          title: ogTitle || title,
-          url: `${import.meta.env.SITE}`,
-          image: `${import.meta.env.SITE}/${ogImage}`,
+          title: title,
+          url: `${SITE_CONFIG.siteUrl}`,
+          image: `${SITE_CONFIG.siteUrl}/og.png`,
         },
         optional: {
-          description: ogDescription || description,
+          description: description,
           locale: "en_GB",
           siteName: "jakeisonline",
         },
       }}
       twitter={{
-        card: "summary",
-        title: ogTitle || title,
-        description: ogDescription || description,
-        image: `${import.meta.env.SITE}/${ogImage}`,
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        image: `${SITE_CONFIG.siteUrl}/og.png`,
       }}
+      {...seo}
     />
+    <slot name="head" />
+
+    <ViewTransitions transition:animate="none" />
   </head>
   <body
-    class="min-h-dvh bg-background overflow-y-scroll flex flex-col items-center"
+    class="bg-background flex min-h-dvh flex-col items-center overflow-y-scroll"
   >
     <GlobalHeader />
-    <main
-      class="container-page w-full flex flex-row justify-center items-center"
-    >
+    <main class="container-page flex w-full flex-row items-center pt-4 md:pt-8">
       <slot />
     </main>
     <GlobalFooter />

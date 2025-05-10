@@ -1,0 +1,75 @@
+---
+import { cn } from "@/lib/utils"
+import { cva } from "class-variance-authority"
+import {
+  CircleAlert,
+  Info,
+  Lightbulb,
+  OctagonAlert,
+  ShieldAlert,
+} from "lucide-astro"
+
+interface Props {
+  type: "note" | "tip" | "important" | "warning" | "caution"
+  title?: string
+}
+
+const defaultType = "note"
+const { type = defaultType, title }: Props = Astro.props
+
+const typeStyles = cva("", {
+  variants: {
+    type: {
+      note: "border-blue-400 bg-blue-400/10 [--color-code:var(--color-blue-200)] [--color-code-foreground:var(--color-blue-800)]",
+      tip: "border-emerald-400 bg-emerald-400/10 [--color-code:var(--color-emerald-200)] [--color-code-foreground:var(--color-emerald-800)]",
+      important:
+        "border-purple-400 bg-purple-400/10 [--color-code:var(--color-purple-200)] [--color-code-foreground:var(--color-purple-800)]",
+      warning:
+        "border-yellow-400 bg-yellow-400/10 [--color-code:var(--color-yellow-200)] [--color-code-foreground:var(--color-yellow-800)]",
+      caution:
+        "border-red-400 bg-red-400/10 [--color-code:var(--color-red-200)] [--color-code-foreground:var(--color-red-800)]",
+    },
+  },
+  defaultVariants: {
+    type: defaultType,
+  },
+})
+
+const iconStyles = cva("", {
+  variants: {
+    icon: {
+      note: "stroke-blue-400",
+      tip: "stroke-emerald-400",
+      important: "stroke-purple-400",
+      warning: "stroke-yellow-400",
+      caution: "stroke-red-400",
+    },
+  },
+  defaultVariants: {
+    icon: defaultType,
+  },
+})
+
+const icons: Record<Props["type"], any> = {
+  note: Info,
+  tip: Lightbulb,
+  important: CircleAlert,
+  warning: ShieldAlert,
+  caution: OctagonAlert,
+}
+
+const Icon = icons[type]
+---
+
+<aside
+  class={cn(
+    "-mx-2 md:-mx-4 border-l-4 rounded-r-sm px-3 pt-4.5 pb-0.5 text-sm mb-8",
+    typeStyles({ type }),
+  )}
+>
+  <div class="-mb-2 flex items-start gap-1.5">
+    <Icon class={cn("size-4", iconStyles({ icon: type }))} />
+    {title && <strong class="text-sm font-bol leading-4">{title}</strong>}
+  </div>
+  <slot />
+</aside>

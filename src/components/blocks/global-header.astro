@@ -1,65 +1,66 @@
 ---
-import { LINKS } from "@/lib/const"
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
-import Link from "@/components/ui/link.astro"
-import ThemeToggle from "@/components/ui/theme-toggle"
 import GlobalNav from "@/components/blocks/global-nav.astro"
 import { Logo } from "@/components/blocks/logo"
 import { MobileNav } from "@/components/blocks/mobile-nav"
+import ThemeToggle from "@/components/blocks/theme-toggle"
+import Link from "@/components/ui/link.astro"
 import { cn } from "@/lib/utils"
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 
 const currentPath = Astro.url.pathname
 ---
 
 <header
   class="container-page bg-background/85 supports[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur"
+  data-pagefind-ignore
 >
-  <div class="flex h-14 items-center lg:text-sm text-xs font-bold">
-    <MobileNav className="mr-4" client:load>
-      <div class="mb-5 grid gap-1 pt-8 text-sm">
+  <div class="flex h-14 items-center text-xs font-bold lg:text-sm">
+    <div class="flex w-full items-center">
+      <MobileNav className="mr-4" client:load>
+        <div class="mb-5 grid gap-1 pt-8 text-sm">
+          <Link
+            href="/"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath === "/" && "text-foreground bg-accent",
+            )}>Home</Link
+          >
+          <Link
+            href="/components"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath.includes("/components") &&
+                "text-foreground bg-accent",
+            )}>Components</Link
+          >
+          <Link
+            href="/blog"
+            class={cn(
+              "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
+              currentPath.includes("/blog") && "text-foreground bg-accent",
+            )}>Posts</Link
+          >
+        </div>
+      </MobileNav>
+      <Logo />
+      <GlobalNav class="ml-8" />
+      <div class="flex flex-1 items-center justify-end gap-1">
         <Link
-          href="/"
-          class={cn(
-            "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
-            currentPath === "/" && "text-foreground bg-accent",
-          )}>Home</Link
+          href="https://www.linkedin.com/in/jakeholman/"
+          noIcon
+          class="hover:decoration-link-hover hover:bg-accent text-foreground inline-flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium whitespace-nowrap underline decoration-transparent decoration-dotted underline-offset-4 ring-offset-white transition-colors duration-300 ease-out hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 dark:focus-visible:ring-slate-300"
         >
+          <LinkedInLogoIcon className="h-4 w-4" />
+        </Link>
         <Link
-          href="/components"
-          class={cn(
-            "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
-            currentPath.includes("/components") && "text-foreground bg-accent",
-          )}>Components</Link
+          href="https://github.com/jakeisonline"
+          noIcon
+          class="hover:decoration-link-hover hover:bg-accent text-foreground inline-flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium whitespace-nowrap underline decoration-transparent decoration-dotted underline-offset-4 ring-offset-white transition-colors duration-300 ease-out hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 dark:focus-visible:ring-slate-300"
         >
-        <Link
-          href="/blog"
-          class={cn(
-            "hover:text-link-hover hover:decoration-link-hover group text-foreground/60 flex items-center rounded-sm px-1.5 py-1 underline decoration-transparent decoration-dotted underline-offset-4 transition-colors duration-300 ease-out",
-            currentPath.includes("/blog") && "text-foreground bg-accent",
-          )}>Posts</Link
-        >
+          <GitHubLogoIcon className="h-4 w-4" />
+        </Link>
+        <ThemeToggle client:load />
       </div>
-    </MobileNav>
-    <Logo />
-    <GlobalNav class="ml-8" />
-    <div class="justify-end flex flex-1 gap-1">
-      <Link
-        href={LINKS.LINKEDIN}
-        external
-        noIcon
-        class="underline-offset-4 underline decoration-transparent decoration-dotted duration-300 ease-out hover:decoration-link-hover inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-10 w-10 hover:bg-accent text-foreground"
-      >
-        <LinkedInLogoIcon className="h-4 w-4" />
-      </Link>
-      <Link
-        href={LINKS.GITHUB}
-        external
-        noIcon
-        class="underline-offset-4 underline decoration-transparent decoration-dotted duration-300 ease-out hover:decoration-link-hover inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-10 w-10 hover:bg-accent text-foreground"
-      >
-        <GitHubLogoIcon className="h-4 w-4" />
-      </Link>
-      <ThemeToggle client:load />
     </div>
   </div>
 </header>

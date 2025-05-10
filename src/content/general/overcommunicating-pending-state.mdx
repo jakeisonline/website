@@ -1,0 +1,131 @@
+---
+title: You should overcommunicate pending state
+description: As a begrudging member of the slow internet community, I'm appreciating the communication of pending state in interfaces now more than ever.
+publishedAt: "2025-03-31"
+layout: "@/layouts/post-layout.astro"
+---
+
+import Callout from "@/components/blocks/callout.astro"
+import Example from "@/components/example"
+
+I'm a member of the slow internet community. Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and **not always being sure if or what I'm waiting for when clicking buttons**.
+
+<Example
+  name="pending-state-no-feedback"
+  caption="Lack of interface feedback can leave users wondering, eventually leading to worry or frustration."
+  client:load
+/>
+
+Whenever a direct user action results in some sort of side effect - such as an API call - you should strongly consider communicating that something is happening.
+
+<Callout type="note" title="A slight caveat">
+  This article is focused on communicating pending state for asynchronous
+  actions, where the user needs to know something is happening and they may need
+  to wait. For example, a button that triggers an API call, the response of
+  which triggers a navigation event, or some sort of UI change.
+</Callout>
+
+## Show me something is happening
+
+By not communicating that something is happening, you're suddenly placing the user into an ominous waiting period where they're left wondering _is something supposed to be happening here?_
+
+Keeping users waiting is already bad enough, but adding doubt into the mix is going to slow perceived performance. Ironically, not communicating any kind of pending state is going to make your interface feel _slower_ than it actually is.
+
+<Example
+  name="pending-state-with-feedback"
+  caption="Adding a loading spinner and disabling the button tells me something is happening and I should wait."
+  client:visible
+/>
+
+But only communicating something is happening is really half of the message. In the absence of any other visual feedback, I don't know what is happening or if the thing I thought would happen has happened successfully.
+
+## Tell me what's happening
+
+So, slap on a loading spinner and maybe disable the button, and call it a day, right? While the loading spinner is a ubiquitous indicator that something is happening, it doesn't communicate _what_ is happening.
+
+<Example
+  name="pending-state-with-context"
+  caption="Updating labels to indicate what is happening is a simple way to communicate more context."
+  client:visible
+/>
+
+Simply switching the button text to "Saving..." immediately communicates _what_ is happening, not just that something is happening.
+
+As an added bonus, confirming the action has finished successfully gives the user even more reassurance that everything is working as expected.
+
+## Show me where it will happen
+
+So far we've concentrated on showing users that something is happening, but we can go a step further by showing users _where_ something is going to happen.
+
+Let's use the example of a page on an e-commerce management app that allows a user to apply filters to a list of orders.
+
+When a new filter is applied, we might be tempted to stick a big, whole page spinner in the middle of the page to communicate that something is happening.
+
+But I find this approach to often be disproportionate to the action, and it doesn't communicate where the action is happening. Also it's usually horribly jarring.
+
+<Example
+  name="pending-state-apply-filters"
+  caption="Showing where the user can expect their action to be reflected reduces the potential for jarring UI updates."
+  client:visible
+/>
+
+Instead, we isolate the pending state to where the user can expect the action to be reflected, reducing the potential for jarring UI updates once the async action is finished.
+
+<Callout type="tip" title="Validate before you communicate">
+  Particularly when dealing with user input, you should validate that input as
+  much as possible _before_ showing them state indicators like
+  [skeletons](https://www.nngroup.com/articles/skeleton-screens/). If the action
+  fails, you'll cause the user UI whiplash instead of a smooth experience.
+</Callout>
+
+## Consider navigation
+
+I'm a bit of an old hack, and navigation feels different these days. It used to be that anything that looked like a link was a link, and clicking it would take you to a new page. It would be obvious that something is happening because the browser would give you a bunch of visual feedback.
+
+Now, it's not so simple.
+
+With all sorts of different ways to deliver content to a browser, that strong visual feedback is a bit unreliable.
+
+<Example
+  name="pending-state-navigation"
+  caption="Consider combining the above with prefetching and caching to further increase perceived performance."
+  client:visible
+/>
+
+Much like in our filter example, it might be tempting to show a big, whole page spinner. But this method feels more graceful, communicates clearly that the user's action has been registered, and something is happening. It sure beats just sitting there wondering if you actually clicked that thing, or whether anything at all is happening.
+
+## Don't rely on vision alone
+
+Visually showing pending state is great, but what about anyone with a disability that might make visual comprehension difficult.
+
+```html
+<button>
+  <span aria-live="assertive" aria-atomic="true">Save</span>
+</button>
+```
+
+We use [`aria-live`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-live) to tell screen readers the content of this element should be watched for changes, with `assertive` telling screen readers to interrupt what they're reading to tell the user the change.
+
+[`aria-atomic`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-atomic) further tells screen readers to read the content of the element as a whole each time it changes, rather than only reading the specific words that changed.
+
+```html
+<button>
+  <span aria-live="assertive" aria-atomic="true">Saving...</span>
+</button>
+```
+
+When the button is clicked, the screen reader will read the content of the button as a whole, telling the user that click has been registered _and_ something is happening but not yet finished.
+
+<Callout type="tip" title="Be a considerate screen reader copy writer">
+  Screen readers generally read out the literal content. In the example above,
+  you might consider wrapping the ellipsis in an element with `aria-hidden` to
+  keep it from being read aloud as "ellipsis" by screen readers.
+</Callout>
+
+## It's OK to overcommunicate
+
+While it does take a little more design and implementation consideration, communicating pending state is one of the easiest ways to improve the user experience and perceived performance of your interface.
+
+If you have a button that triggers a user action which requires that user to wait, even for a couple hundred milliseconds, you should communicate that no matter how quick you think that action is going to be. You have very little control over the user's connection speed no matter your optimisations.
+
+While I advocate for overcommunication, I'm not suggesting we shout about it. No need for big page lockups or obnoxious animations Keep that communication clear and contextual through the use of visual language, and concise copy writing where needed.

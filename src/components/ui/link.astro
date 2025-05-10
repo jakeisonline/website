@@ -1,28 +1,33 @@
 ---
+import { SITE_CONFIG } from "@/lib/config"
 import { cn } from "@/lib/utils"
+import type { HTMLAttributes } from "astro/types"
 import { ExternalLinkIcon } from "lucide-react"
 
-type Props = {
+interface Props extends HTMLAttributes<"a"> {
   href: string
-  external?: boolean
   referrer?: boolean
   noIcon?: boolean
+  noStyle?: boolean
   class?: string
 }
 
 const {
   href,
-  external,
-  referrer,
-  noIcon,
+  referrer = false,
+  noIcon = false,
+  noStyle = false,
   class: className,
   ...props
 }: Props = Astro.props
 
-const processProps = () => {
-  const props = {} as any
+const baseUrl = SITE_CONFIG.baseUrl
+const isExternal = !href.startsWith(baseUrl) && /^(https?:)?\/\//i.test(href)
 
-  if (external) {
+const processProps = () => {
+  const props = {} as HTMLAttributes<"a">
+
+  if (isExternal) {
     props["target"] = "_blank"
     props["rel"] = !referrer ? "noreferrer" : undefined
   }
@@ -37,14 +42,20 @@ const newProps = { ...props, ...processedProps }
 <a
   href={href}
   class={cn(
-    "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover inline-flex",
+    !noStyle &&
+      "text-link hover:text-link-hover underline-offset-4 underline decoration-transparent  decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover",
     className,
   )}
   {...newProps}
 >
   <slot />{
-    external && !noIcon && (
-      <ExternalLinkIcon className="ml-0.5 hover:decoration-none w-2.5 h-2.5 md:w-3 md:h-3 xl:w-4 lg:h-4 mr-0.5" />
+    isExternal && !noIcon && (
+      <ExternalLinkIcon
+        className={cn(
+          !noStyle && "hover:decoration-none -mt-2 ml-1 inline-block size-3",
+        )}
+      />
     )
   }</a
 >
+{/* TODO: Moving this to a new line will cause whitespace! */}

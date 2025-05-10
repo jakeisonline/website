@@ -1,19 +1,18 @@
 ---
-import { GitHubLogoIcon } from "@radix-ui/react-icons"
-import { LinkedInLogoIcon } from "@radix-ui/react-icons"
 import Link from "@/components/ui/link.astro"
 import { LINKS } from "@/lib/const"
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 ---
 
 <footer
-  class="container-page mt-auto grid w-full mb-4 grid-cols-2 lg:text-sm text-xs"
+  class="container-page mt-auto mb-4 grid w-full grid-cols-2 text-xs lg:text-sm"
 >
-  <div>&copy; 2024 Jake Holman</div>
-  <div class="place-self-end flex items-center space-x-2">
-    <Link href={LINKS.LINKEDIN} class="text-foreground" external noIcon>
+  <div>👋 <Link href="/">a thing by jake</Link></div>
+  <div class="flex items-center space-x-2 place-self-end">
+    <Link href={LINKS.LINKEDIN} class="text-foreground" noIcon>
       <LinkedInLogoIcon className="h-4 w-4" />
     </Link>
-    <Link href={LINKS.GITHUB} class="text-foreground" external noIcon>
+    <Link href={LINKS.GITHUB} class="text-foreground" noIcon>
       <GitHubLogoIcon className="h-4 w-4" />
     </Link>
   </div>
