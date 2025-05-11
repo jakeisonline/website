@@ -10,6 +10,13 @@ const defaultSchema = z.object({
   isPrivate: z.boolean().optional().default(false),
 })
 
+const componentsSchema = z.object({
+  ...defaultSchema.shape,
+  component: z.string().optional(),
+  shortDescription: z.string().optional(),
+  isNew: z.boolean().optional().default(false),
+})
+
 export const standardCollection = defineCollection({
   loader: glob({
     pattern: "**\/*.mdx",
@@ -18,6 +25,15 @@ export const standardCollection = defineCollection({
   schema: defaultSchema,
 })
 
+export const componentDocsCollection = defineCollection({
+  loader: glob({
+    pattern: "**\/*.mdx",
+    base: "./src/content/components",
+  }),
+  schema: componentsSchema,
+})
+
 export const collections = {
   general: standardCollection,
+  components: componentDocsCollection,
 }

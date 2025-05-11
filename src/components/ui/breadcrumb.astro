@@ -1,0 +1,66 @@
+---
+import { ChevronRight } from "lucide-react"
+import { sanitizePathname, toTitleCase } from "@/lib/utils"
+import Link from "@/components/ui/link.astro"
+
+interface Props {
+  homeOverridePath?: string
+  hideHome?: boolean
+  ignorePaths?: string[]
+}
+
+const { homeOverridePath, hideHome = false, ignorePaths }: Props = Astro.props
+
+const path = sanitizePathname(Astro.url.pathname)
+let crumbs: { name: string; href: string }[] = []
+
+if (path) {
+  const paths: string[] = path.split("/")
+
+  // Add home to the crumbs, and override the path if the homeOverridePath prop is set
+  if (!hideHome) crumbs.push({ name: "Home", href: homeOverridePath || "/" })
+
+  for (let i = 1; i < paths.length; i++) {
+    // Ignore paths that are defined in the ignorePaths prop
+    if (ignorePaths?.includes(paths[i])) continue
+
+    // We'll use the path name as the crumb name
+    const name = toTitleCase(paths[i].replace(/-/g, " ") as string)
+
+    crumbs.push({
+      name,
+      href: `${paths.slice(0, i + 1).join("/")}`,
+    })
+  }
+}
+---
+
+<nav aria-label="Breadcrumb">
+  <ol
+    class="flex flex-wrap items-center lg:gap-1.5 break-words text-xs md:text-sm text-muted-foreground gap-0.5"
+  >
+    {
+      crumbs.map((crumb) => (
+        <>
+          <li class="inline-flex items-center gap-1.5">
+            <Link
+              href={crumb.href}
+              class={
+                crumb.href === path
+                  ? "text-foreground"
+                  : "text-muted-foreground"
+              }
+            >
+              {crumb.name}
+            </Link>
+          </li>
+          {crumb.href !== path && (
+            <li role="presentation" aria-hidden="true" class="[&>svg]:size-3.5">
+              <ChevronRight />
+            </li>
+          )}
+        </>
+      ))
+    }
+  </ol>
+</nav>

@@ -1,0 +1,65 @@
+---
+import SubNavItem from "@/components/blocks/sub-nav-item.astro"
+import { cn } from "@/lib/utils"
+type SubNavItemConditionals =
+  | {
+      type: "heading"
+    }
+  | {
+      type: "item"
+      href: string
+      badge?: {
+        label: string
+        variant: "default" | "secondary" | "outline"
+      }
+    }
+
+export type SubNavItem = { text: string } & SubNavItemConditionals
+export type SubNavItems = SubNavItem[]
+export type SubNavItemWithSubItems = SubNavItem & { subItems: SubNavItem[] }
+
+interface Props {
+  navItems: SubNavItems
+  class?: string
+}
+
+const { navItems, class: className }: Props = Astro.props
+
+if (!navItems) return null
+
+function buildNav(items: SubNavItems) {
+  const nav: SubNavItems = []
+  const parentItems = new Map()
+  let prevHeading: string = ""
+
+  items.forEach((i: any) => {
+    const item = { ...i, subItems: [] }
+    parentItems.set(item.text, item)
+    if (item.type === "heading") {
+      prevHeading = item.text
+      nav.push(item)
+    } else {
+      parentItems.get(prevHeading).subItems.push(item)
+    }
+  })
+  return nav
+}
+
+const nav: SubNavItems = buildNav(navItems)
+---
+
+<aside
+  class={cn(
+    "hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block",
+    className,
+  )}
+  data-pagefind-ignore
+>
+  <ul>
+    {
+      nav.map((item) => {
+        return <SubNavItem item={item as SubNavItemWithSubItems} />
+      })
+    }
+  </ul>
+</aside>

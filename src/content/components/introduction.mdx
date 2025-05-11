@@ -1,0 +1,34 @@
+---
+title: "Introduction"
+description: "Hello there, I'm Jake (@jakeisonline) and this is my little playground. It's a collection of components, templates, experiments, and other bits and bobs."
+layout: "@/layouts/docs-layout.astro"
+---
+
+import { Button } from "@/components/ui/button"
+import Link from "@/components/ui/link.astro"
+
+## Components
+
+I like to build components that might have a bit of a niche use case, but are still often needed. The kind of components you might not typically find in a UI library.
+
+Generally speaking my components are:
+
+- Accessible, adhering to WAI-ARIA guidelines
+- Styled via Tailwind CSS (and customisable via Tailwind CSS)
+- Typesafe thanks to TypeScript
+- [Installable](/playground/installing-components) via the shadcn CLI (or manually)
+- Usable in any React-based framework or project
+
+I hope you'll find them useful.
+
+<Link href="/components" noStyle>
+  <Button variant="outline">See all components</Button>
+</Link>
+
+## Tools
+
+Outside of building components, I'll sometimes build tools that are usually web-development related. These might be templates, packages, scripts, etc..
+
+<Link href="/tools" noStyle>
+  <Button variant="outline">See all tools</Button>
+</Link>

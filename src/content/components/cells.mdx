@@ -1,0 +1,118 @@
+---
+title: "Cells"
+description: "A fully interactive, accessible, user interface component that allows user to select
+and edit values across a spreadsheet-like grid of cells."
+shortDescription: "Select and edit values across a spreadsheet-like grid of cells."
+component: "cells"
+layout: "@/layouts/docs-layout.astro"
+---
+
+import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+
+<ExampleComponentWithCode name="cells-3x3" client:load />
+
+## Installation
+
+You can install this component via the shadcn CLI.
+
+```bash
+npx shadcn@latest add https://jakeisonline.com/registry/cells.json
+```
+
+## Usage
+
+```jsx
+import { Cell, CellRow, Cells } from "@/components/ui/cells"
+```
+
+```jsx
+<Cells>
+  <CellRow>
+    <Cell name="cell_1" label="Cell 1" initialValue="1" autoActive />
+    <Cell name="cell_2" label="Cell 2" initialValue="2" />
+    <Cell name="cell_3" label="Cell 3" initialValue="3" />
+  </CellRow>
+  <CellRow>
+    <Cell name="cell_4" label="Cell 4" initialValue="4" />
+    <Cell name="cell_5" label="Cell 5" initialValue="5" />
+    <Cell name="cell_6" label="Cell 6" initialValue="6" />
+  </CellRow>
+  <CellRow>
+    <Cell name="cell_7" label="Cell 7" initialValue="7" />
+    <Cell name="cell_8" label="Cell 8" initialValue="8" />
+    <Cell name="cell_9" label="Cell 9" initialValue="9" />
+  </CellRow>
+</Cells>
+```
+
+## Accessibility
+
+Adheres to the [Grid WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/). Under the hood, the generated HTML is not a semantic table, but rather a series of divs and inputs with the appropriate [ARIA roles, states, and properties](https://www.w3.org/WAI/ARIA/apg/patterns/grid/#wai-ariaroles,states,andproperties).
+
+### Keyboard interactions
+
+This component supports a large number of keyboard interactions, with nuances that are specific to spreadsheet-like interactions. It follows the [Grid WAI-ARIA design pattern for keyboard interactions](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) (all non-optional interactions) specifically.
+
+#### Movement & Selection
+
+The following keys can be used to move the selection (the active cell) within the grid of cells.
+
+| Key                                                 | Action                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------ |
+| <kbd>ArrowRight</kbd>                               | Moves selection to the next cell in the current row                |
+| <kbd>ArrowLeft</kbd>                                | Moves selection to the previous cell in the current row            |
+| <kbd>ArrowUp</kbd>                                  | Moves selection to the cell directly above the current cell        |
+| <kbd>ArrowDown</kbd>                                | Moves selection to the cell directly below the current cell        |
+| <kbd>Home</kbd>                                     | Moves selection to the first cell in the current row               |
+| <kbd>End</kbd>                                      | Moves selection to the last cell in the current row                |
+| <kbd>PageUp</kbd>                                   | Moves selection to the first cell in the current column            |
+| <kbd>PageDown</kbd>                                 | Moves selection to the last cell in the current column             |
+| <kbd>Tab</kbd>                                      | Moves selection to the next cell, wrapping to the next row         |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd>                   | Moves selection to the previous cell, wrapping to the previous row |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Space</kbd> | Selects all cells in the current column                            |
+| <kbd>Shift</kbd> + <kbd>Space</kbd>                 | Selects all cells in the current row                               |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>a</kbd>     | Selects all cells                                                  |
+
+#### Editing
+
+The following keys can be used to edit the value of the currently selected (active) cell.
+
+| Key                                             | Action                                                                          |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- |
+| <kbd>Backspace</kbd> / <kbd>Delete</kbd>        | Deletes the value of the currently selected cell's input field                  |
+| <kbd>Enter</kbd> / <kbd>F2</kbd>                | Toggles focus of the currently selected cell's input field                      |
+| <kbd>Escape</kbd>                               | Escapes focus of currently selected cell's input field                          |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>c</kbd> | Copies the value of the currently selected cell to the clipboard                |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>x</kbd> | Cuts the value of the currently selected cell to the clipboard                  |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>v</kbd> | Pastes the (plain text) value of the currently selected cell from the clipboard |
+
+#### General Modifiers
+
+The following modifiers - keys you hold while pressing other keys - can be used to modify the behavior of the documented keyboard interactions.
+
+| Key                                | Action                                                                                                                                                                                                                                                                                                                                          |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>Ctrl</kbd>                    | When <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) is held, and any <kbd>Arrow</kbd> key is then pressed or <kbd>MouseDown</kbd> event occurs, the focus will change to the furthest cell in the direction of the arrow key.                                                                                                                       |
+| <kbd>Shift</kbd>                   | When <kbd>Shift</kbd> is held, and any <kbd>Arrow</kbd> key is then pressed or <kbd>MouseDown</kbd> event occurs, a selection box will be drawn starting from the currently focused cell, which can be further increased or decreased using the <kbd>Arrow</kbd> keys, or further <kbd>MouseDown</kbd> events occur. The focus will not change. |
+| <kbd>Shift</kbd> + <kbd>Ctrl</kbd> | When <kbd>Shift</kbd> and <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) are held, and any <kbd>Arrow</kbd> key is then pressed, a selection box will be drawn starting from the currently focused field, and then the furthest field in the direction of the <kbd>Arrow</kbd> key pressed. The focus will not change.                              |
+
+## Component Reference
+
+### Cells
+
+Used to wrap a grid of cells.
+
+### CellRow
+
+Used to wrap a row of cells.
+
+### Cell
+
+An individual cell within the `Cells` grid. Contains an `input` field wrapped in a `div` container.
+
+| Prop           | Type    | Description                                                                                                 |
+| -------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
+| `name`         | string  | The name of the cell. Required.                                                                             |
+| `label`        | string  | The label of the cell. Required.                                                                            |
+| `initialValue` | string  | The initial value of the cell. Required.                                                                    |
+| `autoActive`   | boolean | If `true`, the cell will automatically be activated when the `Cells` component is mounted. Default `false`. |
