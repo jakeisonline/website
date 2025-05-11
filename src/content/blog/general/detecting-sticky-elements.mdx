@@ -1,0 +1,33 @@
+---
+title: Detecting when an element becomes sticky
+description: Maybe you you'd like to style a sticky element differently when it becomes sticky, or simply run some code when it becomes sticky. You can't do it with CSS alone, but IntersectionObserver to the rescue!
+publishedAt: "2025-05-10"
+layout: "@/layouts/post-layout.astro"
+---
+
+import Callout from "@/components/blocks/callout.astro"
+
+I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turned into floating badges. There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
+
+I've no idea, but here's how I would do it.
+
+## Making an element sticky
+
+Having elements become automatically sticky when scrolling is very simple. You just need to set [`position: sticky`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky) on the element and then set an inset property to control the offset relative to the nearest scrolling ancestor.
+
+```css
+.sticky {
+  position: sticky;
+  top: 0;
+}
+```
+
+<Callout type="tip" title="Using inset properties beyond top">
+  While `top` is being used in this example, you can use any of the [inset
+  properties](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) to control
+  where the element sticks to. At least one inset property **must** be set.
+</Callout>
+
+## Detecting when an element becomes sticky
+
+To detect when an element becomes sticky, you can use the `IntersectionObserver` API.
