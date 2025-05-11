@@ -47,4 +47,10 @@ export const Index: Record<string, any> = {
       () => import("@/content/blog/examples/pending-state/navigation"),
     ),
   },
+  "visual-language-food-icons": {
+    name: "visual-language-food-icons",
+    component: React.lazy(
+      () => import("@/content/blog/examples/visual-language/food-icons"),
+    ),
+  },
 }
