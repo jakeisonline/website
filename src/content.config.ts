@@ -13,7 +13,7 @@ const defaultSchema = z.object({
 export const standardCollection = defineCollection({
   loader: glob({
     pattern: "**\/*.mdx",
-    base: "./src/content/general",
+    base: "./src/content/blog/general",
   }),
   schema: defaultSchema,
 })
