@@ -34,7 +34,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
         start={start}
         step={step}
         shift={shift}
-        inputRef={inputRef}
+        inputRef={inputRef as React.RefObject<HTMLInputElement>}
       >
         <div
           onPointerDown={handleFocus}
