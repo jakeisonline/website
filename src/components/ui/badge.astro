@@ -1,18 +1,35 @@
 ---
 import { cn } from "@/lib/utils"
+import { cva } from "class-variance-authority"
 
 interface Props {
+  variant?: VariantOptions
   class?: string
 }
 
-const { class: className } = Astro.props
+type VariantOptions = "default" | "secondary" | "outline"
+
+const { variant = "default", class: className, ...props } = Astro.props
+
+const variantClasses = cva(
+  "inline-flex items-center rounded-full px-3.5 py-1 text-sm font-medium ring-offset-background transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-muted text-muted-foreground hover:bg-primary/80 border-transparent",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent",
+        outline: "text-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+)
 ---
 
-<span
-  class={cn(
-    "inline-flex items-center rounded-full bg-muted px-3.5 py-1 text-sm font-medium text-muted-foreground ring-offset-background transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-    className,
-  )}
->
+<div class={cn(variantClasses({ variant }), className)} {...props}>
   <slot />
-</span>
+</div>
