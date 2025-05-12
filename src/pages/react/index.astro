@@ -1,0 +1,26 @@
+---
+import CategoryNav from "@/components/blocks/category-nav.astro"
+import PostSnippet from "@/components/blocks/post-snippet.astro"
+import BaseLayout from "@/layouts/base-layout.astro"
+import { getAllPosts } from "@/lib/get-all-posts"
+
+const allBlogPosts = await getAllPosts()
+---
+
+<BaseLayout title="Blog" description="A place of relative calm.">
+  <div
+    class="grid w-full grid-cols-1 gap-4 md:grid-cols-[2fr_1fr] lg:grid-cols-[1.5fr_1fr]"
+  >
+    <section>
+      <h2 class="text-muted-foreground mb-4 text-sm">Stuff to read</h2>
+
+      {allBlogPosts.map((post) => <PostSnippet post={post} />)}
+    </section>
+    <!-- <div class="hidden md:block">
+      <section>
+        <h2 class="text-muted-foreground text-sm">Browse by category</h2>
+        <CategoryNav />
+      </section>
+    </div> -->
+  </div>
+</BaseLayout>

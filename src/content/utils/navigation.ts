@@ -6,6 +6,10 @@ const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
     path: "/general",
     order: {},
   },
+  react: {
+    path: "/react",
+    order: {},
+  },
   components: {
     path: "/components",
     order: {

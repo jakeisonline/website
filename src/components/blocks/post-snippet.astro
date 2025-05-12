@@ -1,13 +1,15 @@
 ---
 const { post } = Astro.props
 const postData = post.data
+const postCollection = post.collection
+const postLink = `/${postCollection === "general" ? "blog" : postCollection}/${post.id}`
 ---
 
 <article
   class="hover:bg-muted/50 group relative isolate -ml-5 flex flex-col gap-2 rounded-lg px-5 py-4"
 >
   <h2 class="text-lg font-bold">
-    <a href={`/blog/${post.id}`} class="group-hover:text-link">
+    <a href={postLink} class="group-hover:text-link">
       <span class="absolute inset-0 z-10"></span>
       {postData.title}</a
     >
@@ -23,6 +25,6 @@ const postData = post.data
   <p
     class="text-muted-foreground group-hover:text-foreground mt-1 text-xs font-semibold"
   >
-    <a href={`/blog/${post.id}`}>Read more</a>
+    <a href={postLink} class="group-hover:text-link">Read more</a>
   </p>
 </article>
