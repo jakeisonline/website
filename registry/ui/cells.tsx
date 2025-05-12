@@ -52,33 +52,23 @@ const _renderCells = ({
   return React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) return null
 
-    const childElement = child as React.ReactElement<{
-      children?: React.ReactNode
-      initialValue: string
-      name: string
-      label: string
-      [key: string]: any
-    }>
-
     if (parentRowIndex === undefined) {
       if (
-        typeof childElement.type === "function" &&
-        (childElement.type as React.ComponentType).displayName !== "CellRow"
+        typeof child.type === "function" &&
+        (child.type as React.ComponentType).displayName !== "CellRow"
       ) {
         throw new Error("Invalid child type, only CellRow is allowed")
       }
 
-      if (!childElement.props.name || !childElement.props.label) {
-        throw new Error("Cell must have name and label props")
-      }
-
-      const tmpKey = childElement.key ? childElement.key : rowIndex
+      const tmpKey = child.key ? child.key : rowIndex
       rowIndex++
 
       return (
         <CellRow key={tmpKey}>
           {_renderCells({
-            children: childElement.props.children,
+            children: (
+              child as React.ReactElement<{ children: React.ReactNode }>
+            ).props.children,
             parentRowIndex: rowIndex - 1,
             addCellIndex,
           })}
@@ -87,21 +77,17 @@ const _renderCells = ({
     }
 
     if (
-      typeof childElement.type === "function" &&
-      (childElement.type as React.ComponentType).displayName !== "Cell"
+      typeof child.type === "function" &&
+      (child.type as React.ComponentType).displayName !== "Cell"
     ) {
       throw new Error("Invalid child type, only Cell is allowed")
     }
 
     const childRef = useRef<HTMLInputElement>(null)
-    const initialValue = childElement.props.initialValue || ""
+    const cellElement = child as React.ReactElement<CellProps>
+    const initialValue = cellElement.props.initialValue || ""
 
-    addCellIndex(
-      rowIndex,
-      cellIndex,
-      childRef as React.RefObject<HTMLInputElement>,
-      initialValue,
-    )
+    addCellIndex(rowIndex, cellIndex, childRef, initialValue)
     cellIndex++
 
     return (
@@ -110,9 +96,9 @@ const _renderCells = ({
           cellIndex={cellIndex - 1}
           rowIndex={rowIndex}
           ref={childRef}
-          {...childElement.props}
+          {...cellElement.props}
         >
-          {childElement.props.children}
+          {cellElement.props.children}
         </Cell>
       </CellContextProvider>
     )
