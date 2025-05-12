@@ -1,10 +1,10 @@
 "use client"
 
+import { cn } from "@/lib/utils"
 import {
   SwitcherContextProvider,
   useSwitcher,
 } from "@/registry/hooks/use-switcher"
-import { cn } from "@/lib/utils"
 import React, { useEffect, useRef } from "react"
 
 type SwitcherProps = {
@@ -47,8 +47,13 @@ const SwitcherMapper = ({
   const controlValues: string[] = []
 
   React.Children.forEach(children, (child) => {
-    if (React.isValidElement(child) && child.props.value) {
-      controlValues.push(child.props.value)
+    if (
+      React.isValidElement(child) &&
+      (child as React.ReactElement<SwitcherItemProps>).props.value
+    ) {
+      controlValues.push(
+        (child as React.ReactElement<SwitcherItemProps>).props.value,
+      )
     }
 
     setValues(controlValues)
