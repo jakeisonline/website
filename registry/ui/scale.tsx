@@ -1,11 +1,11 @@
 "use client"
 
-import React, { forwardRef, useEffect } from "react"
+import { cn } from "@/lib/utils"
 import {
   ScaleContextProvider,
   useScaleContext,
 } from "@/registry/hooks/use-scale"
-import { cn } from "@/lib/utils"
+import React, { forwardRef, useEffect } from "react"
 
 interface ScaleProps extends React.ComponentPropsWithoutRef<"div"> {
   children: React.ReactNode
@@ -52,14 +52,17 @@ export const ScaleFieldset = forwardRef<
       throw new Error("Invalid child type, only ScaleStep is allowed")
     }
 
-    return React.cloneElement(child as React.ReactElement, {
+    return React.cloneElement(child as React.ReactElement<ScaleStepProps>, {
       index,
     })
   })
 
   useEffect(() => {
     React.Children.forEach(children, (child, index) => {
-      if (React.isValidElement(child) && child.props.defaultChecked) {
+      if (
+        React.isValidElement(child) &&
+        (child as React.ReactElement<ScaleStepProps>).props.defaultChecked
+      ) {
         updateSelectedIndex(index)
       }
     })
