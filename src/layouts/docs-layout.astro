@@ -1,10 +1,11 @@
 ---
-import SubNav, { type SubNavItems } from "@/components/blocks/sub-nav.astro"
-import ToC, { type ToCHeadingsType } from "@/components/blocks/toc.astro"
-import Breadcrumb from "@/components/ui/breadcrumb.astro"
-import BaseLayout from "./base-layout.astro"
-import { buildNavigation } from "@/content/utils/navigation"
 import Pagination from "@/components/blocks/pagination.astro"
+import SubNav, { type SubNavItems } from "@/components/blocks/sub-nav.astro"
+import ToC from "@/components/blocks/toc.astro"
+import Breadcrumb from "@/components/ui/breadcrumb.astro"
+import { buildNavigation } from "@/content/utils/navigation"
+import { type ToCHeadingsType } from "@/lib/types"
+import BaseLayout from "./base-layout.astro"
 interface Props {
   frontmatter?: Record<string, string>
   title: string
@@ -26,10 +27,10 @@ const baseUrl = import.meta.env.BASE_URL
 
 <BaseLayout title={title} description={description}>
   <div
-    class="container flex-1 lg:pt-6 pb-20 items-start md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
+    class="container flex-1 items-start pb-20 md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 lg:pt-6"
   >
     <SubNav navItems={navItems as SubNavItems} />
-    <div class="relative lg:grid grid-cols-full xl:grid-cols-[1fr_300px]">
+    <div class="grid-cols-full relative lg:grid xl:grid-cols-[1fr_300px]">
       <div class="mx-auto w-full min-w-0">
         {
           /* In dev, Astro.url.pathname adds an extra slash, so this will always be truthy in dev */
