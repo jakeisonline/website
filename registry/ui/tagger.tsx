@@ -1,12 +1,12 @@
 "use client"
 
-import { useRef, useState } from "react"
-import { X } from "lucide-react"
-import {
-  useTaggerFieldContext,
-  TaggerFieldContextProvider,
-} from "@/registry/hooks/use-tagger"
 import { cn } from "@/lib/utils"
+import {
+  TaggerFieldContextProvider,
+  useTaggerFieldContext,
+} from "@/registry/hooks/use-tagger"
+import { X } from "lucide-react"
+import { useRef, useState } from "react"
 
 interface TaggerProps extends React.ComponentPropsWithoutRef<"div"> {
   children?: React.ReactNode
@@ -27,7 +27,10 @@ export const Tagger = ({ children, className, initialTags }: TaggerProps) => {
   }
 
   return (
-    <TaggerFieldContextProvider inputRef={inputRef} initialTags={initialTags}>
+    <TaggerFieldContextProvider
+      inputRef={inputRef as React.RefObject<HTMLInputElement>}
+      initialTags={initialTags}
+    >
       <div
         onClick={handleClick}
         className={cn(
