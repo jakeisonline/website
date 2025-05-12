@@ -1,0 +1,59 @@
+---
+title: "Tagger"
+description: "A fully interactive, accessible, user interface component that allows users to input a list of tags."
+shortDescription: "Input a list of tags, or select from a list of pre-defined tags"
+slug: "tagger"
+component: "tagger"
+layout: "@/layouts/docs-layout.astro"
+---
+
+import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+
+<ExampleComponentWithCode name="tagger-demo-full" client:load />
+
+## Installation
+
+You can install this component via the shadcn CLI.
+
+```bash
+npx shadcn@latest add https://jakeisonline.com/registry/tagger.json
+```
+
+## Usage
+
+```jsx
+import { Tagger, TaggerInput, TaggerTags } from "@/components/ui/tagger"
+```
+
+```jsx
+<Tagger initialTags={["Hotel", "India"]}>
+  <TaggerTags />
+  <TaggerInput id="current-tags" />
+</Tagger>
+```
+
+## Accessibility
+
+Sadly there is no WAI-ARIA design pattern for this component. Nonetheless, the following accessibility features are implemented:
+
+- Individual tags are focusable, and can be removed using the backspace or delete key.
+- The tags (`<TaggerTags>`) are a semantic unordered list (`<ul>`) with each tag being a list item (`<li>`).
+- `<TaggerInput>` is a semantic text input (`<input type="text">`) is typed as such, and is focusable.
+
+## Component Reference
+
+### Tagger
+
+Used to wrap a single tagger field. Also provides context for all child components.
+
+| Prop          | Type     | Description                                            |
+| ------------- | -------- | ------------------------------------------------------ |
+| `initialTags` | string[] | An array of strings to set the initial tags. Optional. |
+
+### TaggerTags
+
+Used to wrap the list of tags.
+
+### TaggerInput
+
+Used to wrap the input field. Native `<input>` element, allows for all native attributes.

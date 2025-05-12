@@ -1,0 +1,61 @@
+---
+import ExampleComponent from "@/components/blocks/example-component"
+import Badge from "@/components/ui/badge.astro"
+import Card from "@/components/ui/card.astro"
+import DocsLayout from "@/layouts/docs-layout.astro"
+import { getCollection } from "astro:content"
+
+const componentPages = (await getCollection("components")).filter(
+  (page) => page.data.component !== undefined,
+)
+---
+
+<DocsLayout
+  title="Free components for your projects"
+  description="A range of free, accessible, and open-source React components. All of these components are easily installed via cli or manually. Go, explore."
+>
+  <div
+    class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
+    data-pagefind-ignore
+  >
+    <div class="not-prose mt-3 grid gap-3 lg:grid-cols-2">
+      {
+        componentPages.map((page) => {
+          if (page.data.isPrivate) return
+
+          return (
+            <a href={`/components/${page.id}`} class="relative group">
+              <Card class="pointer-events-none">
+                <div class="flex w-auto justify-center p-6 pt-8">
+                  <ExampleComponent
+                    name={page.data.component || ""}
+                    client:load
+                    data-astro-rerun
+                  />
+                  <div class="absolute bottom-1 left-1 right-1 width-full px-3 py-2.5 bg-gradient-to-b from-transparent from-5% to-background/95 to-70% transition-colors duration-200">
+                    <div class="flex items-center">
+                      <h2 class="text-lg font-bold group-hover:text-link-hover group-hover:underline group-hover:underline-offset-4 group-hover:decoration-dotted flex">
+                        {page.data.title}
+                      </h2>
+                      {page.data.isNew && (
+                        <Badge
+                          variant="secondary"
+                          class="ml-1.5 mt-0.5 text-2xs px-2 py-0"
+                        >
+                          New
+                        </Badge>
+                      )}
+                    </div>
+                    <p class="text-sm text-muted-foreground group-hover:text-foreground">
+                      {page.data.shortDescription}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </a>
+          )
+        })
+      }
+    </div>
+  </div>
+</DocsLayout>

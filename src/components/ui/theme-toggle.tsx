@@ -1,5 +1,3 @@
-import { Moon, Sun } from "lucide-react"
-import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -9,6 +7,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
+import { Moon, Sun } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false)

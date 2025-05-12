@@ -13,6 +13,7 @@ export default defineConfig({
   site: "https://jakeisonline.com",
   output: "static",
   trailingSlash: "never",
+  prefetch: true,
   integrations: [
     mdx({
       remarkPlugins: [remarkReadingTime],

@@ -1,0 +1,57 @@
+---
+import { cn } from "@/lib/utils"
+import type {
+  SubNavItem,
+  SubNavItemWithSubItems,
+} from "@/components/blocks/sub-nav.astro"
+import Link from "@/components/ui/link.astro"
+import Badge from "@/components/ui/badge.astro"
+
+interface Props {
+  item: SubNavItemWithSubItems
+}
+
+const { item } = Astro.props
+const currentPath = Astro.url.pathname
+const itemIsCurrent = item.type === "item" && currentPath.includes(item.href)
+
+if (!item) return null
+---
+
+{
+  item.type === "heading" && (
+    <h4 class="font-heading pb-2 scroll-m-20 text-sm font-semibold tracking-tight mt-0 pl-1.5">
+      {item.text}
+    </h4>
+  )
+}
+{
+  item.type === "item" && (
+    <Link
+      href={item.href}
+      class={cn(
+        "hover:text-link-hover underline-offset-4 underline decoration-transparent decoration-dotted transition-colors duration-300 ease-out hover:decoration-link-hover px-1.5 py-1 rounded-sm group flex items-center",
+        itemIsCurrent ? "text-foreground bg-accent" : "text-foreground/60",
+      )}
+    >
+      {item.text}{" "}
+      {item.badge && (
+        <Badge
+          variant={item.badge.variant}
+          class="ml-1.5 text-[0.7rem] px-2 py-0"
+        >
+          {item.badge.label}
+        </Badge>
+      )}
+    </Link>
+  )
+}
+{
+  item.subItems.length > 0 && (
+    <div class="grid gap-1 text-sm mb-5">
+      {item.subItems.map((subitem: any) => (
+        <Astro.self item={subitem} />
+      ))}
+    </div>
+  )
+}

@@ -1,0 +1,24 @@
+---
+import Link from "@/components/ui/link.astro"
+import { type ToCHeadingTypeWithSubItems } from "@/components/blocks/toc.astro"
+
+interface Props {
+  heading: ToCHeadingTypeWithSubItems
+}
+
+const { heading } = Astro.props
+---
+
+<li class="mb-0.5">
+  <Link href={`#${heading.slug}`}>{heading.text}</Link>
+
+  {
+    heading.subHeadings.length > 0 && (
+      <ul class={heading.depth > 1 ? "indented-list" : null}>
+        {heading.subHeadings.map((subheading: any) => (
+          <Astro.self heading={subheading} />
+        ))}
+      </ul>
+    )
+  }
+</li>

@@ -1,0 +1,57 @@
+---
+import Pagination from "@/components/blocks/pagination.astro"
+import SubNav, { type SubNavItems } from "@/components/blocks/sub-nav.astro"
+import ToC from "@/components/blocks/toc.astro"
+import Breadcrumb from "@/components/ui/breadcrumb.astro"
+import { buildNavigation } from "@/content/utils/navigation"
+import { type ToCHeadingsType } from "@/lib/types"
+import BaseLayout from "./base-layout.astro"
+interface Props {
+  frontmatter?: Record<string, string>
+  title: string
+  description: string
+  headings?: ToCHeadingsType
+}
+
+const {
+  frontmatter,
+  title = frontmatter?.title,
+  description = frontmatter?.description,
+  headings,
+} = Astro.props
+
+const navItems = await buildNavigation()
+const currentPath = Astro.url.pathname
+const baseUrl = import.meta.env.BASE_URL
+---
+
+<BaseLayout title={title} description={description}>
+  <div
+    class="container flex-1 items-start pb-20 md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 lg:pt-6"
+  >
+    <SubNav navItems={navItems as SubNavItems} />
+    <div class="grid-cols-full relative lg:grid xl:grid-cols-[1fr_300px]">
+      <div class="mx-auto w-full min-w-0">
+        {
+          /* In dev, Astro.url.pathname adds an extra slash, so this will always be truthy in dev */
+        }
+        {currentPath !== `${baseUrl}` && <Breadcrumb hideHome />}
+        <article
+          class="prose prose-h2:border-b prose-h2:pb-2 prose-headings:scroll-m-20 prose-headings:tracking-tight prose-h1:text-3xl prose-headings:font-bold prose-h1:mb-0 dark:prose-invert mt-4"
+        >
+          <h1>{title}</h1>
+          <p>{description}</p>
+          <slot />
+          <Pagination navItems={navItems as SubNavItems} />
+        </article>
+      </div>
+      <nav
+        aria-labelledby="doc-outline-aria-label"
+        class="sticky top-22 ml-4 hidden h-0 pl-3 text-sm xl:block"
+      >
+        <div>On this page</div>
+        <ToC headings={headings} />
+      </nav>
+    </div>
+  </div>
+</BaseLayout>

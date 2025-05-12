@@ -1,0 +1,63 @@
+---
+import Link from "@/components/ui/link.astro"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { type SubNavItems } from "@/components/blocks/sub-nav.astro"
+
+interface Props {
+  navItems: SubNavItems
+}
+
+const { navItems }: Props = Astro.props
+const currentPath = Astro.url.pathname
+const flattenedNavItems = navItems.filter((item) => item.type !== "heading")
+
+let previous = null
+let next = null
+
+for (let i = 0; i < flattenedNavItems.length; i++) {
+  const item = flattenedNavItems[i]
+
+  if (currentPath.includes(item.href)) {
+    previous = flattenedNavItems[i - 1]
+    next = flattenedNavItems[i + 1]
+  }
+}
+---
+
+<nav
+  aria-label="Pagination"
+  class="flex items-center gap-2 justify-between w-full text-sm mt-16"
+>
+  {
+    previous && (
+      <Link href={previous.href} rel="prev" class="flex gap-2 items-start">
+        <ChevronLeftIcon
+          aria-hidden="true"
+          className="size-4 stroke-muted-foreground"
+        />
+        <div class="flex flex-col gap-1">
+          <span class="text-xs text-muted-foreground">
+            Previous<span class="sr-only"> page:</span>
+          </span>
+          <span class="block">{previous.text}</span>
+        </div>
+      </Link>
+    )
+  }
+  {
+    next && (
+      <Link href={next.href} rel="next" class="flex gap-2 ml-auto items-start">
+        <div class="flex flex-col gap-1">
+          <span class="text-xs text-muted-foreground">
+            Next<span class="sr-only"> page:</span>
+          </span>
+          <span class="block">{next.text}</span>
+        </div>
+        <ChevronRightIcon
+          aria-hidden="true"
+          className="size-4 stroke-muted-foreground"
+        />
+      </Link>
+    )
+  }
+</nav>

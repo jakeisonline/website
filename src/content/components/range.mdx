@@ -1,0 +1,67 @@
+---
+title: "Range"
+description: "A fully interactive, accessible, user interface component that allows users to easily set a minimum and maximum value (a range), using interactive sliders."
+shortDescription: "Set a minimum and maximum value using interactive sliders."
+component: "range"
+layout: "@/layouts/docs-layout.astro"
+---
+
+import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+
+<ExampleComponentWithCode name="range-full-demo" client:load />
+
+## Installation
+
+You can install this component via the shadcn CLI.
+
+```bash
+npx shadcn@latest add https://jakeisonline.com/registry/range.json
+```
+
+## Usage
+
+```jsx
+import { Range, RangeBar, RangeFill, RangeGrabber } from "@/components/ui/range"
+```
+
+```jsx
+<Range minRange={0} maxRange={100} initialLowValue={20} initialHighValue={80}>
+  <RangeBar>
+    <RangeGrabber type={"low"} aria-label="Low Value" />
+    <RangeFill className="h-1 grow bg-blue-600" />
+    <RangeGrabber type={"high"} aria-label="High Value" />
+  </RangeBar>
+</Range>
+```
+
+## Accessibility
+
+Adheres to the [Slider (multi-thumb) WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/).
+
+Each `<RangeGrabber>` should have an aria-label prop, describing what that grabber represents. For example, if you have a price range, you might have a low price grabber with an `aria-label="Low price"` and a high price grabber with an `aria-label="High price"`.
+
+## Component Reference
+
+### Range
+
+Used to wrap a single range field. Also provides context for all child components.
+
+| Prop               | Type   | Description                                                           |
+| ------------------ | ------ | --------------------------------------------------------------------- |
+| `minRange`         | number | The minumum number a user can select. Required.                       |
+| `maxRange`         | number | The maximum number a user can select. Required.                       |
+| `initialLowValue`  | number | The initial low value of the range. Uses `minRange` if not provided.  |
+| `initialHighValue` | number | The initial high value of the range. Uses `maxRange` if not provided. |
+
+### RangeGrabber
+
+An interactive element that represents a single value in a range. It is used to allow users to select a value within a range.
+
+| Prop         | Type              | Description                                                              |
+| ------------ | ----------------- | ------------------------------------------------------------------------ |
+| `type`       | `"low" \| "high"` | The type of the grabber. Must be either `"low"` or `"high"`. Required.   |
+| `aria-label` | string            | Label for screen readers. See [accessibility](#accessibility). Required. |
+
+### RangeFill
+
+A component that fills the space between two range grabbers. It is used to indicate the size of the given range. Used for aestetics only (you might wish to customise the fill color, for example).
