@@ -87,7 +87,12 @@ const _renderCells = ({
     const cellElement = child as React.ReactElement<CellProps>
     const initialValue = cellElement.props.initialValue || ""
 
-    addCellIndex(rowIndex, cellIndex, childRef, initialValue)
+    addCellIndex(
+      rowIndex,
+      cellIndex,
+      childRef as React.RefObject<HTMLInputElement>,
+      initialValue,
+    )
     cellIndex++
 
     return (
