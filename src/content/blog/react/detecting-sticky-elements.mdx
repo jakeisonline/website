@@ -6,6 +6,7 @@ layout: "@/layouts/post-layout.astro"
 ---
 
 import Callout from "@/components/blocks/callout.astro"
+import Example from "@/components/example"
 
 I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turned into floating badges. There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
 
@@ -27,6 +28,18 @@ Having elements become automatically sticky when scrolling is very simple. You j
   properties](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) to control
   where the element sticks to. At least one inset property **must** be set.
 </Callout>
+
+If we take our Luma example from earlier, we can use sticky positioning on the date headings like so:
+
+<Example
+  name="detecting-sticky-elements-basic"
+  className="max-h-64"
+  client:load
+/>
+
+Now, our headings become sticky when they hit the top of the viewport.
+
+But how can we style this when it becomes sticky?
 
 ## Detecting when an element becomes sticky
 
