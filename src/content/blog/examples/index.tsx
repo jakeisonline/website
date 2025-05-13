@@ -58,4 +58,16 @@ export const Index: Record<string, any> = {
       )
     ).default,
   },
+  "detecting-sticky-elements-simple": {
+    name: "detecting-sticky-elements-simple",
+    component: React.lazy(
+      () =>
+        import("@/content/blog/examples/sticky-elements/sticky-detect-simple"),
+    ),
+    source: (
+      await import(
+        `@/content/blog/examples/sticky-elements/sticky-detect-simple.tsx?raw`
+      )
+    ).default,
+  },
 }

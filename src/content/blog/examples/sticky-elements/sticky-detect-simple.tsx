@@ -1,21 +1,44 @@
+import { cn } from "@/lib/utils"
+import { useEffect } from "react"
+
 export default function JustSticky() {
+  useEffect(() => {
+    const elm = document.querySelector(".detect-sticky")
+    const badgeElm = elm?.querySelector(".sticky-badge")
+    const badgeOriginalClasses = badgeElm?.className
+
+    if (!elm || !badgeElm) return
+
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio < 1) {
+          const curClasses = badgeElm.className
+          const combinedClasses = cn(
+            curClasses,
+            "border-foreground/10 drop-shadow-lg backdrop-blur bg-background",
+          )
+          badgeElm.className = combinedClasses
+        } else {
+          badgeElm.className = cn(badgeOriginalClasses)
+        }
+      },
+      {
+        root: document.querySelector(
+          "#example-detecting-sticky-elements-simple",
+        ),
+        threshold: [1],
+      },
+    )
+
+    observer.observe(elm)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="w-3/4 mr-auto">
       <EventsContainer>
         <EventsHeading date={new Date("2025-05-13")} />
-        <EventCard />
-        <EventCard />
-      </EventsContainer>
-      <EventsContainer>
-        <EventsHeading date={new Date("2025-05-14")} />
-        <EventCard />
-        <EventCard />
-        <EventCard />
-        <EventCard />
-      </EventsContainer>
-      <EventsContainer>
-        <EventsHeading date={new Date("2025-05-15")} />
-        <EventCard />
         <EventCard />
         <EventCard />
         <EventCard />
@@ -35,7 +58,7 @@ export function EventsHeading({ date }: { date: Date }) {
   const dayOfMonth = date.toLocaleDateString("en-US", { day: "numeric" })
 
   return (
-    <div className="sticky -top-1 pt-2 -mt-4 w-fit">
+    <div className="sticky detect-sticky -top-3 pt-3 -mt-4 w-fit">
       <div className="sticky-badge px-4 py-1 border border-transparent rounded-full transition-all duration-300">
         {dayOfMonth} {month}{" "}
         <span className="text-muted-foreground">{day}</span>

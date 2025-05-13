@@ -8,7 +8,9 @@ layout: "@/layouts/post-layout.astro"
 import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
 
-I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turned into floating badges. There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
+I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turned into floating badges.
+
+There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
 
 I've no idea, but here's how I would do it.
 
@@ -37,10 +39,20 @@ If we take our Luma example from earlier, we can use sticky positioning on the d
   client:load
 />
 
-Now, our headings become sticky when they hit the top of the viewport.
+Now, our headings become sticky when they hit the top of the viewport. But the headings just float over the content, which doesn't look clean or as slick.
 
-But how can we style this when it becomes sticky?
+So, how can we style the headings when they become sticky?
 
 ## Detecting when an element becomes sticky
 
-To detect when an element becomes sticky, you can use the `IntersectionObserver` API.
+As of this writing, there is no way to detect when an element becomes sticky using CSS alone. We have to rely on JavaScript to detect when an element becomes sticky.
+
+Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+
+<Example
+  name="detecting-sticky-elements-simple"
+  className="max-h-64"
+  client:load
+/>
+
+<div className="h-[2000px]" />
