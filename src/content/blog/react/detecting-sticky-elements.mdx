@@ -47,12 +47,26 @@ So, how can we style the headings when they become sticky?
 
 As of this writing, there is no way to detect when an element becomes sticky using CSS alone. We have to rely on JavaScript to detect when an element becomes sticky.
 
-Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API). If you've not heard of this API before, you're about to discover one of modern web development's best tools.
+
+<Callout type="note">
+  If you're already familiar with `IntersectionObserver`, you can skip to the
+  [Sticky detection with
+  IntersectionObserver](#sticky-detection-with-intersectionobserver) section.
+</Callout>
+
+### IntersectionObserver overview
+
+The `IntersectionObserver` API allows you to detect when an element becomes visible in the viewport, or within an element (as is the case for most of this guide).
+
+<Example name="intersection-observer-basics" client:load />
+
+### Sticky detection with IntersectionObserver
+
+Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, then it never leaves the viewport, and thus will only trigger the `IntersectionObserver` callback when it hits the bounds of it's parent element.
 
 <Example
   name="detecting-sticky-elements-simple"
   className="max-h-64"
   client:load
 />
-
-<div className="h-[2000px]" />

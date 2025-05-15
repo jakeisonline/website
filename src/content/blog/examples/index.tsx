@@ -70,4 +70,18 @@ export const Index: Record<string, any> = {
       )
     ).default,
   },
+  "intersection-observer-basics": {
+    name: "intersection-observer-basics",
+    component: React.lazy(
+      () =>
+        import(
+          "@/content/blog/examples/sticky-elements/intersection-observer-basics"
+        ),
+    ),
+    source: (
+      await import(
+        `@/content/blog/examples/sticky-elements/intersection-observer-basics.tsx?raw`
+      )
+    ).default,
+  },
 }

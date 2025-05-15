@@ -13,11 +13,10 @@ export default function JustSticky() {
       ([e]) => {
         if (e.intersectionRatio < 1) {
           const curClasses = badgeElm.className
-          const combinedClasses = cn(
+          badgeElm.className = cn(
             curClasses,
             "border-foreground/10 drop-shadow-lg backdrop-blur bg-background",
           )
-          badgeElm.className = combinedClasses
         } else {
           badgeElm.className = cn(badgeOriginalClasses)
         }
@@ -27,6 +26,7 @@ export default function JustSticky() {
           "#example-detecting-sticky-elements-simple",
         ),
         threshold: [1],
+        rootMargin: "-16px 0px 0px 0px",
       },
     )
 
@@ -58,7 +58,7 @@ export function EventsHeading({ date }: { date: Date }) {
   const dayOfMonth = date.toLocaleDateString("en-US", { day: "numeric" })
 
   return (
-    <div className="sticky detect-sticky -top-3 pt-3 -mt-4 w-fit">
+    <div className="sticky detect-sticky top-0 w-fit">
       <div className="sticky-badge px-4 py-1 border border-transparent rounded-full transition-all duration-300">
         {dayOfMonth} {month}{" "}
         <span className="text-muted-foreground">{day}</span>
