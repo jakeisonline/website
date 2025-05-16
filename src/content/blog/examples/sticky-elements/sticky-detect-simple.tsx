@@ -1,24 +1,18 @@
-import { cn } from "@/lib/utils"
 import { useEffect } from "react"
 
 export default function JustSticky() {
   useEffect(() => {
-    const elm = document.querySelector(".detect-sticky")
-    const badgeElm = elm?.querySelector(".sticky-badge")
-    const badgeOriginalClasses = badgeElm?.className
+    const stickyElement: HTMLElement | null =
+      document.querySelector(".detect-sticky")
 
-    if (!elm || !badgeElm) return
+    if (!stickyElement) return
 
     const observer = new IntersectionObserver(
       ([e]) => {
         if (e.intersectionRatio < 1) {
-          const curClasses = badgeElm.className
-          badgeElm.className = cn(
-            curClasses,
-            "border-foreground/10 drop-shadow-lg backdrop-blur bg-background",
-          )
+          stickyElement.dataset.currentlySticky = "true"
         } else {
-          badgeElm.className = cn(badgeOriginalClasses)
+          stickyElement.dataset.currentlySticky = "false"
         }
       },
       {
@@ -30,7 +24,7 @@ export default function JustSticky() {
       },
     )
 
-    observer.observe(elm)
+    observer.observe(stickyElement)
 
     return () => observer.disconnect()
   }, [])
@@ -58,11 +52,8 @@ export function EventsHeading({ date }: { date: Date }) {
   const dayOfMonth = date.toLocaleDateString("en-US", { day: "numeric" })
 
   return (
-    <div className="sticky detect-sticky top-0 w-fit">
-      <div className="sticky-badge px-4 py-1 border border-transparent rounded-full transition-all duration-300">
-        {dayOfMonth} {month}{" "}
-        <span className="text-muted-foreground">{day}</span>
-      </div>
+    <div className="sticky detect-sticky top-0 w-fit data-[currently-sticky=true]:border-foreground/10 data-[currently-sticky=true]:drop-shadow-lg data-[currently-sticky=true]:backdrop-blur data-[currently-sticky=true]:bg-background px-4 py-1 border border-transparent rounded-full transition-all duration-300">
+      {dayOfMonth} {month} <span className="text-muted-foreground">{day}</span>
     </div>
   )
 }
