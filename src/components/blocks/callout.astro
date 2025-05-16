@@ -63,13 +63,26 @@ const Icon = icons[type]
 
 <aside
   class={cn(
-    "-mx-2 md:-mx-4 border-l-4 rounded-r-sm px-3 pt-4.5 pb-0.5 text-sm mb-8",
+    "-mx-2 md:-mx-4 border-l-4 rounded-r-sm px-3 py-0.5 text-sm mb-8",
     typeStyles({ type }),
   )}
 >
-  <div class="-mb-2 flex items-start gap-1.5">
-    <Icon class={cn("size-4", iconStyles({ icon: type }))} />
-    {title && <strong class="text-sm font-bol leading-4">{title}</strong>}
-  </div>
-  <slot />
+  {
+    title && (
+      <div class="-mb-1.5 flex items-start gap-1.5 mt-4">
+        <Icon class={cn("size-4", iconStyles({ icon: type }))} />
+        {title && <strong class="text-sm font-bol leading-4">{title}</strong>}
+      </div>
+      <slot />
+    )
+  }
+  {
+    !title && (
+      <Icon class={cn("size-4 absolute mt-4.5", iconStyles({ icon: type }))} />
+      <div class="indent-5.5">
+        <slot />
+      </div>
+    )
+  }
+
 </aside>
