@@ -8,13 +8,13 @@ layout: "@/layouts/post-layout.astro"
 import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
 
-I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turned into floating badges.
+I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
 
 There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
 
 I've no idea, but here's how I would do it.
 
-## Making an element sticky
+## Making an element sticky is easy
 
 Having elements become automatically sticky when scrolling is very simple. You just need to set [`position: sticky`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky) on the element and then set an inset property to control the offset relative to the nearest scrolling ancestor.
 
@@ -24,6 +24,8 @@ Having elements become automatically sticky when scrolling is very simple. You j
   top: 0;
 }
 ```
+
+Now any element with this class will be `static` by default, but will become `sticky` when it hits the `top` of the nearest scrolling ancestor, which is usually the viewport. It will be offset by `0`.
 
 <Callout type="tip" title="Using inset properties beyond top">
   While `top` is being used in this example, you can use any of the [inset
@@ -39,11 +41,13 @@ If we take our Luma example from earlier, we can use sticky positioning on the d
   client:load
 />
 
-Now, our headings become sticky when they hit the top of the viewport. But the headings just float over the content, which doesn't look clean or as slick.
+Now, our headings become sticky when they hit the top of the viewport, or in this case the top of the scrolling ancestor.
+
+But the headings just float over the content, which doesn't look clean or as slick.
 
 So, how can we style the headings when they become sticky?
 
-## Detecting when an element becomes sticky
+## Detecting when an element becomes sticky is tricky
 
 As of this writing, there is no way to detect when an element becomes sticky using CSS alone. We have to rely on JavaScript to detect when an element becomes sticky.
 
@@ -57,16 +61,31 @@ Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](htt
 
 ### IntersectionObserver overview
 
-The `IntersectionObserver` API allows you to detect when an element becomes visible in the viewport, or within an element (as is the case for most of this guide).
+At its simplest, the `IntersectionObserver` API allows you to detect the relative visibility of two elements, giving us a way to asynchronously observe when one of those elements intersects with the other. Typically you would use this API to detect when an element becomes visible within the viewport, or within a scrollable ancestor, but the API is very flexible, supporting many different use cases.
 
 <Example name="intersection-observer-basics" client:load />
 
+<Callout type="tip" title="Learning more about IntersectionObserver">
+  This guide scratches the surface of `IntersectionObserver`, enough to explain
+  the challenges of sticky elements. If you'd like to learn more about the API,
+  I'd recommend reading [Dynamic Header with
+  IntersectionObserver](https://www.smashingmagazine.com/2021/07/dynamic-header-intersection-observer/)
+  where Michelle Barker does an excellent job of explaining the API in more
+  detail.
+</Callout>
+
 ### Sticky detection with IntersectionObserver
 
-Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, then it never leaves the viewport, and thus will only trigger the `IntersectionObserver` callback when it hits the bounds of it's parent element.
+Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, it unlikely intersects with the viewport until it hits the bounds of it's container element, at which point it becomes fixed in place 🤔.
 
 <Example
   name="detecting-sticky-elements-simple"
   className="max-h-64"
   client:load
 />
+
+## Further reading
+
+The following articles are excellent resources for learning more about `IntersectionObserver`, some of which helped me understand how to achieve the sticky detection explained in this guide:
+
+- [MDN's IntersectionObserver documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
