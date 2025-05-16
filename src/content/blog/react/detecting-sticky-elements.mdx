@@ -14,6 +14,11 @@ There's no way to use CSS to style an element when it becomes sticky, so how the
 
 I've no idea, but here's how I would do it.
 
+<Callout type="tip">
+  Just looking for the solution? Skip to the [Sticky detection with
+  IntersectionObserver](#sticky-detection-with-intersectionobserver) section.
+</Callout>
+
 ## Making an element sticky is easy
 
 Having elements become automatically sticky when scrolling is very simple. You just need to set [`position: sticky`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky) on the element and then set an inset property to control the offset relative to the nearest scrolling ancestor.
@@ -43,7 +48,7 @@ If we take our Luma example from earlier, we can use sticky positioning on the d
 
 Now, our headings become sticky when they hit the top of the viewport, or in this case the top of the scrolling ancestor.
 
-But the headings just float over the content, which doesn't look clean or as slick.
+But the headings just float over the content, which doesn't look clean or as slick. Once you have images and text instead of the placeholders in my example, it looks even worse.
 
 So, how can we style the headings when they become sticky?
 
@@ -59,7 +64,7 @@ Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](htt
   IntersectionObserver](#sticky-detection-with-intersectionobserver) section.
 </Callout>
 
-### IntersectionObserver overview
+### Quick `IntersectionObserver` overview
 
 At its simplest, the `IntersectionObserver` API allows you to detect the relative visibility of two elements, giving us a way to asynchronously observe when one of those elements intersects with the other. Typically you would use this API to detect when an element becomes visible within the viewport, or within a scrollable ancestor, but the API is very flexible, supporting many different use cases.
 
@@ -74,15 +79,65 @@ At its simplest, the `IntersectionObserver` API allows you to detect the relativ
   detail.
 </Callout>
 
-### Sticky detection with IntersectionObserver
+### Sticky detection with `IntersectionObserver`
 
 Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, it unlikely intersects with the viewport until it hits the bounds of it's container element, at which point it becomes fixed in place 🤔.
+
+That's where the `rootMargin` property comes in, which allows us to specify a margin around the root element (usually the viewport, but can be any element or scrollable ancestor).
+
+`rootMargin` is given a string value of inset properties, and you can give it negative insets to create an inner margin.
+
+By telling the observer to observe the element with a `rootMargin` of `-16px 0px 0px 0px`, for example, we're telling the observer to start observing the element when it's 16px from the top of the viewport.
+
+Putting it all together, we can use the following code to detect when an element becomes sticky:
 
 <Example
   name="detecting-sticky-elements-simple"
   className="max-h-64"
   client:load
 />
+
+```js
+// Get the elements we want to detect
+const stickyElements = document.querySelectorAll(".detect-sticky")
+
+// If the elements don't exist, bail
+if (!stickyElements) return
+
+// Loop through the elements and create an observer for each
+stickyElements.forEach((stickyElement) => {
+  // Create an observer that's configured to detect when
+  // the element becomes sticky
+  const observer = new IntersectionObserver(
+    ([e]) => {
+      let isSticky = false
+      // Check if the target is actually sticking to the root element,
+      // you'll want to change the check here if you're using different
+      // inset properties for the rootMargin
+      if (e.intersectionRect.top === e.rootBounds?.top) {
+        isSticky = true
+      }
+
+      stickyElement.dataset.currentlySticky = String(isSticky)
+    },
+    {
+      // 💫 Add a margin to the observer's root, to account for
+      // the sticky element's offset. It's a good idea to add 2px
+      // as sticky elements don't become sticky until moving past
+      // the sticky offset, and there can be rounding errors.
+      rootMargin: "-14px 0px 0px 0px",
+      // We haven't covered thresholds, but for now, know that
+      // it's an array of numbers between 0 and 1 that represent the
+      // percentage of the element that must be visible in order to
+      // be considered an intersection.
+      threshold: [1],
+    },
+  )
+
+  // Start observing the sticky element
+  observer.observe(stickyElement)
+})
+```
 
 ## Further reading
 

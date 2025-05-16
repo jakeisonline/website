@@ -2,37 +2,62 @@ import { useEffect } from "react"
 
 export default function JustSticky() {
   useEffect(() => {
-    const stickyElement: HTMLElement | null =
-      document.querySelector(".detect-sticky")
+    const stickyElements = document.querySelectorAll(
+      ".detect-sticky",
+    ) as NodeListOf<HTMLElement>
 
-    if (!stickyElement) return
+    if (!stickyElements) return
 
-    const observer = new IntersectionObserver(
-      ([e]) => {
-        if (e.intersectionRatio < 1) {
-          stickyElement.dataset.currentlySticky = "true"
-        } else {
-          stickyElement.dataset.currentlySticky = "false"
-        }
-      },
-      {
-        root: document.querySelector(
-          "#example-detecting-sticky-elements-simple",
-        ),
-        threshold: [1],
-        rootMargin: "-16px 0px 0px 0px",
-      },
-    )
+    const observers: IntersectionObserver[] = []
 
-    observer.observe(stickyElement)
+    stickyElements.forEach((stickyElement) => {
+      const observer = new IntersectionObserver(
+        ([e]) => {
+          let isSticky = false
 
-    return () => observer.disconnect()
+          if (e.intersectionRect.top === e.rootBounds?.top) {
+            isSticky = true
+          }
+
+          stickyElement.dataset.currentlySticky = String(isSticky)
+        },
+        {
+          root: document.querySelector(
+            "#example-detecting-sticky-elements-simple",
+          ),
+          threshold: [1],
+          rootMargin: "-14px 0px 0px 0px",
+        },
+      )
+
+      observer.observe(stickyElement)
+      observers.push(observer)
+    })
+
+    return () => {
+      observers.forEach((observer) => {
+        observer.disconnect()
+      })
+    }
   }, [])
 
   return (
     <div className="w-3/4 mr-auto">
       <EventsContainer>
         <EventsHeading date={new Date("2025-05-13")} />
+        <EventCard />
+        <EventCard />
+      </EventsContainer>
+      <EventsContainer>
+        <EventsHeading date={new Date("2025-05-14")} />
+        <EventCard />
+        <EventCard />
+        <EventCard />
+        <EventCard />
+      </EventsContainer>
+      <EventsContainer>
+        <EventsHeading date={new Date("2025-05-15")} />
+        <EventCard />
         <EventCard />
         <EventCard />
         <EventCard />
@@ -43,7 +68,7 @@ export default function JustSticky() {
 }
 
 export function EventsContainer({ children }: { children: React.ReactNode }) {
-  return <section className="flex flex-col gap-4">{children}</section>
+  return <section className="flex flex-col gap-4 mb-8">{children}</section>
 }
 
 export function EventsHeading({ date }: { date: Date }) {
