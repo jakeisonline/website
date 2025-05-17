@@ -11,10 +11,12 @@ const currentPath = Astro.url.pathname
 ---
 
 <header
-  class="container-page bg-background/85 supports[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur"
+  class="bg-background/85 supports[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur"
   data-pagefind-ignore
 >
-  <div class="flex h-14 items-center text-xs font-bold lg:text-sm">
+  <div
+    class="container-page m-auto flex h-14 items-center text-xs font-bold lg:text-sm"
+  >
     <div class="flex w-full items-center">
       <MobileNav className="mr-4" client:load>
         <div class="mb-5 grid gap-1 pt-8 text-sm">
