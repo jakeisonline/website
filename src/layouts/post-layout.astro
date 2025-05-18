@@ -6,7 +6,7 @@ import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
 import { type ToCHeadingsType } from "@/lib/types"
 import type { SEOProps } from "astro-seo"
-import { Dot } from "lucide-react"
+import { Dot, Eye } from "lucide-react"
 
 interface Props {
   frontmatter: Record<string, string>
@@ -110,7 +110,14 @@ const seo: SEOProps = {
             </p>
           )
         }
-        {!publishedAt && <p class="mt-1 text-muted-foreground">Unpublished</p>}
+        {
+          !publishedAt && (
+            <p class="mt-1 flex items-center gap-1">
+              <Eye className="size-3.5" />
+              Preview
+            </p>
+          )
+        }
         {
           frontmatter?.readingMinutes && (
             <p class="mt-1 text-muted-foreground flex items-center gap-1">
