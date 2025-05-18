@@ -17,7 +17,7 @@ There's no way to use CSS to style an element when it becomes sticky, so how the
 
 I've no idea, but here's how I would do it.
 
-<Callout type="tip">
+<Callout type="note">
   Just looking for the solution? Skip to [the final
   solution](#the-final-solution).
 </Callout>
@@ -67,7 +67,7 @@ At its simplest, the `IntersectionObserver` API allows you to detect the relativ
 
 <Figure
   src={StickyHeaderIntersection}
-  alt="A diagram showing how rootMargin is used in IntersectionObserver, specifically that you can use negative insets to create an inner margin."
+  alt="A diagram showing how IntersectionObserver works, specifically that it can track the visibility of an element within a root element, such as a scrollable ancestor or the viewport."
   caption="IntersectionObserver allows us to track the visibility of an element within a root element, such as a scrollable ancestor or the viewport."
 />
 
