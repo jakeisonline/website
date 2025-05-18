@@ -7,6 +7,8 @@ layout: "@/layouts/post-layout.astro"
 
 import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
+import Figure from "@/components/ui/figure.astro"
+import StickyHeaderRootMargin from "@/assets/images/sticky-header-rootmargin.svg"
 
 I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
 
@@ -64,7 +66,7 @@ Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](htt
   IntersectionObserver](#sticky-detection-with-intersectionobserver) section.
 </Callout>
 
-### Quick `IntersectionObserver` overview
+### `IntersectionObserver` to the rescue
 
 At its simplest, the `IntersectionObserver` API allows you to detect the relative visibility of two elements, giving us a way to asynchronously observe when one of those elements intersects with the other. Typically you would use this API to detect when an element becomes visible within the viewport, or within a scrollable ancestor, but the API is very flexible, supporting many different use cases.
 
@@ -85,9 +87,17 @@ Sticky elements present us with a unique challenge when using `IntersectionObser
 
 That's where the `rootMargin` property comes in, which allows us to specify a margin around the root element (usually the viewport, but can be any element or scrollable ancestor).
 
+<Figure
+  src={StickyHeaderRootMargin}
+  alt="A diagram showing how rootMargin is used in IntersectionObserver, specifically that you can use negative insets to create an inner margin."
+  caption="The rootMargin property allows us to specify a margin around the root element, which is usually the viewport, but can be any element or scrollable ancestor."
+/>
+
 `rootMargin` is given a string value of inset properties, and you can give it negative insets to create an inner margin.
 
 By telling the observer to observe the element with a `rootMargin` of `-16px 0px 0px 0px`, for example, we're telling the observer to start observing the element when it's 16px from the top of the viewport.
+
+## The final solution
 
 Putting it all together, we can use the following code to detect when an element becomes sticky:
 
@@ -138,9 +148,3 @@ stickyElements.forEach((stickyElement) => {
   observer.observe(stickyElement)
 })
 ```
-
-## Further reading
-
-The following articles are excellent resources for learning more about `IntersectionObserver`, some of which helped me understand how to achieve the sticky detection explained in this guide:
-
-- [MDN's IntersectionObserver documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
