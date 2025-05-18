@@ -3,7 +3,7 @@ interface Props {
   headline: string
   alternativeHeadline?: string
   description: string
-  datePublished: string
+  datePublished?: string
   wordCount: string
   timeRequired: string
 }
@@ -24,7 +24,9 @@ const jsonLd = {
   alternativeHeadline,
   description,
   wordCount,
-  "datePublished": new Date(datePublished).toISOString().substring(0, 10),
+  "datePublished": datePublished
+    ? new Date(datePublished).toISOString().substring(0, 10)
+    : undefined,
   "timeRequired": `PT${timeRequired}M`,
   "author": {
     "@type": "Person",
