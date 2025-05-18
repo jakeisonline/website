@@ -9,6 +9,7 @@ import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
 import Figure from "@/components/ui/figure.astro"
 import StickyHeaderRootMargin from "@/assets/images/sticky-header-rootmargin.svg"
+import StickyHeaderIntersection from "@/assets/images/sticky-header-intersection.svg"
 
 I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
 
@@ -17,8 +18,8 @@ There's no way to use CSS to style an element when it becomes sticky, so how the
 I've no idea, but here's how I would do it.
 
 <Callout type="tip">
-  Just looking for the solution? Skip to the [Sticky detection with
-  IntersectionObserver](#sticky-detection-with-intersectionobserver) section.
+  Just looking for the solution? Skip to [the final
+  solution](#the-final-solution).
 </Callout>
 
 ## Making an element sticky is easy
@@ -60,30 +61,28 @@ As of this writing, there is no way to detect when an element becomes sticky usi
 
 Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API). If you've not heard of this API before, you're about to discover one of modern web development's best tools.
 
-<Callout type="note">
-  If you're already familiar with `IntersectionObserver`, you can skip to the
-  [Sticky detection with
-  IntersectionObserver](#sticky-detection-with-intersectionobserver) section.
-</Callout>
-
 ### `IntersectionObserver` to the rescue
 
 At its simplest, the `IntersectionObserver` API allows you to detect the relative visibility of two elements, giving us a way to asynchronously observe when one of those elements intersects with the other. Typically you would use this API to detect when an element becomes visible within the viewport, or within a scrollable ancestor, but the API is very flexible, supporting many different use cases.
 
-<Example name="intersection-observer-basics" client:load />
+<Figure
+  src={StickyHeaderIntersection}
+  alt="A diagram showing how rootMargin is used in IntersectionObserver, specifically that you can use negative insets to create an inner margin."
+  caption="IntersectionObserver allows us to track the visibility of an element within a root element, such as a scrollable ancestor or the viewport."
+/>
 
 <Callout type="tip" title="Learning more about IntersectionObserver">
-  This guide scratches the surface of `IntersectionObserver`, enough to explain
-  the challenges of sticky elements. If you'd like to learn more about the API,
-  I'd recommend reading [Dynamic Header with
+  This guide isn't going to cover the IntersectionObserver API in detail. If
+  you'd like to learn more about the API, I'd recommend reading [Dynamic Header
+  with
   IntersectionObserver](https://www.smashingmagazine.com/2021/07/dynamic-header-intersection-observer/)
   where Michelle Barker does an excellent job of explaining the API in more
   detail.
 </Callout>
 
-### Sticky detection with `IntersectionObserver`
+### Sticky detection with `rootMargin`
 
-Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, it unlikely intersects with the viewport until it hits the bounds of it's container element, at which point it becomes fixed in place 🤔.
+Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, it unlikely intersects with the viewport until it hits the bounds of it's container element, at which point it becomes fixed in place and is no longer sticky 🤔.
 
 That's where the `rootMargin` property comes in, which allows us to specify a margin around the root element (usually the viewport, but can be any element or scrollable ancestor).
 
@@ -95,7 +94,9 @@ That's where the `rootMargin` property comes in, which allows us to specify a ma
 
 `rootMargin` is given a string value of inset properties, and you can give it negative insets to create an inner margin.
 
-By telling the observer to observe the element with a `rootMargin` of `-16px 0px 0px 0px`, for example, we're telling the observer to start observing the element when it's 16px from the top of the viewport.
+By telling the observer to observe the element with a `rootMargin` of `-10px 0px 0px 0px`, for example, we're telling the observer to consider the target element as intersecting when it's `10px` from the top of the viewport.
+
+**🧠 Here's the big brain bit:** by setting the `rootMargin` with a negative inset that matches the offset of the sticky element, we can reasonably deduce that when the element is within the `rootMagin` it is **not** sticky.
 
 ## The final solution
 
