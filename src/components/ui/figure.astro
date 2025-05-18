@@ -10,10 +10,18 @@ interface Props {
 }
 
 const { src, alt, caption, className, ...attributes } = Astro.props
+
+const isSVG = src.format === "svg"
+let ImageComponent = Image
+
+// If the src is a SVG, simply render that rather than Astro's Image component
+if (isSVG) {
+  ImageComponent = src
+}
 ---
 
 <figure class={cn("flex flex-col items-center", className)} {...attributes}>
-  <Image
+  <ImageComponent
     class="border-border max-w-full rounded-xs border"
     src={src}
     alt={alt}
