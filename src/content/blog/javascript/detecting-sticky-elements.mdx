@@ -64,7 +64,7 @@ Thankfully, we have a Web API that can help us out: [`IntersectionObserver`](htt
 
 ### `IntersectionObserver` to the rescue
 
-At its simplest, the `IntersectionObserver` API allows you to detect the relative visibility of two elements, giving us a way to asynchronously observe when one of those elements intersects with the other. Typically you would use this API to detect when an element becomes visible within the viewport, or within a scrollable ancestor, but the API is very flexible, supporting many different use cases.
+At its simplest, the `IntersectionObserver` API allows you to detect the relative visibility of two elements, giving us a way to asynchronously observe (i.e. performant and non-blocking) when one of those elements intersects with the other.
 
 <Figure
   src={StickyHeaderIntersection}
@@ -72,20 +72,25 @@ At its simplest, the `IntersectionObserver` API allows you to detect the relativ
   caption="IntersectionObserver allows us to track the visibility of an element within a root element, such as a scrollable ancestor or the viewport."
 />
 
+Typically you would use this API to detect when an element becomes visible within the viewport, or within a scrollable ancestor, but the API is very flexible, supporting many different use cases.
+
 <Callout type="tip" title="Learning more about IntersectionObserver">
-  This guide isn't going to cover the IntersectionObserver API in detail. If
-  you'd like to learn more about the API, I'd recommend reading [Dynamic Header
+  This guide isn't going to cover the IntersectionObserver API in detail, just enough for sticky detection. If you'd like to learn more about the API, I'd recommend two great resources:
+
+  <ul>
+    <li>[MDN's IntersectionObserver documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) the web developers bible entry</li>
+    <li>[Dynamic Header
   with
   IntersectionObserver](https://www.smashingmagazine.com/2021/07/dynamic-header-intersection-observer/)
-  where Michelle Barker does an excellent job of explaining the API in more
-  detail.
+  where Michelle Barker goes into detail on another fun example with headings</li>
+  </ul>
 </Callout>
 
 ### Sticky detection with `rootMargin`
 
 Sticky elements present us with a unique challenge when using `IntersectionObserver`: if the element is sticky, it unlikely intersects with the viewport until it hits the bounds of it's container element, at which point it becomes fixed in place and is no longer sticky 🤔.
 
-That's where the `rootMargin` property comes in, which allows us to specify a margin around the root element (usually the viewport, but can be any element or scrollable ancestor).
+That's where the [`rootMargin` option](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) comes in, which allows us to specify a margin around the root element (usually the viewport, but can be any element or scrollable ancestor).
 
 <Figure
   src={StickyHeaderRootMargin}
@@ -115,23 +120,16 @@ We end up with something like this:
   client:visible
 />
 
-```javascript
-// Get the elements we want to detect
+```js showLineNumbers
 const stickyElements = document.querySelectorAll(".detect-sticky")
 
-// If the elements don't exist, bail
 if (!stickyElements) return
 
-// Loop through the elements and create an observer for each
 stickyElements.forEach((stickyElement) => {
-  // Create an observer that's configured to detect when
-  // the element becomes sticky
   const observer = new IntersectionObserver(
     ([e]) => {
       let isSticky = false
-      // Check if the target is actually sticking to the root element,
-      // you'll want to change the check here if you're using different
-      // inset properties for the rootMargin
+
       if (e.intersectionRect.top === e.rootBounds?.top) {
         isSticky = true
       }
@@ -139,20 +137,48 @@ stickyElements.forEach((stickyElement) => {
       stickyElement.dataset.currentlySticky = String(isSticky)
     },
     {
-      // 💫 Add a margin to the observer's root, to account for
-      // the sticky element's offset. It's a good idea to add 2px
-      // as sticky elements don't become sticky until moving past
-      // the sticky offset, and there can be rounding errors.
       rootMargin: "-14px 0px 0px 0px",
-      // We haven't covered thresholds, but for now, know that
-      // it's an array of numbers between 0 and 1 that represent the
-      // percentage of the element that must be visible in order to
-      // be considered an intersection.
       threshold: [1],
     },
   )
 
-  // Start observing the sticky element
   observer.observe(stickyElement)
 })
 ```
+
+Let's step through the details inside the `IntersectionObserver` callback.
+
+```js showLineNumbers startLineNumber=8
+let isSticky = false
+
+if (e.intersectionRect.top === e.rootBounds?.top) {
+  isSticky = true
+}
+```
+
+Here we're checking if the top edge of the intersection rectangle exactly matches the top edge of the root bounds. If it does, we know the element is sticking to the top of the root element, and we can set the `isSticky` variable to `true`.
+
+You'll want to change the check here if you're using something other than the `top` inset property for the `rootMargin`.
+
+```js showLineNumbers startLineNumber=14
+stickyElement.dataset.currentlySticky = String(isSticky)
+```
+
+We set the `dataset.currentlySticky` property to the `isSticky` variable, which we can then use in our CSS to style the element accordingly. You'll want to change
+
+In addition to the callback, we're also passing some options to the `IntersectionObserver`.
+
+```js showLineNumbers startLineNumber=16
+{
+  rootMargin: "-14px 0px 0px 0px",
+  threshold: [1],
+}
+```
+
+Add a negative top margin to the observer's root, to account for the sticky element's offset (including margin and padding). It's a good idea to a couple of pixels on top of the sticky offset, as sticky elements don't become sticky until moving past the sticky offset, and there can be rounding errors. You should play around to get a feel for the right value.
+
+The [`threshold` option](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) isn't something we've covered in detail here, but it's an array of numbers between 0 and 1 that represent the percentage of the element that must be visible in order to be considered an intersection.
+
+In this case, we're saying that the element must be 100% visible in order to be considered an intersection. This is important because we want to avoid false positives, where we think the element is sticking, but we just haven't scrolled past it yet.
+
+And that's it! We've now got a way to detect when an element becomes sticky, and we can use that state to style the element accordingly.
