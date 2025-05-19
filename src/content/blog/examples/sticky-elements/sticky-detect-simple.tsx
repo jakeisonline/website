@@ -77,7 +77,7 @@ export function EventsHeading({ date }: { date: Date }) {
   const dayOfMonth = date.toLocaleDateString("en-US", { day: "numeric" })
 
   return (
-    <div className="sticky detect-sticky top-0 w-fit data-[currently-sticky=true]:border-foreground/10 data-[currently-sticky=true]:drop-shadow-lg data-[currently-sticky=true]:backdrop-blur data-[currently-sticky=true]:bg-background px-4 py-1 border border-transparent rounded-full transition-all duration-300">
+    <div className="sticky detect-sticky top-0 w-fit data-[currently-sticky=true]:border-foreground/10 data-[currently-sticky=true]:drop-shadow-lg data-[currently-sticky=true]:backdrop-blur data-[currently-sticky=true]:bg-background px-4 py-1 border border-transparent rounded-full transition-all duration-150">
       {dayOfMonth} {month} <span className="text-muted-foreground">{day}</span>
     </div>
   )
