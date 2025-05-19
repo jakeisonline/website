@@ -10,7 +10,7 @@ import Figure from "@/components/ui/figure.astro"
 import Video from "@/components/ui/video.astro"
 import StickyHeaderRootMargin from "@/assets/images/sticky-header-rootmargin.svg"
 import StickyHeaderIntersection from "@/assets/images/sticky-header-intersection.svg"
-import StickyHeaderVideo from "@/media/luma-sitcky-date-headings.mp4"
+import StickyHeaderVideo from "@/assets/videos/luma-sitcky-date-headings.mp4"
 
 I recently stumbled upon a lovely detail on [Luma's website](https://www.luma.com/) when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
 
@@ -19,8 +19,8 @@ I recently stumbled upon a lovely detail on [Luma's website](https://www.luma.co
 There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
 
 <Callout type="note">
-  Just looking for the solution? Skip to [the final
-  solution](#the-final-solution).
+  Just looking for the solution? Sure, skip to [the final
+  solution](#the-final-solution), but you'll miss my diagrams!
 </Callout>
 
 ## Making an element sticky is easy
@@ -101,7 +101,13 @@ By telling the observer to observe the element with a `rootMargin` of `-10px 0px
 
 ## The final solution
 
-Putting it all together, we can use the following code to detect when an element becomes sticky:
+We'll use `IntersectionObserver` to observe when our target sticky element leaves our root element, but we'll add a negative `rootMargin` to account for the sticky element's offset.
+
+We'll also check if the element is intersecting where we expect it to be to avoid false positives (i.e. we think the element is sticking, but we just haven't scrolled past it yet).
+
+Finally, we'll use the `dataset` property to store the state of the element, as that then allows us not only to style the element with simple CSS, but gives us the potential to run code when that state changes if desired.
+
+We end up with something like this:
 
 <Example
   name="detecting-sticky-elements-simple"
@@ -109,7 +115,7 @@ Putting it all together, we can use the following code to detect when an element
   client:visible
 />
 
-```js
+```javascript
 // Get the elements we want to detect
 const stickyElements = document.querySelectorAll(".detect-sticky")
 
