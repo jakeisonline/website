@@ -1,21 +1,22 @@
 ---
 title: Detecting when an element becomes sticky
 description: Maybe you you'd like to style a sticky element differently when it becomes sticky, or simply run some code when it becomes sticky. You can't do it with CSS alone, but IntersectionObserver to the rescue!
-publishedAt: "2025-05-10"
 layout: "@/layouts/post-layout.astro"
 ---
 
 import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
 import Figure from "@/components/ui/figure.astro"
+import Video from "@/components/ui/video.astro"
 import StickyHeaderRootMargin from "@/assets/images/sticky-header-rootmargin.svg"
 import StickyHeaderIntersection from "@/assets/images/sticky-header-intersection.svg"
+import StickyHeaderVideo from "@/media/luma-sitcky-date-headings.mp4"
 
-I recently stumbled upon a lovely detail on [website] when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
+I recently stumbled upon a lovely detail on [Luma's website](https://www.luma.com/) when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
+
+<Video src={StickyHeaderVideo} />
 
 There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
-
-I've no idea, but here's how I would do it.
 
 <Callout type="note">
   Just looking for the solution? Skip to [the final
@@ -51,9 +52,9 @@ If we take our Luma example from earlier, we can use sticky positioning on the d
 
 Now, our headings become sticky when they hit the top of the viewport, or in this case the top of the scrolling ancestor.
 
-But the headings just float over the content, which doesn't look clean or as slick. Once you have images and text instead of the placeholders in my example, it looks even worse.
+But the headings just float over the content, which doesn't look clean or as slick. Once you have images and text instead of the placeholders in my example, it will look even worse.
 
-So, how can we style the headings when they become sticky?
+So, how can we style the headings to stand out when they become sticky?
 
 ## Detecting when an element becomes sticky is tricky
 
@@ -96,7 +97,7 @@ That's where the `rootMargin` property comes in, which allows us to specify a ma
 
 By telling the observer to observe the element with a `rootMargin` of `-10px 0px 0px 0px`, for example, we're telling the observer to consider the target element as intersecting when it's `10px` from the top of the viewport.
 
-**🧠 Here's the big brain bit:** by setting the `rootMargin` with a negative inset that matches the offset of the sticky element, we can reasonably deduce that when the element is within the `rootMagin` it is **not** sticky.
+**🧠 Here's the big brain bit:** by setting the `rootMargin` with a negative inset that matches the offset of the sticky element, we can reasonably deduce that when the element is within the `rootMargin` it is **not** sticky. So we just need to check for the inverse, and style accordingly.
 
 ## The final solution
 

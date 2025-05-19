@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/registry/*": ["./registry/*"]
+      "@/registry/*": ["./registry/*"],
+      "@/media/*": ["./public/media/*"]
     },
     "plugins": [
       {

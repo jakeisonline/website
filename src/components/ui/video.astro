@@ -1,0 +1,12 @@
+---
+interface Props {
+  src: string
+}
+
+const { src } = Astro.props as Props
+---
+
+<div class="w-full max-w-full">
+  <video autoplay loop playsinline muted src={src} class="m-auto rounded-sm"
+  ></video>
+</div>
