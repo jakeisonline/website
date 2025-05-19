@@ -8,7 +8,7 @@ import Link from "@/components/ui/link.astro"
 import { getCollection, render } from "astro:content"
 
 export async function getStaticPaths() {
-  const posts = await getCollection("react")
+  const posts = await getCollection("javascript")
 
   return posts.map((post) => ({
     params: { id: post.id },

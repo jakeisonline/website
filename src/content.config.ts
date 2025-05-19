@@ -25,10 +25,10 @@ export const standardCollection = defineCollection({
   schema: defaultSchema,
 })
 
-export const reactCollection = defineCollection({
+export const javascriptCollection = defineCollection({
   loader: glob({
     pattern: "**\/*.mdx",
-    base: "./src/content/blog/react",
+    base: "./src/content/blog/javascript",
   }),
   schema: defaultSchema,
 })
@@ -43,6 +43,6 @@ export const componentDocsCollection = defineCollection({
 
 export const collections = {
   general: standardCollection,
-  react: reactCollection,
+  javascript: javascriptCollection,
   components: componentDocsCollection,
 }

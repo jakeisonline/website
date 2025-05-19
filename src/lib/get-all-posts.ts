@@ -3,7 +3,7 @@ import { getCollection } from "astro:content"
 export async function getAllPosts() {
   // TODO: well this won't scale...
   const generalPosts = await getCollection("general")
-  const reactPosts = await getCollection("react")
+  const reactPosts = await getCollection("javascript")
 
   const allPosts = [...generalPosts, ...reactPosts]
 
