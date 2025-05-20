@@ -11,10 +11,11 @@ import Video from "@/components/ui/video.astro"
 import StickyHeaderRootMargin from "@/assets/images/sticky-header-rootmargin.svg"
 import StickyHeaderIntersection from "@/assets/images/sticky-header-intersection.svg"
 import StickyHeaderVideo from "@/assets/videos/luma-sitcky-date-headings.mp4"
+import { CldVideoPlayer } from "astro-cloudinary"
 
 I recently stumbled upon a lovely detail on [Luma's website](https://www.luma.com/) when scrolling down a list. As soon as the date headings became sticky, they turn into floating badges.
 
-<Video src={StickyHeaderVideo} />
+<Video publicId="ue4nokdrvh6leyd25lql" />
 
 There's no way to use CSS to style an element when it becomes sticky, so how the hell did they do it?
 

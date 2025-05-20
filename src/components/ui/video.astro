@@ -1,12 +1,18 @@
 ---
 interface Props {
-  src: string
+  publicId: string
 }
 
-const { src } = Astro.props as Props
+const { publicId } = Astro.props as Props
+
+import { getCldVideoUrl } from "astro-cloudinary/helpers"
+
+const url = getCldVideoUrl({
+  src: publicId,
+})
 ---
 
 <div class="w-full max-w-full">
-  <video autoplay loop playsinline muted src={src} class="m-auto rounded-sm"
+  <video autoplay loop playsinline muted src={url} class="m-auto rounded-sm"
   ></video>
 </div>
