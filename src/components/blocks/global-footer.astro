@@ -9,10 +9,20 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 >
   <div>👋 <Link href="/">a thing by jake</Link></div>
   <div class="flex items-center space-x-2 place-self-end">
-    <Link href={LINKS.LINKEDIN} class="text-foreground" noIcon>
+    <Link
+      aria-label="LinkedIn"
+      href={LINKS.LINKEDIN}
+      class="text-foreground"
+      noIcon
+    >
       <LinkedInLogoIcon className="h-4 w-4" />
     </Link>
-    <Link href={LINKS.GITHUB} class="text-foreground" noIcon>
+    <Link
+      aria-label="GitHub"
+      href={LINKS.GITHUB}
+      class="text-foreground"
+      noIcon
+    >
       <GitHubLogoIcon className="h-4 w-4" />
     </Link>
   </div>
