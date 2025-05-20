@@ -4,4 +4,9 @@ export const CATEGORIES = [
     name: "General",
     url: "/blog",
   },
+  {
+    id: "javascript",
+    name: "JavaScript",
+    url: "/javascript",
+  },
 ]

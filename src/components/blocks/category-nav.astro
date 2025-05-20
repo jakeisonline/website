@@ -1,6 +1,9 @@
 ---
 import Badge from "@/components/ui/badge.astro"
 import { CATEGORIES } from "@/lib/categories"
+import { cn } from "@/lib/utils"
+
+const currentPath = Astro.url.pathname
 ---
 
 <nav class="mt-3">
@@ -9,7 +12,13 @@ import { CATEGORIES } from "@/lib/categories"
       CATEGORIES.map((category) => (
         <li>
           <a href={category.url}>
-            <Badge class="hover:bg-muted-foreground hover:text-background">
+            <Badge
+              class={cn(
+                "hover:bg-muted-foreground hover:text-background",
+                currentPath === category.url &&
+                  "bg-muted-foreground text-background",
+              )}
+            >
               {category.name}
             </Badge>
           </a>

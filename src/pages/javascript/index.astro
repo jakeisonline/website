@@ -2,9 +2,9 @@
 import CategoryNav from "@/components/blocks/category-nav.astro"
 import PostSnippet from "@/components/blocks/post-snippet.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
-import { getAllPosts } from "@/lib/get-all-posts"
+import { getAllPostsByCategory } from "@/lib/get-all-posts"
 
-const allBlogPosts = await getAllPosts()
+const javascriptPosts = await getAllPostsByCategory("javascript")
 ---
 
 <BaseLayout title="Blog" description="A place of relative calm.">
@@ -14,13 +14,13 @@ const allBlogPosts = await getAllPosts()
     <section>
       <h2 class="text-muted-foreground mb-4 text-sm">Stuff to read</h2>
 
-      {allBlogPosts.map((post) => <PostSnippet post={post} />)}
+      {javascriptPosts.map((post) => <PostSnippet post={post} />)}
     </section>
-    <!-- <div class="hidden md:block">
+    <div class="hidden md:block">
       <section>
         <h2 class="text-muted-foreground text-sm">Browse by category</h2>
         <CategoryNav />
       </section>
-    </div> -->
+    </div>
   </div>
 </BaseLayout>
