@@ -1,11 +1,11 @@
 "use client"
 
+import { BackToTop } from "@/components/blocks/back-to-top"
 import { useActiveAnchor } from "@/stores/active-anchor"
 import cn from "clsx"
 import { ChevronRight } from "lucide-react"
 import type { FC } from "react"
 import { useEffect, useRef } from "react"
-import { BackToTop } from "@/components/blocks/back-to-top"
 
 export type ToCHeadingType = {
   id: string
@@ -17,13 +17,6 @@ export type ToCHeadingType = {
 export type TOCProps = {
   headings: ToCHeadingType[]
 }
-
-const linkClassName = cn(
-  "text-xs font-medium transition",
-  "text-gray-600 dark:text-gray-400",
-  "hover:text-gray-800 dark:hover:text-gray-200",
-  "contrast-more:text-gray-700 contrast-more:dark:text-gray-100",
-)
 
 export const TOC: FC<TOCProps> = ({ headings }) => {
   const activeSlug = useActiveAnchor()
@@ -60,7 +53,7 @@ export const TOC: FC<TOCProps> = ({ headings }) => {
                 "flex items-start subpixel-antialiased transition-colors",
                 slug === activeSlug
                   ? "text-link hover:text-link-hover font-semibold"
-                  : "text-muted-foreground/70 hover:text-link-hover",
+                  : "text-muted-foreground hover:text-link-hover",
               )}
             >
               <span className="mt-1 mr-0.5 inline-flex w-3">
@@ -74,7 +67,10 @@ export const TOC: FC<TOCProps> = ({ headings }) => {
         ))}
       </ul>
       <div className="border-border mt-6 border-t pt-1.5">
-        <BackToTop className={linkClassName} hidden={activeIndex < 2}>
+        <BackToTop
+          className="text-xs font-medium transition text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 contrast-more:text-gray-700 contrast-more:dark:text-gray-100"
+          hidden={activeIndex < 2}
+        >
           Scroll to top
         </BackToTop>
       </div>
