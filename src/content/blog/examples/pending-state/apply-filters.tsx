@@ -111,8 +111,8 @@ export default function ApplyFilters({
           onValueChange={setSelectedStatus}
           disabled={pending}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Payment Status" />
+          <SelectTrigger aria-label="Status">
+            <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All</SelectItem>
