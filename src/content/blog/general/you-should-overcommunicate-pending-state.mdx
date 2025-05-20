@@ -8,7 +8,7 @@ layout: "@/layouts/post-layout.astro"
 import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
 
-I'm a member of the slow internet community. Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and **not always being sure if or what I'm waiting for when clicking buttons**.
+I'm a member of the slow internet community. Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and not always being sure if or what I'm waiting for when clicking buttons because **no one implemented any sort of pending state feedback** 😮‍💨.
 
 <Example
   name="pending-state-no-feedback"
@@ -25,7 +25,7 @@ Whenever a direct user action results in some sort of side effect - such as an A
   which triggers a navigation event, or some sort of UI change.
 </Callout>
 
-## Show me something is happening
+## Show what's happening
 
 By not communicating that something is happening, you're suddenly placing the user into an ominous waiting period where they're left wondering _is something supposed to be happening here?_
 
@@ -53,7 +53,7 @@ Simply switching the button text to "Saving..." immediately communicates _what_ 
 
 As an added bonus, confirming the action has finished successfully gives the user even more reassurance that everything is working as expected.
 
-## Show me where it will happen
+## Show where it will happen
 
 So far we've concentrated on showing users that something is happening, but we can go a step further by showing users _where_ something is going to happen.
 

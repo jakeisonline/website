@@ -3,19 +3,30 @@ import { useState } from "react"
 
 export default function NoFeedback() {
   const [hasFinished, setHasFinished] = useState(false)
+  const [didRageClick, setDidRageClick] = useState(false)
+  const [timeoutId, setTimeoutId] = useState<Number | null>(null)
 
-  // Random number between 1000 and 1500
-  const randomTime = Math.floor(Math.random() * 500) + 1000
+  // Random number between 1000 and 2300
+  const randomTime = Math.floor(Math.random() * 1300) + 1000
 
   const handleClick = () => {
-    window.setTimeout(() => {
+    if (timeoutId) {
+      setDidRageClick(true)
+      return
+    }
+
+    const newTimeoutId = window.setTimeout(() => {
       setHasFinished(true)
+      setTimeoutId(null)
     }, randomTime)
+
+    setTimeoutId(newTimeoutId)
   }
 
   const handleReset = (e: React.PointerEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     setHasFinished(false)
+    setDidRageClick(false)
   }
 
   return (
@@ -30,6 +41,12 @@ export default function NoFeedback() {
           <a href="#" onClick={handleReset}>
             (reset)
           </a>
+          {!timeoutId && didRageClick && (
+            <>
+              <br />
+              <span className="text-red-500">... and you rage clicked! 😡</span>
+            </>
+          )}
         </p>
       )}
     </div>

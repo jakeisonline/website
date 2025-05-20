@@ -15,7 +15,7 @@ import { HomePage } from "./home-page"
 
 export default function Navigation() {
   const [selected, setSelected] = useState<"home" | "orders" | "products">(
-    "orders",
+    "home",
   )
   const [pending, setPending] = useState<"home" | "orders" | "products" | null>(
     null,
