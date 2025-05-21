@@ -2,8 +2,8 @@
 import GlobalFooter from "@/components/blocks/global-footer.astro"
 import GlobalHeader from "@/components/blocks/global-header.astro"
 import { SITE_CONFIG } from "@/lib/config"
+import { defaultSEO, mergeSEO, type SEOOverride } from "@/lib/seo"
 import "@/styles/global.css"
-import type { SEOProps } from "astro-seo"
 import { SEO } from "astro-seo"
 import { ViewTransitions } from "astro:transitions"
 
@@ -11,15 +11,43 @@ interface Props {
   frontmatter?: Record<string, string>
   title?: string
   description?: string
-  seo?: SEOProps
+  seo?: SEOOverride
 }
 
 const {
   frontmatter,
   title = frontmatter?.title || "",
   description = frontmatter?.description || "",
-  seo,
+  seo = {},
 } = Astro.props
+
+const currentPath = Astro.url.pathname
+
+// First merge any overrides from child layouts
+const mergedSEO = mergeSEO(defaultSEO, seo)
+
+// Then apply page-specific values
+const seoConfig = {
+  ...mergedSEO,
+  title: `${title} | jakeisonline`,
+  description,
+  openGraph: {
+    basic: {
+      ...mergedSEO.openGraph!.basic,
+      title,
+      url: `${SITE_CONFIG.siteUrl}${currentPath}`,
+    },
+    optional: {
+      ...mergedSEO.openGraph!.optional,
+      description,
+    },
+  },
+  twitter: {
+    ...mergedSEO.twitter,
+    title,
+    description,
+  },
+}
 ---
 
 <script is:inline>
@@ -60,46 +88,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <SEO
-      title={`${title} | jakeisonline`}
-      description={description}
-      charset="UTF-8"
-      extend={{
-        link: [
-          {
-            rel: "icon",
-            type: "image/svg+xml",
-            href: "/favicon.svg",
-          },
-        ],
-        meta: [
-          {
-            name: "author",
-            content: "Jake Holman (@jakeisonline)",
-          },
-        ],
-      }}
-      openGraph={{
-        basic: {
-          type: "website",
-          title: title,
-          url: `${SITE_CONFIG.siteUrl}`,
-          image: `${SITE_CONFIG.siteUrl}/og.png`,
-        },
-        optional: {
-          description: description,
-          locale: "en_GB",
-          siteName: "jakeisonline",
-        },
-      }}
-      twitter={{
-        card: "summary_large_image",
-        title: title,
-        description: description,
-        image: `${SITE_CONFIG.siteUrl}/og.png`,
-      }}
-      {...seo}
-    />
+    <SEO {...seoConfig} />
     <slot name="head" />
 
     <ViewTransitions transition:animate="none" />
