@@ -1,6 +1,6 @@
 ---
 title: Detecting when an element becomes sticky
-description: Maybe you you'd like to style a sticky element differently when it becomes sticky, or simply run some code when it becomes sticky. You can't do it with CSS alone, but IntersectionObserver to the rescue!
+description: Want to style a sticky element differently when it becomes sticky, or simply run some code when it becomes sticky? You can't do it with CSS alone, but there is a way...
 layout: "@/layouts/post-layout.astro"
 ---
 
@@ -138,7 +138,7 @@ stickyElements.forEach((stickyElement) => {
       stickyElement.dataset.currentlySticky = String(isSticky)
     },
     {
-      rootMargin: "-14px 0px 0px 0px",
+      rootMargin: "-15px 0px 0px 0px",
       threshold: [1],
     },
   )
@@ -171,7 +171,7 @@ In addition to the callback, we're also passing some options to the `Intersectio
 
 ```js showLineNumbers startLineNumber=16
 {
-  rootMargin: "-14px 0px 0px 0px",
+  rootMargin: "-15px 0px 0px 0px",
   threshold: [1],
 }
 ```

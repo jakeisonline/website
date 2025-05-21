@@ -26,7 +26,7 @@ export default function JustSticky() {
             "#example-detecting-sticky-elements-simple",
           ),
           threshold: [1],
-          rootMargin: "-14px 0px 0px 0px",
+          rootMargin: "-15px 0px 0px 0px",
         },
       )
 
