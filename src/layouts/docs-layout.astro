@@ -4,8 +4,10 @@ import SubNav, { type SubNavItems } from "@/components/blocks/sub-nav.astro"
 import ToC from "@/components/blocks/toc.astro"
 import Breadcrumb from "@/components/ui/breadcrumb.astro"
 import { buildNavigation } from "@/content/utils/navigation"
+import { type SEOOverride } from "@/lib/seo"
 import { type ToCHeadingsType } from "@/lib/types"
 import BaseLayout from "./base-layout.astro"
+
 interface Props {
   frontmatter?: Record<string, string>
   title: string
@@ -23,9 +25,17 @@ const {
 const navItems = await buildNavigation()
 const currentPath = Astro.url.pathname
 const baseUrl = import.meta.env.BASE_URL
+
+const seo: SEOOverride = {
+  openGraph: {
+    basic: {
+      image: `/images/og-components.png`,
+    },
+  },
+}
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} seo={seo}>
   <div
     class="container flex-1 items-start pb-20 md:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 lg:pt-6"
   >

@@ -7,7 +7,10 @@ import { getAllPosts } from "@/lib/get-all-posts"
 const allBlogPosts = await getAllPosts()
 ---
 
-<BaseLayout title="Blog" description="A place of relative calm.">
+<BaseLayout
+  title="Articles & Guides"
+  description="A collection of handwritten thoughts on web development, and interactive guides on building better web experiences"
+>
   <div
     class="grid w-full grid-cols-1 gap-4 md:grid-cols-[2fr_1fr] lg:grid-cols-[1.5fr_1fr]"
   >

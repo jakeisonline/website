@@ -4,8 +4,8 @@ import ToC from "@/components/blocks/toc.astro"
 import Category from "@/components/category.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
+import { type SEOOverride } from "@/lib/seo"
 import { type ToCHeadingsType } from "@/lib/types"
-import type { SEOProps } from "astro-seo"
 import { Dot, Eye } from "lucide-react"
 
 interface Props {
@@ -26,37 +26,21 @@ const {
   url = Astro.url.pathname,
 } = Astro.props
 
-const seo: SEOProps = {
-  title: `${title} | jakeisonline`,
-  description: frontmatter?.description,
+const seo: SEOOverride = {
   openGraph: {
     basic: {
       type: "article",
-      title: `${title}`,
-      image: `${SITE_CONFIG.siteUrl}/og.png`,
     },
     article: {
       publishedTime: publishedAt,
       authors: ["Jake Holman (@jakeisonline)"],
     },
-    optional: {
-      description: frontmatter?.description,
-    },
   },
   twitter: {
     card: "summary_large_image",
-    title: `${title}`,
-    description: frontmatter?.description,
     image: `${SITE_CONFIG.siteUrl}/og.png`,
   },
   extend: {
-    link: [
-      {
-        rel: "icon",
-        type: "image/svg+xml",
-        href: "/favicon.svg",
-      },
-    ],
     meta: [
       {
         name: "twitter:label1",
@@ -79,7 +63,7 @@ const seo: SEOProps = {
 }
 ---
 
-<BaseLayout seo={seo}>
+<BaseLayout title={title} description={frontmatter?.description} seo={seo}>
   <JsonLd
     slot="head"
     headline={title}
