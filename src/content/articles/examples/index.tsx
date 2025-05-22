@@ -54,11 +54,11 @@ export const Index: Record<string, any> = {
   "detecting-sticky-elements-basic": {
     name: "detecting-sticky-elements-basic",
     component: React.lazy(
-      () => import("@/content/blog/examples/sticky-elements/just-sticky"),
+      () => import("@/content/articles/examples/sticky-elements/just-sticky"),
     ),
     source: (
       await import(
-        `@/content/blog/examples/sticky-elements/just-sticky.tsx?raw`
+        `@/content/articles/examples/sticky-elements/just-sticky.tsx?raw`
       )
     ).default,
   },
@@ -66,11 +66,13 @@ export const Index: Record<string, any> = {
     name: "detecting-sticky-elements-simple",
     component: React.lazy(
       () =>
-        import("@/content/blog/examples/sticky-elements/sticky-detect-simple"),
+        import(
+          "@/content/articles/examples/sticky-elements/sticky-detect-simple"
+        ),
     ),
     source: (
       await import(
-        `@/content/blog/examples/sticky-elements/sticky-detect-simple.tsx?raw`
+        `@/content/articles/examples/sticky-elements/sticky-detect-simple.tsx?raw`
       )
     ).default,
   },
@@ -79,12 +81,12 @@ export const Index: Record<string, any> = {
     component: React.lazy(
       () =>
         import(
-          "@/content/blog/examples/sticky-elements/intersection-observer-basics"
+          "@/content/articles/examples/sticky-elements/intersection-observer-basics"
         ),
     ),
     source: (
       await import(
-        `@/content/blog/examples/sticky-elements/intersection-observer-basics.tsx?raw`
+        `@/content/articles/examples/sticky-elements/intersection-observer-basics.tsx?raw`
       )
     ).default,
   },
