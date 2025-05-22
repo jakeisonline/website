@@ -1,23 +1,26 @@
 ---
 import Link from "@/components/ui/link.astro"
-import { CATEGORIES } from "@/lib/categories"
+import { createCategoryObject } from "@/lib/categories"
 
-const url = Astro.props.url
+interface Props {
+  category: any
+}
 
-// Extract the category from the url
-const categoryId = url.split("/").slice(3, -1).join("/")
+const { category } = Astro.props as Props
 
-const category = CATEGORIES.find((c) => c.id === categoryId)
+console.log("category", category)
+
+const categoryData = await createCategoryObject(category)
 ---
 
 {
-  category && (
+  categoryData && (
     <Link
       class="text-muted-foreground hover:text-foreground"
-      href={category?.url}
+      href={categoryData?.url}
     >
-      {category?.name}
+      {categoryData?.name}
     </Link>
   )
 }
-{!category && <span class="text-muted-foreground">Unknown</span>}
+{!categoryData && <span class="text-muted-foreground">Unknown</span>}

@@ -113,7 +113,7 @@ const seo: SEOOverride = {
         }
         <p class="text-muted-foreground mt-1 flex items-center gap-1 text-sm">
           <Dot className="size-4" />
-          <Category url={url} />
+          <Category category={frontmatter?.category} />
         </p>
       </div>
       <article class="mt-10 md:mt-16">
