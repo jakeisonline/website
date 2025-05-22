@@ -1,13 +1,15 @@
 import { getCollection, type DataEntryMap } from "astro:content"
 import type { CollectionKeys, PageNavConfig } from "./navigation.types"
 
+type PageData = {
+  title: string
+  isPrivate?: boolean
+  isNew?: boolean
+}
+
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
   general: {
     path: "/general",
-    order: {},
-  },
-  javascript: {
-    path: "/javascript",
     order: {},
   },
   components: {
@@ -39,14 +41,16 @@ export async function getNavItems(collectionName: CollectionKeys) {
     : pages.sort((a, b) => a.id.localeCompare(b.id))
 
   return sortedPages.map((page) => {
-    if (page.data.isPrivate) return null
+    const data = page.data as PageData
+
+    if (data.isPrivate) return null
 
     const href = `${config.path}/${page.id}`
 
     return {
       type: "item" as const,
       href,
-      text: page.data.title,
+      text: data.title,
       ...(config.newBadge ? { badge: config.newBadge(page) } : {}),
     }
   })
