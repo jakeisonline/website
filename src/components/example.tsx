@@ -1,4 +1,4 @@
-import { Index } from "@/content/blog/examples"
+import { Index } from "@/content/articles/examples"
 import { cn } from "@/lib/utils"
 import React from "react"
 

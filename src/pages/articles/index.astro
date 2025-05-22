@@ -2,9 +2,9 @@
 import CategoryNav from "@/components/blocks/category-nav.astro"
 import PostSnippet from "@/components/blocks/post-snippet.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
-import { getAllPosts } from "@/lib/get-all-posts"
+import { getCollection } from "astro:content"
 
-const allBlogPosts = await getAllPosts()
+const allArticles = await getCollection("articles")
 ---
 
 <BaseLayout
@@ -17,7 +17,7 @@ const allBlogPosts = await getAllPosts()
     <section>
       <h2 class="text-muted-foreground mb-4 text-sm">Stuff to read</h2>
 
-      {allBlogPosts.map((post) => <PostSnippet post={post} />)}
+      {allArticles.map((article) => <PostSnippet post={article} />)}
     </section>
     <!-- <div class="hidden md:block">
       <section>
