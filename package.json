@@ -47,6 +47,7 @@
     "reading-time": "^1.5.0",
     "recharts": "^2.15.1",
     "remark-reading-time": "^2.0.1",
+    "slugify": "^1.6.6",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.9",
     "tailwindcss-animate": "^1.0.7",
