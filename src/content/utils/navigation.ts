@@ -2,10 +2,6 @@ import { getCollection, type DataEntryMap } from "astro:content"
 import type { CollectionKeys, PageNavConfig } from "./navigation.types"
 
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
-  general: {
-    path: "/general",
-    order: {},
-  },
   components: {
     path: "/components",
     order: {
