@@ -8,8 +8,6 @@ interface Props {
 
 const { category } = Astro.props as Props
 
-console.log("category", category)
-
 const categoryData = await createCategoryObject(category)
 ---
 
