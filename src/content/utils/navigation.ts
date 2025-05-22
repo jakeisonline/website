@@ -15,6 +15,11 @@ const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
     newBadge: (page: any) =>
       page.data.isNew ? { label: "New", variant: "secondary" } : null,
   },
+  // TODO: This isn't really needed as this should only be (sub) nav for /components
+  articles: {
+    path: "/articles",
+    order: {},
+  },
 } as const
 
 export async function getNavItems(collectionName: CollectionKeys) {
