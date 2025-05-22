@@ -22,22 +22,6 @@ const articlesSchema = z.object({
   category: z.string(),
 })
 
-export const standardCollection = defineCollection({
-  loader: glob({
-    pattern: "**\/*.mdx",
-    base: "./src/content/blog/general",
-  }),
-  schema: defaultSchema,
-})
-
-export const javascriptCollection = defineCollection({
-  loader: glob({
-    pattern: "**\/*.mdx",
-    base: "./src/content/blog/javascript",
-  }),
-  schema: defaultSchema,
-})
-
 export const componentDocsCollection = defineCollection({
   loader: glob({
     pattern: "**\/*.mdx",
@@ -55,8 +39,6 @@ export const articlesCollection = defineCollection({
 })
 
 export const collections = {
-  general: standardCollection,
-  javascript: javascriptCollection,
   components: componentDocsCollection,
   articles: articlesCollection,
 }

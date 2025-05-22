@@ -1,19 +1,6 @@
 import { getCollection } from "astro:content"
 import slugify from "slugify"
 
-export const CATEGORIES = [
-  {
-    id: "general",
-    name: "General",
-    url: "/blog",
-  },
-  {
-    id: "javascript",
-    name: "JavaScript",
-    url: "/javascript",
-  },
-]
-
 export async function getCategories() {
   const articles = await getCollection("articles")
 
@@ -27,20 +14,7 @@ export async function getCategories() {
     // Create a slug from the category name
     const slug = slugifyCategory(category)
 
-    // We want "blog" to be named "General"
-    if (slug === "blog") {
-      return {
-        id: "blog",
-        name: "General",
-        url: "/blog",
-      }
-    }
-
-    return {
-      id: slug,
-      name: category,
-      url: `/${slug}`,
-    }
+    return createCategoryObject(category)
   })
 
   return categories
@@ -51,4 +25,20 @@ export function slugifyCategory(category: string) {
     lower: true,
     strict: true,
   })
+}
+
+export function createCategoryObject(category: string) {
+  if (category === "blog") {
+    return {
+      id: "blog",
+      name: "General",
+      url: "/blog",
+    }
+  }
+
+  return {
+    id: slugifyCategory(category),
+    name: category,
+    url: `/${slugifyCategory(category)}`,
+  }
 }

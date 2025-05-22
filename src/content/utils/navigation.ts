@@ -8,10 +8,6 @@ type PageData = {
 }
 
 const pageCollectionsConfig: Record<CollectionKeys, PageNavConfig> = {
-  general: {
-    path: "/general",
-    order: {},
-  },
   components: {
     path: "/components",
     order: {
