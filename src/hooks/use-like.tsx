@@ -13,12 +13,14 @@ export const useLike = () => {
 type LikeContextType = {
   likeId: string
   numLikes: number | undefined
+  atLimit: boolean
   handleLike: () => void
 }
 
 export const LikeContext = createContext<LikeContextType>({
   likeId: "",
   numLikes: undefined,
+  atLimit: false,
   handleLike: () => {},
 })
 
@@ -33,24 +35,33 @@ export const LikeContextProvider = ({
 }: LikeContextProviderProps) => {
   const likeId = useRef(initialLikeId)
   const [numLikes, setNumLikes] = useState<number | undefined>(undefined)
+  const [atLimit, setAtLimit] = useState(false)
 
   useEffect(() => {
     fetch(`/api/likes?targetId=${likeId.current}`)
       .then((res) => res.json())
-      .then((data) => setNumLikes(data.totalLikes))
+      .then((data) => {
+        setNumLikes(data.totalLikes)
+        setAtLimit(data.atLimit)
+      })
   }, [])
 
   const handleLike = () => {
     fetch(`/api/likes?targetId=${likeId.current}`, {
       method: "POST",
     })
-
-    setNumLikes((numLikes ?? 0) + 1)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setNumLikes((numLikes ?? 0) + 1)
+          setAtLimit(data.atLimit)
+        }
+      })
   }
 
   return (
     <LikeContext.Provider
-      value={{ likeId: likeId.current, numLikes, handleLike }}
+      value={{ likeId: likeId.current, numLikes, atLimit, handleLike }}
     >
       {children}
     </LikeContext.Provider>

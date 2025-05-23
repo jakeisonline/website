@@ -31,23 +31,17 @@ export const GET = async ({
       ),
     )
 
-  let totalLikes = 0
-  let userLikes = 0
-
   if (fetchedLikes.length === 0) {
     return new Response(JSON.stringify({ totalLikes: 0, userLikes: 0 }), {
       status: 200,
     })
   }
 
-  fetchedLikes.forEach((like) => {
-    if (like.LikesUserTable.userId === clientAddress) {
-      userLikes += like.LikesUserTable.likes
-    }
-    totalLikes += like.LikesTable.likes
-  })
+  const totalLikes = fetchedLikes[0].LikesTable.likes
+  const userLikes = fetchedLikes[0].LikesUserTable.likes
+  const atLimit = userLikes === SITE_CONFIG.options.maxLikes
 
-  return new Response(JSON.stringify({ totalLikes, userLikes }), {
+  return new Response(JSON.stringify({ totalLikes, userLikes, atLimit }), {
     status: 200,
   })
 }
@@ -70,21 +64,6 @@ export const POST = async ({
 
   queries.push(
     db
-      .insert(LikesTable)
-      .values({
-        id: targetId,
-        likes: 1,
-      })
-      .onConflictDoUpdate({
-        target: [LikesTable.id],
-        set: {
-          likes: sql`${LikesTable.likes} + 1`,
-        },
-      }),
-  )
-
-  queries.push(
-    db
       .insert(LikesUserTable)
       .values({
         userId: clientAddress,
@@ -96,11 +75,52 @@ export const POST = async ({
         set: {
           likes: sql`${LikesUserTable.likes} + 1`,
         },
-        where: sql`(SELECT likes FROM ${LikesTable} WHERE id = ${targetId}) < ${SITE_CONFIG.options.maxLikes}`,
-      }),
+        where: sql`${LikesUserTable.likes} <= ${SITE_CONFIG.options.maxLikes}`,
+      })
+      .returning(),
   )
 
-  await db.batch(queries as any)
+  queries.push(
+    db
+      .insert(LikesTable)
+      .values({
+        id: targetId,
+        likes: 1,
+      })
+      .onConflictDoUpdate({
+        target: [LikesTable.id],
+        set: {
+          likes: sql`${LikesTable.likes} + 1`,
+        },
+        where: sql`EXISTS (
+          SELECT 1 FROM ${LikesUserTable}
+          WHERE userId = ${clientAddress}
+          AND likeId = ${targetId}
+          AND likes <= ${SITE_CONFIG.options.maxLikes}
+        )`,
+      })
+      .returning(),
+  )
 
-  return new Response(JSON.stringify({ success: true }), { status: 200 })
+  const result = await db.batch(queries as any)
+
+  const totalLikes = result[1][0]?.likes
+  const userLikes = result[0][0]?.likes
+
+  if (userLikes === undefined || totalLikes === undefined) {
+    return new Response(
+      JSON.stringify({ success: false, message: "Like limit reached" }),
+      { status: 422 },
+    )
+  }
+
+  return new Response(
+    JSON.stringify({
+      success: true,
+      atLimit: userLikes === SITE_CONFIG.options.maxLikes,
+      totalLikes,
+      userLikes,
+    }),
+    { status: 200 },
+  )
 }

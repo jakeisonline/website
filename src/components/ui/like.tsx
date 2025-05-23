@@ -14,10 +14,10 @@ export function Like({ likeId }: LikeProps) {
 }
 
 export function LikeButton() {
-  const { numLikes, handleLike } = useLike()
+  const { numLikes, handleLike, atLimit } = useLike()
 
   return (
-    <Button variant="outline" onClick={handleLike}>
+    <Button variant="outline" onClick={handleLike} disabled={atLimit}>
       Like {numLikes}
     </Button>
   )
