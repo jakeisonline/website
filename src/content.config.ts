@@ -19,7 +19,7 @@ const componentsSchema = z.object({
 
 const articlesSchema = z.object({
   ...defaultSchema.shape,
-  category: z.string(),
+  category: z.string().default("blog"),
 })
 
 export const componentDocsCollection = defineCollection({
