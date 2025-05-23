@@ -92,12 +92,6 @@ export const POST = async ({
         set: {
           likes: sql`${LikesTable.likes} + 1`,
         },
-        where: sql`EXISTS (
-          SELECT 1 FROM ${LikesUserTable}
-          WHERE userId = ${clientAddress}
-          AND likeId = ${targetId}
-          AND likes <= ${SITE_CONFIG.options.maxLikes}
-        )`,
       })
       .returning(),
   )
