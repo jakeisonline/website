@@ -1,4 +1,5 @@
 // @ts-check
+import db from "@astrojs/db"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
@@ -11,10 +12,11 @@ import { remarkReadingTime } from "./src/lib/remark-reading-time"
 // https://astro.build/config
 export default defineConfig({
   site: "https://jakeisonline.com",
-  output: "static",
+  output: "server",
   trailingSlash: "never",
   prefetch: true,
   integrations: [
+    db(),
     mdx({
       remarkPlugins: [remarkReadingTime],
       syntaxHighlight: "shiki",
