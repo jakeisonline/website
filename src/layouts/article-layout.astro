@@ -2,6 +2,7 @@
 import JsonLd from "@/components/blocks/json-ld.astro"
 import ToC from "@/components/blocks/toc.astro"
 import Category from "@/components/category.astro"
+import { Like } from "@/components/ui/like"
 import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
 import { type SEOOverride } from "@/lib/seo"
@@ -131,6 +132,7 @@ const seo: SEOOverride = {
     >
       <div>On this page</div>
       <ToC headings={headings} />
+      <Like likeId="you-should-overcommunicate-pending-state" client:load />
     </nav>
   </div>
 </BaseLayout>
