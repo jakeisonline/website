@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "test": "vitest",
     "build": "astro check && astro build && pagefind --site .vercel/output/static && cp -r .vercel/output/static/pagefind public/",
     "build:registry": "tsx ./scripts/build-registry.ts",
     "build:index": "pagefind --site dist",
@@ -63,6 +64,7 @@
     "shiki": "^1.29.2",
     "tailwindcss-device": "^1.0.0",
     "tsx": "^4.19.2",
+    "vitest": "^3.1.4",
     "zod": "^3.24.2"
   }
 }

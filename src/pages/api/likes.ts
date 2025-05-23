@@ -1,5 +1,7 @@
 export const prerender = false
 
+// TODO: We need to protect against adding just garbage targetIds somehow
+
 import { SITE_CONFIG } from "@/lib/config"
 import { and, db, eq, LikesTable, LikesUserTable, sql } from "astro:db"
 
@@ -11,16 +13,16 @@ export const GET = async ({
   clientAddress: string
 }) => {
   const { searchParams } = new URL(request.url)
-  const articleId = searchParams.get("articleId")
+  const targetId = searchParams.get("targetId")
 
-  if (!articleId) {
-    return new Response("Article ID is required", { status: 400 })
+  if (!targetId) {
+    return new Response("targetId is required", { status: 400 })
   }
 
   const fetchedLikes = await db
     .select()
     .from(LikesTable)
-    .where(eq(LikesTable.id, articleId))
+    .where(eq(LikesTable.id, targetId))
     .innerJoin(
       LikesUserTable,
       and(
@@ -29,19 +31,21 @@ export const GET = async ({
       ),
     )
 
-  console.log(fetchedLikes)
-
   let totalLikes = 0
   let userLikes = 0
 
-  if (fetchedLikes.length > 0) {
-    fetchedLikes.forEach((like) => {
-      if (like.LikesUserTable.userId === clientAddress) {
-        userLikes += like.LikesUserTable.likes
-      }
-      totalLikes += like.LikesTable.likes
+  if (fetchedLikes.length === 0) {
+    return new Response(JSON.stringify({ totalLikes: 0, userLikes: 0 }), {
+      status: 200,
     })
   }
+
+  fetchedLikes.forEach((like) => {
+    if (like.LikesUserTable.userId === clientAddress) {
+      userLikes += like.LikesUserTable.likes
+    }
+    totalLikes += like.LikesTable.likes
+  })
 
   return new Response(JSON.stringify({ totalLikes, userLikes }), {
     status: 200,
@@ -59,7 +63,7 @@ export const POST = async ({
   const targetId = searchParams.get("targetId")
 
   if (!targetId) {
-    return new Response("Article ID is required", { status: 400 })
+    return new Response("targetId is required", { status: 400 })
   }
 
   const queries = []
@@ -92,7 +96,7 @@ export const POST = async ({
         set: {
           likes: sql`${LikesUserTable.likes} + 1`,
         },
-        where: sql`${LikesTable.likes} < ${SITE_CONFIG.options.maxLikes}`,
+        where: sql`(SELECT likes FROM ${LikesTable} WHERE id = ${targetId}) < ${SITE_CONFIG.options.maxLikes}`,
       }),
   )
 
