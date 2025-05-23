@@ -30,6 +30,9 @@ const seo: SEOOverride = {
   openGraph: {
     basic: {
       type: "article",
+      image: frontmatter?.coverImage
+        ? `${SITE_CONFIG.siteUrl}${frontmatter?.coverImage}`
+        : `${SITE_CONFIG.siteUrl}/og.png`,
     },
     article: {
       publishedTime: publishedAt,
@@ -38,7 +41,9 @@ const seo: SEOOverride = {
   },
   twitter: {
     card: "summary_large_image",
-    image: `${SITE_CONFIG.siteUrl}/og.png`,
+    image: frontmatter?.coverImage
+      ? `${SITE_CONFIG.siteUrl}${frontmatter?.coverImage}`
+      : `${SITE_CONFIG.siteUrl}/og.png`,
   },
   extend: {
     meta: [

@@ -20,6 +20,7 @@ const componentsSchema = z.object({
 const articlesSchema = z.object({
   ...defaultSchema.shape,
   category: z.string().default("blog"),
+  coverImage: z.string().optional(),
 })
 
 export const componentDocsCollection = defineCollection({
