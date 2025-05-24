@@ -12,7 +12,7 @@ import { remarkReadingTime } from "./src/lib/remark-reading-time"
 // https://astro.build/config
 export default defineConfig({
   site: "https://jakeisonline.com",
-  output: "server",
+  output: "static",
   trailingSlash: "never",
   prefetch: true,
   integrations: [
