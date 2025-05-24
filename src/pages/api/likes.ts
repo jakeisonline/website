@@ -23,7 +23,7 @@ export const GET = async ({
     .select()
     .from(LikesTable)
     .where(eq(LikesTable.id, targetId))
-    .leftJoin(
+    .rightJoin(
       LikesUserTable,
       and(
         eq(LikesUserTable.userId, clientAddress),
@@ -31,15 +31,13 @@ export const GET = async ({
       ),
     )
 
-  console.log("fetchedLikes", fetchedLikes)
-
   if (fetchedLikes.length === 0) {
     return new Response(JSON.stringify({ totalLikes: 0, userLikes: 0 }), {
       status: 200,
     })
   }
 
-  const totalLikes = fetchedLikes[0].LikesTable.likes
+  const totalLikes = fetchedLikes[0].LikesTable?.likes ?? 0
   const userLikes = fetchedLikes[0].LikesUserTable?.likes ?? 0
   const atLimit = userLikes === SITE_CONFIG.options.maxLikes
 
