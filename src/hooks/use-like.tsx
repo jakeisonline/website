@@ -44,7 +44,6 @@ export const LikeContextProvider = ({
     fetch(`/api/likes?targetId=${likeId.current}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data)
         setTotalLikes(data.totalLikes)
         setUserLikes(data.userLikes)
         setAtLimit(data.atLimit)

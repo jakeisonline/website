@@ -6,6 +6,7 @@ import { Like } from "@/components/ui/like"
 import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
 import { type SEOOverride } from "@/lib/seo"
+import { getFinalDirectory } from "@/lib/server-utils"
 import { type ToCHeadingsType } from "@/lib/types"
 import { Dot, Eye } from "lucide-react"
 
@@ -26,6 +27,8 @@ const {
   publishedAt = frontmatter?.publishedAt,
   url = Astro.url.pathname,
 } = Astro.props
+
+const articleId = getFinalDirectory(Astro.url.href)
 
 const seo: SEOOverride = {
   openGraph: {
@@ -132,7 +135,7 @@ const seo: SEOOverride = {
     >
       <div>On this page</div>
       <ToC headings={headings} />
-      <Like likeId="you-should-overcommunicate-pending-state" client:load />
+      <Like likeId={articleId} client:load />
     </nav>
   </div>
 </BaseLayout>
