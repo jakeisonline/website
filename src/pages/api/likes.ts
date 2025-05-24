@@ -4,6 +4,7 @@ export const prerender = false
 
 import { SITE_CONFIG } from "@/lib/config"
 import { and, db, eq, LikesTable, LikesUserTable, sql } from "astro:db"
+import crypto from "crypto"
 
 export const GET = async ({
   request,
@@ -19,6 +20,17 @@ export const GET = async ({
     return new Response("targetId is required", { status: 400 })
   }
 
+  if (!import.meta.env.IP_HASH_KEY) {
+    console.error("IP_HASH_KEY environment variable is not set")
+    return new Response("Server configuration error", { status: 500 })
+  }
+
+  // Create a consistent hash of the IP address
+  const ipHash = crypto
+    .createHmac("sha256", import.meta.env.IP_HASH_KEY)
+    .update(clientAddress)
+    .digest("hex")
+
   const fetchedLikes = await db
     .select({
       likes: LikesTable.likes,
@@ -29,7 +41,7 @@ export const GET = async ({
     .leftJoin(
       LikesUserTable,
       and(
-        eq(LikesUserTable.userId, clientAddress),
+        eq(LikesUserTable.userId, ipHash),
         eq(LikesTable.id, LikesUserTable.likeId),
       ),
     )
@@ -63,13 +75,25 @@ export const POST = async ({
     return new Response("targetId is required", { status: 400 })
   }
 
+  if (!import.meta.env.IP_HASH_KEY) {
+    console.error("IP_HASH_KEY environment variable is not set")
+    return new Response("Server configuration error", { status: 500 })
+  }
+
+  const ipHash = crypto
+    .createHmac("sha256", import.meta.env.IP_HASH_KEY)
+    .update(clientAddress)
+    .digest("hex")
+
+  console.log("ipHash", ipHash)
+
   const queries = []
 
   queries.push(
     db
       .insert(LikesUserTable)
       .values({
-        userId: clientAddress,
+        userId: ipHash,
         likeId: targetId,
         likes: 1,
       })
