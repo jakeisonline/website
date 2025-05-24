@@ -39,6 +39,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   adapter: vercel({
+    edgeMiddleware: true,
     includeFiles: ["./public/fonts/urbanist-latin-400-normal.woff"],
     webAnalytics: {
       enabled: true,
