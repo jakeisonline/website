@@ -20,10 +20,13 @@ export const GET = async ({
   }
 
   const fetchedLikes = await db
-    .select()
+    .select({
+      likes: LikesTable.likes,
+      userLikes: LikesUserTable.likes,
+    })
     .from(LikesTable)
     .where(eq(LikesTable.id, targetId))
-    .rightJoin(
+    .leftJoin(
       LikesUserTable,
       and(
         eq(LikesUserTable.userId, clientAddress),
@@ -37,8 +40,8 @@ export const GET = async ({
     })
   }
 
-  const totalLikes = fetchedLikes[0].LikesTable?.likes ?? 0
-  const userLikes = fetchedLikes[0].LikesUserTable?.likes ?? 0
+  const totalLikes = fetchedLikes[0].likes ?? 0
+  const userLikes = fetchedLikes[0].userLikes ?? 0
   const atLimit = userLikes === SITE_CONFIG.options.maxLikes
 
   return new Response(JSON.stringify({ totalLikes, userLikes, atLimit }), {
