@@ -16,6 +16,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/db": "^0.14.14",
     "@astrojs/mdx": "^4.2.6",
+    "@astrojs/node": "^9.2.2",
     "@astrojs/react": "^4.2.7",
     "@astrojs/sitemap": "^3.3.1",
     "@astrojs/ts-plugin": "^1.10.4",

@@ -15,6 +15,7 @@ interface Props {
   title: string
   description: string
   headings?: ToCHeadingsType
+  canLike?: boolean
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   title = frontmatter?.title,
   description = frontmatter?.description,
   headings,
+  canLike = true,
 } = Astro.props
 
 const navItems = await buildNavigation()
@@ -65,7 +67,7 @@ const seo: SEOOverride = {
       >
         <div>On this page</div>
         <ToC headings={headings} />
-        <Like likeId={docsId} client:load />
+        {canLike && <Like likeId={docsId} client:load />}
       </nav>
     </div>
   </div>

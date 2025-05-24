@@ -1,5 +1,3 @@
-"use server"
-
 import { URL } from "url"
 
 export function getFinalDirectory(url: string): string {
