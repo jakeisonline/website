@@ -3,8 +3,10 @@ import Pagination from "@/components/blocks/pagination.astro"
 import SubNav, { type SubNavItems } from "@/components/blocks/sub-nav.astro"
 import ToC from "@/components/blocks/toc.astro"
 import Breadcrumb from "@/components/ui/breadcrumb.astro"
+import { Like } from "@/components/ui/like"
 import { buildNavigation } from "@/content/utils/navigation"
 import { type SEOOverride } from "@/lib/seo"
+import { getFinalDirectory } from "@/lib/server-utils"
 import { type ToCHeadingsType } from "@/lib/types"
 import BaseLayout from "./base-layout.astro"
 
@@ -25,6 +27,8 @@ const {
 const navItems = await buildNavigation()
 const currentPath = Astro.url.pathname
 const baseUrl = import.meta.env.BASE_URL
+
+const docsId = getFinalDirectory(Astro.url.href)
 
 const seo: SEOOverride = {
   openGraph: {
@@ -61,6 +65,7 @@ const seo: SEOOverride = {
       >
         <div>On this page</div>
         <ToC headings={headings} />
+        <Like likeId={docsId} client:load />
       </nav>
     </div>
   </div>
