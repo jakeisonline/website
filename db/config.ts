@@ -16,9 +16,6 @@ const LikesTable = defineTable({
 
 const LikesUserTable = defineTable({
   columns: {
-    id: column.text({
-      primaryKey: true,
-    }),
     userId: column.text(),
     likeId: column.text(),
     likes: column.number(),
