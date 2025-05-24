@@ -6,7 +6,7 @@ export const SITE_CONFIG = {
     github: "https://github.com/jakeisonline/website",
   },
   options: {
-    maxLikes: 10,
+    maxLikes: 3,
   },
 }
 
