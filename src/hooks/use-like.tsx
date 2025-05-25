@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react"
+import { SITE_CONFIG } from "@/lib/config"
+import { createContext, useContext, useEffect, useState } from "react"
 
 export const useLike = () => {
   const context = useContext(LikeContext)
@@ -14,7 +15,7 @@ type LikeContextType = {
   likeId: string
   totalLikes: number | undefined
   userLikes: number | undefined
-  atLimit: boolean | undefined
+  userLimit: number
   handleLike: () => void
 }
 
@@ -22,7 +23,7 @@ export const LikeContext = createContext<LikeContextType>({
   likeId: "",
   totalLikes: undefined,
   userLikes: undefined,
-  atLimit: undefined,
+  userLimit: SITE_CONFIG.options.maxLikes,
   handleLike: () => {},
 })
 
@@ -35,27 +36,28 @@ export const LikeContextProvider = ({
   children,
   likeId: initialLikeId,
 }: LikeContextProviderProps) => {
-  const likeId = useRef(initialLikeId)
+  const likeId = initialLikeId
+  const userLimit = SITE_CONFIG.options.maxLikes
   const [totalLikes, setTotalLikes] = useState<number | undefined>(undefined)
   const [userLikes, setUserLikes] = useState<number | undefined>(undefined)
-  const [atLimit, setAtLimit] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
     handleFetch()
   }, [])
 
   const handleFetch = () => {
-    fetch(`/api/likes?targetId=${likeId.current}`)
+    fetch(`/api/likes?targetId=${likeId}`)
       .then((res) => res.json())
       .then((data) => {
         setTotalLikes(data.totalLikes)
         setUserLikes(data.userLikes)
-        setAtLimit(data.atLimit)
       })
   }
 
   const handleLike = () => {
-    fetch(`/api/likes?targetId=${likeId.current}`, {
+    if (userLikes === userLimit) return
+
+    fetch(`/api/likes?targetId=${likeId}`, {
       method: "POST",
     })
       .then((res) => res.json())
@@ -63,7 +65,6 @@ export const LikeContextProvider = ({
         if (data.success) {
           setTotalLikes((totalLikes ?? 0) + 1)
           setUserLikes(data.userLikes)
-          setAtLimit(data.atLimit)
         }
       })
   }
@@ -71,10 +72,10 @@ export const LikeContextProvider = ({
   return (
     <LikeContext.Provider
       value={{
-        likeId: likeId.current,
+        likeId,
         totalLikes,
         userLikes,
-        atLimit,
+        userLimit,
         handleLike,
       }}
     >

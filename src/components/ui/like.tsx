@@ -1,5 +1,4 @@
 import { LikeContextProvider, useLike } from "@/hooks/use-like"
-import { SITE_CONFIG } from "@/lib/config"
 import { HeartIcon } from "lucide-react"
 import { Button } from "./button"
 import { Skeleton } from "./skeleton"
@@ -17,11 +16,11 @@ export function Like({ likeId }: LikeProps) {
 }
 
 export function LikeButton() {
-  const { handleLike, atLimit } = useLike()
+  const { handleLike, userLimit, userLikes } = useLike()
 
   // We don't want the user to be able to like if they're at limit,
   // nor if we've not yet found out if they're at limit
-  const isDisabled = atLimit === undefined || atLimit
+  const isDisabled = userLikes === undefined || (userLikes ?? 0) >= userLimit
 
   return (
     <Button
@@ -37,17 +36,17 @@ export function LikeButton() {
 }
 
 export function LikeAction() {
-  const { userLikes, atLimit } = useLike()
+  const { userLikes, userLimit } = useLike()
 
   const userDidLike = userLikes && userLikes > 0
 
   const buttonText = () => {
-    if (atLimit) return "Loved!"
+    if (userLimit && (userLikes ?? 0) >= userLimit) return "Loved!"
     if (userDidLike) return `Liked`
     return "Like"
   }
 
-  const userVotesLeft = SITE_CONFIG.options.maxLikes - (userLikes ?? 0)
+  const userVotesLeft = userLimit - (userLikes ?? 0)
 
   const LikeActionDisplay = (): React.ReactNode => {
     if (userLikes === undefined) {
@@ -61,7 +60,7 @@ export function LikeAction() {
           <div
             className="w-full overflow-hidden absolute top-0 right-0 transition-all duration-300"
             style={{
-              height: `${(userVotesLeft / SITE_CONFIG.options.maxLikes) * 100}%`,
+              height: `${(userVotesLeft / userLimit) * 100}%`,
             }}
           >
             <HeartIcon className="fill-pink-200 stroke-transparent h-4 w-4" />
