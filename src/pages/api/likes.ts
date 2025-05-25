@@ -85,8 +85,6 @@ export const POST = async ({
     .update(clientAddress)
     .digest("hex")
 
-  console.log("ipHash", ipHash)
-
   const queries = []
 
   queries.push(
