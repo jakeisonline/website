@@ -135,7 +135,7 @@ const seo: SEOOverride = {
     >
       <div>On this page</div>
       <ToC headings={headings} />
-      <Like likeId={articleId} client:load />
+      <Like likeId={articleId} client:idle />
     </nav>
   </div>
 </BaseLayout>
