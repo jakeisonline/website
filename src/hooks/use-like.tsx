@@ -41,6 +41,10 @@ export const LikeContextProvider = ({
   const [atLimit, setAtLimit] = useState(false)
 
   useEffect(() => {
+    handleFetch()
+  }, [])
+
+  const handleFetch = () => {
     fetch(`/api/likes?targetId=${likeId.current}`)
       .then((res) => res.json())
       .then((data) => {
@@ -48,7 +52,7 @@ export const LikeContextProvider = ({
         setUserLikes(data.userLikes)
         setAtLimit(data.atLimit)
       })
-  }, [])
+  }
 
   const handleLike = () => {
     fetch(`/api/likes?targetId=${likeId.current}`, {
