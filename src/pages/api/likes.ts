@@ -47,9 +47,12 @@ export const GET = async ({
     )
 
   if (fetchedLikes.length === 0) {
-    return new Response(JSON.stringify({ totalLikes: 0, userLikes: 0 }), {
-      status: 200,
-    })
+    return new Response(
+      JSON.stringify({ totalLikes: 0, userLikes: 0, atLimit: false }),
+      {
+        status: 200,
+      },
+    )
   }
 
   const totalLikes = fetchedLikes[0].likes ?? 0
