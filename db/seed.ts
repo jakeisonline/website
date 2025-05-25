@@ -7,12 +7,12 @@ export default async function seed() {
     likes: 21,
   })
 
-  await db.insert(LikesUserTable).values({
-    // ::1 is the default IP address for localhost
-    userId: "::1",
-    likeId: "you-should-overcommunicate-pending-state",
-    likes: 1,
-  })
+  // await db.insert(LikesUserTable).values({
+  //   // ::1 is the default IP address for localhost
+  //   userId: "::1",
+  //   likeId: "you-should-overcommunicate-pending-state",
+  //   likes: 1,
+  // })
 
   await db.insert(LikesUserTable).values({
     // Normally we'd expect this to be a real IP address
