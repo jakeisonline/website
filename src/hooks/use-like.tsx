@@ -14,7 +14,7 @@ type LikeContextType = {
   likeId: string
   totalLikes: number | undefined
   userLikes: number | undefined
-  atLimit: boolean
+  atLimit: boolean | undefined
   handleLike: () => void
 }
 
@@ -22,7 +22,7 @@ export const LikeContext = createContext<LikeContextType>({
   likeId: "",
   totalLikes: undefined,
   userLikes: undefined,
-  atLimit: false,
+  atLimit: undefined,
   handleLike: () => {},
 })
 
@@ -38,7 +38,7 @@ export const LikeContextProvider = ({
   const likeId = useRef(initialLikeId)
   const [totalLikes, setTotalLikes] = useState<number | undefined>(undefined)
   const [userLikes, setUserLikes] = useState<number | undefined>(undefined)
-  const [atLimit, setAtLimit] = useState(false)
+  const [atLimit, setAtLimit] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
     handleFetch()
