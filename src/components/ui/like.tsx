@@ -11,12 +11,12 @@ interface LikeProps {
 export function Like({ likeId }: LikeProps) {
   return (
     <LikeContextProvider likeId={likeId}>
-      <LikeButton likeId={likeId} />
+      <LikeButton />
     </LikeContextProvider>
   )
 }
 
-export function LikeButton({ likeId }: LikeProps) {
+export function LikeButton() {
   const { handleLike, atLimit } = useLike()
 
   return (
