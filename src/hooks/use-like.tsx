@@ -70,10 +70,7 @@ export const LikeContextProvider = ({
       })
       const data = await res.json()
 
-      if (data.success) {
-        setTotalLikes(data.totalLikes)
-        setUserLikes(data.userLikes)
-      } else if (!data.success) {
+      if (!data.success) {
         setTotalLikes((prev) => (prev ?? 1) - 1)
         setUserLikes((prev) => (prev ?? 1) - 1)
         console.error("Failed to update likes:", data.message)
