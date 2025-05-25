@@ -45,28 +45,45 @@ export const LikeContextProvider = ({
     handleFetch()
   }, [])
 
-  const handleFetch = () => {
-    fetch(`/api/likes?targetId=${likeId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTotalLikes(data.totalLikes)
-        setUserLikes(data.userLikes)
-      })
+  const handleFetch = async () => {
+    try {
+      const res = await fetch(`/api/likes?targetId=${likeId}`)
+      const data = await res.json()
+      setTotalLikes(data.totalLikes)
+      setUserLikes(data.userLikes)
+    } catch (error) {
+      console.error("Failed to fetch likes:", error)
+    }
   }
 
-  const handleLike = () => {
-    if (userLikes === userLimit) return
+  const handleLike = async () => {
+    // Don't proceed if we're still loading or at limit
+    if (userLikes === undefined || userLikes >= userLimit) return
 
-    fetch(`/api/likes?targetId=${likeId}`, {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setTotalLikes((totalLikes ?? 0) + 1)
-          setUserLikes(data.userLikes)
-        }
+    // Update optimistically
+    setTotalLikes((prev) => (prev ?? 0) + 1)
+    setUserLikes((prev) => (prev ?? 0) + 1)
+
+    try {
+      const res = await fetch(`/api/likes?targetId=${likeId}`, {
+        method: "POST",
       })
+      const data = await res.json()
+
+      if (data.success) {
+        setTotalLikes(data.totalLikes)
+        setUserLikes(data.userLikes)
+      } else if (!data.success) {
+        setTotalLikes((prev) => (prev ?? 1) - 1)
+        setUserLikes((prev) => (prev ?? 1) - 1)
+        console.error("Failed to update likes:", data.message)
+      }
+    } catch (error) {
+      // Revert optimistic updates on error
+      setTotalLikes((prev) => (prev ?? 1) - 1)
+      setUserLikes((prev) => (prev ?? 1) - 1)
+      console.error("Failed to update likes:", error)
+    }
   }
 
   return (
