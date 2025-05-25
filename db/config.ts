@@ -1,4 +1,4 @@
-import { column, defineDb, defineTable } from "astro:db"
+import { column, defineDb, defineTable, sql } from "astro:db"
 
 // Tables
 
@@ -16,6 +16,10 @@ const LikesTable = defineTable({
 
 const LikesUserTable = defineTable({
   columns: {
+    id: column.text({
+      primaryKey: true,
+      default: sql`(uuid())`,
+    }),
     userId: column.text(),
     likeId: column.text(),
     likes: column.number(),
