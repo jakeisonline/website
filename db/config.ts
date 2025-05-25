@@ -20,7 +20,7 @@ const LikesUserTable = defineTable({
       primaryKey: true,
     }),
     userId: column.text(),
-    likeId: column.text(),
+    likeId: column.text({ references: () => LikesTable.columns.id }),
     likes: column.number(),
     createdAt: column.date({
       default: new Date(),
