@@ -89,6 +89,22 @@ export const POST = async ({
 
   queries.push(
     db
+      .insert(LikesTable)
+      .values({
+        id: targetId,
+        likes: 1,
+      })
+      .onConflictDoUpdate({
+        target: [LikesTable.id],
+        set: {
+          likes: sql`${LikesTable.likes} + 1`,
+        },
+      })
+      .returning(),
+  )
+
+  queries.push(
+    db
       .insert(LikesUserTable)
       .values({
         id: crypto.randomUUID(),
@@ -106,26 +122,10 @@ export const POST = async ({
       .returning(),
   )
 
-  queries.push(
-    db
-      .insert(LikesTable)
-      .values({
-        id: targetId,
-        likes: 1,
-      })
-      .onConflictDoUpdate({
-        target: [LikesTable.id],
-        set: {
-          likes: sql`${LikesTable.likes} + 1`,
-        },
-      })
-      .returning(),
-  )
-
   const result = await db.batch(queries as any)
 
-  const totalLikes = result[1][0]?.likes
-  const userLikes = result[0][0]?.likes
+  const totalLikes = result[0][0]?.likes
+  const userLikes = result[1][0]?.likes
 
   if (userLikes === undefined || totalLikes === undefined) {
     return new Response(
