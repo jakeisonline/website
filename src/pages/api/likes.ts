@@ -91,6 +91,7 @@ export const POST = async ({
     db
       .insert(LikesUserTable)
       .values({
+        id: crypto.randomUUID(),
         userId: ipHash,
         likeId: targetId,
         likes: 1,
