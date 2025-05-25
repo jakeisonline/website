@@ -19,12 +19,16 @@ export function Like({ likeId }: LikeProps) {
 export function LikeButton() {
   const { handleLike, atLimit } = useLike()
 
+  // We don't want the user to be able to like if they're at limit,
+  // nor if we've not yet found out if they're at limit
+  const isDisabled = atLimit === undefined || atLimit
+
   return (
     <Button
       variant="outline"
       className="p-0 hover:bg-pink-50/50 text-foreground group disabled:opacity-100"
       onClick={handleLike}
-      disabled={atLimit === undefined || atLimit}
+      disabled={isDisabled}
     >
       <LikeAction />
       <LikeCount />
