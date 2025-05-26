@@ -1,21 +1,23 @@
 import { LikeContextProvider, useLike } from "@/hooks/use-like"
+import { cn } from "@/lib/utils"
 import { HeartIcon } from "lucide-react"
 import { Button } from "./button"
 import { Skeleton } from "./skeleton"
 
 interface LikeProps {
   likeId: string
+  className?: string
 }
 
-export function Like({ likeId }: LikeProps) {
+export function Like({ likeId, className }: LikeProps) {
   return (
     <LikeContextProvider likeId={likeId}>
-      <LikeButton />
+      <LikeButton className={className} />
     </LikeContextProvider>
   )
 }
 
-export function LikeButton() {
+export function LikeButton({ className }: { className?: string }) {
   const { handleLike, userLimit, userLikes } = useLike()
 
   // We don't want the user to be able to like if they're at limit,
@@ -25,7 +27,10 @@ export function LikeButton() {
   return (
     <Button
       variant="outline"
-      className="p-0 hover:bg-pink-50/50 text-foreground group disabled:opacity-100"
+      className={cn(
+        "p-0 hover:bg-pink-50/50 text-foreground group disabled:opacity-100",
+        className,
+      )}
       onClick={handleLike}
       disabled={isDisabled}
     >

@@ -129,6 +129,11 @@ const seo: SEOOverride = {
       </div>
       <article class="mt-10 md:mt-16">
         <slot />
+        <Like
+          className="md:hidden"
+          likeId={articleId}
+          client:visible={{ rootMargin: "600px" }}
+        />
       </article>
     </div>
     <nav
@@ -137,7 +142,7 @@ const seo: SEOOverride = {
     >
       <div>On this page</div>
       <ToC headings={headings} />
-      <Like likeId={articleId} client:idle />
+      <Like likeId={articleId} client:load />
     </nav>
   </div>
 </BaseLayout>
