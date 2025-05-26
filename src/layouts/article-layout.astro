@@ -120,7 +120,9 @@ const seo: SEOOverride = {
             </p>
           )
         }
-        <p class="text-muted-foreground mt-1 flex items-center gap-1 text-sm">
+        <p
+          class="text-muted-foreground mt-1 flex items-center gap-1 text-xs md:text-sm"
+        >
           <Dot className="size-4" />
           <Category category={frontmatter?.category} />
         </p>
