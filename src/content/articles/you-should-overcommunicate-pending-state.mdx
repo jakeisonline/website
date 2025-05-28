@@ -1,15 +1,15 @@
 ---
 title: You should overcommunicate pending state
-description: As a begrudging member of the slow internet community, I'm appreciating the communication of pending state in interfaces now more than ever.
+description: As a sufferer of "having slow internet", I'm appreciating the feedback of when something is happening in interfaces now more than ever.
 category: blog
-publishedAt: "2025-03-31"
-layout: "@/layouts/article-layout.astro"
+publishedAt: "2025-05-27"
+coverImage: "/images/og-blog-pending-state.png"
 ---
 
 import Callout from "@/components/blocks/callout.astro"
 import Example from "@/components/example"
 
-I'm a member of the slow internet community. Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and not always being sure if or what I'm waiting for when clicking buttons because **no one implemented any sort of pending state feedback** 😮‍💨.
+I suffer from an ailment, called "having slow internet". Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and not always being sure if or what I'm waiting for when clicking buttons because **no one implemented any sort of pending state feedback** 😮‍💨.
 
 <Example
   name="pending-state-no-feedback"
@@ -26,7 +26,7 @@ Whenever a direct user action results in some sort of side effect - such as an A
   which triggers a navigation event, or some sort of UI change.
 </Callout>
 
-## Show what's happening
+## Show something is happening
 
 By not communicating that something is happening, you're suddenly placing the user into an ominous waiting period where they're left wondering _is something supposed to be happening here?_
 

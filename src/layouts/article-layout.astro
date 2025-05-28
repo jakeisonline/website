@@ -2,9 +2,11 @@
 import JsonLd from "@/components/blocks/json-ld.astro"
 import ToC from "@/components/blocks/toc.astro"
 import Category from "@/components/category.astro"
+import { Like } from "@/components/ui/like"
 import BaseLayout from "@/layouts/base-layout.astro"
 import { SITE_CONFIG } from "@/lib/config"
 import { type SEOOverride } from "@/lib/seo"
+import { getFinalDirectory } from "@/lib/server-utils"
 import { type ToCHeadingsType } from "@/lib/types"
 import { Dot, Eye } from "lucide-react"
 
@@ -26,10 +28,15 @@ const {
   url = Astro.url.pathname,
 } = Astro.props
 
+const articleId = getFinalDirectory(Astro.url.href)
+
 const seo: SEOOverride = {
   openGraph: {
     basic: {
       type: "article",
+      image: frontmatter?.coverImage
+        ? `${SITE_CONFIG.siteUrl}${frontmatter?.coverImage}`
+        : `${SITE_CONFIG.siteUrl}/og.png`,
     },
     article: {
       publishedTime: publishedAt,
@@ -38,7 +45,9 @@ const seo: SEOOverride = {
   },
   twitter: {
     card: "summary_large_image",
-    image: `${SITE_CONFIG.siteUrl}/og.png`,
+    image: frontmatter?.coverImage
+      ? `${SITE_CONFIG.siteUrl}${frontmatter?.coverImage}`
+      : `${SITE_CONFIG.siteUrl}/og.png`,
   },
   extend: {
     meta: [
@@ -111,13 +120,20 @@ const seo: SEOOverride = {
             </p>
           )
         }
-        <p class="text-muted-foreground mt-1 flex items-center gap-1 text-sm">
+        <p
+          class="text-muted-foreground mt-1 flex items-center gap-1 text-xs md:text-sm"
+        >
           <Dot className="size-4" />
           <Category category={frontmatter?.category} />
         </p>
       </div>
       <article class="mt-10 md:mt-16">
         <slot />
+        <Like
+          className="md:hidden"
+          likeId={articleId}
+          client:visible={{ rootMargin: "600px" }}
+        />
       </article>
     </div>
     <nav
@@ -126,6 +142,7 @@ const seo: SEOOverride = {
     >
       <div>On this page</div>
       <ToC headings={headings} />
+      <Like likeId={articleId} client:load />
     </nav>
   </div>
 </BaseLayout>

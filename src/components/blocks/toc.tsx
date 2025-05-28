@@ -66,9 +66,9 @@ export const TOC: FC<TOCProps> = ({ headings }) => {
           </li>
         ))}
       </ul>
-      <div className="border-border mt-6 border-t pt-1.5">
+      <div className="border-border mt-6 border-t">
         <BackToTop
-          className="text-xs font-medium transition text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 contrast-more:text-gray-700 contrast-more:dark:text-gray-100"
+          className="text-xs font-medium transition text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 contrast-more:text-gray-700 contrast-more:dark:text-gray-100 pl-0! mb-2"
           hidden={activeIndex < 2}
         >
           Scroll to top

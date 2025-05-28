@@ -5,6 +5,9 @@ export const SITE_CONFIG = {
   links: {
     github: "https://github.com/jakeisonline/website",
   },
+  options: {
+    maxLikes: 3,
+  },
 }
 
 export type SiteConfig = typeof SITE_CONFIG

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "test": "vitest",
     "build": "astro check && astro build && pagefind --site .vercel/output/static && cp -r .vercel/output/static/pagefind public/",
     "build:registry": "tsx ./scripts/build-registry.ts",
     "build:index": "pagefind --site dist",
@@ -13,7 +14,9 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/db": "^0.14.14",
     "@astrojs/mdx": "^4.2.6",
+    "@astrojs/node": "^9.2.2",
     "@astrojs/react": "^4.2.7",
     "@astrojs/sitemap": "^3.3.1",
     "@astrojs/ts-plugin": "^1.10.4",
@@ -65,6 +68,7 @@
     "shiki": "^1.29.2",
     "tailwindcss-device": "^1.0.0",
     "tsx": "^4.19.2",
+    "vitest": "^3.1.4",
     "zod": "^3.24.2"
   }
 }
