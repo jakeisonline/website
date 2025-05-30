@@ -49,8 +49,8 @@ Now any element with this class will be `static` by default, but will become `st
 
 If we take our Luma example from earlier, we can use sticky positioning on the date headings like so:
 
-<Example className="max-h-64" client:load>
-  <JustSticky client:visible />
+<Example className="max-h-64">
+  <JustSticky client:load />
 </Example>
 
 Now, our headings become sticky when they hit the top of the viewport, or in this case the top of the scrolling ancestor.
@@ -117,7 +117,7 @@ Finally, we'll use the `dataset` property to store the state of the element, as 
 
 We end up with something like this:
 
-<Example className="max-h-64" client:load>
+<Example className="max-h-64">
   <StickyDetect client:visible />
 </Example>
 
