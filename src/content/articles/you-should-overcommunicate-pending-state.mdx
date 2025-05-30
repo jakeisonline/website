@@ -7,15 +7,18 @@ coverImage: "/images/og-blog-pending-state.png"
 ---
 
 import Callout from "@/components/blocks/callout.astro"
-import Example from "@/components/example"
+import Example from "@/components/blocks/example.astro"
+import NoFeedback from "@/content/articles/examples/pending-state/no-feedback"
+import WithFeedback from "@/content/articles/examples/pending-state/with-feedback"
+import WithContext from "@/content/articles/examples/pending-state/with-context"
+import ApplyFilters from "@/content/articles/examples/pending-state/apply-filters"
+import Navigation from "@/content/articles/examples/pending-state/navigation"
 
 I suffer from an ailment, called "having slow internet". Symptoms include: frequent complaining about how slow the internet is, constant sighing each time a video suddenly stops to buffer, and not always being sure if or what I'm waiting for when clicking buttons because **no one implemented any sort of pending state feedback** 😮‍💨.
 
-<Example
-  name="pending-state-no-feedback"
-  caption="Lack of interface feedback can leave users wondering, eventually leading to worry or frustration."
-  client:load
-/>
+<Example caption="Lack of interface feedback can leave users wondering, eventually leading to worry or frustration.">
+  <NoFeedback client:load />
+</Example>
 
 Whenever a direct user action results in some sort of side effect - such as an API call - you should strongly consider communicating that something is happening.
 
@@ -32,11 +35,9 @@ By not communicating that something is happening, you're suddenly placing the us
 
 Keeping users waiting is already bad enough, but adding doubt into the mix is going to slow perceived performance. Ironically, not communicating any kind of pending state is going to make your interface feel _slower_ than it actually is.
 
-<Example
-  name="pending-state-with-feedback"
-  caption="Adding a loading spinner and disabling the button tells me something is happening and I should wait."
-  client:visible
-/>
+<Example caption="Adding a loading spinner and disabling the button tells me something is happening and I should wait.">
+  <WithFeedback client:visible />
+</Example>
 
 But only communicating something is happening is really half of the message. In the absence of any other visual feedback, I don't know what is happening or if the thing I thought would happen has happened successfully.
 
@@ -44,11 +45,9 @@ But only communicating something is happening is really half of the message. In 
 
 So, slap on a loading spinner and maybe disable the button, and call it a day, right? While the loading spinner is a ubiquitous indicator that something is happening, it doesn't communicate _what_ is happening.
 
-<Example
-  name="pending-state-with-context"
-  caption="Updating labels to indicate what is happening is a simple way to communicate more context."
-  client:visible
-/>
+<Example caption="Updating labels to indicate what is happening is a simple way to communicate more context.">
+  <WithContext client:visible />
+</Example>
 
 Simply switching the button text to "Saving..." immediately communicates _what_ is happening, not just that something is happening.
 
@@ -64,11 +63,9 @@ When a new filter is applied, we might be tempted to stick a big, whole page spi
 
 But I find this approach to often be disproportionate to the action, and it doesn't communicate where the action is happening. Also it's usually horribly jarring.
 
-<Example
-  name="pending-state-apply-filters"
-  caption="Showing where the user can expect their action to be reflected reduces the potential for jarring UI updates."
-  client:visible
-/>
+<Example caption="Showing where the user can expect their action to be reflected reduces the potential for jarring UI updates.">
+  <ApplyFilters client:visible />
+</Example>
 
 Instead, we isolate the pending state to where the user can expect the action to be reflected, reducing the potential for jarring UI updates once the async action is finished.
 
@@ -87,11 +84,9 @@ Now, it's not so simple.
 
 With all sorts of different ways to deliver content to a browser, that strong visual feedback is a bit unreliable.
 
-<Example
-  name="pending-state-navigation"
-  caption="Consider combining the above with prefetching and caching to further increase perceived performance."
-  client:visible
-/>
+<Example caption="Consider combining the above with prefetching and caching to further increase perceived performance.">
+  <Navigation client:visible />
+</Example>
 
 Much like in our filter example, it might be tempting to show a big, whole page spinner. But this method feels more graceful, communicates clearly that the user's action has been registered, and something is happening. It sure beats just sitting there wondering if you actually clicked that thing, or whether anything at all is happening.
 

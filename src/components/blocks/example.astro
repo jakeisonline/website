@@ -1,0 +1,31 @@
+---
+import { cn } from "@/lib/utils"
+
+interface Props {
+  caption?: string
+  class?: string
+}
+
+const { caption, class: className } = Astro.props
+---
+
+<div class="my-6">
+  <div
+    class={cn(
+      "ring-offset-background focus-visible:ring-ring bg-card text-card-foreground overflow-x-scroll rounded-lg border px-2 py-2 shadow-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none md:mx-2 @sm:px-4",
+    )}
+  >
+    <div
+      class="not-prose @container flex min-h-32 w-auto items-center justify-center px-0 py-2 md:px-4 md:py-6"
+    >
+      <slot />
+    </div>
+  </div>
+  {
+    caption && (
+      <div class="text-xs text-muted-foreground text-center md:px-4 mt-1.5 mx-auto">
+        {caption}
+      </div>
+    )
+  }
+</div>
