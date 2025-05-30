@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function JustSticky() {
+export default function StickyDetect() {
   useEffect(() => {
     const stickyElements = document.querySelectorAll(
       ".detect-sticky",
