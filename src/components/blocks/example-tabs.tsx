@@ -1,16 +1,11 @@
-import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Index } from "@/components/examples/react"
-import ExampleSource from "@/components/blocks/example-source"
-import ExampleComponent from "@/components/blocks/example-component"
 
-interface ExampleComponentWithCodeProps {
-  name: string
+interface ExampleTabsProps {
+  children: React.ReactNode
+  codeContent?: React.ReactNode
 }
 
-export default function ExampleComponentWithCode({
-  name,
-}: ExampleComponentWithCodeProps) {
+export function ExampleTabs({ children, codeContent }: ExampleTabsProps) {
   return (
     <Tabs defaultValue="example">
       <TabsList>
@@ -22,11 +17,11 @@ export default function ExampleComponentWithCode({
         className="rounded-lg border bg-card text-card-foreground shadow-sm"
       >
         <div className="not-prose flex min-h-44 w-auto items-center justify-center p-6 pt-6">
-          <ExampleComponent name={name} />
+          {children}
         </div>
       </TabsContent>
       <TabsContent value="code" className="mt-0">
-        <ExampleSource name={name} />
+        {codeContent}
       </TabsContent>
     </Tabs>
   )

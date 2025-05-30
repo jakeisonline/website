@@ -5,9 +5,17 @@ shortDescription: "Increment or decrement a numerical value, with step controls.
 component: "stepper"
 ---
 
-import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+import ExampleWithSource from "@/components/blocks/example-with-source.astro"
+import StepperDemo from "@/components/examples/react/stepper-demo"
+import StepperDemoRaw from "@/components/examples/react/stepper-demo?raw"
+import StepperShift from "@/components/examples/react/stepper-shift"
+import StepperShiftRaw from "@/components/examples/react/stepper-shift?raw"
+import StepperCollapse from "@/components/examples/react/stepper-collapse"
+import StepperCollapseRaw from "@/components/examples/react/stepper-collapse?raw"
 
-<ExampleComponentWithCode name={frontmatter.component} client:load />
+<ExampleWithSource code={StepperDemoRaw} client:load>
+  <StepperDemo client:load />
+</ExampleWithSource>
 
 ## Installation
 
@@ -108,10 +116,14 @@ An optional floating badge that displays the current value of the field.
 
 Shift stepping allowing users to increment or decrement a value by a larger amount. When `shift` is set, users can shift step by holding <kbd>Shift</kbd> while clicking a `<StepperButton>`, or by using the keyboard interactions.
 
-<ExampleComponentWithCode name="stepper-shift" client:visible />
+<ExampleWithSource code={StepperShiftRaw} client:load>
+  <StepperShift client:visible />
+</ExampleWithSource>
 
 ### Collapsing stepper fields
 
 You might want to display multiple quantities in a single row. For example, when ordering multiple product variants in bulk, or providing measurements for a product.
 
-<ExampleComponentWithCode name="stepper-collapse" client:visible />
+<ExampleWithSource code={StepperCollapseRaw} client:load>
+  <StepperCollapse client:visible />
+</ExampleWithSource>

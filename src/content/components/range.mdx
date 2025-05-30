@@ -5,9 +5,13 @@ shortDescription: "Set a minimum and maximum value using interactive sliders."
 component: "range"
 ---
 
-import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+import ExampleWithSource from "@/components/blocks/example-with-source.astro"
+import RangeFullDemo from "@/components/examples/react/range-full-demo"
+import RangeFullDemoRaw from "@/components/examples/react/range-full-demo?raw"
 
-<ExampleComponentWithCode name="range-full-demo" client:load />
+<ExampleWithSource code={RangeFullDemoRaw} client:load>
+  <RangeFullDemo client:load />
+</ExampleWithSource>
 
 ## Installation
 

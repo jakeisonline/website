@@ -6,9 +6,13 @@ shortDescription: "Select and edit values across a spreadsheet-like grid of cell
 component: "cells"
 ---
 
-import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+import ExampleWithSource from "@/components/blocks/example-with-source.astro"
+import Cells3x3 from "@/components/examples/react/cells-3x3"
+import Cells3x3Raw from "@/components/examples/react/cells-3x3?raw"
 
-<ExampleComponentWithCode name="cells-3x3" client:load />
+<ExampleWithSource code={Cells3x3Raw} client:load>
+  <Cells3x3 client:load />
+</ExampleWithSource>
 
 ## Installation
 

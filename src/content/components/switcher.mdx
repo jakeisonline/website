@@ -5,9 +5,15 @@ shortDescription: "Select a single value among a linear set of options."
 component: "switcher"
 ---
 
-import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+import ExampleWithSource from "@/components/blocks/example-with-source.astro"
+import SwitcherDemo from "@/components/examples/react/switcher-demo"
+import SwitcherDemoRaw from "@/components/examples/react/switcher-demo?raw"
+import SwitcherIcons from "@/components/examples/react/switcher-icons"
+import SwitcherIconsRaw from "@/components/examples/react/switcher-icons?raw"
 
-<ExampleComponentWithCode name="switcher" client:load />
+<ExampleWithSource code={SwitcherDemoRaw} client:load>
+  <SwitcherDemo client:load />
+</ExampleWithSource>
 
 ## Installation
 
@@ -63,4 +69,6 @@ Used to wrap a single `<button>` component.
 
 Icons add a quick way to visually identify the `SwitcherItem`, in addition to a little visual flair to the component.
 
-<ExampleComponentWithCode name="switcher-icons" client:visible />
+<ExampleWithSource code={SwitcherIconsRaw} client:load>
+  <SwitcherIcons client:visible />
+</ExampleWithSource>

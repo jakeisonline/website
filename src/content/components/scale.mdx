@@ -5,9 +5,13 @@ shortDescription: "Select a single value from a scale, similar to a horizontal r
 component: "scale"
 ---
 
-import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+import ExampleWithSource from "@/components/blocks/example-with-source.astro"
+import ScaleDemo from "@/components/examples/react/scale-demo"
+import ScaleDemoRaw from "@/components/examples/react/scale-demo?raw"
 
-<ExampleComponentWithCode name="scale" client:load />
+<ExampleWithSource code={ScaleDemoRaw} client:load>
+  <ScaleDemo client:load />
+</ExampleWithSource>
 
 ## Installation
 

@@ -6,9 +6,13 @@ slug: "tagger"
 component: "tagger"
 ---
 
-import ExampleComponentWithCode from "@/components/blocks/example-component-with-code"
+import ExampleWithSource from "@/components/blocks/example-with-source.astro"
+import TaggerDemo from "@/components/examples/react/tagger-demo"
+import TaggerDemoRaw from "@/components/examples/react/tagger-demo?raw"
 
-<ExampleComponentWithCode name="tagger-demo-full" client:load />
+<ExampleWithSource code={TaggerDemoRaw} client:load>
+  <TaggerDemo client:load />
+</ExampleWithSource>
 
 ## Installation
 

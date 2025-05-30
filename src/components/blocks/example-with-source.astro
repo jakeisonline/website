@@ -1,0 +1,16 @@
+---
+import { Code } from "astro-expressive-code/components"
+import { ExampleTabs } from "./example-tabs"
+
+interface Props {
+  lang?: string
+  code: string
+}
+
+const { lang = "jsx", code } = Astro.props
+---
+
+<ExampleTabs client:load>
+  <slot />
+  <Code slot="codeContent" lang={lang} code={code} class="mt-2" />
+</ExampleTabs>

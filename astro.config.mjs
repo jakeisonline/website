@@ -4,10 +4,10 @@ import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import vercel from "@astrojs/vercel"
-import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers"
 import playformCompress from "@playform/compress"
 import tailwindcss from "@tailwindcss/vite"
 import expressiveCode from "astro-expressive-code"
+
 import { defineConfig } from "astro/config"
 import { remarkReadingTime } from "./src/lib/remark-reading-time"
 
@@ -19,16 +19,7 @@ export default defineConfig({
   prefetch: true,
   integrations: [
     db(),
-    expressiveCode({
-      themes: ["plastic"],
-      plugins: [pluginLineNumbers()],
-      shiki: {
-        bundledLangs: ["javascript", "typescript", "jsx", "tsx"],
-      },
-      defaultProps: {
-        showLineNumbers: false,
-      },
-    }),
+    expressiveCode(),
     mdx({
       remarkPlugins: [remarkReadingTime],
     }),
