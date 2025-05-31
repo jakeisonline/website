@@ -22,9 +22,7 @@ export default function StickyDetect() {
           stickyElement.dataset.currentlySticky = String(isSticky)
         },
         {
-          root: document.querySelector(
-            "#example-detecting-sticky-elements-simple",
-          ),
+          root: document.querySelector("#example-sticky-detect"),
           threshold: [1],
           rootMargin: "-15px 0px 0px 0px",
         },
