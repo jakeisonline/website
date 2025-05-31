@@ -38,7 +38,10 @@ export async function getStaticPaths() {
 // Get path
 const { route } = Astro.params
 
-const articles = await getCollection("articles")
+const articles = await getCollection("articles", ({ data }) => {
+  const isPublished = data.publishedAt !== undefined
+  return import.meta.env.PROD ? data.publishedAt : true
+})
 const categories = await getCategories()
 
 // Check if the route is a category (exact match)

@@ -4,7 +4,10 @@ import PostSnippet from "@/components/blocks/post-snippet.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
 import { getCollection } from "astro:content"
 
-const allArticles = await getCollection("articles")
+const allArticles = await getCollection("articles", ({ data }) => {
+  const isPublished = data.publishedAt !== undefined
+  return import.meta.env.PROD ? isPublished : true
+})
 ---
 
 <BaseLayout
