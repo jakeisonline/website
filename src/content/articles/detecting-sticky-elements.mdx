@@ -111,15 +111,15 @@ By telling the observer to observe the element with a `rootMargin` of `-10px 0px
 
 We'll use `IntersectionObserver` to observe when our target sticky element leaves our root element, but we'll add a negative `rootMargin` to account for the sticky element's offset.
 
-We'll also check if the element is intersecting where we expect it to be to avoid false positives (i.e. we think the element is sticking, but we just haven't scrolled past it yet).
-
-Finally, we'll use the `dataset` property to store the state of the element, as that then allows us not only to style the element with simple CSS, but gives us the potential to run code when that state changes if desired.
-
-We end up with something like this:
-
 <Example id="example-sticky-detect" class="max-h-64">
   <StickyDetect client:visible />
 </Example>
+
+As an added measure here, we're also checking if the element is intersecting where we expect it to be to avoid false positives (i.e. we think the element is sticking, but we just haven't scrolled past it yet).
+
+Finally, we'll use the `dataset` property to store the state of the element, as that then allows us not only to style the element with simple CSS, but gives us the potential to run code when that state changes if desired.
+
+Combining all of that above, we end up with some plain JavaScript like so:
 
 ```js showLineNumbers
 const stickyElements = document.querySelectorAll(".detect-sticky")
