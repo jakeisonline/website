@@ -2,12 +2,9 @@
 import CategoryNav from "@/components/blocks/category-nav.astro"
 import PostSnippet from "@/components/blocks/post-snippet.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
-import { getCollection } from "astro:content"
+import { getAllArticles } from "@/lib/content"
 
-const allArticles = await getCollection("articles", ({ data }) => {
-  const isPublished = data.publishedAt !== undefined
-  return import.meta.env.PROD ? isPublished : true
-})
+const allArticles = await getAllArticles()
 ---
 
 <BaseLayout

@@ -9,10 +9,11 @@ import Link from "@/components/ui/link.astro"
 import ArticleLayout from "@/layouts/article-layout.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
 import { getCategories, slugifyCategory } from "@/lib/categories"
-import { getCollection, render, type CollectionEntry } from "astro:content"
+import { getAllArticles } from "@/lib/content"
+import { render, type CollectionEntry } from "astro:content"
 
 export async function getStaticPaths() {
-  const articles = await getCollection("articles")
+  const articles = await getAllArticles()
   const categories = await getCategories()
 
   const articlesMap = articles.map((article) => {
@@ -38,10 +39,7 @@ export async function getStaticPaths() {
 // Get path
 const { route } = Astro.params
 
-const articles = await getCollection("articles", ({ data }) => {
-  const isPublished = data.publishedAt !== undefined
-  return import.meta.env.PROD ? data.publishedAt : true
-})
+const articles = await getAllArticles()
 const categories = await getCategories()
 
 // Check if the route is a category (exact match)
