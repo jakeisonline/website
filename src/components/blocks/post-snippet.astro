@@ -1,10 +1,10 @@
 ---
-import { slugifyCategory } from "@/lib/categories"
+import { slugify } from "@/lib/utils"
 
 const { post } = Astro.props
 const postData = post.data
 
-const categorySlug = slugifyCategory(postData.category)
+const categorySlug = slugify(postData.category)
 ---
 
 <article
