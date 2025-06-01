@@ -8,16 +8,16 @@ import Heading6 from "@/components/mdx/heading-6.astro"
 import Link from "@/components/ui/link.astro"
 import ArticleLayout from "@/layouts/article-layout.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
-import { getCategories, slugifyCategory } from "@/lib/categories"
-import { getAllArticles } from "@/lib/content"
+import { getAllArticles, getAllCategories } from "@/lib/content"
+import { slugify } from "@/lib/utils"
 import { render, type CollectionEntry } from "astro:content"
 
 export async function getStaticPaths() {
   const articles = await getAllArticles()
-  const categories = await getCategories()
+  const categories = await getAllCategories()
 
   const articlesMap = articles.map((article) => {
-    const categorySlug = slugifyCategory(article.data.category)
+    const categorySlug = slugify(article.data.category)
     const articleUrl = `${categorySlug}/${article.id}`
 
     return {
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 const { route } = Astro.params
 
 const articles = await getAllArticles()
-const categories = await getCategories()
+const categories = await getAllCategories()
 
 // Check if the route is a category (exact match)
 const isCategory = categories.some((category) => category.id === route)
@@ -59,7 +59,7 @@ if (!isCategory) {
   // Find the article
   article = articles.find(
     (article) =>
-      slugifyCategory(article.data.category) === categorySlug &&
+      slugify(article.data.category) === categorySlug &&
       article.id === articleId,
   )
 
@@ -76,7 +76,7 @@ if (!isCategory) {
   // It's a category, show all articles in that category
   category = categories.find((cat) => cat.id === route)
   categoryArticles = articles.filter(
-    (article) => slugifyCategory(article.data.category) === route,
+    (article) => slugify(article.data.category) === route,
   )
 }
 ---

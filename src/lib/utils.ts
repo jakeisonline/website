@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
+import slugifyLib from "slugify"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -22,4 +23,11 @@ export function sanitizePathname(pathname: string) {
   const noTrailingSlash = noQueryParams.replace(/\/$/, "")
   const pathSegments = noTrailingSlash.split("/")
   return pathSegments.join("/")
+}
+
+export function slugify(category: string) {
+  return slugifyLib(category, {
+    lower: true,
+    strict: true,
+  })
 }

@@ -1,8 +1,8 @@
 ---
 import Badge from "@/components/ui/badge.astro"
-import { getCategories } from "@/lib/categories"
+import { getAllCategories } from "@/lib/content"
 
-const categories = await getCategories()
+const categories = await getAllCategories()
 ---
 
 <nav class="mt-3">

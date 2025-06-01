@@ -1,4 +1,5 @@
 import { isProduction } from "@/lib/server-utils"
+import { slugify } from "@/lib/utils"
 import { getCollection } from "astro:content"
 
 export async function getAllArticles() {
@@ -8,4 +9,41 @@ export async function getAllArticles() {
   })
 
   return articles
+}
+
+export async function getAllCategories() {
+  const articles = await getAllArticles()
+
+  // List unique categories
+  const uniqueCategories = [
+    ...new Set(articles.map((article) => article.data.category)),
+  ]
+
+  // Map categories into an object
+  const categories = uniqueCategories.map((category) => {
+    // Create a slug from the category name
+    const slug = slugify(category)
+
+    return createCategoryObject(category)
+  })
+
+  return categories
+}
+
+export function createCategoryObject(category: string) {
+  if (category === "blog") {
+    return {
+      id: "blog",
+      name: "General",
+      url: "/blog",
+    }
+  }
+
+  const slug = slugify(category)
+
+  return {
+    id: slug,
+    name: category,
+    url: `/${slug}`,
+  }
 }
