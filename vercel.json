@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/playground",
+      "destination": "/components",
+      "permanent": true
+    },
+    {
+      "source": "/playground/:match*",
+      "destination": "/components/:match*",
+      "permanent": true
+    }
+  ],
+  "trailingSlash": false
+}
