@@ -36,6 +36,7 @@ export function LikeButton({ className }: { className?: string }) {
       onClick={handleLike}
       disabled={isDisabled}
       aria-label={labelText}
+      aria-live="assertive"
     >
       <LikeAction />
       <LikeCount />
