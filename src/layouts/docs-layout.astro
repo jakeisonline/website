@@ -16,6 +16,7 @@ interface Props {
   description: string
   headings?: ToCHeadingsType
   canLike?: boolean
+  hasToC?: boolean
 }
 
 const {
@@ -24,6 +25,7 @@ const {
   description = frontmatter?.description,
   headings,
   canLike = true,
+  hasToC = true,
 } = Astro.props
 
 const navItems = await buildNavigation()
@@ -65,8 +67,14 @@ const seo: SEOOverride = {
         aria-labelledby="doc-outline-aria-label"
         class="sticky top-22 ml-4 hidden h-0 pl-3 text-sm xl:block"
       >
-        <div>On this page</div>
-        <ToC headings={headings} />
+        {
+          hasToC && (
+            <>
+              <div>On this page</div>
+              <ToC headings={headings} />
+            </>
+          )
+        }
         {canLike && <Like likeId={docsId} client:idle />}
       </nav>
     </div>
