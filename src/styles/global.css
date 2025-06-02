@@ -248,8 +248,18 @@
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--border)) transparent;
   }
-  .expressive-code .gutter .ln {
-    @apply text-muted/70! dark:text-foreground/70!;
+  .expressive-code {
+    .code {
+      @apply border-none!;
+    }
+
+    .gutter {
+      @apply sticky! left-0! z-10! border-r! border-white/10! bg-[#21252B]!;
+
+      .ln {
+        @apply text-muted/70! dark:text-foreground/70!;
+      }
+    }
   }
 }
 
