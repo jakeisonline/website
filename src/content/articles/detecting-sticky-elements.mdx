@@ -52,7 +52,10 @@ Now any element with this class will be `static` by default, but will become `st
 
 If we take our Luma example from earlier, we can use sticky positioning on the date headings like so:
 
-<Example class="max-h-64">
+<Example
+  class="max-h-64"
+  caption="We can use CSS to make an element sticky, but what about styling it differently when it becomes sticky? 🤔"
+>
   <JustSticky client:load />
 </Example>
 
@@ -114,7 +117,11 @@ By telling the observer to observe the element with a `rootMargin` of `-10px 0px
 
 We'll use `IntersectionObserver` to observe when our target sticky element leaves our root element, but we'll add a negative `rootMargin` to account for the sticky element's offset.
 
-<Example id="example-sticky-detect" class="max-h-64">
+<Example
+  id="example-sticky-detect"
+  class="max-h-64"
+  caption="The final solution, using IntersectionObserver to detect when an element becomes sticky."
+>
   <StickyDetect client:load />
 </Example>
 
