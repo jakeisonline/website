@@ -37,6 +37,7 @@ export function MobileNav({
           variant="ghost"
           size="icon"
           className={cn("size-6 hover:bg-transparent lg:hidden", className)}
+          aria-label="Open navigation menu"
         >
           <MenuIcon className="h-4 w-4" />
         </Button>
