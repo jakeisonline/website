@@ -48,18 +48,19 @@ function buildNav(items: SubNavItems) {
 const nav: SubNavItems = buildNav(navItems)
 ---
 
-<aside
+<nav
   class={cn(
-    "hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block",
+    "hidden top-20 z-30 -ml-2 w-full shrink-0 sticky lg:block text-sm",
     className,
   )}
+  aria-label="Navigation for components documentation"
   data-pagefind-ignore
 >
-  <ul>
+  <ul class="mb-5 grid gap-1">
     {
       nav.map((item) => {
         return <SubNavItem item={item as SubNavItemWithSubItems} />
       })
     }
   </ul>
-</aside>
+</nav>
