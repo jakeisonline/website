@@ -24,7 +24,7 @@ export default function StickyDetect() {
         {
           root: document.querySelector("#example-sticky-detect"),
           threshold: [1],
-          rootMargin: "-15px 0px 0px 0px",
+          rootMargin: "-12px 0px 0px 0px",
         },
       )
 
@@ -66,7 +66,9 @@ export default function StickyDetect() {
 }
 
 export function EventsContainer({ children }: { children: React.ReactNode }) {
-  return <section className="flex flex-col gap-4 mb-8">{children}</section>
+  return (
+    <section className="flex flex-col gap-4 mb-8 mt-0.5">{children}</section>
+  )
 }
 
 export function EventsHeading({ date }: { date: Date }) {
