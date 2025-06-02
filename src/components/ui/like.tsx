@@ -18,11 +18,13 @@ export function Like({ likeId, className }: LikeProps) {
 }
 
 export function LikeButton({ className }: { className?: string }) {
-  const { handleLike, userLimit, userLikes } = useLike()
+  const { handleLike, userLimit, userLikes, totalLikes } = useLike()
 
   // We don't want the user to be able to like if they're at limit,
   // nor if we've not yet found out if they're at limit
   const isDisabled = userLikes === undefined || (userLikes ?? 0) >= userLimit
+
+  const labelText = `Like this article. There are a total of ${totalLikes} likes. ${userLimit ? `You have ${userLimit - (userLikes ?? 0)} votes left.` : ""}`
 
   return (
     <Button
@@ -33,6 +35,7 @@ export function LikeButton({ className }: { className?: string }) {
       )}
       onClick={handleLike}
       disabled={isDisabled}
+      aria-label={labelText}
     >
       <LikeAction />
       <LikeCount />
@@ -60,7 +63,7 @@ export function LikeAction() {
 
     return (
       <>
-        <div className="relative h-4 w-4">
+        <div className="relative h-4 w-4" aria-hidden>
           <HeartIcon className="fill-pink-500 stroke-transparent" />
           <div
             className="w-full overflow-hidden absolute top-0 right-0 transition-all duration-300"
@@ -77,7 +80,10 @@ export function LikeAction() {
   }
 
   return (
-    <div className="flex items-center gap-2 border-r border-border h-full px-3">
+    <div
+      className="flex items-center gap-2 border-r border-border h-full px-3"
+      aria-hidden
+    >
       <LikeActionDisplay />
     </div>
   )
