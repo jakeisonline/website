@@ -175,7 +175,7 @@ You'll want to change the check here if you're using something other than the `t
 stickyElement.dataset.currentlySticky = String(isSticky)
 ```
 
-We set the `dataset.currentlySticky` property to the `isSticky` variable, which we can then use in our CSS to style the element accordingly. You'll want to change
+We set the `dataset.currentlySticky` property to the `isSticky` variable, which we can then use in our CSS to style the element accordingly.
 
 In addition to the callback, we're also passing some options to the `IntersectionObserver`.
 
@@ -186,7 +186,7 @@ In addition to the callback, we're also passing some options to the `Intersectio
 }
 ```
 
-Add a negative top margin to the observer's root, to account for the sticky element's offset (including margin and padding). It's a good idea to a couple of pixels on top of the sticky offset, as sticky elements don't become sticky until moving past the sticky offset, and there can be rounding errors. You should play around to get a feel for the right value.
+Adding a negative top margin to the observer's root, we account for the sticky element's offset (including margin and padding). It's a good idea to add a couple of pixels on top of the sticky offset, as sticky elements don't become sticky until moving past the sticky offset, and there can be rounding errors. You should play around to get a feel for the right value.
 
 The [`threshold` option](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) isn't something we've covered in detail here, but it's an array of numbers between 0 and 1 that represent the percentage of the element that must be visible in order to be considered an intersection.
 
