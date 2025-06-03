@@ -1,14 +1,17 @@
 ---
-import { slugify } from "@/lib/utils"
+import { cn, slugify } from "@/lib/utils"
 
-const { post } = Astro.props
+const { post, class: className = "" } = Astro.props
 const postData = post.data
 
 const categorySlug = slugify(postData.category)
 ---
 
 <article
-  class="hover:bg-muted/50 group relative isolate -ml-5 flex flex-col gap-2 rounded-lg px-5 py-4"
+  class={cn(
+    "hover:bg-muted/50 group relative isolate -ml-5 flex flex-col gap-2 rounded-lg px-5 py-4",
+    className,
+  )}
 >
   <h2 class="text-lg font-bold">
     <a href={`/${categorySlug}/${post.id}`} class="group-hover:text-link">

@@ -1,0 +1,23 @@
+---
+import ComponentSnippet from "@/components/blocks/component-snippet.astro"
+import { getCollection } from "astro:content"
+
+const componentPages = (await getCollection("components")).filter(
+  (page) => page.data.component !== undefined,
+)
+
+const latestComponents = componentPages.slice(0, 3)
+---
+
+<div
+  class="not-prose mt-3 grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-scroll pb-3"
+>
+  {
+    latestComponents.map((componentPage) => (
+      <ComponentSnippet
+        data={componentPage}
+        class="snap-start min-w-[calc(100svw-2.5rem)] sm:min-w-72"
+      />
+    ))
+  }
+</div>

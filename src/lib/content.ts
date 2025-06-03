@@ -2,11 +2,19 @@ import { isProduction } from "@/lib/server-utils"
 import { slugify } from "@/lib/utils"
 import { getCollection } from "astro:content"
 
-export async function getAllArticles() {
+export interface GetAllArticlesOptions {
+  limit?: number
+}
+
+export async function getAllArticles(options?: GetAllArticlesOptions) {
   const articles = await getCollection("articles", ({ data }) => {
     const isPublished = data.publishedAt !== undefined
     return isProduction() ? isPublished : true
   })
+
+  if (options?.limit) {
+    return articles.slice(0, options.limit)
+  }
 
   return articles
 }

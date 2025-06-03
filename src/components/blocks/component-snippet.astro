@@ -1,0 +1,42 @@
+---
+import ExampleComponent from "@/components/blocks/example-component"
+import Badge from "@/components/ui/badge.astro"
+import Card from "@/components/ui/card.astro"
+import { cn } from "@/lib/utils"
+
+const { data, class: className = "" } = Astro.props
+
+const id = data.id
+const component = data.data
+---
+
+<a href={`/components/${id}`} class={cn("group relative min-w-72", className)}>
+  <Card class="pointer-events-none flex justify-center p-6 pt-8">
+    <ExampleComponent
+      name={component.component || ""}
+      client:visible
+      data-astro-rerun
+    />
+    <div
+      class="to-background/95 absolute right-1 bottom-1 left-1 bg-gradient-to-b from-transparent from-5% to-70% px-3 py-2.5 transition-colors duration-200"
+    >
+      <div class="flex items-center">
+        <h2
+          class="group-hover:text-link-hover flex text-lg font-bold group-hover:underline group-hover:decoration-dotted group-hover:underline-offset-4"
+        >
+          {component.title}
+        </h2>
+        {
+          component.isNew && (
+            <Badge variant="secondary" class="ml-1.5 mt-0.5 text-2xs px-2 py-0">
+              New
+            </Badge>
+          )
+        }
+      </div>
+      <p class="text-muted-foreground group-hover:text-foreground text-sm">
+        {component.shortDescription}
+      </p>
+    </div>
+  </Card>
+</a>

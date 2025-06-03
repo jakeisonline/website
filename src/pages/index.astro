@@ -1,5 +1,7 @@
 ---
-import Link from "@/components/ui/link.astro"
+import ArticleTicker from "@/components/blocks/article-ticker.astro"
+import ComponentTicker from "@/components/blocks/component-ticker.astro"
+import ToolsTicker from "@/components/blocks/tools-ticker.astro"
 import BaseLayout from "@/layouts/base-layout.astro"
 ---
 
@@ -26,37 +28,31 @@ import BaseLayout from "@/layouts/base-layout.astro"
         </ul>
       </div>
     </h1>
-    <div
-      class="animate-in fade-in slide-in-from-top-2 mb-20 max-w-4xl duration-1000"
-    >
-      <p class="paragraph">
+    <div class="mb-20 flex max-w-4xl flex-col gap-4">
+      <p class="paragraph animate-in fade-in slide-in-from-top-2 duration-1000">
         My name is <strong class="inline-block font-semibold"
           >Jake Holman</strong
         >. I've been doing software stuff for ages. I'm one of those coding,
         designing, product people. 🤹
       </p>
-      <p class="paragraph">
-        Need a quick way to bootstrap a Next.js project with auth baked in? I've
-        made <Link href="https://next-auth-template-demo.vercel.app" referrer
-          >next-auth-template</Link
-        > just for you.
-      </p>
-      <p class="paragraph">
-        I made <Link href="https://numberformat.app" referrer
-          >numberformat.app</Link
-        > to help people understand the various ways of localising numbers.
-      </p>
-      <p class="paragraph">
-        Consider checking out my <Link
-          href="https://jakeisonline.com/playground">🛝 playground</Link
-        > too, where I provide some free components and experiments for you to play
-        with.
-      </p>
-      <p class="paragraph">
-        I currently work at <Link href="https://www.akqa.com/leap/"
-          >AKQA Leap</Link
-        > as their Head of Product.
-      </p>
+      <div class="animate-in fade-in slide-in-from-top-2 duration-1000">
+        <h2 class="paragraph mb-4">
+          ✍️ Here's some stuff I've recently written about
+        </h2>
+        <ArticleTicker />
+      </div>
+      <div class="animate-in fade-in slide-in-from-top-2 duration-1000">
+        <h2 class="paragraph mb-4">
+          🧑‍💻 I've made some free and open source components
+        </h2>
+        <ComponentTicker />
+      </div>
+      <!-- <div class="animate-in fade-in slide-in-from-top-2 duration-1000">
+        <h2 class="paragraph mb-4">
+          🧰 And some tools and apps you might like
+        </h2>
+        <ToolsTicker />
+      </div> -->
     </div>
   </div>
 </BaseLayout>
