@@ -14,7 +14,7 @@ const { title, description, href, imageSrc, imageAlt }: Props = Astro.props
 ---
 
 <article
-  class="hover:bg-muted/50 group border-border relative isolate flex w-full max-w-[470px] snap-start flex-col gap-2 rounded-lg border text-sm sm:min-w-72 sm:text-base"
+  class="hover:bg-muted/50 group border-border relative isolate flex max-w-[470px] min-w-[calc(100svw-2.5rem)] snap-start flex-col gap-2 rounded-lg border text-sm sm:min-w-72 sm:text-base"
 >
   <div class="relative">
     <Image
