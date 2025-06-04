@@ -1,5 +1,6 @@
 ---
 import ComponentSnippet from "@/components/blocks/component-snippet.astro"
+import MoreSnap from "@/components/ui/more-snap.astro"
 import { getCollection } from "astro:content"
 
 const componentPages = (await getCollection("components")).filter(
@@ -10,7 +11,7 @@ const latestComponents = componentPages.slice(0, 3)
 ---
 
 <div
-  class="not-prose no-scrollbar mt-3 grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-scroll pb-3"
+  class="not-prose no-scrollbar relative mt-3 grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-scroll pb-3"
 >
   {
     latestComponents.map((componentPage) => (
@@ -20,4 +21,6 @@ const latestComponents = componentPages.slice(0, 3)
       />
     ))
   }
+
+  <MoreSnap href="/components" aria-label="View all components" />
 </div>

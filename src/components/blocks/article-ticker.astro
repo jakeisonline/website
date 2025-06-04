@@ -1,5 +1,6 @@
 ---
 import PostSnippet from "@/components/blocks/post-snippet.astro"
+import MoreSnap from "@/components/ui/more-snap.astro"
 import { getAllArticles } from "@/lib/content"
 
 const allArticles = await getAllArticles({ limit: 3 })
@@ -16,4 +17,6 @@ const allArticles = await getAllArticles({ limit: 3 })
       />
     ))
   }
+
+  <MoreSnap href="/articles" aria-label="View all articles" />
 </div>

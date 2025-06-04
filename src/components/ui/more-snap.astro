@@ -1,0 +1,25 @@
+---
+import Link from "@/components/ui/link.astro"
+import { cn } from "@/lib/utils"
+import { ArrowRight } from "lucide-react"
+
+interface Props {
+  "href": string
+  "aria-label": string
+  "class"?: string
+}
+
+const { href, "aria-label": ariaLabel, "class": className }: Props = Astro.props
+---
+
+<Link
+  href={href}
+  aria-label={ariaLabel}
+  class={cn(
+    "flex w-[10px] snap-start flex-col items-start justify-center gap-2 pr-3",
+    className,
+  )}
+>
+  <ArrowRight className="size-4" />
+  <span class="text-sm">More</span>
+</Link>
