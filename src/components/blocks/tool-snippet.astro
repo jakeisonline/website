@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets"
+import { ExternalLink } from "lucide-react"
+
+interface Props {
+  title: string
+  description: string
+  href: string
+  imageSrc: string
+  imageAlt: string
+}
+
+const { title, description, href, imageSrc, imageAlt }: Props = Astro.props
+---
+
+<article
+  class="hover:bg-muted/50 group border-border relative isolate flex w-full max-w-[470px] snap-start flex-col gap-2 rounded-lg border text-sm sm:min-w-72 sm:text-base"
+>
+  <div class="relative">
+    <Image
+      src={imageSrc}
+      alt={imageAlt}
+      width={1200}
+      height={630}
+      class="h-auto w-full"
+    />
+    <div class="bg-background absolute top-3 right-3 rounded-full p-1.5">
+      <ExternalLink className="size-4" />
+    </div>
+  </div>
+  <div class="px-5 pb-4">
+    <h2 class="text-lg font-bold">
+      <a href={href} target="_blank" class="group-hover:text-link">
+        <span class="absolute inset-0 z-10"></span>
+        {title}</a
+      >
+    </h2>
+    <p>{description}</p>
+    <p
+      class="text-muted-foreground group-hover:text-foreground mt-1 text-xs font-semibold"
+    >
+      <a href={href} target="_blank"> View </a>
+    </p>
+  </div>
+</article>

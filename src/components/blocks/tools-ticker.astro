@@ -1,20 +1,22 @@
 ---
-
+import ToolSnippet from "@/components/blocks/tool-snippet.astro"
 ---
 
-<article
-  class="hover:bg-muted/50 group relative isolate -ml-5 flex flex-col gap-2 rounded-lg px-5 py-4"
+<div
+  class="no-scrollbar inline-grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-scroll pb-3"
 >
-  <h2 class="text-lg font-bold">
-    <a href="" class="group-hover:text-link">
-      <span class="absolute inset-0 z-10"></span>
-      Title</a
-    >
-  </h2>
-  <p>Description</p>
-  <p
-    class="text-muted-foreground group-hover:text-foreground mt-1 text-xs font-semibold"
-  >
-    <a href="">View</a>
-  </p>
-</article>
+  <ToolSnippet
+    title="numberformat.app"
+    description="A tiny web-based tool to display number formats in every locale"
+    href="https://numberformat.app"
+    imageSrc="https://numberformat.app/opengraph-image"
+    imageAlt="Every number format, for every locale"
+  />
+  <ToolSnippet
+    title="next-auth-template"
+    description="A Next.js template with auth already done, so you can get to building"
+    href="https://next-auth-template-demo.vercel.app"
+    imageSrc="https://next-auth-template-demo.vercel.app/opengraph-image.png"
+    imageAlt="Sign up and auth, super quick"
+  />
+</div>
