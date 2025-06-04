@@ -152,6 +152,10 @@
   html {
     font-size: 22px;
   }
+
+  .no-scrollbar {
+    @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  }
 }
 
 @layer base {
