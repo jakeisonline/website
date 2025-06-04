@@ -1,6 +1,6 @@
 ---
 import ComponentSnippet from "@/components/blocks/component-snippet.astro"
-import MoreSnap from "@/components/ui/more-snap.astro"
+import TickerMore from "@/components/ui/ticker-more.astro"
 import { getCollection } from "astro:content"
 
 const componentPages = (await getCollection("components")).filter(
@@ -22,5 +22,5 @@ const latestComponents = componentPages.slice(0, 3)
     ))
   }
 
-  <MoreSnap href="/components" aria-label="View all components" />
+  <TickerMore href="/components" aria-label="View all components" />
 </div>
