@@ -7,7 +7,7 @@ import {
   Lightbulb,
   OctagonAlert,
   ShieldAlert,
-} from "lucide-astro"
+} from "lucide-react"
 
 interface Props {
   type: "note" | "tip" | "important" | "warning" | "caution"
@@ -70,7 +70,7 @@ const Icon = icons[type]
   {
     title && (
       <div class="-mb-1.5 flex items-start gap-1.5 mt-4">
-        <Icon class={cn("size-4", iconStyles({ icon: type }))} />
+        <Icon className={cn("size-4", iconStyles({ icon: type }))} />
         {title && <strong class="text-sm font-bol leading-4">{title}</strong>}
       </div>
       <slot />
@@ -78,7 +78,7 @@ const Icon = icons[type]
   }
   {
     !title && (
-      <Icon class={cn("size-4 absolute mt-4.5", iconStyles({ icon: type }))} />
+      <Icon className={cn("size-4 absolute mt-4.5", iconStyles({ icon: type }))} />
       <div class="indent-5.5">
         <slot />
       </div>

@@ -95,9 +95,6 @@ importers:
       cmdk:
         specifier: 1.1.1
         version: 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      lucide-astro:
-        specifier: ^0.482.0
-        version: 0.482.0(astro@5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.34.9)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))
       lucide-react:
         specifier: ^0.477.0
         version: 0.477.0(react@19.0.0)
@@ -3227,11 +3224,6 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
-
-  lucide-astro@0.482.0:
-    resolution: {integrity: sha512-K2xV/CQBho6PxcAuVjsqQPNfp8SA5QvNckEawehe2K8n4SKioHuslI6oEweqN2DIfOtCJCaQvoT4eynuk/rMPA==}
-    peerDependencies:
-      astro: '>=2.7.1'
 
   lucide-react@0.477.0:
     resolution: {integrity: sha512-yCf7aYxerFZAbd8jHJxjwe1j7jEMPptjnaOqdYeirFnEy85cNR3/L+o0I875CYFYya+eEVzZSbNuRk8BZPDpVw==}
@@ -8055,10 +8047,6 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
-
-  lucide-astro@0.482.0(astro@5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.34.9)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)):
-    dependencies:
-      astro: 5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.34.9)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)
 
   lucide-react@0.477.0(react@19.0.0):
     dependencies:
