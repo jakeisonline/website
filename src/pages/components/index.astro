@@ -1,11 +1,17 @@
 ---
 import ComponentSnippet from "@/components/blocks/component-snippet.astro"
+import CellsDemo from "@/components/examples/react/cells-demo"
+import RangeDemo from "@/components/examples/react/range-demo"
+import ScaleDemo from "@/components/examples/react/scale-demo"
+import StepperDemo from "@/components/examples/react/stepper-demo"
+import SwitcherDemo from "@/components/examples/react/switcher-demo"
+import TaggerDemo from "@/components/examples/react/tagger-demo"
 import DocsLayout from "@/layouts/docs-layout.astro"
-import { getCollection } from "astro:content"
+import { getEntry } from "astro:content"
 
-const componentPages = (await getCollection("components")).filter(
-  (page) => page.data.component !== undefined,
-)
+/* TODO: Ideally this would be dynamic, but Astro doesn't support dynamic
+// import AND hydration: https://github.com/withastro/astro/issues/11701#issuecomment-2288646873
+*/
 ---
 
 <DocsLayout
@@ -19,13 +25,24 @@ const componentPages = (await getCollection("components")).filter(
     data-pagefind-ignore
   >
     <div class="not-prose mt-3 grid gap-3 lg:grid-cols-2">
-      {
-        componentPages.map((page) => {
-          if (page.data.isPrivate) return
-
-          return <ComponentSnippet data={page} />
-        })
-      }
+      <ComponentSnippet data={await getEntry("components", "cells")}>
+        <CellsDemo client:load />
+      </ComponentSnippet>
+      <ComponentSnippet data={await getEntry("components", "range")}>
+        <RangeDemo client:load />
+      </ComponentSnippet>
+      <ComponentSnippet data={await getEntry("components", "scale")}>
+        <ScaleDemo client:load />
+      </ComponentSnippet>
+      <ComponentSnippet data={await getEntry("components", "stepper")}>
+        <StepperDemo client:load />
+      </ComponentSnippet>
+      <ComponentSnippet data={await getEntry("components", "switcher")}>
+        <SwitcherDemo client:load />
+      </ComponentSnippet>
+      <ComponentSnippet data={await getEntry("components", "tagger")}>
+        <TaggerDemo client:load />
+      </ComponentSnippet>
     </div>
   </div>
 </DocsLayout>
