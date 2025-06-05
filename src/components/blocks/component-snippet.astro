@@ -11,7 +11,9 @@ const component = data.data
 
 <a href={`/components/${id}`} class={cn("group relative min-w-72", className)}>
   <Card class="pointer-events-none flex justify-center p-6 pt-8">
-    <slot />
+    <div class="flex h-fit w-full max-w-full justify-center">
+      <slot />
+    </div>
     <div
       class="to-background/95 absolute right-1 bottom-1 left-1 bg-gradient-to-b from-transparent from-5% to-70% px-3 py-2.5 transition-colors duration-200"
     >
