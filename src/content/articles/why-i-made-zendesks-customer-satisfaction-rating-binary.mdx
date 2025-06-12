@@ -5,6 +5,9 @@ category: blog
 coverImage: "/images/og-blog.png"
 ---
 
+import Figure from "@/components/ui/figure.astro"
+import ImageSurveyMonkey from "@/assets/images/surveymonkeycom-2011.png"
+
 Back in 2011 I was a young and inexperienced product manager at Zendesk. At that time, Zendesk had a lively feature request forum, which I was often reviewing and taking part in. In fact it's how I got a job at Zendesk in the first place, but that's a story for another time.
 
 One particular feature request was coming up fairly often: I want to survey customers when they talk to us.
@@ -14,3 +17,36 @@ At the same time, leadership were interested in the idea of having a survey prod
 I knew nothing about surveys. So it was time to get learning.
 
 ## Surveys felt like the wrong fit
+
+At the time there were already some well known players outside of the enterprise market, most notably SurveyMonkey, who would eventually become a part of Zendesk's history.
+
+It was clear that if we were to add Surveys to Zendesk, we would need to at least match their baseline experience.
+
+<Figure
+  src={ImageSurveyMonkey}
+  alt="A screenshot of SurveyMonkey's homepage in 2011"
+  caption="SaaS home page design certainly has improved since 2011"
+/>
+
+## "We just want to know that we're helping our customers"
+
+Beneath most of the requests for surveys, there was a common theme that would always come up from support managers. I remember distinctly one support manager saying to me: "We just want to know that we're helping our customers.", with many wanting to ensure they could follow up where customers were unhappy.
+
+That seemed like a problem that could be easily solved. Without a survey.
+
+## One simple question
+
+There were two insights that really stood out to me from my conversations with support managers:
+
+1. The surveys they would send were often off puttingly long. Some even asked for the name and email address of the customer to really depersonalise the experience.
+2. Results were often analysed long after the surveys were filled out by customers. Real time feedback was nearly impossible, and following up with customers long after they raised issue wasn't great customer service.
+
+If most surveys were long and often not filled out, and if the results took ages to analyse and create reports for, then it was clear a simpler solution was needed.
+
+But what if we went _really_ lean? We only need to know the answer to one question to get what we need:
+
+> How would you rate the support you received?
+
+One question is enough to tell us if we're doing good, or if someone's having a bad experience. The effort to respond to one question is super low, as would be turning the feature on. It can serve as a primary key performance indicator, whilst integration with Zendesk's existing business rules and workflows without adding significant complexity.
+
+###
