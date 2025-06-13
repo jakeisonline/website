@@ -6,6 +6,11 @@
       "permanent": true
     },
     {
+      "source": "/playground/components/:match*",
+      "destination": "/components/:match*",
+      "permanent": true
+    },
+    {
       "source": "/playground/:match*",
       "destination": "/components/:match*",
       "permanent": true
