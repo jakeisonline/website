@@ -10,14 +10,36 @@ import { SimpleExample } from "@/content/articles/examples/blur-placeholders/sim
 
 I was recently trying out [uploadthing](https://uploadthing.com/) and was impressed by the easy of use. **But**, it lacked one feature I wanted: the ability to create a blur placeholder for uploaded images.
 
-If you're not familiar with blur placeholders, it's a technique of creating a small (in terms of file size) image that is a blurred version of the original image. That's encoded as image data and sent along with the HTML so the blurred image loads immediately, and the original image is swapped in later.
-
 <Example>
   <SimpleExample />
 </Example>
 
-This technique allows for a really fast, optimised loading experience for visitors with any level of internet connection. Those with a fast connection likely won't even see the blurred image, whilst those on slower connections won't be jarred by a sudden blank space being filled in.
+If you're not familiar with blur placeholders, it's a technique of creating a small image (in terms of both file size and dimensions) that is a blurred version of the original image. That is then encoded as image data and sent along with the HTML so the blurred image loads immediately, and the original image is swapped in later.
 
-## Creating the blur
+This technique allows for a really fast, optimised initial loading experience for visitors with any level of internet connection. Those with a fast connection likely won't even see the blurred image, whilst those on slower connections won't be jarred by a sudden blank space being filled in.
 
-We going to need to create a hash of the image, which we'll use to then create the blurred version. To do that, we'll use a fantastic library called [blurhash](https://www.npmjs.com/package/blurhash).
+## Creating the blurred image
+
+In order to create this blurred image, we'll need to perform two steps:
+
+1. We should resize the original image to be must smaller than the original. Not only will this of course reduce the final size of the blurred image, it will keep the encoding performant. If you care about neither of these things, you can skip this step.
+2. We're going to need to create a hash of the blurred image (known as a "blurhash"), which we'll later convert to a base64 data string to server to the client.
+
+### Resizing the image
+
+We'll use the popular [sharp](https://sharp.pixelplumbing.com/) library to resize the image.
+
+### Creating the blurhash
+
+Once we have our image in the desired size, we'll use a fantastic library called [blurhash](https://www.npmjs.com/package/blurhash) to create a hash of the blurred image. This hash can then be stored, and later decoded to get the image data.
+
+## Saving the blurred placeholder
+
+When saving the blurred placeholder, there's a choice you'll need to make. You can either:
+
+1. Store the blurhash in the database, which will significantly decrease the amount of storage required for the image, but you'll need to decode the blurhash to get the image data when you need to display it.
+2. Store the base64 encoded image data in the database, which will mean no decoding is required to display the image, but at the expense of increased storage requirements.
+
+## Displaying the blurred placeholder
+
+## Pro tip for user uploaded images
