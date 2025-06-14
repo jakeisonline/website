@@ -1,0 +1,23 @@
+---
+title: Creating and serving user uploaded image blur placeholders
+description: Especially when using Astro, you can create client-side image blur placeholders that are fast to load and look great.
+category: Node.js
+coverImage: "/images/og-blog.png"
+---
+
+import Example from "@/components/blocks/example.astro"
+import { SimpleExample } from "@/content/articles/examples/blur-placeholders/simple-example"
+
+I was recently trying out [uploadthing](https://uploadthing.com/) and was impressed by the easy of use. **But**, it lacked one feature I wanted: the ability to create a blur placeholder for uploaded images.
+
+If you're not familiar with blur placeholders, it's a technique of creating a small (in terms of file size) image that is a blurred version of the original image. That's encoded as image data and sent along with the HTML so the blurred image loads immediately, and the original image is swapped in later.
+
+<Example>
+  <SimpleExample />
+</Example>
+
+This technique allows for a really fast, optimised loading experience for visitors with any level of internet connection. Those with a fast connection likely won't even see the blurred image, whilst those on slower connections won't be jarred by a sudden blank space being filled in.
+
+## Creating the blur
+
+We going to need to create a hash of the image, which we'll use to then create the blurred version. To do that, we'll use a fantastic library called [blurhash](https://www.npmjs.com/package/blurhash).
