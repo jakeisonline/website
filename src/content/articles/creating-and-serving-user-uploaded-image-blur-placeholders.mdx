@@ -12,10 +12,11 @@ import {
   ResizedImage,
 } from "@/content/articles/examples/blur-placeholders/resize-example"
 import { SimpleExample } from "@/content/articles/examples/blur-placeholders/simple-example"
+import { BlurhashImage } from "@/content/articles/examples/blur-placeholders/simple-example"
 
 I was recently trying out [uploadthing](https://uploadthing.com/) and was impressed by the easy of use. **But**, it lacked one feature I wanted: the ability to create a blur placeholder for uploaded images.
 
-<Example>
+<Example caption="">
   <SimpleExample />
 </Example>
 
@@ -74,13 +75,28 @@ We can resize the original image to be much smaller, blurhash it, and then upsca
 <Callout type="tip" title="Why not just use CSS?">
 You could simply stretch the resized image to the desired size, use CSS to apply `blur` to it, and then wrap it in a container with the same size as the original with `overflow-hidden` to ensure the edges are crisp (CSS `blur` feathers anything it is applied to):
 
-<div className="not-prose flex size-[128px] flex-col items-center overflow-hidden rounded-full">
-  <ResizedImage
-    alt="Jake's dumb face"
-    width={16}
-    height={16}
-    className="size-[128px] rounded-full blur-sm"
-  />
+<div className="not-prose my-6 flex items-center gap-4 text-center">
+  <div className="flex flex-col gap-2">
+    <div className="flex size-[128px] flex-col items-center overflow-hidden rounded-full">
+      <ResizedImage
+        alt="Jake's dumb face"
+        width={32}
+        height={32}
+        className="size-[128px] rounded-full blur-sm"
+      />
+    </div>
+    <p className="text-sm">CSS blur</p>
+  </div>
+  <p className="text-muted-foreground -mt-6 text-sm">vs.</p>
+  <div className="flex flex-col gap-2">
+    <BlurhashImage
+      alt="Jake's dumb face"
+      width={128}
+      height={128}
+      className="rounded-full"
+    />
+    <p className="text-sm">Blurhash</p>
+  </div>
 </div>
 
 While this would result in a smaller file size for the client, there are a few downsides:
@@ -91,7 +107,7 @@ While this would result in a smaller file size for the client, there are a few d
 4. I personally feel the CSS version looks a bit meh, like I'm looking through a dirty smeared lense instead of the frosted glass effect of blurhash.
 5. The original pixelated image is still there, and you're at the mercy of the browser's rendering engine to decide how good the blur effect is going to be.
 
-If your concern is storage sizes of images, I think the blurhash version is the better option.
+Even without file storage concerns, I think the blurhash version is the better option.
 
 </Callout>
 
