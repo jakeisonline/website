@@ -5,7 +5,10 @@ category: blog
 coverImage: "/images/og-blog.png"
 ---
 
+import Callout from "@/components/blocks/callout.astro"
+import Example from "@/components/blocks/example.astro"
 import Figure from "@/components/ui/figure.astro"
+import Smileys from "@/content/articles/examples/zendesk-csat/smileys"
 import ImageSurveyMonkey from "@/assets/images/surveymonkeycom-2011.png"
 
 Back in 2011 I was a young and inexperienced product manager at Zendesk. At that time, Zendesk had a lively feature request forum, which I was often reviewing and taking part in. In fact it's how I got a job at Zendesk in the first place, but that's a story for another time.
@@ -16,29 +19,33 @@ At the same time, leadership were interested in the idea of having a survey prod
 
 I knew nothing about surveys. So it was time to get learning.
 
-## Surveys felt like the wrong fit
+## Surveys felt like the wrong strategic move
 
-At the time there were already some well known players outside of the enterprise market, most notably SurveyMonkey, who would eventually become a part of Zendesk's history.
-
-It was clear that if we were to add Surveys to Zendesk, we would need to at least match their baseline experience.
+At the time there were already some well known players outside of the enterprise market, most notably SurveyMonkey, who would eventually become a part of Zendesk's history, with a failed acquisition setting in motion a series of unfortunate events.
 
 <Figure
   src={ImageSurveyMonkey}
   alt="A screenshot of SurveyMonkey's homepage in 2011"
-  caption="SaaS home page design certainly has improved since 2011"
+  caption="SaaS home page design certainly was different back in 2011"
 />
 
+It was clear that if we were to add Surveys to Zendesk, we would need to at least match their baseline features. That was going to require a lot of work, did we really want to be competing against a new set of competitors while still fighting off giants in Customer Support?
+
+No. We didn't.
+
 ## "We just want to know that we're helping our customers"
+
+I spoke to probably a dozen customers - keeping in mind this was the days before video calling was common, and we didn't have a huge number of customers yet - that were already using some sort of survey solution today. I wanted to understand what questions they were asking, why they were asking them, and what they were doing with the data.
 
 Beneath most of the requests for surveys, there was a common theme that would always come up from support managers. I remember distinctly one support manager saying to me: "We just want to know that we're helping our customers.", with many wanting to ensure they could follow up where customers were unhappy.
 
 That seemed like a problem that could be easily solved. Without a survey.
 
-## One simple question
+## One simple question, "are you satisfied?"
 
 There were two insights that really stood out to me from my conversations with support managers:
 
-1. The surveys they would send were often off puttingly long. Some even asked for the name and email address of the customer to really depersonalise the experience.
+1. The surveys they would send were often off puttingly long. Some even asked for the name and email address of the customer to really depersonalise the experience. Many weren't seeing a good response rate to their surveys, raising concerns of statistical significance.
 2. Results were often analysed long after the surveys were filled out by customers. Real time feedback was nearly impossible, and following up with customers long after they raised issue wasn't great customer service.
 
 If most surveys were long and often not filled out, and if the results took ages to analyse and create reports for, then it was clear a simpler solution was needed.
@@ -49,4 +56,50 @@ But what if we went _really_ lean? We only need to know the answer to one questi
 
 One question is enough to tell us if we're doing good, or if someone's having a bad experience. The effort to respond to one question is super low, as would be turning the feature on. It can serve as a primary key performance indicator, whilst integration with Zendesk's existing business rules and workflows without adding significant complexity.
 
-###
+<Callout type="note" title="I've cut out some steps">
+  It took us a long time to settle on the final question, and in reality we had a few different options which required further iteration once we made our decision on which answers to present the customer with.
+
+We wanted to be _very_ concise in our question, to remove any perception of effort or cognitive load, and ensure no ambiguity as to what it is you're providing an answer for.
+
+We also wanted to try and protect against customers using the rating against a product they bought, instead of the actual _support_ they received for that product. But that was sometimes unavoidable.
+
+</Callout>
+
+## But what is the answer?
+
+We knew we wanted to keep our question simple, but what about the options you have to answer those questions?
+
+### The problem with star ratings
+
+We've all seen them. They still feature heavily in the world of reviews, and arguably have a place. But they are a terrible fit for rating customer support.
+
+At the time of me putting together my thoughts on answering the satisfaction question, YouTube were making their case for [thumbs up/down ratings to replace star ratings](https://blog.youtube/news-and-events/five-stars-dominate-ratings/). Turned out, most people were using 1 star, showing dislike, and 5 stars, showing their approval of the video.
+
+<Example caption="YouTube had a graph not to dissimilar to this one, which showed the average votes were either 1 or 5 stars, with very little in between."></Example>
+
+In addition to this suggestion that star ratings were not a good way to show the level of approval someone might have, there was also the problem of the stars being somewhat subjective.
+
+What is really the difference between 1 stars, and 2 stars? Worse if it's half stars. Even today I'm unsure how to interpret a 3.5 star rating - it's far from terrible but still not great, but better than OK. Is it good?! It doesn't feel like it... 🥴
+
+5 point scales were out.
+
+### The problem with 3 point scales
+
+Having learned that star ratings were seemingly unfit, I started to question other established rating scales. A simpler option than 5 star ratings would have been the equally popular 3 point scale.
+
+<Example caption="What is the middle option supposed to mean?">
+  <Smileys client:visible />
+</Example>
+
+I don't fully recall what prompted me to read into these biases (likely a conversation with my much smarter co-workers), but there were several concepts that I read about which caused me to think carefully about a 3 point scale.
+
+1. [Satisficing](https://en.wikipedia.org/wiki/Satisficing) - the idea that people will settle for a good enough option, rather than the best possible one.
+2. [Regret](https://en.wikipedia.org/wiki/Regret_theory) - the idea that people will regret their choices, and that this will influence their decisions.
+
+I interpreted these concepts as meaning the middle option was likely going to be selected by customers who were not satisfied, but not unhappy enough to give a lower rating. Or that the customer didn't _really_ care enough either way, and is just responding because they've been asked to. This would mean that the middle option would be a poor indicator of customer satisfaction.
+
+There is maybe an argument to keep the middle option in regardless of these concerns, but what are you as a support manager going to be doing with that metric? How should it factor into a satisfaction score? Perhaps we could exclude it in the calculation, like Net Promoter Score (NPS) does, in which case: what is the point of having it at all?
+
+So, it was decided: good, or bad. Nothing else.
+
+## The results
