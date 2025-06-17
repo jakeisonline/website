@@ -72,7 +72,7 @@ To illustrate both the resized image and the results of upscaling with blurhash,
 We can resize the original image to be much smaller, blurhash it, and then upscale to the desired size when rendering it. Almost no detail it lost despite the upscaling.
 
 <Callout type="tip" title="Why not just use CSS?">
-You could simply stretch the resized image to the desired size, and apply `blur` to it in order to get a similar blurred effect as blurhash, and then wrap it in a container with the same size as the original with `overflow-hidden` to ensure the edges are crisp:
+You could simply stretch the resized image to the desired size, use CSS to apply `blur` to it, and then wrap it in a container with the same size as the original with `overflow-hidden` to ensure the edges are crisp (CSS `blur` feathers anything it is applied to):
 
 <div className="not-prose flex size-[128px] flex-col items-center overflow-hidden rounded-full">
   <ResizedImage
@@ -87,7 +87,9 @@ While this would result in a smaller file size for the client, there are a few d
 
 1. You'll need to store that image data somewhere, in order to include it in the initial HTML
 2. Storing the image data will result in a significantly larger storage requirements. My example here would result in needing to store `~940 B` vs only `100 B` for the blurhash.
-3. I personally feel the CSS version looks a bit more "janky" than the blurhash version, but that might be a minor concern for a placeholder image.
+3. Now you've got to mess with markups _and_ CSS to get the desired effect.
+4. I personally feel the CSS version looks a bit meh, like I'm looking through a dirty smeared lense instead of the frosted glass effect of blurhash.
+5. The original pixelated image is still there, and you're at the mercy of the browser's rendering engine to decide how good the blur effect is going to be.
 
 If your concern is storage sizes of images, I think the blurhash version is the better option.
 
