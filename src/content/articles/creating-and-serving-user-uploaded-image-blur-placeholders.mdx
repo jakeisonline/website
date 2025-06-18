@@ -1,6 +1,6 @@
 ---
-title: Creating and serving user uploaded image blur placeholders
-description: Especially when using Astro, you can create client-side image blur placeholders that are fast to load and look great.
+title: Creating and serving image blur placeholders
+description: Particularly when images make up a significant portion of the page experience, a perceived performance trick to keep up your sleeve is making use of blur placeholders..
 category: Node.js
 coverImage: "/images/og-blog.png"
 ---
@@ -13,11 +13,12 @@ import {
 } from "@/content/articles/examples/blur-placeholders/resize-example"
 import { SimpleExample } from "@/content/articles/examples/blur-placeholders/simple-example"
 import { BlurhashImage } from "@/content/articles/examples/blur-placeholders/simple-example"
+import { GalleryExample } from "@/content/articles/examples/blur-placeholders/gallery-example"
 
-I was recently trying out [uploadthing](https://uploadthing.com/) and was impressed by the easy of use. **But**, it lacked one feature I wanted: the ability to create a blur placeholder for uploaded images.
+Imagine a page with a large grid of images, or a page displaying lots of products to purchase, you don't want your user staring at blank spaces slowly being filled in as the images load. **Gross**. Instead, you can use a blur placeholder to give the user a quick visual indication that something is loading, without a jarring change.
 
-<Example caption="">
-  <SimpleExample />
+<Example caption="Thanks to Karsten Winegeart from Unsplash for the amazing pups.">
+  <GalleryExample />
 </Example>
 
 If you're not familiar with blur placeholders, it's a technique of creating a small image (in terms of both file size and dimensions) that is a blurred version of the original image. That is then encoded as image data and sent along with the HTML so the blurred image loads immediately, and the original image is swapped in later.
@@ -26,9 +27,13 @@ This technique allows for a really fast, optimised initial loading experience fo
 
 ## Creating the blurred image
 
+<Example caption="Partly due to a lack of shame, we'll use my face for this example.">
+  <SimpleExample />
+</Example>
+
 In order to create this blurred image, we'll need to perform two steps:
 
-1. We should resize the original image to be must smaller than the original. Not only will this of course reduce the final size of the blurred image, it will keep the encoding performant. If you care about neither of these things, you can skip this step.
+1. We should resize the original image to be much smaller than the original. Not only will this of course reduce the final size of the blurred image, it will keep the encoding performant. If you care about neither of these things, you can skip this step.
 2. We're going to need to create a hash of the blurred image (known as a "blurhash"), which we'll later convert to a base64 data string to server to the client.
 
 ### Resizing the image
