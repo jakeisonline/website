@@ -93,7 +93,7 @@ async function BlurhashImage({
         height={height}
         {...props}
       />
-      <script>
+      <script data-astro-rerun>
         {`
           (function() {
             const img = document.currentScript.previousElementSibling;
