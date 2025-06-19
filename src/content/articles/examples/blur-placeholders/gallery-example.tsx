@@ -51,7 +51,11 @@ function GalleryImage({
   height = 32,
   className,
   ...props
-}: React.ComponentProps<"img">) {
+}: React.ComponentProps<"img"> & {
+  src: string
+  width: number
+  height: number
+}) {
   const aspectRatio = width > height ? "aspect-3/2" : "aspect-2/3"
 
   return (
@@ -71,8 +75,12 @@ async function BlurhashImage({
   width,
   height,
   ...props
-}: React.ComponentProps<"img">) {
-  const hash = await generateBlurhash({ imagePath: src!, width, height })
+}: React.ComponentProps<"img"> & {
+  src: string
+  width: number
+  height: number
+}) {
+  const hash = await generateBlurhash({ imagePath: src, width, height })
   const hashBase64 = await blurhashToBase64(hash)
 
   return (
