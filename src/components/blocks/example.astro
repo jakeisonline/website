@@ -1,12 +1,20 @@
 ---
+import Link from "@/components/ui/link.astro"
 import { cn } from "@/lib/utils"
 
 interface Props {
   caption?: string
+  source?: string
   class?: string
 }
 
-const { caption, class: className, ...props } = Astro.props
+const { caption, source, class: className, ...props } = Astro.props
+
+if (!caption && source) {
+  console.warn(
+    "Example component: source prop provided without caption. This will be ignored.",
+  )
+}
 ---
 
 <div class="my-6">
@@ -27,6 +35,7 @@ const { caption, class: className, ...props } = Astro.props
     caption && (
       <div class="text-xs text-muted-foreground text-center md:px-4 mt-1.5 mx-auto">
         {caption}
+        {source && <Link href={source}>(source)</Link>}
       </div>
     )
   }
