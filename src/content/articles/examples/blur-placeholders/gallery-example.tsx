@@ -2,43 +2,82 @@ import { cn } from "@/lib/utils"
 import { encode } from "blurhash"
 import { blurhashToBase64 } from "blurhash-base64"
 import fs from "fs"
+import { InfoIcon } from "lucide-react"
 import path from "path"
 import sharp from "sharp"
 
 export function GalleryExample() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div className="grid gap-4">
-        <GalleryImage src={"dog-1.jpg"} width={240} height={360} alt="Dog 1" />
-        <GalleryImage src={"dog-6.jpg"} width={240} height={160} alt="Dog 6" />
-        <GalleryImage
-          src={"dog-8.jpg"}
-          width={240}
-          height={360}
-          alt="Dog 8"
-          className="hidden md:block"
-        />
-      </div>
-      <div className="grid gap-4">
-        <GalleryImage
-          width={240}
-          height={160}
-          src={"dog-10.jpg"}
-          alt="Dog 10"
-        />
-        <GalleryImage width={240} height={360} src={"dog-2.jpg"} alt="Dog 2" />
-        <GalleryImage
-          width={240}
-          height={360}
-          src={"dog-11.jpg"}
-          alt="Dog 11"
-          className="hidden md:block"
-        />
-      </div>
-      <div className="hidden md:grid gap-4">
-        <GalleryImage width={240} height={360} src={"dog-4.jpg"} alt="Dog 4" />
-        <GalleryImage width={240} height={360} src={"dog-9.jpg"} alt="Dog 9" />
-        <GalleryImage width={240} height={160} src={"dog-3.jpg"} alt="Dog 3" />
+    <div className="flex flex-col gap-2">
+      <p className="flex items-start gap-1 justify-center text-xs text-muted-foreground">
+        <InfoIcon className="size-3 mt-0.5" />
+        <span className="text-xs">
+          Loading times have been slowed here to simulate a slower connection.
+        </span>
+      </p>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+        <div className="grid gap-2 md:gap-4">
+          <GalleryImage
+            src={"dog-1.jpg"}
+            width={240}
+            height={360}
+            alt="Dog 1"
+          />
+          <GalleryImage
+            src={"dog-6.jpg"}
+            width={240}
+            height={160}
+            alt="Dog 6"
+          />
+          <GalleryImage
+            src={"dog-8.jpg"}
+            width={240}
+            height={360}
+            alt="Dog 8"
+            className="hidden md:block"
+          />
+        </div>
+        <div className="grid gap-2 md:gap-4">
+          <GalleryImage
+            width={240}
+            height={160}
+            src={"dog-10.jpg"}
+            alt="Dog 10"
+          />
+          <GalleryImage
+            width={240}
+            height={360}
+            src={"dog-2.jpg"}
+            alt="Dog 2"
+          />
+          <GalleryImage
+            width={240}
+            height={360}
+            src={"dog-11.jpg"}
+            alt="Dog 11"
+            className="hidden md:block"
+          />
+        </div>
+        <div className="hidden md:grid gap-2 md:gap-4">
+          <GalleryImage
+            width={240}
+            height={360}
+            src={"dog-4.jpg"}
+            alt="Dog 4"
+          />
+          <GalleryImage
+            width={240}
+            height={360}
+            src={"dog-9.jpg"}
+            alt="Dog 9"
+          />
+          <GalleryImage
+            width={240}
+            height={160}
+            src={"dog-3.jpg"}
+            alt="Dog 3"
+          />
+        </div>
       </div>
     </div>
   )
@@ -64,7 +103,7 @@ function GalleryImage({
         src={src}
         width={width}
         height={height}
-        className={cn("rounded-xs max-w-full", aspectRatio)}
+        className={cn("rounded-xs max-w-full", aspectRatio, className)}
       />
     </div>
   )
@@ -106,7 +145,7 @@ async function BlurhashImage({
               // loading due to erratic scrolling
               observer.disconnect();
 
-              // Deliberately add a random 100-350ms delay
+              // Deliberately add a random 350-650ms delay
               window.setTimeout(() => {
                 // Set the src directly, which will trigger browser
               // to load the image
@@ -114,7 +153,7 @@ async function BlurhashImage({
 
               // May as well clean up after ourselves
               delete img.dataset.src;
-              }, Math.random() * 450 + 200);
+              }, Math.random() * 650 + 350);
             };
 
             const observer = new IntersectionObserver(
@@ -125,11 +164,6 @@ async function BlurhashImage({
                   }
                 });
               },
-              {
-                // Begin loading image when it's within 50px of
-                // the viewport for perceived performance
-                rootMargin: "50px",
-              }
             );
 
             observer.observe(img);
@@ -170,19 +204,21 @@ async function generateBlurhash({
     }
 
     // Resize and ensure we get RGBA data
-    const { data: pixels, info } = await sharp(imageBuffer)
+    const { data: imageData, info: imageMeta } = await sharp(imageBuffer)
       .resize(blurWidth, blurHeight, { fit: "inside" })
       .ensureAlpha()
       .raw()
       .toBuffer({ resolveWithObject: true })
 
     // Create a new array with the correct format
-    const rgbaData = new Uint8ClampedArray(info.width * info.height * 4)
-    for (let i = 0; i < pixels.length; i++) {
-      rgbaData[i] = pixels[i]
+    const rgbaData = new Uint8ClampedArray(
+      imageMeta.width * imageMeta.height * 4,
+    )
+    for (let i = 0; i < imageData.length; i++) {
+      rgbaData[i] = imageData[i]
     }
 
-    const hash = encode(rgbaData, info.width, info.height, 5, 4)
+    const hash = encode(rgbaData, imageMeta.width, imageMeta.height, 5, 4)
     return hash
   } catch (error) {
     console.error("Error generating blurhash:", error)

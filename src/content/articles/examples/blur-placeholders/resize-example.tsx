@@ -7,7 +7,7 @@ import { BlurhashImage } from "./simple-example"
 
 export async function ResizeExample() {
   return (
-    <div className="grid grid-cols-3 gap-8 justify-items-center">
+    <div className="grid grid-cols-2 gap-8 justify-items-center text-center">
       <div className="flex flex-col gap-2 items-center size-fit">
         <div className="size-[128px] flex items-center justify-center">
           <ResizedImage
@@ -20,17 +20,6 @@ export async function ResizeExample() {
         </div>
         <p>Resized</p>
         <p className="-mt-3 text-sm text-muted-foreground">32 x 32 pixels</p>
-      </div>
-      <div className="flex flex-col gap-2 items-center size-fit">
-        <ResizedImage
-          src={ImageJakesDumbFace.src}
-          alt="Jake's dumb face"
-          width={32}
-          height={32}
-          className="rounded-full size-[128px]"
-        />
-        <p>Upscaled</p>
-        <p className="-mt-3 text-sm text-muted-foreground">128 x 128 pixels</p>
       </div>
       <div className="flex flex-col gap-2 items-center size-fit">
         <BlurhashImage

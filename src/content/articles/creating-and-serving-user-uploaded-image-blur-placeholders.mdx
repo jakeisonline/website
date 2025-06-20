@@ -15,26 +15,29 @@ import { SimpleExample } from "@/content/articles/examples/blur-placeholders/sim
 import { BlurhashImage } from "@/content/articles/examples/blur-placeholders/simple-example"
 import { GalleryExample } from "@/content/articles/examples/blur-placeholders/gallery-example"
 
-Imagine a page with a large grid of images, or a page displaying lots of products to purchase, you don't want your user staring at blank spaces slowly being filled in as the images load. **Gross**. Instead, you can use a blur placeholder to give the user a quick visual indication that something is loading, without a jarring change.
+Imagine a page with a large grid of images, you don't want your user staring at blank spaces slowly being filled in as the images load. _Gross_. Instead, give them a quick visual indication that something is loading, with a hint of what's to come.
 
-<Example caption="Image loading has been simulated slightly slower loading times so you can see the effect. Thanks to Karsten Winegeart from Unsplash for the amazing pups.">
+<Example
+  caption="Thanks to Karsten Winegeart from Unsplash for the amazing pups."
+  source="https://unsplash.com/@karsten116"
+>
   <GalleryExample />
 </Example>
 
-If you're not familiar with blur placeholders, it's a technique of creating a small image (in terms of both file size and dimensions) that is a blurred version of the original image. That is then encoded as image data and sent along with the HTML so the blurred image loads immediately, and the original image is swapped in later.
+If you're not familiar with blur placeholders, it's a technique of creating a blurred version of the original image at a fraction of the file size, and then encoding that blurred version directly into the HTML. The blurred image loads as immediately as the page, whilst the original image is swapped in later.
 
 This technique allows for a really fast, optimised initial loading experience for visitors with any level of internet connection. Those with a fast connection likely won't even see the blurred image, whilst those on slower connections won't be jarred by a sudden blank space being filled in.
 
 ## Creating the blurred image
 
-<Example caption="Partly due to a lack of shame, we'll use my face for this example.">
+<Example caption="Partly due to a lack of shame, we'll use my face from here on out.">
   <SimpleExample />
 </Example>
 
 In order to create this blurred image, we'll need to perform two steps:
 
-1. We should resize the original image to be much smaller than the original. Not only will this of course reduce the final size of the blurred image, it will keep the encoding performant. If you care about neither of these things, you can skip this step.
-2. We're going to need to create a hash of the blurred image (known as a "blurhash"), which we'll later convert to a base64 data string to server to the client.
+1. We should resize the original image to be much smaller than the original. Not only will this of reduce the final size of the blurred image, it will keep the encoding performant. If you care about neither of these things, you can skip this step.
+2. We're going to need to create a hash of the blurred image (known as a "blurhash"), which we'll later convert to a base64 image data string to serve to the client.
 
 ### Resizing the image
 
@@ -48,11 +51,11 @@ Doing this in Node is simple, we'll use the popular [sharp](https://sharp.pixelp
 npm install sharp
 ```
 
-`sharp` gives us a powerful, performant, and
-
-With `sharp` installed, it's a simple matter of calling a few Sharp methods to resize the image:
+`sharp` gives us a powerful, performant, and easy way to do all sorts of image operations. In this case, we're going to be using it to resize the image to be much smaller than the original.
 
 ```ts
+import path from "path"
+import fs from "fs"
 import sharp from "sharp"
 
 // Resolve the path to the image
@@ -61,21 +64,99 @@ const filePath = path.resolve(process.cwd(), "path/to/image.jpg")
 // Read the image file into a buffer
 const imageBuffer = fs.readFileSync(filePath)
 
+// Calculate optimal dimensions for blurhash
+const aspectRatio = Number(width) / Number(height)
+const minDimension = 32
+
+// Calculate dimensions ensuring minimum of 32 pixels on
+// the smaller side
+let blurWidth, blurHeight
+if (aspectRatio >= 1) {
+  // Landscape or square
+  blurHeight = minDimension
+  blurWidth = Math.round(minDimension * aspectRatio)
+} else {
+  // Portrait
+  blurWidth = minDimension
+  blurHeight = Math.round(minDimension / aspectRatio)
+}
+
 // Give sharp the buffer, and then call the resize method,
 // and make sure to return that data as raw bytes
-const resizedImage = await sharp(imageBuffer).resize(32, 32).toBuffer()
+const { data: imageData, info: imageMeta } = await sharp(imageBuffer)
+  .resize(blurWidth, blurHeight, { fit: "inside" })
+  .ensureAlpha()
+  .raw()
+  .toBuffer({ resolveWithObject: true })
 
-// We'll use the raw bytes in a bit, but you could also
-// .toString("base64") to get a base64 encoded string
+// We'll use the raw bytes in a bit
 ```
 
-To illustrate both the resized image and the results of upscaling with blurhash, take a look at the following example:
+But wait, won't resizing the image to be smaller result in a loss of quality? Not really. To illustrate both the resized image and the results of upscaling with blurhash, take a look at the following example:
 
-<Example caption="Running blurhash on the smaller image and then upscaling it show almost no loss of quality.">
+<Example caption="Running blurhash on the smaller image and then upscaling it shows almost no loss of quality.">
   <ResizeExample />
 </Example>
 
 We can resize the original image to be much smaller, blurhash it, and then upscale to the desired size when rendering it. Almost no detail it lost despite the upscaling.
+
+### Creating the blurhash
+
+Once we have our image in the desired size, we'll use a fantastic library called [blurhash](https://www.npmjs.com/package/blurhash) to create a hash of the blurred image (a string of seemingly random characters that represents the image). This hash can then be stored, and later decoded to get the image data.
+
+```bash
+npm install blurhash
+```
+
+With `blurhash` installed, we can create a hash from the resized image data we generated earlier:
+
+```ts
+// Create a new array with the correct format
+const rgbaData = new Uint8ClampedArray(imageMeta.width * imageMeta.height * 4)
+
+for (let i = 0; i < imageData.length; i++) {
+  rgbaData[i] = imageData[i]
+}
+
+const hash = encode(rgbaData, info.width, info.height, 5, 4)
+```
+
+Wait, what's all this extra code about? While `sharp` returns the image data in a format, `blurhash` expects the image data to be in a specific format called [`Uint8ClampedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray).
+
+So we simply need to create a new array (`rgbaData`) that's exactly the right size for the image data (width `x` height `x` 4, where the 4 represents the RGBA channels - Red, Green, Blue, and Alpha/transparency), and then copy over all the pixel data from the original format to this new format.
+
+We end up with a hash that looks something like this:
+
+```plaintext
+-VHd]Lt7TH.7xuR+.le?t5xu%2t6OZxar?S4XSoy%MOTV[spoMn,%MV@aeafjuWqkqsUNaWBt6WXogtPafjut6ofs;oea#kBoeof
+```
+
+That's my face at 32x32, blurred, and represented as a string. You're welcome!
+
+### Controlling the blur
+
+### Saving the blurred placeholder (optional)
+
+When saving the blurred placeholder, there's a choice you'll need to make. You can either:
+
+1. Store the blurhash in the database, which will significantly decrease the amount of storage required for the image, but you'll need to decode the blurhash to get the image data when you need to display it.
+2. Store the base64 encoded image data in the database, which will mean no decoding is required to display the image, but at the expense of increased storage requirements.
+
+## Displaying the blurred placeholder
+
+Once we have our image resized, compressed into a blurhash, and then stored somewhere, we'll inevitably want to display it somewhere.
+
+To do that, we'll need to:
+
+1. Decode the blurhash from a string to an array of raw pixel data
+2. Convert the decoded pixel data to an image format, generally a PNG
+3. Convert that image into a base64 encoded string
+
+Thankfully we have a library that can do all of this for us: [blurhash-base64](https://www.npmjs.com/package/blurhash-base64).
+
+```bash
+npm install blurhash-base64
+```
 
 <Callout type="tip" title="Why not just use CSS?">
 You could simply stretch the resized image to the desired size, use CSS to apply `blur` to it, and then wrap it in a container with the same size as the original with `overflow-hidden` to ensure the edges are crisp (CSS `blur` feathers anything it is applied to):
@@ -107,8 +188,8 @@ You could simply stretch the resized image to the desired size, use CSS to apply
 While this would result in a smaller file size for the client, there are a few downsides:
 
 1. You'll need to store that image data somewhere, in order to include it in the initial HTML
-2. Storing the image data will result in a significantly larger storage requirements. My example here would result in needing to store `~940 B` vs only `100 B` for the blurhash.
-3. Now you've got to mess with markups _and_ CSS to get the desired effect.
+2. Storing the image data will result in significantly larger storage requirements. My example here would result in needing to store `~940 B` vs only `100 B` for the blurhash, and that's with a relatively small image.
+3. Now you've got to mess with markups _and_ CSS to get the desired effect, and you'll still need JavaScript to swap the placeholder for the original image.
 4. I personally feel the CSS version looks a bit meh, like I'm looking through a dirty smeared lense instead of the frosted glass effect of blurhash.
 5. The original pixelated image is still there, and you're at the mercy of the browser's rendering engine to decide how good the blur effect is going to be.
 
@@ -116,31 +197,49 @@ Even without file storage concerns, I think the blurhash version is the better o
 
 </Callout>
 
-### Creating the blurhash
+## Swapping the placeholder for the original image
 
-Once we have our image in the desired size, we'll use a fantastic library called [blurhash](https://www.npmjs.com/package/blurhash) to create a hash of the blurred image. This hash can then be stored, and later decoded to get the image data.
+```js
+;(function () {
+  const img = document.currentScript.previousElementSibling
+  if (!img || !img.dataset.src) return
 
-## Saving the blurred placeholder
+  const loadHighQualityImage = () => {
+    const originalSrc = img.dataset.src
 
-When saving the blurred placeholder, there's a choice you'll need to make. You can either:
+    // Disconnect observer to prevent any accidental
+    // loading due to erratic scrolling
+    observer.disconnect()
 
-1. Store the blurhash in the database, which will significantly decrease the amount of storage required for the image, but you'll need to decode the blurhash to get the image data when you need to display it.
-2. Store the base64 encoded image data in the database, which will mean no decoding is required to display the image, but at the expense of increased storage requirements.
+    // Deliberately add a random 100-350ms delay
+    window.setTimeout(
+      () => {
+        // Set the src directly, which will trigger browser
+        // to load the image
+        img.src = originalSrc
 
-## Displaying the blurred placeholder
+        // May as well clean up after ourselves
+        delete img.dataset.src
+      },
+      Math.random() * 650 + 400,
+    )
+  }
 
-Once we have our image resized, compressed into a blurhash, and then stored somewhere, we'll inevitably want to display it somewhere.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadHighQualityImage()
+        }
+      })
+    },
+    {
+      // Begin loading image when it's within 50px of
+      // the viewport for perceived performance
+      rootMargin: "50px",
+    },
+  )
 
-To do that, we'll need to:
-
-1. Decode the blurhash from a string to an array of raw pixel data
-2. Convert the decoded pixel data to an image format, generally a PNG
-3. Convert that image into a base64 encoded string
-
-Thankfully we have a library that can do all of this for us: [blurhash-base64](https://www.npmjs.com/package/blurhash-base64).
-
-```bash
-npm install blurhash-base64
+  observer.observe(img)
+})()
 ```
-
-## Pro tip for user uploaded images
