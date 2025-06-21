@@ -1,8 +1,6 @@
-import ImageJakesDumbFace from "@/assets/images/jakes-dumb-face.jpg"
 import { cn } from "@/lib/utils"
-import fs from "fs"
-import path from "path"
-import sharp from "sharp"
+import { resizeImage } from "./image-utils"
+import ImageJakesDumbFace from "./public/images/jakes-dumb-face.jpg"
 import { BlurhashImage } from "./simple-example"
 
 export async function ResizeExample() {
@@ -45,7 +43,11 @@ export async function ResizedImage({
   width: number
   height: number
 }) {
-  const resizedImage = await resizeImage(src, width, height)
+  const resizedImage = await resizeImage({
+    imageFileName: "jakes-dumb-face.jpg",
+    width,
+    height,
+  })
 
   return (
     <img
@@ -57,25 +59,4 @@ export async function ResizedImage({
       {...props}
     />
   )
-}
-
-async function resizeImage(imagePath: string, width: number, height: number) {
-  try {
-    const filePath = path.resolve(
-      process.cwd(),
-      "src/assets/images/jakes-dumb-face.jpg",
-    )
-    const imageBuffer = fs.readFileSync(filePath)
-
-    // Resize and ensure we get RGBA data
-    const resizedImage = await sharp(imageBuffer)
-      .resize(width, height, { fit: "inside" })
-      .ensureAlpha()
-      .toBuffer()
-
-    return resizedImage.toString("base64")
-  } catch (error) {
-    console.error("Error generating image:", error)
-    return ""
-  }
 }
