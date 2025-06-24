@@ -9,7 +9,8 @@ export function GalleryExample() {
       <p className="flex items-start gap-1 justify-center text-xs text-muted-foreground">
         <InfoIcon className="size-3 mt-0.5" />
         <span className="text-xs">
-          Loading times have been slowed here to simulate a slower connection.
+          Loading artificially slowed, simulating a slower connection. Refresh
+          if you missed the blurred images.
         </span>
       </p>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
