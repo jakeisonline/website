@@ -146,12 +146,20 @@ Personally, I've found that `componentX = 5` and `componentY = 4` gives a good b
 
 Note though, "The more components you pick, the more information is retained in the placeholder, but the longer the BlurHash string will be", so you'll need to balance that with the amount of detail you want to retain.
 
-### Saving the blurred placeholder (optional)
+### Save the blurred placeholder
 
-When saving the blurred placeholder, there's a choice you'll need to make. You can either:
+Now that you have your blurhash string, you'll need to store it somewhere. Where you store the blurhash is entirely up to you. You could store it in the database, or in a file, or in a cache, or wherever you want.
 
-1. Store the blurhash in the database, which will significantly decrease the amount of storage required for the image, but you'll need to decode the blurhash to get the image data when you need to display it.
-2. Store the base64 encoded image data in the database, which will mean no decoding is required to display the image, but at the expense of increased storage requirements.
+**So long as** you can quickly retrieve for decoding and server side rendering later.
+
+<Callout type="tip" title="Why not just store the base64 encoded image data?">
+We _could_ at this point decode the blurhash into a base64 encoded image data string, and store that in the database.
+
+This would mean no decoding is required to display the image, but at the expense of increased storage requirements.
+
+In my example here, the base64 encoded image data is significantly larger than the blurhash string. My example image is `~5,500 bytes` in string length as base64, but only `100 bytes` as the blurhash string. That's a 190%+ difference!
+
+</Callout>
 
 ## Displaying the blurred placeholder
 
@@ -169,8 +177,22 @@ Thankfully we have a library that can do all of this for us: [blurhash-base64](h
 npm install blurhash-base64
 ```
 
+Now all we need to do is decode the blurhash:
+
+```ts
+const hashBase64 = await blurhashToBase64(hash)
+```
+
+And then we can display the image!
+
+```html
+<img src="{hashBase64}" />
+```
+
+`blurhash-base64` gives us a base64 encoded image data string that we can use to display the image.
+
 <Callout type="tip" title="Why not just use CSS?">
-You could simply stretch the resized image to the desired size, use CSS to apply `blur` to it, and then wrap it in a container with the same size as the original with `overflow-hidden` to ensure the edges are crisp (CSS `blur` feathers anything it is applied to):
+Rather than doing all this fussy stuff with encoding and decoding, you could simply stretch the resized image to the desired size, use CSS to apply `blur` to it, and then wrap it in a container with the same size as the original with `overflow-hidden` to ensure the edges are crisp (CSS `blur` feathers anything it is applied to):
 
 <div className="not-prose my-6 flex items-center gap-4 text-center">
   <div className="flex flex-col gap-2">
@@ -210,47 +232,47 @@ Even without file storage concerns, I think the blurhash version is the better o
 
 ## Swapping the placeholder for the original image
 
-```js
-;(function () {
-  const img = document.currentScript.previousElementSibling
-  if (!img || !img.dataset.src) return
+Now that we have our blurred placeholder, and we're rendering it on the server, we'll need to swap it for the original (non-blurred) image when it's loaded on the client.
 
-  const loadHighQualityImage = () => {
-    const originalSrc = img.dataset.src
+Executing the following script in the client will swap the placeholder for the original image only when the image is within 50px of the viewport.
 
-    // Disconnect observer to prevent any accidental
-    // loading due to erratic scrolling
-    observer.disconnect()
+```js showLineNumbers
+// Select all images with a data-original-src attribute
+const blurredImages = document.querySelectorAll("img[data-original-src]")
 
-    // Deliberately add a random 100-350ms delay
-    window.setTimeout(
-      () => {
-        // Set the src directly, which will trigger browser
-        // to load the image
-        img.src = originalSrc
+// Create an observer to load the images when they're in the viewport
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        loadHighQualityImage(entry.target)
+      }
+    })
+  },
+  {
+    // Begin loading image when it's within 50px of
+    // the viewport for perceived performance
+    rootMargin: "50px",
+  },
+)
 
-        // May as well clean up after ourselves
-        delete img.dataset.src
-      },
-      Math.random() * 650 + 400,
-    )
-  }
+const loadHighQualityImage = (img) => {
+  // Disconnect observer to prevent any accidental
+  // loading due to erratic scrolling
+  observer.disconnect()
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          loadHighQualityImage()
-        }
-      })
-    },
-    {
-      // Begin loading image when it's within 50px of
-      // the viewport for perceived performance
-      rootMargin: "50px",
-    },
-  )
+  // Set the src directly, which will trigger browser
+  // to load the image
+  img.src = img.dataset.originalSrc
 
+  // May as well clean up after ourselves
+  delete img.dataset.originalSrc
+}
+
+// Begin observing all images with a data-original-src attribute
+blurredImages.forEach((img) => {
   observer.observe(img)
-})()
+})
 ```
+
+And we're done! Now you can take any image, resize it, blur it, save it, and then display it on your page with a placeholder that's instantly rendered for users, and then swapped for the original image when it's loaded.

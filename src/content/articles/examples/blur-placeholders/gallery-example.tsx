@@ -123,7 +123,7 @@ async function BlurhashImage({
     <>
       <img
         src={hashBase64}
-        data-src={`/images/${src}`}
+        data-original-src={`/images/${src}`}
         alt="Jake's blurry dumb face"
         width={width}
         height={height}
@@ -133,10 +133,10 @@ async function BlurhashImage({
         {`
           (function() {
             const img = document.currentScript.previousElementSibling;
-            if (!img || !img.dataset.src) return;
+            if (!img || !img.dataset.originalSrc) return;
 
             const loadHighQualityImage = () => {
-              const originalSrc = img.dataset.src;
+              const originalSrc = img.dataset.originalSrc;
 
               // Disconnect observer to prevent any accidental
               // loading due to erratic scrolling
