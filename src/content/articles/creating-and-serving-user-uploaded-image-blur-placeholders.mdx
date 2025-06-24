@@ -14,6 +14,7 @@ import {
 import { SimpleExample } from "@/content/articles/examples/blur-placeholders/simple-example"
 import { BlurhashImage } from "@/content/articles/examples/blur-placeholders/simple-example"
 import { GalleryExample } from "@/content/articles/examples/blur-placeholders/gallery-example"
+import { BlurControlExample } from "@/content/articles/examples/blur-placeholders/blur-control-example"
 
 Imagine a page with a large grid of images, you don't want your user staring at blank spaces slowly being filled in as the images load. _Gross_. Instead, give them a quick visual indication that something is loading, with a hint of what's to come.
 
@@ -134,6 +135,16 @@ We end up with a hash that looks something like this:
 That's my face at 32x32, blurred, and represented as a string. You're welcome!
 
 ### Controlling the blur
+
+Blurhash gives us two parameters to control the blur, called `componentX` and `componentY`. Roughly, `componentX` controls the horizontal blur, and `componentY` controls the vertical blur.
+
+<Example caption="Smaller numbers mean more blur, larger numbers mean more detail.">
+  <BlurControlExample client:visible />
+</Example>
+
+Personally, I've found that `componentX = 5` and `componentY = 4` gives a good balance between blur and detail, but you should play around with the values to get your desired sweet spot.
+
+Note though, "The more components you pick, the more information is retained in the placeholder, but the longer the BlurHash string will be", so you'll need to balance that with the amount of detail you want to retain.
 
 ### Saving the blurred placeholder (optional)
 
