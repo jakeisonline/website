@@ -12,6 +12,13 @@ export async function getAllArticles(options?: GetAllArticlesOptions) {
     return isProduction() ? isPublished : true
   })
 
+  articles.sort((a, b) => {
+    const aDate = new Date(a.data.publishedAt ?? "")
+    const bDate = new Date(b.data.publishedAt ?? "")
+
+    return bDate.getTime() - aDate.getTime()
+  })
+
   if (options?.limit) {
     return articles.slice(0, options.limit)
   }
