@@ -96,7 +96,7 @@ export function BlurControlExample() {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            className="absolute z-10 right-5 top-5"
+            className="absolute z-10 right-2.5 md:right-5 top-2.5 md:top-5"
             variant="outline"
             size="sm"
             onClick={() => {
@@ -104,7 +104,7 @@ export function BlurControlExample() {
               setComponentY(4)
             }}
           >
-            <RefreshCcwIcon className="w-4 h-4" />
+            <RefreshCcwIcon className="size-3 md:size-4" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Reset to default values</TooltipContent>
