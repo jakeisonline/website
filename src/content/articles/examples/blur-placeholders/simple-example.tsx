@@ -1,14 +1,13 @@
 import { cn } from "@/lib/utils"
 import { blurhashToBase64 } from "blurhash-base64"
 import { generateBlurhash } from "./image-utils"
-import ImageJakesDumbFace from "./public/images/jakes-dumb-face.jpg"
 
 export async function SimpleExample() {
   return (
     <div className="flex flex-row gap-8">
       <div className="flex flex-col gap-2 items-center">
         <img
-          src={ImageJakesDumbFace.src}
+          src={`/images/jakes-dumb-face.jpg`}
           alt="Jake's dumb face"
           width={128}
           height={128}

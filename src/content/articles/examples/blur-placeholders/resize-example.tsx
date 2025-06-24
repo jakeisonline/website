@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils"
 import { resizeImage } from "./image-utils"
-import ImageJakesDumbFace from "./public/images/jakes-dumb-face.jpg"
 import { BlurhashImage } from "./simple-example"
 
 export async function ResizeExample() {
@@ -9,7 +8,7 @@ export async function ResizeExample() {
       <div className="flex flex-col gap-2 items-center size-fit">
         <div className="size-[128px] flex items-center justify-center">
           <ResizedImage
-            src={ImageJakesDumbFace.src}
+            src={`/images/jakes-dumb-face.jpg`}
             alt="Jake's dumb face"
             width={32}
             height={32}
@@ -34,7 +33,7 @@ export async function ResizeExample() {
 }
 
 export async function ResizedImage({
-  src = ImageJakesDumbFace.src,
+  src = `/images/jakes-dumb-face.jpg`,
   width = 32,
   height = 32,
   ...props
