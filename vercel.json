@@ -16,8 +16,8 @@
       "permanent": true
     },
     {
-      "source": "/articles/creating-and-serving-user-uploaded-image-blur-placeholders",
-      "destination": "/articles/creating-and-serving-image-blur-placeholders",
+      "source": "/nodejs/creating-and-serving-user-uploaded-image-blur-placeholders",
+      "destination": "/nodejs/creating-and-serving-image-blur-placeholders",
       "permanent": true
     }
   ],
