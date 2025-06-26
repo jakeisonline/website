@@ -96,6 +96,7 @@ export function BlurControlExample() {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            aria-label="Reset to default values"
             className="absolute z-10 right-2.5 md:right-5 top-2.5 md:top-5"
             variant="outline"
             size="sm"
@@ -204,10 +205,11 @@ function ControlSlider({
         className,
       )}
     >
-      <label className="text-sm font-medium">
+      <label className="text-sm font-medium" htmlFor={label}>
         {label} = <code>{value}</code>
       </label>
       <input
+        id={label}
         type="range"
         min={min}
         max={max}
