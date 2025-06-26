@@ -19,19 +19,19 @@ export function GalleryExample() {
             src={"dog-1.jpg"}
             width={240}
             height={360}
-            alt="Dog 1"
+            alt="A Frenchie dog wearing a green cap"
           />
           <GalleryImage
             src={"dog-6.jpg"}
             width={240}
             height={160}
-            alt="Dog 6"
+            alt="A Frenchie dog in a pineapple costume laying on the ground"
           />
           <GalleryImage
             src={"dog-8.jpg"}
             width={240}
             height={360}
-            alt="Dog 8"
+            alt="A Frenchie dog wearing a yellow dog sweater looking at a tennis ball"
             className="hidden md:block"
           />
         </div>
@@ -40,19 +40,19 @@ export function GalleryExample() {
             width={240}
             height={160}
             src={"dog-10.jpg"}
-            alt="Dog 10"
+            alt="Two dogs sit next to one another, each wearing a cowboy hat"
           />
           <GalleryImage
             width={240}
             height={360}
             src={"dog-2.jpg"}
-            alt="Dog 2"
+            alt="A Frenchie dog in a banana dog sweater"
           />
           <GalleryImage
             width={240}
             height={360}
             src={"dog-11.jpg"}
-            alt="Dog 11"
+            alt="A dog of unknown breed wearing a neckerchief"
             className="hidden md:block"
           />
         </div>
@@ -61,19 +61,19 @@ export function GalleryExample() {
             width={240}
             height={360}
             src={"dog-4.jpg"}
-            alt="Dog 4"
+            alt="A Frenchie wearing a blingin' necklace and a leather baseball jersey"
           />
           <GalleryImage
             width={240}
             height={360}
             src={"dog-9.jpg"}
-            alt="Dog 9"
+            alt="A Frenchie dog wearing a blinging' necklace and black dog sweater"
           />
           <GalleryImage
             width={240}
             height={160}
             src={"dog-3.jpg"}
-            alt="Dog 3"
+            alt="A Frenchie dog being held in the air by a human"
           />
         </div>
       </div>
@@ -90,6 +90,7 @@ function GalleryImage({
   ...props
 }: React.ComponentProps<"img"> & {
   src: string
+  alt: string
   width: number
   height: number
 }) {
@@ -101,6 +102,7 @@ function GalleryImage({
         src={src}
         width={width}
         height={height}
+        alt={alt}
         className={cn("rounded-xs max-w-full", aspectRatio, className)}
       />
     </div>
@@ -111,11 +113,13 @@ async function BlurhashImage({
   src,
   width,
   height,
+  alt,
   ...props
 }: React.ComponentProps<"img"> & {
   src: string
   width: number
   height: number
+  alt: string
 }) {
   const hash = await generateBlurhash({ imageFileName: src, width, height })
   const hashBase64 = await blurhashToBase64(hash)
@@ -125,7 +129,7 @@ async function BlurhashImage({
       <img
         src={hashBase64}
         data-original-src={`/images/${src}`}
-        alt="Jake's blurry dumb face"
+        alt={alt}
         width={width}
         height={height}
         {...props}
