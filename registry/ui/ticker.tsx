@@ -32,8 +32,8 @@ export function Ticker({
     doNext,
     doPrevious,
     getCurrentItem,
-    getQueueLength,
-    getQueuePosition,
+    getStackLength,
+    getStackPosition,
   } = useTicker()
   const [currentItem, setCurrentItem] = useState<TickerItem | null>(
     initialItems[0] || null,
@@ -66,12 +66,12 @@ export function Ticker({
     // Check bounds for non-looping scenarios
     if (
       direction === "next" &&
-      getQueuePosition(id) === getQueueLength(id) - 1 &&
+      getStackPosition(id) === getStackLength(id) - 1 &&
       !canLoop
     ) {
       return
     }
-    if (direction === "previous" && getQueuePosition(id) === 0 && !canLoop) {
+    if (direction === "previous" && getStackPosition(id) === 0 && !canLoop) {
       return
     }
 
@@ -94,11 +94,11 @@ export function Ticker({
     }, 300)
   }
 
-  const toNext = () => {
+  const handleNext = () => {
     toDirection("next")
   }
 
-  const toPrevious = () => {
+  const handlePrevious = () => {
     toDirection("previous")
   }
 
@@ -143,10 +143,10 @@ export function Ticker({
       </div>
 
       <div className="flex justify-center items-center gap-2">
-        <Button variant="outline" size="icon" onClick={toPrevious}>
+        <Button variant="outline" size="icon" onClick={handlePrevious}>
           <ChevronLeft className="w-4 h-4" />
         </Button>
-        <Button variant="outline" size="icon" onClick={toNext}>
+        <Button variant="outline" size="icon" onClick={handleNext}>
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>

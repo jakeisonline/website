@@ -12,8 +12,8 @@ interface TickerContextType {
   doNext: (tickerId: string, autoLoop?: boolean) => TickerItem | null
   doPrevious: (tickerId: string) => TickerItem | null
   getCurrentItem: (tickerId: string) => TickerItem | null
-  getQueueLength: (tickerId: string) => number
-  getQueuePosition: (tickerId: string) => number
+  getStackLength: (tickerId: string) => number
+  getStackPosition: (tickerId: string) => number
 }
 
 export const TickerContext = createContext<TickerContextType | undefined>(
@@ -68,14 +68,14 @@ export function TickerContextProvider({
     [originalItems, currentIndices],
   )
 
-  const getQueueLength = useCallback(
+  const getStackLength = useCallback(
     (tickerId: string): number => {
       return originalItems[tickerId]?.length || 0
     },
     [originalItems],
   )
 
-  const getQueuePosition = useCallback(
+  const getStackPosition = useCallback(
     (tickerId: string): number => {
       return currentIndices[tickerId] || 0
     },
@@ -135,8 +135,8 @@ export function TickerContextProvider({
         doNext,
         doPrevious,
         getCurrentItem,
-        getQueueLength,
-        getQueuePosition,
+        getStackLength,
+        getStackPosition,
       }}
     >
       {children}
