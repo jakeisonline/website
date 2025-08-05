@@ -8,11 +8,12 @@ import {
 } from "react"
 
 interface TickerContextType {
-  addToTicker: (tickerId: string, item: TickerItem) => void
-  addMultipleToTicker: (tickerId: string, items: TickerItem[]) => void
-  getTickerQueue: (tickerId: string) => TickerItem[]
-  consumeFromTicker: (tickerId: string) => TickerItem | null
-  getQueueLength: (bannerId: string) => number
+  setOriginalItems: (tickerId: string, items: TickerItem[]) => void
+  doNext: (tickerId: string, autoLoop?: boolean) => TickerItem | null
+  doPrevious: (tickerId: string) => TickerItem | null
+  getCurrentItem: (tickerId: string) => TickerItem | null
+  getQueueLength: (tickerId: string) => number
+  getQueuePosition: (tickerId: string) => number
 }
 
 export const TickerContext = createContext<TickerContextType | undefined>(
@@ -36,59 +37,106 @@ interface TickerContextProviderProps {
 export function TickerContextProvider({
   children,
 }: TickerContextProviderProps) {
-  const [tickerQueues, setTickerQueues] = useState<
+  const [originalItems, setOriginalItemsState] = useState<
     Record<string, TickerItem[]>
   >({})
+  const [currentIndices, setCurrentIndices] = useState<Record<string, number>>(
+    {},
+  )
 
-  const addToTicker = useCallback((tickerId: string, item: TickerItem) => {
-    setTickerQueues((prev) => ({
-      ...prev,
-      [tickerId]: [...(prev[tickerId] || []), item],
-    }))
-  }, [])
-
-  const addMultipleToTicker = useCallback(
+  const setOriginalItems = useCallback(
     (tickerId: string, items: TickerItem[]) => {
-      setTickerQueues((prev) => ({
+      setOriginalItemsState((prev) => ({
         ...prev,
-        [tickerId]: [...(prev[tickerId] || []), ...items],
+        [tickerId]: items,
+      }))
+      // Initialize current index to 0
+      setCurrentIndices((prev) => ({
+        ...prev,
+        [tickerId]: 0,
       }))
     },
     [],
   )
 
-  const getTickerQueue = useCallback(
-    (tickerId: string) => tickerQueues[tickerId] || [],
-    [tickerQueues],
+  const getCurrentItem = useCallback(
+    (tickerId: string): TickerItem | null => {
+      const items = originalItems[tickerId] || []
+      const currentIndex = currentIndices[tickerId] || 0
+      return items[currentIndex] || null
+    },
+    [originalItems, currentIndices],
   )
 
   const getQueueLength = useCallback(
-    (tickerId: string) => (tickerQueues[tickerId] || []).length,
-    [tickerQueues],
+    (tickerId: string): number => {
+      return originalItems[tickerId]?.length || 0
+    },
+    [originalItems],
   )
 
-  const consumeFromTicker = useCallback(
-    (tickerId: string): TickerItem | null => {
-      const queue = tickerQueues[tickerId]
-      if (!queue || queue.length === 0) return null
-      const item = queue[0]
-      setTickerQueues((prev) => ({
-        ...prev,
-        [tickerId]: queue.slice(1),
-      }))
-      return item
+  const getQueuePosition = useCallback(
+    (tickerId: string): number => {
+      return currentIndices[tickerId] || 0
     },
-    [tickerQueues],
+    [currentIndices],
+  )
+
+  const navigateToItem = useCallback(
+    (
+      tickerId: string,
+      direction: "next" | "previous",
+      enableLoop = true,
+    ): TickerItem | null => {
+      const items = originalItems[tickerId] || []
+      if (items.length === 0) return null
+
+      const currentIndex = currentIndices[tickerId] || 0
+      let newIndex: number
+
+      if (direction === "next") {
+        if (enableLoop) {
+          newIndex = (currentIndex + 1) % items.length
+        } else {
+          newIndex = Math.min(currentIndex + 1, items.length - 1)
+        }
+      } else {
+        newIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1
+      }
+
+      setCurrentIndices((prev) => ({
+        ...prev,
+        [tickerId]: newIndex,
+      }))
+
+      return items[newIndex] || null
+    },
+    [originalItems, currentIndices],
+  )
+
+  const doNext = useCallback(
+    (tickerId: string, autoLoop = true): TickerItem | null => {
+      return navigateToItem(tickerId, "next", autoLoop)
+    },
+    [navigateToItem],
+  )
+
+  const doPrevious = useCallback(
+    (tickerId: string): TickerItem | null => {
+      return navigateToItem(tickerId, "previous", true)
+    },
+    [navigateToItem],
   )
 
   return (
     <TickerContext.Provider
       value={{
-        addToTicker,
-        addMultipleToTicker,
-        getTickerQueue,
-        consumeFromTicker,
+        setOriginalItems,
+        doNext,
+        doPrevious,
+        getCurrentItem,
         getQueueLength,
+        getQueuePosition,
       }}
     >
       {children}

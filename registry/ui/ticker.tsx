@@ -1,8 +1,9 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useTicker } from "@/registry/hooks/use-ticker"
-import { ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 export interface TickerItem {
@@ -16,25 +17,23 @@ export interface TickerItem {
 interface TickerProps {
   id: string
   initialItems?: TickerItem[]
-  autoAdvance?: boolean
-  autoAdvanceDelay?: number
-  autoLoop?: boolean
+  canLoop?: boolean
   className?: string
 }
 
 export function Ticker({
   id,
   initialItems = [],
-  autoAdvance = true,
-  autoAdvanceDelay = 3000,
-  autoLoop = true,
+  canLoop = true,
   className = "",
 }: TickerProps) {
   const {
-    getTickerQueue,
-    consumeFromTicker,
-    addMultipleToTicker,
+    setOriginalItems,
+    doNext,
+    doPrevious,
+    getCurrentItem,
     getQueueLength,
+    getQueuePosition,
   } = useTicker()
   const [currentItem, setCurrentItem] = useState<TickerItem | null>(
     initialItems[0] || null,
@@ -45,38 +44,42 @@ export function Ticker({
   >("visible")
   const didInit = useRef(false)
 
-  // Add initial items to queue once
+  // Set original items once
   useEffect(() => {
-    if (!didInit.current && initialItems.length > 1) {
-      addMultipleToTicker(id, initialItems.slice(1))
+    if (!didInit.current && initialItems.length > 0) {
+      setOriginalItems(id, initialItems)
       didInit.current = true
     }
-  }, [id, addMultipleToTicker, initialItems])
+  }, [id, setOriginalItems, initialItems])
 
-  // Watch queue length to trigger processing
-  const queueLength = getQueueLength(id)
-
-  // Process queue when it has items and we're not animating
+  // Get current item from hook
   useEffect(() => {
-    if (queueLength === 0 || isAnimating) return
+    const item = getCurrentItem(id)
+    if (item && item.id !== currentItem?.id) {
+      setCurrentItem(item)
+    }
+  }, [id, getCurrentItem, currentItem?.id])
 
-    const queue = getTickerQueue(id)
-    const nextItem = queue[0]
+  const toDirection = (direction: "next" | "previous") => {
+    if (isAnimating) return
 
-    if (!nextItem) return
-
-    // Skip if it's the same item
-    if (currentItem && nextItem.id === currentItem.id) {
-      consumeFromTicker(id)
+    // Check bounds for non-looping scenarios
+    if (
+      direction === "next" &&
+      getQueuePosition(id) === getQueueLength(id) - 1 &&
+      !canLoop
+    ) {
+      return
+    }
+    if (direction === "previous" && getQueuePosition(id) === 0 && !canLoop) {
       return
     }
 
-    // Start animation sequence
     setIsAnimating(true)
     setAnimationState("exiting")
 
     setTimeout(() => {
-      const item = consumeFromTicker(id)
+      const item = direction === "next" ? doNext(id, canLoop) : doPrevious(id)
       if (item) {
         setCurrentItem(item)
         setAnimationState("entering")
@@ -84,67 +87,33 @@ export function Ticker({
         setTimeout(() => {
           setAnimationState("visible")
           setIsAnimating(false)
-        }, 100)
+        }, 300)
       } else {
         setIsAnimating(false)
       }
-    }, 100)
-  }, [
-    queueLength,
-    isAnimating,
-    currentItem,
-    id,
-    getTickerQueue,
-    consumeFromTicker,
-    autoAdvanceDelay,
-  ])
+    }, 300)
+  }
 
-  // Auto advance functionality
-  useEffect(() => {
-    if (!autoAdvance || queueLength === 0 || isAnimating) return
+  const toNext = () => {
+    toDirection("next")
+  }
 
-    const timer = setTimeout(() => {
-      setIsAnimating(true)
-      setAnimationState("exiting")
-
-      setTimeout(() => {
-        const item = consumeFromTicker(id)
-        if (item) {
-          setCurrentItem(item)
-          setAnimationState("entering")
-
-          setTimeout(() => {
-            setAnimationState("visible")
-            setIsAnimating(false)
-          }, 100)
-        } else {
-          setIsAnimating(false)
-        }
-      }, 100)
-    }, autoAdvanceDelay)
-
-    return () => clearTimeout(timer)
-  }, [
-    autoAdvance,
-    autoAdvanceDelay,
-    queueLength,
-    isAnimating,
-    id,
-    consumeFromTicker,
-  ])
+  const toPrevious = () => {
+    toDirection("previous")
+  }
 
   if (!currentItem) {
     return null
   }
 
   return (
-    <div
-      className={cn(
-        "relative overflow-hidden border border-border rounded-full p-1 w-4/5",
-        className,
-      )}
-    >
-      <div className="items-center gap-3">
+    <div className="flex flex-col items-center gap-2">
+      <div
+        className={cn(
+          "relative overflow-hidden border border-border rounded-full p-1 h-8 w-full flex items-center",
+          className,
+        )}
+      >
         <div
           className={cn(
             "flex items-center gap-3 transition-all duration-300 ease-in-out",
@@ -160,7 +129,7 @@ export function Ticker({
             </span>
           )}
 
-          <span className="text-sm font-medium flex-1">
+          <span className="text-sm font-medium flex-1 first:ml-1.5 last:mr-1.5">
             {currentItem.title}
           </span>
 
@@ -171,6 +140,15 @@ export function Ticker({
             </div>
           )}
         </div>
+      </div>
+
+      <div className="flex justify-center items-center gap-2">
+        <Button variant="outline" size="icon" onClick={toPrevious}>
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+        <Button variant="outline" size="icon" onClick={toNext}>
+          <ChevronRight className="w-4 h-4" />
+        </Button>
       </div>
     </div>
   )
