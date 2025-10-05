@@ -9,6 +9,7 @@
     "build": "astro check && astro build && pagefind --site .vercel/output/static && cp -r .vercel/output/static/pagefind public/",
     "build:registry": "tsx ./scripts/build-registry.ts",
     "build:index": "pagefind --site dist",
+    "capture:screenshots": "tsx ./scripts/capture-screenshots.ts",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -68,6 +69,7 @@
     "prettier-plugin-astro-organize-imports": "^0.4.11",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "puppeteer": "^24.23.0",
     "shiki": "^1.29.2",
     "tailwindcss-device": "^1.0.0",
     "tsx": "^4.19.2",
